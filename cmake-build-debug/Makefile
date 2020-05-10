@@ -123,32 +123,410 @@ bomberman/fast:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/build
 .PHONY : bomberman/fast
 
-main.o: main.cpp.o
+src/CApplication.o: src/CApplication.cpp.o
 
-.PHONY : main.o
+.PHONY : src/CApplication.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/main.cpp.o
-.PHONY : main.cpp.o
+src/CApplication.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CApplication.cpp.o
+.PHONY : src/CApplication.cpp.o
 
-main.i: main.cpp.i
+src/CApplication.i: src/CApplication.cpp.i
 
-.PHONY : main.i
+.PHONY : src/CApplication.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/main.cpp.i
-.PHONY : main.cpp.i
+src/CApplication.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CApplication.cpp.i
+.PHONY : src/CApplication.cpp.i
 
-main.s: main.cpp.s
+src/CApplication.s: src/CApplication.cpp.s
 
-.PHONY : main.s
+.PHONY : src/CApplication.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/main.cpp.s
-.PHONY : main.cpp.s
+src/CApplication.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CApplication.cpp.s
+.PHONY : src/CApplication.cpp.s
+
+src/CBoard.o: src/CBoard.cpp.o
+
+.PHONY : src/CBoard.o
+
+# target to build an object file
+src/CBoard.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CBoard.cpp.o
+.PHONY : src/CBoard.cpp.o
+
+src/CBoard.i: src/CBoard.cpp.i
+
+.PHONY : src/CBoard.i
+
+# target to preprocess a source file
+src/CBoard.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CBoard.cpp.i
+.PHONY : src/CBoard.cpp.i
+
+src/CBoard.s: src/CBoard.cpp.s
+
+.PHONY : src/CBoard.s
+
+# target to generate assembly for a file
+src/CBoard.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CBoard.cpp.s
+.PHONY : src/CBoard.cpp.s
+
+src/CGameManager.o: src/CGameManager.cpp.o
+
+.PHONY : src/CGameManager.o
+
+# target to build an object file
+src/CGameManager.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CGameManager.cpp.o
+.PHONY : src/CGameManager.cpp.o
+
+src/CGameManager.i: src/CGameManager.cpp.i
+
+.PHONY : src/CGameManager.i
+
+# target to preprocess a source file
+src/CGameManager.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CGameManager.cpp.i
+.PHONY : src/CGameManager.cpp.i
+
+src/CGameManager.s: src/CGameManager.cpp.s
+
+.PHONY : src/CGameManager.s
+
+# target to generate assembly for a file
+src/CGameManager.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CGameManager.cpp.s
+.PHONY : src/CGameManager.cpp.s
+
+src/CLevelLoader.o: src/CLevelLoader.cpp.o
+
+.PHONY : src/CLevelLoader.o
+
+# target to build an object file
+src/CLevelLoader.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o
+.PHONY : src/CLevelLoader.cpp.o
+
+src/CLevelLoader.i: src/CLevelLoader.cpp.i
+
+.PHONY : src/CLevelLoader.i
+
+# target to preprocess a source file
+src/CLevelLoader.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.i
+.PHONY : src/CLevelLoader.cpp.i
+
+src/CLevelLoader.s: src/CLevelLoader.cpp.s
+
+.PHONY : src/CLevelLoader.s
+
+# target to generate assembly for a file
+src/CLevelLoader.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.s
+.PHONY : src/CLevelLoader.cpp.s
+
+src/CSDLInterface.o: src/CSDLInterface.cpp.o
+
+.PHONY : src/CSDLInterface.o
+
+# target to build an object file
+src/CSDLInterface.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o
+.PHONY : src/CSDLInterface.cpp.o
+
+src/CSDLInterface.i: src/CSDLInterface.cpp.i
+
+.PHONY : src/CSDLInterface.i
+
+# target to preprocess a source file
+src/CSDLInterface.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.i
+.PHONY : src/CSDLInterface.cpp.i
+
+src/CSDLInterface.s: src/CSDLInterface.cpp.s
+
+.PHONY : src/CSDLInterface.s
+
+# target to generate assembly for a file
+src/CSDLInterface.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.s
+.PHONY : src/CSDLInterface.cpp.s
+
+src/CTexturePack.o: src/CTexturePack.cpp.o
+
+.PHONY : src/CTexturePack.o
+
+# target to build an object file
+src/CTexturePack.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o
+.PHONY : src/CTexturePack.cpp.o
+
+src/CTexturePack.i: src/CTexturePack.cpp.i
+
+.PHONY : src/CTexturePack.i
+
+# target to preprocess a source file
+src/CTexturePack.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CTexturePack.cpp.i
+.PHONY : src/CTexturePack.cpp.i
+
+src/CTexturePack.s: src/CTexturePack.cpp.s
+
+.PHONY : src/CTexturePack.s
+
+# target to generate assembly for a file
+src/CTexturePack.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CTexturePack.cpp.s
+.PHONY : src/CTexturePack.cpp.s
+
+src/gameobjects/CBomb.o: src/gameobjects/CBomb.cpp.o
+
+.PHONY : src/gameobjects/CBomb.o
+
+# target to build an object file
+src/gameobjects/CBomb.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o
+.PHONY : src/gameobjects/CBomb.cpp.o
+
+src/gameobjects/CBomb.i: src/gameobjects/CBomb.cpp.i
+
+.PHONY : src/gameobjects/CBomb.i
+
+# target to preprocess a source file
+src/gameobjects/CBomb.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.i
+.PHONY : src/gameobjects/CBomb.cpp.i
+
+src/gameobjects/CBomb.s: src/gameobjects/CBomb.cpp.s
+
+.PHONY : src/gameobjects/CBomb.s
+
+# target to generate assembly for a file
+src/gameobjects/CBomb.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.s
+.PHONY : src/gameobjects/CBomb.cpp.s
+
+src/gameobjects/CBoost.o: src/gameobjects/CBoost.cpp.o
+
+.PHONY : src/gameobjects/CBoost.o
+
+# target to build an object file
+src/gameobjects/CBoost.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CBoost.cpp.o
+.PHONY : src/gameobjects/CBoost.cpp.o
+
+src/gameobjects/CBoost.i: src/gameobjects/CBoost.cpp.i
+
+.PHONY : src/gameobjects/CBoost.i
+
+# target to preprocess a source file
+src/gameobjects/CBoost.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CBoost.cpp.i
+.PHONY : src/gameobjects/CBoost.cpp.i
+
+src/gameobjects/CBoost.s: src/gameobjects/CBoost.cpp.s
+
+.PHONY : src/gameobjects/CBoost.s
+
+# target to generate assembly for a file
+src/gameobjects/CBoost.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CBoost.cpp.s
+.PHONY : src/gameobjects/CBoost.cpp.s
+
+src/gameobjects/CEnemy.o: src/gameobjects/CEnemy.cpp.o
+
+.PHONY : src/gameobjects/CEnemy.o
+
+# target to build an object file
+src/gameobjects/CEnemy.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CEnemy.cpp.o
+.PHONY : src/gameobjects/CEnemy.cpp.o
+
+src/gameobjects/CEnemy.i: src/gameobjects/CEnemy.cpp.i
+
+.PHONY : src/gameobjects/CEnemy.i
+
+# target to preprocess a source file
+src/gameobjects/CEnemy.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CEnemy.cpp.i
+.PHONY : src/gameobjects/CEnemy.cpp.i
+
+src/gameobjects/CEnemy.s: src/gameobjects/CEnemy.cpp.s
+
+.PHONY : src/gameobjects/CEnemy.s
+
+# target to generate assembly for a file
+src/gameobjects/CEnemy.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CEnemy.cpp.s
+.PHONY : src/gameobjects/CEnemy.cpp.s
+
+src/gameobjects/CFire.o: src/gameobjects/CFire.cpp.o
+
+.PHONY : src/gameobjects/CFire.o
+
+# target to build an object file
+src/gameobjects/CFire.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.o
+.PHONY : src/gameobjects/CFire.cpp.o
+
+src/gameobjects/CFire.i: src/gameobjects/CFire.cpp.i
+
+.PHONY : src/gameobjects/CFire.i
+
+# target to preprocess a source file
+src/gameobjects/CFire.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.i
+.PHONY : src/gameobjects/CFire.cpp.i
+
+src/gameobjects/CFire.s: src/gameobjects/CFire.cpp.s
+
+.PHONY : src/gameobjects/CFire.s
+
+# target to generate assembly for a file
+src/gameobjects/CFire.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.s
+.PHONY : src/gameobjects/CFire.cpp.s
+
+src/gameobjects/CGameObject.o: src/gameobjects/CGameObject.cpp.o
+
+.PHONY : src/gameobjects/CGameObject.o
+
+# target to build an object file
+src/gameobjects/CGameObject.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o
+.PHONY : src/gameobjects/CGameObject.cpp.o
+
+src/gameobjects/CGameObject.i: src/gameobjects/CGameObject.cpp.i
+
+.PHONY : src/gameobjects/CGameObject.i
+
+# target to preprocess a source file
+src/gameobjects/CGameObject.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.i
+.PHONY : src/gameobjects/CGameObject.cpp.i
+
+src/gameobjects/CGameObject.s: src/gameobjects/CGameObject.cpp.s
+
+.PHONY : src/gameobjects/CGameObject.s
+
+# target to generate assembly for a file
+src/gameobjects/CGameObject.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.s
+.PHONY : src/gameobjects/CGameObject.cpp.s
+
+src/gameobjects/CGround.o: src/gameobjects/CGround.cpp.o
+
+.PHONY : src/gameobjects/CGround.o
+
+# target to build an object file
+src/gameobjects/CGround.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.o
+.PHONY : src/gameobjects/CGround.cpp.o
+
+src/gameobjects/CGround.i: src/gameobjects/CGround.cpp.i
+
+.PHONY : src/gameobjects/CGround.i
+
+# target to preprocess a source file
+src/gameobjects/CGround.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.i
+.PHONY : src/gameobjects/CGround.cpp.i
+
+src/gameobjects/CGround.s: src/gameobjects/CGround.cpp.s
+
+.PHONY : src/gameobjects/CGround.s
+
+# target to generate assembly for a file
+src/gameobjects/CGround.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.s
+.PHONY : src/gameobjects/CGround.cpp.s
+
+src/gameobjects/CPlayer.o: src/gameobjects/CPlayer.cpp.o
+
+.PHONY : src/gameobjects/CPlayer.o
+
+# target to build an object file
+src/gameobjects/CPlayer.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CPlayer.cpp.o
+.PHONY : src/gameobjects/CPlayer.cpp.o
+
+src/gameobjects/CPlayer.i: src/gameobjects/CPlayer.cpp.i
+
+.PHONY : src/gameobjects/CPlayer.i
+
+# target to preprocess a source file
+src/gameobjects/CPlayer.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CPlayer.cpp.i
+.PHONY : src/gameobjects/CPlayer.cpp.i
+
+src/gameobjects/CPlayer.s: src/gameobjects/CPlayer.cpp.s
+
+.PHONY : src/gameobjects/CPlayer.s
+
+# target to generate assembly for a file
+src/gameobjects/CPlayer.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CPlayer.cpp.s
+.PHONY : src/gameobjects/CPlayer.cpp.s
+
+src/gameobjects/CWall.o: src/gameobjects/CWall.cpp.o
+
+.PHONY : src/gameobjects/CWall.o
+
+# target to build an object file
+src/gameobjects/CWall.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.o
+.PHONY : src/gameobjects/CWall.cpp.o
+
+src/gameobjects/CWall.i: src/gameobjects/CWall.cpp.i
+
+.PHONY : src/gameobjects/CWall.i
+
+# target to preprocess a source file
+src/gameobjects/CWall.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.i
+.PHONY : src/gameobjects/CWall.cpp.i
+
+src/gameobjects/CWall.s: src/gameobjects/CWall.cpp.s
+
+.PHONY : src/gameobjects/CWall.s
+
+# target to generate assembly for a file
+src/gameobjects/CWall.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.s
+.PHONY : src/gameobjects/CWall.cpp.s
+
+src/main.o: src/main.cpp.o
+
+.PHONY : src/main.o
+
+# target to build an object file
+src/main.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
+
+src/main.i: src/main.cpp.i
+
+.PHONY : src/main.i
+
+# target to preprocess a source file
+src/main.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
+
+src/main.s: src/main.cpp.s
+
+.PHONY : src/main.s
+
+# target to generate assembly for a file
+src/main.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
 
 # Help Target
 help:
@@ -159,9 +537,51 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... bomberman"
 	@echo "... edit_cache"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... src/CApplication.o"
+	@echo "... src/CApplication.i"
+	@echo "... src/CApplication.s"
+	@echo "... src/CBoard.o"
+	@echo "... src/CBoard.i"
+	@echo "... src/CBoard.s"
+	@echo "... src/CGameManager.o"
+	@echo "... src/CGameManager.i"
+	@echo "... src/CGameManager.s"
+	@echo "... src/CLevelLoader.o"
+	@echo "... src/CLevelLoader.i"
+	@echo "... src/CLevelLoader.s"
+	@echo "... src/CSDLInterface.o"
+	@echo "... src/CSDLInterface.i"
+	@echo "... src/CSDLInterface.s"
+	@echo "... src/CTexturePack.o"
+	@echo "... src/CTexturePack.i"
+	@echo "... src/CTexturePack.s"
+	@echo "... src/gameobjects/CBomb.o"
+	@echo "... src/gameobjects/CBomb.i"
+	@echo "... src/gameobjects/CBomb.s"
+	@echo "... src/gameobjects/CBoost.o"
+	@echo "... src/gameobjects/CBoost.i"
+	@echo "... src/gameobjects/CBoost.s"
+	@echo "... src/gameobjects/CEnemy.o"
+	@echo "... src/gameobjects/CEnemy.i"
+	@echo "... src/gameobjects/CEnemy.s"
+	@echo "... src/gameobjects/CFire.o"
+	@echo "... src/gameobjects/CFire.i"
+	@echo "... src/gameobjects/CFire.s"
+	@echo "... src/gameobjects/CGameObject.o"
+	@echo "... src/gameobjects/CGameObject.i"
+	@echo "... src/gameobjects/CGameObject.s"
+	@echo "... src/gameobjects/CGround.o"
+	@echo "... src/gameobjects/CGround.i"
+	@echo "... src/gameobjects/CGround.s"
+	@echo "... src/gameobjects/CPlayer.o"
+	@echo "... src/gameobjects/CPlayer.i"
+	@echo "... src/gameobjects/CPlayer.s"
+	@echo "... src/gameobjects/CWall.o"
+	@echo "... src/gameobjects/CWall.i"
+	@echo "... src/gameobjects/CWall.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
 .PHONY : help
 
 

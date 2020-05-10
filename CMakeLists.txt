@@ -2,5 +2,10 @@ cmake_minimum_required(VERSION 3.15)
 project(bomberman)
 
 set(CMAKE_CXX_STANDARD 14)
+find_package(SDL2 REQUIRED)
+include_directories(${SDL2_INCLUDE_DIRS})
 
-add_executable(bomberman main.cpp)
+
+add_executable(bomberman src/main.cpp src/CBoard.cpp src/CBoard.h src/CApplication.cpp src/CApplication.h src/gameobjects/CGameObject.cpp src/gameobjects/CGameObject.h src/CSDLInterface.cpp src/CSDLInterface.h src/CGameManager.cpp src/CGameManager.h src/gameobjects/CGameObject.cpp src/gameobjects/CGameObject.h src/gameobjects/CWall.cpp src/gameobjects/CWall.h src/gameobjects/CPlayer.cpp src/gameobjects/CPlayer.h src/gameobjects/CGround.cpp src/gameobjects/CGround.h src/gameobjects/CEnemy.cpp src/gameobjects/CEnemy.h src/gameobjects/CBomb.cpp src/gameobjects/CBomb.h src/gameobjects/CFire.cpp src/gameobjects/CFire.h src/gameobjects/CBoost.cpp src/gameobjects/CBoost.h src/CLevelLoader.cpp src/CLevelLoader.h src/CTexturePack.cpp src/CTexturePack.h)
+
+target_link_libraries(bomberman ${SDL2_LIBRARIES} -lSDL2_image)
