@@ -14,14 +14,15 @@ bool CLevelLoader::LoadLevel(CBoard &board, size_t level)
     return false;
 }
 
-CBoard *CLevelLoader::GetBoard(int players, CSettings *settings)
+CBoard *CLevelLoader::GetBoard(int playersCount, CSettings *settings)
 {
     // calc cellsize
     int cellSize = static_cast<int>(settings->GetScreenWidth() / CLevelLoader::MAP_WIDTH);
 
     CGameObject ***map = this->LoadMap();
+    std::vector<CPlayer *> players = this->LoadPlayers(playersCount);
 
-    return new CBoard(map, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), cellSize);
+    return new CBoard(map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), cellSize);
 }
 
 CGameObject ***CLevelLoader::LoadMap()
@@ -32,8 +33,8 @@ CGameObject ***CLevelLoader::LoadMap()
                                                                                        const std::string>{{ETextureType::TEXTURE_STATIC, "Blocks/SolidBlock.png"}});
     CWall wall(texturePack);
 
+    // init 2D array
     CGameObject ***map = new CGameObject **[MAP_WIDTH];
-
     for (size_t i = 0; i < CLevelLoader::MAP_WIDTH; i++)
     {
         map[i] = new CGameObject *[CLevelLoader::MAP_HEIGHT];
@@ -46,8 +47,10 @@ CGameObject ***CLevelLoader::LoadMap()
 
 
     size_t row = 0, col = 0;
-    std::ifstream fileReader(this->m_Interface->GetSettings()->GetDataPath() + CLevelLoader::MAP_FILE_NAME, std::ios::binary | std::ios::in);
+    std::ifstream fileReader(this->m_Interface->GetSettings()->GetDataPath() + CLevelLoader::MAP_FILE_NAME,
+                             std::ios::binary | std::ios::in);
 
+    // Is file reader ok?
     if (!fileReader || !fileReader.is_open() || fileReader.eof() || fileReader.bad())
     {
         throw std::ios::failure(MESSAGE_MAP_ERROR);
@@ -65,9 +68,7 @@ CGameObject ***CLevelLoader::LoadMap()
                 if (input >> (7 - i) & 1)
                 {
                     map[static_cast<int>(col * 8 + i)][row] = wall.Clone();
-                    std::cout << "*";
                 }
-                else std::cout << "o";
             }
 
             // Increment col with every readed byte.
@@ -77,7 +78,6 @@ CGameObject ***CLevelLoader::LoadMap()
             if (col >= MAP_WIDTH / 8)
             {
                 col = 0;
-                std::cout << std::endl;
                 row++;
             }
 
@@ -92,6 +92,58 @@ CGameObject ***CLevelLoader::LoadMap()
     fileReader.close();
 
     return map;
+}
+
+std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
+{
+    // Prepare data for all possible players
+    CControls *controls[CLevelLoader::MAX_PLAYERS];
+    controls[0] = new CControls(SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A,
+                                SDL_SCANCODE_D, SDL_SCANCODE_X, SDL_SCANCODE_C);
+
+    controls[1] = new CControls(SDL_SCANCODE_I, SDL_SCANCODE_K, SDL_SCANCODE_J,
+                                SDL_SCANCODE_L, SDL_SCANCODE_N, SDL_SCANCODE_M);
+
+    CTexturePack *texturePacks[CLevelLoader::MAX_PLAYERS];
+    texturePacks[0] = new CTexturePack(this->m_Interface, std::map<ETextureType,
+            const std::string>{{ETextureType::TEXTURE_STATIC, "Bomberman/Front/Bman_F_f00.png"},
+                               {ETextureType::TEXTURE_UP,     "Bomberman/Back/Bman_B_f00.png"},
+                               {ETextureType::TEXTURE_DOWN,   "Bomberman/Front/Bman_F_f00.png"},
+                               {ETextureType::TEXTURE_LEFT,   "Bomberman/Left/Bman_F_f00.png"},
+                               {ETextureType::TEXTURE_RIGHT,  "Bomberman/Right/Bman_F_f00.png"}});
+
+    texturePacks[1] = new CTexturePack(this->m_Interface, std::map<ETextureType,
+            const std::string>{{ETextureType::TEXTURE_STATIC, "Bomberman/Front/Bman_F_f00.png"},
+                               {ETextureType::TEXTURE_UP,     "Bomberman/Back/Bman_B_f00.png"},
+                               {ETextureType::TEXTURE_DOWN,   "Bomberman/Front/Bman_F_f00.png"},
+                               {ETextureType::TEXTURE_LEFT,   "Bomberman/Left/Bman_F_f00.png"},
+                               {ETextureType::TEXTURE_RIGHT,  "Bomberman/Right/Bman_F_f00.png"}});
+
+    CCoord startingLocation[CLevelLoader::MAX_PLAYERS];
+    startingLocation[0] = CCoord(0, 0);
+    startingLocation[1] = CCoord(0, 7);
+
+    std::vector<CPlayer *> players;
+
+    // return only required players
+    for (int i = 0; i < count; i++)
+    {
+        players.push_back(
+                new CPlayer(std::make_shared<CTexturePack>(*(texturePacks[i])), startingLocation[i], controls[i]));
+        texturePacks[i] = nullptr;
+        controls[i] = nullptr;
+    }
+
+    // delete unused objects
+    for (size_t i = 0; i < CLevelLoader::MAX_PLAYERS; i++)
+    {
+        delete texturePacks[i];
+        delete controls[i];
+    }
+
+    return players;
+
+  //return std::vector<CPlayer*>();
 }
 
 

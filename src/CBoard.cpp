@@ -9,12 +9,16 @@
 CBoard::~CBoard()
 {
     for(size_t i = 0; i < this->m_BoardSize.m_X; i++){
-        for(size_t j = 0; j < this->m_BoardSize.m_X; j++){
+        for(size_t j = 0; j < this->m_BoardSize.m_Y; j++){
             delete this->m_Map[i][j];
         }
         delete [] this->m_Map[i];
     }
     delete [] this->m_Map;
+
+    for(size_t i = 0; i < this->m_Players.size(); i++){
+        delete this->m_Players[i];
+    }
 }
 
 bool CBoard::IsPassable(CCoord coord, bool wallPass, bool bombPass, bool firePass)

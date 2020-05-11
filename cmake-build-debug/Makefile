@@ -447,6 +447,33 @@ src/gameobjects/CGround.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.s
 .PHONY : src/gameobjects/CGround.cpp.s
 
+src/gameobjects/CMovable.o: src/gameobjects/CMovable.cpp.o
+
+.PHONY : src/gameobjects/CMovable.o
+
+# target to build an object file
+src/gameobjects/CMovable.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CMovable.cpp.o
+.PHONY : src/gameobjects/CMovable.cpp.o
+
+src/gameobjects/CMovable.i: src/gameobjects/CMovable.cpp.i
+
+.PHONY : src/gameobjects/CMovable.i
+
+# target to preprocess a source file
+src/gameobjects/CMovable.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CMovable.cpp.i
+.PHONY : src/gameobjects/CMovable.cpp.i
+
+src/gameobjects/CMovable.s: src/gameobjects/CMovable.cpp.s
+
+.PHONY : src/gameobjects/CMovable.s
+
+# target to generate assembly for a file
+src/gameobjects/CMovable.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CMovable.cpp.s
+.PHONY : src/gameobjects/CMovable.cpp.s
+
 src/gameobjects/CPlayer.o: src/gameobjects/CPlayer.cpp.o
 
 .PHONY : src/gameobjects/CPlayer.o
@@ -573,6 +600,9 @@ help:
 	@echo "... src/gameobjects/CGround.o"
 	@echo "... src/gameobjects/CGround.i"
 	@echo "... src/gameobjects/CGround.s"
+	@echo "... src/gameobjects/CMovable.o"
+	@echo "... src/gameobjects/CMovable.i"
+	@echo "... src/gameobjects/CMovable.s"
 	@echo "... src/gameobjects/CPlayer.o"
 	@echo "... src/gameobjects/CPlayer.i"
 	@echo "... src/gameobjects/CPlayer.s"

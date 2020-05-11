@@ -6,6 +6,8 @@
 #pragma once
 
 #include <map>
+#include <vector>
+
 #include "CCoord.h"
 #include "gameobjects/CGameObject.h"
 #include "gameobjects/CWall.h"
@@ -18,8 +20,8 @@
 class CBoard
 {
 public:
-    CBoard(CGameObject ***map, CCoord boardSize, int cellSize)
-            : m_Map(map), m_BoardSize(boardSize), m_CellSize(cellSize)
+    CBoard(CGameObject ***map, std::vector<CPlayer*> players, CCoord boardSize, int cellSize)
+            :m_Players(players),  m_Map(map), m_BoardSize(boardSize), m_CellSize(cellSize)
     {}
 
     ~CBoard();
@@ -29,6 +31,7 @@ public:
     CBoard &operator=(const CBoard &other) = delete;
 
     void Update(int deltaTime);
+
     void Draw(CSDLInterface * interface);
 
     /**
@@ -37,6 +40,12 @@ public:
      * @return
      */
     bool IsPassable(CCoord coord, bool wallPass, bool bombPass, bool firePass);
+
+    std::vector<CPlayer *> m_Players;
+    std::vector<CEnemy *> m_Enemies;
+    std::vector<CBoost *> m_Boosts;
+    std::vector<CFire *> m_Fires;
+    std::vector<CBomb *> m_Bombs;
 
 protected:
     CGameObject ***m_Map;

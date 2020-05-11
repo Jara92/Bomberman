@@ -26,10 +26,10 @@ void CGameManager::Run()
         const Uint8 * keystate = SDL_GetKeyboardState(NULL);
 
         // send state to all players
-        /*auto i = this->m_Board->m_Players.begin();
-        while(i != this->m_Coard->m_Players.end()){
+        auto i = this->m_Board->m_Players.begin();
+        while(i != this->m_Board->m_Players.end()){
             (*((i++).base()))->HandleInput(keystate); // TODO removed i++;
-        }*/
+        }
 
         // Close window
         SDL_Event e;
@@ -40,8 +40,6 @@ void CGameManager::Run()
             }
         }
 
-        //  std::cout << "Delta: " << this->m_Clock.DeltaTime() << std::endl;
-        //   if(this->m_Clock.DeltaTime() != 0 ) std::cout << "FPS: " << 60000 / this->m_Clock.DeltaTime() << std::endl;
         this->Update(this->m_Clock.DeltaTime());
 
      //   this->UpdatePhysics();
@@ -63,6 +61,12 @@ void CGameManager::Draw() const
 void CGameManager::Update(int deltaTime)
 {
     //this->m_Board->Update(deltaTime);
+}
+
+CGameManager::~CGameManager()
+{
+    delete this->m_Board;
+    delete this->m_LevelLoader;
 }
 
 

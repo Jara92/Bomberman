@@ -57,7 +57,7 @@ public:
     * @param board Game board
     * @param deltaTime DeltaTime
     */
-    virtual void Update(CBoard *board, int deltaTime) = 0;
+    virtual void Update(CBoard * board, int deltaTime) = 0;
 
     virtual void Draw(CSDLInterface * interface, CCoord location, int cellSize,  CCoord offset = CCoord(0, 0)) const;
 

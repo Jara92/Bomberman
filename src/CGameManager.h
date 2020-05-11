@@ -14,7 +14,7 @@ class CGameManager
 {
 public:
     CGameManager(CSDLInterface *interface);
-    ~CGameManager() = default;
+    ~CGameManager();
     CGameManager (const CGameManager & other) = delete;
     CGameManager & operator = (const CGameManager & other) = delete;
 

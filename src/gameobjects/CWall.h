@@ -26,6 +26,7 @@ public:
 
     CWall *Clone()
     {
+        std::cerr << this->m_TexturePack.use_count() << std::endl;
         return new CWall(this->m_TexturePack);
     }
 

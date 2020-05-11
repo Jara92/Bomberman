@@ -10,19 +10,14 @@
 class CSettings
 {
 public:
-    CSettings()
-            : m_ScreenWidth(1150), m_ScreenHeight(650), m_Sound(true), m_AssetsPath("../examples/assets/"),
-              m_DataPath("../examples/data/")
-    {}
-
     CSettings &settings(const CSettings &other) = delete;
 
     CSettings &operator=(const CSettings &other) = delete;
 
     ~CSettings() = default;
 
-    CSettings(std::size_t width, std::size_t height, bool sound, std::string assetsPath = "../examples/assets/",
-              std::string dataPath = "../examples/data/")
+    CSettings(std::size_t width = 1150, std::size_t height = 650, bool sound = false, std::string assetsPath = "./examples/assets/",
+              std::string dataPath = "./examples/data/")
             : m_AssetsPath(std::move(assetsPath)), m_DataPath(std::move(dataPath))
     { this->ChangeSettings(width, height, sound); }
 
