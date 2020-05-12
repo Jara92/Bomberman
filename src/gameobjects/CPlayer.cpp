@@ -5,6 +5,50 @@
 
 
 #include "CPlayer.h"
+#include "../CBoard.h"
+
+CPlayer::~CPlayer()
+{
+    delete this->m_Controls;
+}
+
+void CPlayer::Update(CBoard *board, int deltaTime)
+{
+
+    CCoord oldLocation = this->m_Location;
+   //  std::cout << "dt: " <<  deltaTime << std::endl;
+    // TODO přidat ošetření kolizí se zdí
+    switch (this->m_MovingDirection){
+        case EDirection::DIRECTION_UP:
+            this->m_Location.m_Y -= this->m_Speed * deltaTime;
+            break;
+        case EDirection::DIRECTION_DOWN:
+            this->m_Location.m_Y += this->m_Speed * deltaTime;
+            break;
+        case EDirection::DIRECTION_LEFT:
+            this->m_Location.m_X -= this->m_Speed * deltaTime;
+            break;
+        case EDirection::DIRECTION_RIGHT:
+            this->m_Location.m_X += this->m_Speed * deltaTime;
+            break;
+    }
+
+    if(!board->IsPassable(this->m_Location, false, false, false)){
+        this->m_Location = oldLocation;
+    }
+
+    if(this->m_IsPlanting){
+        this->TryPlaceBomb(board);
+    }
+
+   /* if(this->m_IsDetonating && this->m_RemoteExplosion){
+        board.DetonateBombs(this);
+    }*/
+
+    this->m_IsDetonating = false;
+    this->m_IsPlanting = false;
+    this->m_MovingDirection = EDirection::DIRECTION_NONE;
+}
 
 void CPlayer::HandleInput(const Uint8 *keyState)
 {
@@ -42,7 +86,11 @@ void CPlayer::HandleInput(const Uint8 *keyState)
     }
 }
 
-CPlayer::~CPlayer()
+void CPlayer::TryPlaceBomb(CBoard *board)
 {
-    delete this->m_Controls;
+
 }
+
+
+
+

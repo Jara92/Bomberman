@@ -44,7 +44,7 @@ public:
     { return this->m_Renderer; }
 
     CCoord GetWindowSize() const
-    { return CCoord(m_WindowWidth, m_WindowHeight); }
+    { return {static_cast<double>(m_WindowWidth), static_cast<double>(m_WindowHeight)}; }
 
     CSettings *GetSettings()
     {

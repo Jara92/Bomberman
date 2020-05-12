@@ -45,7 +45,6 @@ CGameObject ***CLevelLoader::LoadMap()
         }
     }
 
-
     size_t row = 0, col = 0;
     std::ifstream fileReader(this->m_Interface->GetSettings()->GetDataPath() + CLevelLoader::MAP_FILE_NAME,
                              std::ios::binary | std::ios::in);
@@ -118,8 +117,8 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
                                                       {ETextureType::TEXTURE_RIGHT,  "Bomberman/Right/Bman_F_f00.png"}}
     };
 
-    CCoord startingLocation[CLevelLoader::MAX_PLAYERS] = {{0, 0},
-                                                          {0, 7}};
+    CCoord startingLocation[CLevelLoader::MAX_PLAYERS] = {{1, 1},
+                                                          {21, 11}};
 
     std::vector<CPlayer *> players;
 

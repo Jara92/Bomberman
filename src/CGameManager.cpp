@@ -61,7 +61,7 @@ void CGameManager::Draw() const
 
 void CGameManager::Update(int deltaTime)
 {
-    //this->m_Board->Update(deltaTime);
+    this->m_Board->Update(deltaTime);
 }
 
 CGameManager::~CGameManager()

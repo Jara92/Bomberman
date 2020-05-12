@@ -17,7 +17,7 @@ public:
      * @param isPassable Is this object passable for movable objects?
     */
     explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord location, CControls *controls,
-                     double speed = 0.001)
+                     double speed = 0.01)
             : CMovable(texturePack, location, speed, false), m_Controls(controls)
     {}
 
@@ -32,8 +32,7 @@ public:
     * @param board Game board
     * @param deltaTime DeltaTime
     */
-    virtual void Update(CBoard *board, int deltaTime) override
-    {}
+    virtual void Update(CBoard *board, int deltaTime) override;
 
     void HandleInput(const Uint8 *keyState);
 

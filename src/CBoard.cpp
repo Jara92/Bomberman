@@ -8,29 +8,75 @@
 
 CBoard::~CBoard()
 {
-    for(size_t i = 0; i < this->m_BoardSize.m_X; i++){
-        for(size_t j = 0; j < this->m_BoardSize.m_Y; j++){
+    for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
+    {
+        for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
+        {
             delete this->m_Map[i][j];
         }
-        delete [] this->m_Map[i];
+        delete[] this->m_Map[i];
     }
-    delete [] this->m_Map;
+    delete[] this->m_Map;
 
-    for(size_t i = 0; i < this->m_Players.size(); i++){
+    for (size_t i = 0; i < this->m_Players.size(); i++)
+    {
         delete this->m_Players[i];
     }
 }
 
 bool CBoard::IsPassable(CCoord coord, bool wallPass, bool bombPass, bool firePass)
 {
-    return false; // TODO
+    if(coord.m_X < 0 || coord.m_X >= CBoard::m_BoardSize.m_X ||
+            coord.m_Y < 0 || coord.m_Y >= CBoard::m_BoardSize.m_Y){
+        throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND);
+    }
+
+    CGameObject * gameObject = this->m_Map[static_cast<int>(floor(coord.m_X))][static_cast<int>( floor(coord.m_Y))];
+
+    if(gameObject && gameObject->IsAlive()){
+        return false;
+    }
+return true;
+    // todo other gameobjests
 }
 
 void CBoard::Draw(CSDLInterface *interface)
 {
-    for(size_t i = 0; i < this->m_BoardSize.m_X ; i++){
-        for(size_t j = 0; j < this->m_BoardSize.m_Y; j++){
-           if(this->m_Map[i][j])  this->m_Map[i][j]->Draw(interface, this->m_CellSize, CCoord(i,j) );
+    for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
+    {
+        for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
+        {
+            if (this->m_Map[i][j]) this->m_Map[i][j]->Draw(interface, this->m_CellSize, CCoord(i, j));
         }
+    }
+
+    for (size_t i = 0; i < this->m_Players.size(); i++)
+    {
+        this->m_Players[i]->Draw(interface, this->m_CellSize);
+    }
+}
+
+void CBoard::Update(int deltaTime)
+{
+    for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
+    {
+        for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
+        {
+            // Update if object is alive
+            if (this->m_Map[i][j] && this->m_Map[i][j]->IsAlive())
+            {
+                this->m_Map[i][j]->Update(this, deltaTime);
+            }
+                // destroy if is dead (TODO this will be problem with dying animations)
+            else
+            {
+                delete this->m_Map[i][j];
+            }
+        }
+    }
+
+    for (size_t i = 0; i < this->m_Players.size(); i++)
+    {
+        this->m_Players[i]->Update(this, deltaTime);
     }
 }

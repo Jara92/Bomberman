@@ -7,7 +7,7 @@
 
 #include <map>
 #include <vector>
-
+#include "Messages.h"
 #include "CCoord.h"
 #include "gameobjects/CGameObject.h"
 #include "gameobjects/CWall.h"
@@ -21,7 +21,7 @@ class CBoard
 {
 public:
     CBoard(CGameObject ***map, std::vector<CPlayer*> players, CCoord boardSize, int cellSize)
-            :m_Players(players),  m_Map(map), m_BoardSize(boardSize), m_CellSize(cellSize)
+            :m_Players(std::move(players)),  m_Map(map), m_BoardSize(boardSize), m_CellSize(cellSize)
     {}
 
     ~CBoard();
@@ -43,9 +43,9 @@ public:
 
     std::vector<CPlayer *> m_Players;
     std::vector<CEnemy *> m_Enemies;
-    std::vector<CCollectible *> m_Boosts;
-    std::vector<CFire *> m_Fires;
-    std::vector<CBomb *> m_Bombs;
+    std::map<CCoord, CCollectible *> m_Boosts;
+    std::map<CCoord, CFire *> m_Fires;
+    std::map<CCoord, CBomb *> m_Bombs;
 
 protected:
     CGameObject ***m_Map;
