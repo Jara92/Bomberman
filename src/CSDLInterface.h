@@ -37,11 +37,11 @@ public:
 
     void UpdateSettings(CSettings *settings);
 
-    SDL_Window *GetWindow() const
+    /*SDL_Window *GetWindow() const
     { return this->m_Window; }
 
     SDL_Renderer *GetRenderer() const
-    { return this->m_Renderer; }
+    { return this->m_Renderer; }*/
 
     CCoord GetWindowSize() const
     { return {static_cast<double>(m_WindowWidth), static_cast<double>(m_WindowHeight)}; }
@@ -51,7 +51,13 @@ public:
         return this->m_Settings;
     }
 
-    SDL_Texture *LoadTexture(const std::string & path) const;
+    /**
+     * Load an image into a render texture
+     * @param file  File path
+     * @throws std::ios_base::failure If file is not avaible.
+     * @return Texture pointer.
+     */
+    SDL_Texture *LoadTexture(const std::string &file) const;
 
     /**
      * Clear the current rendering target with the drawing color
@@ -65,7 +71,20 @@ public:
     void Present()
     { SDL_RenderPresent(this->m_Renderer); }
 
-    void RenderTexture(SDL_Texture *texture, CCoord coord, CCoord size);
+    /**
+     * Render texture.
+     * @param texture Texture
+     * @param location Render location
+     * @param size Texture size
+     */
+    void RenderTexture(SDL_Texture *texture, CCoord location, CCoord size);
+
+    /**
+     * Draw a rectangle on the current rendering target.
+     * @param rect Rectangle
+     */
+    void RenderRectangle(SDL_Rect *rect)
+    { SDL_RenderDrawRect(this->m_Renderer, rect); }
 
     /**
      * Draw a line on the current rendering target.
@@ -86,8 +105,7 @@ public:
     { SDL_SetRenderDrawColor(this->m_Renderer, r, g, b, a); }
 
     /**
-    *  Create a simple modal message box
-    *
+    *  Create a modal message box
     *  @param flags    ::SDL_MessageBoxFlags
     *  @param title    UTF-8 title text
     *  @param message  UTF-8 message text

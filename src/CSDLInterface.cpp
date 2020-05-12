@@ -10,10 +10,12 @@
 CSDLInterface::CSDLInterface()
 : m_WindowWidth(0), m_WindowHeight(0), m_Window(nullptr), m_Renderer(nullptr)
 {
+    // Init SDL
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 
     IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
 
+    // Smooth texture rendering
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 }
 
@@ -29,6 +31,7 @@ CSDLInterface::~CSDLInterface()
         SDL_DestroyRenderer(this->m_Renderer);
     }
 
+    // Quit SDL
     IMG_Quit();
 
     SDL_QuitSubSystem(SDL_INIT_EVERYTHING);
@@ -80,9 +83,9 @@ void CSDLInterface::UpdateSettings(CSettings *settings)
     SDL_SetWindowSize(this->m_Window, settings->GetScreenWidth(), settings->GetScreenHeight());
 }
 
-SDL_Texture *CSDLInterface::LoadTexture(const std::string & path) const
+SDL_Texture *CSDLInterface::LoadTexture(const std::string & file) const
 {
-    SDL_Texture * texture = IMG_LoadTexture(this->GetRenderer(), (this->m_Settings->GetAssetsPath() + path).c_str());
+    SDL_Texture * texture = IMG_LoadTexture(this->m_Renderer, (this->m_Settings->GetAssetsPath() + file).c_str());
 
     if (!texture)
     {
@@ -97,10 +100,15 @@ void CSDLInterface::ShowMessageBox(Uint32 flags, const std::string title, const 
     SDL_ShowSimpleMessageBox(flags, title.c_str(), message.c_str(), this->m_Window);
 }
 
-void CSDLInterface::RenderTexture(SDL_Texture *texture, CCoord coord, CCoord size)
+void CSDLInterface::RenderTexture(SDL_Texture *texture, CCoord location, CCoord size)
 {
-    SDL_Rect targetRect = {static_cast<int>(coord.m_X),static_cast<int>(coord.m_Y),
+    SDL_Rect targetRect = {static_cast<int>(location.m_X),static_cast<int>(location.m_Y),
                            static_cast<int>(size.m_X), static_cast<int>(size.m_Y)};
+
+    // TODO Debug
+    this->SetRenderColor(0,0,255,255);
+   // this->RenderRectangle(&targetRect);
+    this->SetRenderColor(255,0,0,255);
 
     SDL_RenderCopy(this->m_Renderer, texture, NULL, &targetRect);
 }

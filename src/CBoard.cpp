@@ -42,6 +42,21 @@ return true;
 
 void CBoard::Draw(CSDLInterface *interface)
 {
+    // TODO debug
+
+    // Draw debug lines
+    interface->SetRenderColor( 255, 0, 0, 255);
+    for (double i = 0; i < interface->GetWindowSize().m_Y; i++)
+    {
+        interface->RenderLine( CCoord(0, 25 * i), CCoord(interface->GetWindowSize().m_X, 25 * i));
+    }
+
+    for (double i = 0; i < interface->GetWindowSize().m_X; i++)
+    {
+        interface->RenderLine(CCoord(25 * i, 0), CCoord(25 * i, interface->GetWindowSize().m_Y));
+    }
+
+    // draw map
     for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
     {
         for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
@@ -50,6 +65,7 @@ void CBoard::Draw(CSDLInterface *interface)
         }
     }
 
+    // draw players
     for (size_t i = 0; i < this->m_Players.size(); i++)
     {
         this->m_Players[i]->Draw(interface, this->m_CellSize);
