@@ -6,12 +6,13 @@
 
 #include "CTexturePack.h"
 
-CTexturePack::CTexturePack(CSDLInterface *interface, std::map<ETextureType, const std::string> textures)
+CTexturePack::CTexturePack(CSDLInterface *interface, std::map<ETextureType, const std::string> textures,
+                           CCoord textureSize) : m_TextureSize(textureSize)
 {
     auto i = textures.begin();
-    while(i != textures.end())
+    while (i != textures.end())
     {
-        this->m_Textures.insert(std::pair<ETextureType, SDL_Texture *>(i->first, interface->LoadTexture( i->second)));
+        this->m_Textures.insert(std::pair<ETextureType, SDL_Texture *>(i->first, interface->LoadTexture(i->second)));
         i++;
     }
 }

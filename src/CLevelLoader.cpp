@@ -126,7 +126,7 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
     for (int i = 0; i < count; i++)
     {
         players.push_back(
-                new CPlayer(std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i]), startingLocation[i],
+                new CPlayer(std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i], CCoord( 1,2)), startingLocation[i],
                             controls[i]));
         controls[i] = nullptr;
     }

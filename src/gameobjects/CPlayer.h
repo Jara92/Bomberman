@@ -17,8 +17,9 @@ public:
      * @param isPassable Is this object passable for movable objects?
     */
     explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord location, CControls *controls,
-                     double speed = 0.01)
+                     double speed = 0.005)
             : CMovable(texturePack, location, speed, false), m_Controls(controls)
+           /* m_HorizontalMoveDirection(EDirection::DIRECTION_NONE), m_VerticalMoveDirection(EDirection::DIRECTION_NONE)*/
     {}
 
     CPlayer(const CPlayer &other) = default;
@@ -35,6 +36,14 @@ public:
     virtual void Update(CBoard *board, int deltaTime) override;
 
     void HandleInput(const Uint8 *keyState);
+
+    /**
+ * Draw gameobject
+ * @param interface
+ * @param cellSize
+ * @param offset
+ */
+  //  virtual void Draw(CSDLInterface *interface, int cellSize, CCoord offset = CCoord(0, 0)) const;
 
     /**
     * Place bomb on the ground if it is possible.
@@ -134,5 +143,10 @@ protected:
     bool m_LevelUp;
 
     CControls *m_Controls;
+
+    /*EDirection m_HorizontalMoveDirection;
+    EDirection m_VerticalMoveDirection;*/
+    const Uint8 * m_Input;
+
 };
 

@@ -13,6 +13,8 @@ CSDLInterface::CSDLInterface()
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 
     IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
+
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 }
 
 CSDLInterface::~CSDLInterface()
@@ -59,7 +61,7 @@ bool CSDLInterface::InitInterface(const char *title, CSettings * settings)
     }
 
     // Init renderer
-    this->m_Renderer = SDL_CreateRenderer(this->m_Window, -1, SDL_RENDERER_ACCELERATED);
+    this->m_Renderer = SDL_CreateRenderer(this->m_Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
 
     // Check that the renderer was successfully created
     if (this->m_Window == NULL)
