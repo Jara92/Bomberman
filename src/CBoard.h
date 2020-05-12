@@ -11,7 +11,7 @@
 #include "CCoord.h"
 #include "gameobjects/CGameObject.h"
 #include "gameobjects/CWall.h"
-#include "gameobjects/CBoost.h"
+#include "gameobjects/collectibles/CCollectible.h"
 #include "gameobjects/CFire.h"
 #include "gameobjects/CEnemy.h"
 #include "gameobjects/CBomb.h"
@@ -43,7 +43,7 @@ public:
 
     std::vector<CPlayer *> m_Players;
     std::vector<CEnemy *> m_Enemies;
-    std::vector<CBoost *> m_Boosts;
+    std::vector<CCollectible *> m_Boosts;
     std::vector<CFire *> m_Fires;
     std::vector<CBomb *> m_Bombs;
 

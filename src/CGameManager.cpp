@@ -43,6 +43,7 @@ void CGameManager::Run()
         this->Update(this->m_Clock.DeltaTime());
 
      //   this->UpdatePhysics();
+    // this->m_Board->m_Players[0].Dra
 
         this->Draw();
     }

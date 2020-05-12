@@ -17,7 +17,7 @@ CSDLInterface::CSDLInterface()
 
 CSDLInterface::~CSDLInterface()
 {
-    // SDL is C library and it use NULL
+    // SDL is C library and it uses NULL
     if (this->m_Window != NULL && this->m_Window != nullptr)
     {
         SDL_DestroyWindow(this->m_Window);
@@ -28,6 +28,8 @@ CSDLInterface::~CSDLInterface()
     }
 
     IMG_Quit();
+
+    SDL_QuitSubSystem(SDL_INIT_EVERYTHING);
 
      SDL_Quit();
 }
@@ -82,7 +84,6 @@ SDL_Texture *CSDLInterface::LoadTexture(const std::string & path) const
 
     if (!texture)
     {
-
         throw std::ios_base::failure(MESSAGE_TEXTURE_ERROR);
     }
 

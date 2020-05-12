@@ -59,7 +59,14 @@ public:
     */
     virtual void Update(CBoard * board, int deltaTime) = 0;
 
-    virtual void Draw(CSDLInterface * interface, CCoord location, int cellSize,  CCoord offset = CCoord(0, 0)) const;
+    /**
+     * Draw the gameobject
+     * @param interface Interface
+     * @param cellSize Cellsize
+     * @param location Location
+     * @param offset Offset
+     */
+    virtual void Draw(CSDLInterface * interface,  int cellSize, CCoord location, CCoord offset = CCoord(0, 0)) const;
 
 protected:
     std::shared_ptr<CTexturePack> m_TexturePack;

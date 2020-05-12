@@ -3,11 +3,5 @@
  * 
 */
 
-#pragma once
 
-
-class CBoost
-{
-
-};
-
+#include "CCollectible.h"

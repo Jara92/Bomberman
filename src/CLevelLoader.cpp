@@ -96,32 +96,30 @@ CGameObject ***CLevelLoader::LoadMap()
 
 std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
 {
-    // Prepare data for all possible players
-    CControls *controls[CLevelLoader::MAX_PLAYERS];
-    controls[0] = new CControls(SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A,
-                                SDL_SCANCODE_D, SDL_SCANCODE_X, SDL_SCANCODE_C);
+    count = 2;
+    CControls *controls[MAX_PLAYERS] = {
+            new CControls(SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A,
+                          SDL_SCANCODE_D, SDL_SCANCODE_X, SDL_SCANCODE_C),
+            new CControls(SDL_SCANCODE_I, SDL_SCANCODE_K, SDL_SCANCODE_J,
+                          SDL_SCANCODE_L, SDL_SCANCODE_N, SDL_SCANCODE_M)
+    };
 
-    controls[1] = new CControls(SDL_SCANCODE_I, SDL_SCANCODE_K, SDL_SCANCODE_J,
-                                SDL_SCANCODE_L, SDL_SCANCODE_N, SDL_SCANCODE_M);
+    std::vector<std::map<ETextureType, const std::string>> texturePacks{
+            std::map<ETextureType, const std::string>{{ETextureType::TEXTURE_STATIC, "Bomberman/Front/Bman_F_f00.png"},
+                                                      {ETextureType::TEXTURE_UP,     "Bomberman/Back/Bman_B_f00.png"},
+                                                      {ETextureType::TEXTURE_DOWN,   "Bomberman/Front/Bman_F_f00.png"},
+                                                      {ETextureType::TEXTURE_LEFT,   "Bomberman/Left/Bman_F_f00.png"},
+                                                      {ETextureType::TEXTURE_RIGHT,  "Bomberman/Right/Bman_F_f00.png"}},
 
-    CTexturePack *texturePacks[CLevelLoader::MAX_PLAYERS];
-    texturePacks[0] = new CTexturePack(this->m_Interface, std::map<ETextureType,
-            const std::string>{{ETextureType::TEXTURE_STATIC, "Bomberman/Front/Bman_F_f00.png"},
-                               {ETextureType::TEXTURE_UP,     "Bomberman/Back/Bman_B_f00.png"},
-                               {ETextureType::TEXTURE_DOWN,   "Bomberman/Front/Bman_F_f00.png"},
-                               {ETextureType::TEXTURE_LEFT,   "Bomberman/Left/Bman_F_f00.png"},
-                               {ETextureType::TEXTURE_RIGHT,  "Bomberman/Right/Bman_F_f00.png"}});
+            std::map<ETextureType, const std::string>{{ETextureType::TEXTURE_STATIC, "Bomberman/Front/Bman_F_f00.png"},
+                                                      {ETextureType::TEXTURE_UP,     "Bomberman/Back/Bman_B_f00.png"},
+                                                      {ETextureType::TEXTURE_DOWN,   "Bomberman/Front/Bman_F_f00.png"},
+                                                      {ETextureType::TEXTURE_LEFT,   "Bomberman/Left/Bman_F_f00.png"},
+                                                      {ETextureType::TEXTURE_RIGHT,  "Bomberman/Right/Bman_F_f00.png"}}
+    };
 
-    texturePacks[1] = new CTexturePack(this->m_Interface, std::map<ETextureType,
-            const std::string>{{ETextureType::TEXTURE_STATIC, "Bomberman/Front/Bman_F_f00.png"},
-                               {ETextureType::TEXTURE_UP,     "Bomberman/Back/Bman_B_f00.png"},
-                               {ETextureType::TEXTURE_DOWN,   "Bomberman/Front/Bman_F_f00.png"},
-                               {ETextureType::TEXTURE_LEFT,   "Bomberman/Left/Bman_F_f00.png"},
-                               {ETextureType::TEXTURE_RIGHT,  "Bomberman/Right/Bman_F_f00.png"}});
-
-    CCoord startingLocation[CLevelLoader::MAX_PLAYERS];
-    startingLocation[0] = CCoord(0, 0);
-    startingLocation[1] = CCoord(0, 7);
+    CCoord startingLocation[CLevelLoader::MAX_PLAYERS] = {{0, 0},
+                                                          {0, 7}};
 
     std::vector<CPlayer *> players;
 
@@ -129,21 +127,20 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
     for (int i = 0; i < count; i++)
     {
         players.push_back(
-                new CPlayer(std::make_shared<CTexturePack>(*(texturePacks[i])), startingLocation[i], controls[i]));
-        texturePacks[i] = nullptr;
+                new CPlayer(std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i]), startingLocation[i],
+                            controls[i]));
         controls[i] = nullptr;
     }
 
     // delete unused objects
     for (size_t i = 0; i < CLevelLoader::MAX_PLAYERS; i++)
     {
-        delete texturePacks[i];
         delete controls[i];
     }
 
     return players;
 
-  //return std::vector<CPlayer*>();
+    //return std::vector<CPlayer*>();
 }
 
 

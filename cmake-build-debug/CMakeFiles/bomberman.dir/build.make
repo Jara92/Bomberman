@@ -213,18 +213,18 @@ CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaroslav/CLionProjects/bomberman/src/gameobjects/CFire.cpp -o CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.s
 
-CMakeFiles/bomberman.dir/src/gameobjects/CBoost.cpp.o: CMakeFiles/bomberman.dir/flags.make
-CMakeFiles/bomberman.dir/src/gameobjects/CBoost.cpp.o: ../src/gameobjects/CBoost.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/CBoost.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/gameobjects/CBoost.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/gameobjects/CBoost.cpp
+CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: CMakeFiles/bomberman.dir/flags.make
+CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/gameobjects/collectibles/CCollectible.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CCollectible.cpp
 
-CMakeFiles/bomberman.dir/src/gameobjects/CBoost.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bomberman.dir/src/gameobjects/CBoost.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jaroslav/CLionProjects/bomberman/src/gameobjects/CBoost.cpp > CMakeFiles/bomberman.dir/src/gameobjects/CBoost.cpp.i
+CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CCollectible.cpp > CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.i
 
-CMakeFiles/bomberman.dir/src/gameobjects/CBoost.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bomberman.dir/src/gameobjects/CBoost.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaroslav/CLionProjects/bomberman/src/gameobjects/CBoost.cpp -o CMakeFiles/bomberman.dir/src/gameobjects/CBoost.cpp.s
+CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CCollectible.cpp -o CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.s
 
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/CLevelLoader.cpp
@@ -265,6 +265,32 @@ CMakeFiles/bomberman.dir/src/gameobjects/CMovable.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bomberman.dir/src/gameobjects/CMovable.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaroslav/CLionProjects/bomberman/src/gameobjects/CMovable.cpp -o CMakeFiles/bomberman.dir/src/gameobjects/CMovable.cpp.s
 
+CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o: CMakeFiles/bomberman.dir/flags.make
+CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o: ../src/gameobjects/collectibles/CDoor.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CDoor.cpp
+
+CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CDoor.cpp > CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.i
+
+CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CDoor.cpp -o CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.s
+
+CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: CMakeFiles/bomberman.dir/flags.make
+CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: ../src/gameobjects/collectibles/CBoost.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CBoost.cpp
+
+CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CBoost.cpp > CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.i
+
+CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CBoost.cpp -o CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.s
+
 # Object files for target bomberman
 bomberman_OBJECTS = \
 "CMakeFiles/bomberman.dir/src/main.cpp.o" \
@@ -279,10 +305,12 @@ bomberman_OBJECTS = \
 "CMakeFiles/bomberman.dir/src/gameobjects/CEnemy.cpp.o" \
 "CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o" \
 "CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.o" \
-"CMakeFiles/bomberman.dir/src/gameobjects/CBoost.cpp.o" \
+"CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o" \
 "CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o" \
 "CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o" \
-"CMakeFiles/bomberman.dir/src/gameobjects/CMovable.cpp.o"
+"CMakeFiles/bomberman.dir/src/gameobjects/CMovable.cpp.o" \
+"CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o" \
+"CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o"
 
 # External object files for target bomberman
 bomberman_EXTERNAL_OBJECTS =
@@ -299,13 +327,15 @@ bomberman: CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/gameobjects/CEnemy.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.o
-bomberman: CMakeFiles/bomberman.dir/src/gameobjects/CBoost.cpp.o
+bomberman: CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/gameobjects/CMovable.cpp.o
+bomberman: CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o
+bomberman: CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o
 bomberman: CMakeFiles/bomberman.dir/build.make
 bomberman: CMakeFiles/bomberman.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Linking CXX executable bomberman"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Linking CXX executable bomberman"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/bomberman.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

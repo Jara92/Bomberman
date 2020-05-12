@@ -22,11 +22,11 @@ public:
 
     CWall &operator=(const CWall &other) = delete;
 
-    virtual ~CWall() = default;
+    virtual ~CWall() {}
 
     CWall *Clone()
     {
-        std::cerr << this->m_TexturePack.use_count() << std::endl;
+//        std::cerr << this->m_TexturePack.use_count() << std::endl;
         return new CWall(this->m_TexturePack);
     }
 

@@ -16,8 +16,9 @@ public:
     * @param textures Texturepack to be rendered.
      * @param isPassable Is this object passable for movable objects?
     */
-    explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord location, CControls *controls, double speed = 0.001)
-            : CMovable(texturePack, location, speed), m_Controls(controls)
+    explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord location, CControls *controls,
+                     double speed = 0.001)
+            : CMovable(texturePack, location, speed, false), m_Controls(controls)
     {}
 
     CPlayer(const CPlayer &other) = default;
@@ -31,7 +32,8 @@ public:
     * @param board Game board
     * @param deltaTime DeltaTime
     */
-    virtual void Update(CBoard *board, int deltaTime) override{}
+    virtual void Update(CBoard *board, int deltaTime) override
+    {}
 
     void HandleInput(const Uint8 *keyState);
 
@@ -39,7 +41,7 @@ public:
     * Place bomb on the ground if it is possible.
     * @param board Game board
     */
-    void TryPlaceBomb(CBoard * board);
+    void TryPlaceBomb(CBoard *board);
 
     /**
  * Boosts interface
@@ -48,26 +50,76 @@ public:
     void IncreseScore(size_t ammount)
     { this->m_Score += ammount; }
 
-    void IncreseSpeed(double ammount)
-    { this->m_Speed += ammount; }
+    void SpeedUp()
+    { this->m_Speed *= 1.1; /* TODO setup contants */}
 
-    void IncreseExplosionRadius(size_t ammount)
-    { this->m_ExplosionRadius += ammount; }
+    void SpeedDown()
+    { this->m_Speed /= 1.1; /* TODO setup contants */    }
+
+    void IncreseExplosionRadius()
+    { this->m_ExplosionRadius++; }
+
+    void DecreseExplosionRadius()
+    {
+        // Minimum value is 1
+        if (this->m_ExplosionRadius > 1)
+        { this->m_ExplosionRadius--; }
+    }
 
     void IncreseMaxBombs(size_t ammount)
-    { this->m_MaxBombs += ammount; }
+    { this->m_MaxBombs++; }
 
-    void SwitchRemoveExplosion(bool remoteExplosion)
-    { this->m_RemoteExplosion = remoteExplosion; }
+    void DecreseMaxBombs()
+    {
+        // Minimum value is 1
+        if (this->m_MaxBombs > 1)
+        { this->m_MaxBombs--; }
+    }
 
-    void SwitchBombPass(bool bombPass)
-    { this->m_BombPass = bombPass; }
+    void ActivateRemoteExplosion()
+    { this->m_RemoteExplosion = true; }
 
-    void SwitchFireImmunity(bool fireImmunity)
-    { this->m_FireImmunity = fireImmunity; }
+    void DeactivateRemoteExplosion()
+    { this->m_RemoteExplosion = false; }
 
+    void ActivateBombPass()
+    { this->m_BombPass = true; }
 
-    size_t GetScore() const { return  this->m_Score;}
+    void DeactivateBombPass()
+    { this->m_BombPass = false; }
+
+    void ActivateWallPass()
+    { this->m_WallPass = true; }
+
+    void DeactivateWallPass()
+    { this->m_BombPass = false; }
+
+    void ActivateFireImmunity()
+    { this->m_FireImmunity = true; }
+
+    void DeactivateFireImmunity()
+    { this->m_FireImmunity = false; }
+
+    void ActivateLevelUp()
+    { this->m_LevelUp = true; }
+
+    void DeactivateLevelUp()
+    { this->m_LevelUp = false; }
+
+    void DecreseActivateBombs()
+    {
+        // Minimum value is 0
+        if (this->m_ActiveBombs > 0)
+        { this->m_ActiveBombs--; }
+    }
+
+    size_t GetScore() const
+    { return this->m_Score; }
+
+    bool GetLevelUp() const
+    {
+        return this->m_LevelUp;
+    }
 
 protected:
     size_t m_Score;

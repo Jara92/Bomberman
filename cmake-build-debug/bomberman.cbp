@@ -134,12 +134,6 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CBomb.h">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CBoost.cpp">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CBoost.h">
-			<Option target="bomberman"/>
-		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CEnemy.cpp">
 			<Option target="bomberman"/>
 		</Unit>
@@ -180,6 +174,24 @@
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CWall.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CBoost.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CBoost.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CCollectible.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CCollectible.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CDoor.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CDoor.h">
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/main.cpp">
