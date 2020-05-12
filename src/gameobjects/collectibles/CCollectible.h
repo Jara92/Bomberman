@@ -27,8 +27,7 @@ public:
 
     virtual ~CCollectible() = default;
 
-    virtual void Update(CBoard *board, int deltaTime) override
-    {}
+    virtual void Update(CBoard *board, int deltaTime) override = 0;
 
     /**
      * Apply collectible on the player.
@@ -40,10 +39,5 @@ protected:
     int m_Duration;
     size_t m_ScoreBonus;
     CPlayer *m_TargetPlayer;
-
-    /**
-     * Deativate collectible.
-     */
-    virtual void Deactivate() = 0;
 };
 

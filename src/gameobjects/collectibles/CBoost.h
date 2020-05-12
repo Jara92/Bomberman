@@ -52,5 +52,8 @@ protected:
     std::function<void(const CPlayer *)> m_Apply;
     std::function<void(const CPlayer *)> m_Deactivate;
 
+    /**
+    * Deativate collectible.
+    */
     virtual void Deactivate();
 };
