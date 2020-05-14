@@ -13,9 +13,9 @@
 #include "gameobjects/CWall.h"
 #include "gameobjects/collectibles/CCollectible.h"
 #include "gameobjects/CFire.h"
-#include "gameobjects/CEnemy.h"
+#include "gameobjects/movables/CEnemy.h"
 #include "gameobjects/CBomb.h"
-#include "gameobjects/CPlayer.h"
+#include "gameobjects/movables/CPlayer.h"
 
 class CBoard
 {

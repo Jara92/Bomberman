@@ -4,9 +4,9 @@
 */
 
 #pragma once
+#include "CEnemy.h"
 
-
-class CEnemy
+class CEnemySmart : public CEnemy
 {
 
 };

@@ -22,6 +22,9 @@ public:
     CCoord(double x = 0, double y = 0)
             : m_X(x), m_Y(y)
     {}
+    CCoord(const CCoord & other) = default;
+    CCoord & operator= (const CCoord & other) = default;
+    ~CCoord() = default;
 
     /** Operators +, - and * */
     CCoord operator+(const CCoord &other) const

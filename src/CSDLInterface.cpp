@@ -8,7 +8,7 @@
 #include "Messages.h"
 
 CSDLInterface::CSDLInterface()
-: m_WindowWidth(0), m_WindowHeight(0), m_Window(nullptr), m_Renderer(nullptr)
+        : m_WindowWidth(0), m_WindowHeight(0), m_Window(nullptr), m_Renderer(nullptr)
 {
     // Init SDL
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
@@ -19,6 +19,7 @@ CSDLInterface::CSDLInterface()
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 }
 
+
 CSDLInterface::~CSDLInterface()
 {
     // SDL is C library and it uses NULL
@@ -27,19 +28,18 @@ CSDLInterface::~CSDLInterface()
         SDL_DestroyWindow(this->m_Window);
     }
 
-    if(this->m_Renderer != NULL && this->m_Renderer != nullptr){
+    if (this->m_Renderer != NULL && this->m_Renderer != nullptr)
+    {
         SDL_DestroyRenderer(this->m_Renderer);
     }
 
     // Quit SDL
     IMG_Quit();
-
     SDL_QuitSubSystem(SDL_INIT_EVERYTHING);
-
-     SDL_Quit();
+    SDL_Quit();
 }
 
-bool CSDLInterface::InitInterface(const char *title, CSettings * settings)
+bool CSDLInterface::InitInterface(const char *title, CSettings *settings)
 {
     this->m_Settings = settings;
     this->m_WindowWidth = settings->GetScreenWidth();
@@ -52,14 +52,14 @@ bool CSDLInterface::InitInterface(const char *title, CSettings * settings)
             SDL_WINDOWPOS_CENTERED,           // initial y position
             settings->GetScreenWidth(),                               // width, in pixels
             settings->GetScreenHeight(),                               // height, in pixels
-            SDL_WINDOW_OPENGL  | SDL_WINDOW_RESIZABLE                // flags - see below
+            SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE                // flags - see below
     );
 
     // Check that the window was successfully created
     if (this->m_Window == NULL)
     {
         // In the case that the window could not be made...
-        std::cerr << "Could not create window: \n" <<  SDL_GetError() << std::endl;
+        std::cerr << "Could not create window: \n" << SDL_GetError() << std::endl;
         return false;
     }
 
@@ -70,7 +70,7 @@ bool CSDLInterface::InitInterface(const char *title, CSettings * settings)
     if (this->m_Window == NULL)
     {
         // In the case that the window could not be made...
-        std::cerr << "Could not create renderer: \n" <<  SDL_GetError() << std::endl;
+        std::cerr << "Could not create renderer: \n" << SDL_GetError() << std::endl;
         return false;
     }
 
@@ -83,9 +83,9 @@ void CSDLInterface::UpdateSettings(CSettings *settings)
     SDL_SetWindowSize(this->m_Window, settings->GetScreenWidth(), settings->GetScreenHeight());
 }
 
-SDL_Texture *CSDLInterface::LoadTexture(const std::string & file) const
+SDL_Texture *CSDLInterface::LoadTexture(const std::string &file) const
 {
-    SDL_Texture * texture = IMG_LoadTexture(this->m_Renderer, (this->m_Settings->GetAssetsPath() + file).c_str());
+    SDL_Texture *texture = IMG_LoadTexture(this->m_Renderer, (this->m_Settings->GetAssetsPath() + file).c_str());
 
     if (!texture)
     {
@@ -95,20 +95,20 @@ SDL_Texture *CSDLInterface::LoadTexture(const std::string & file) const
     return texture;
 }
 
-void CSDLInterface::ShowMessageBox(Uint32 flags, const std::string title, const std::string message)
+void CSDLInterface::ShowMessageBox(Uint32 flags, const std::string &title, const std::string &message)
 {
     SDL_ShowSimpleMessageBox(flags, title.c_str(), message.c_str(), this->m_Window);
 }
 
 void CSDLInterface::RenderTexture(SDL_Texture *texture, CCoord location, CCoord size)
 {
-    SDL_Rect targetRect = {static_cast<int>(location.m_X),static_cast<int>(location.m_Y),
+    SDL_Rect targetRect = {static_cast<int>(location.m_X), static_cast<int>(location.m_Y),
                            static_cast<int>(size.m_X), static_cast<int>(size.m_Y)};
 
     // TODO Debug
-    this->SetRenderColor(0,0,255,255);
-   // this->RenderRectangle(&targetRect);
-    this->SetRenderColor(255,0,0,255);
+    this->SetRenderColor(0, 0, 255, 255);
+    // this->RenderRectangle(&targetRect);
+    this->SetRenderColor(255, 0, 0, 255);
 
     SDL_RenderCopy(this->m_Renderer, texture, NULL, &targetRect);
 }

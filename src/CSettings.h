@@ -10,17 +10,30 @@
 class CSettings
 {
 public:
-    CSettings &settings(const CSettings &other) = delete;
-
-    CSettings &operator=(const CSettings &other) = delete;
-
-    ~CSettings() = default;
-
+    /**
+     * Initializes a new instance of the CSettings.
+     * @param width Screen width in pixels
+     * @param height Screen height in pixels
+     * @param sound Enable sound?
+     * @param assetsPath Assets directory path
+     * @param dataPath  Data directory path
+     */
     CSettings(std::size_t width = 1150, std::size_t height = 650, bool sound = false, std::string assetsPath = "./examples/assets/",
               std::string dataPath = "./examples/data/")
             : m_AssetsPath(std::move(assetsPath)), m_DataPath(std::move(dataPath))
     { this->ChangeSettings(width, height, sound); }
 
+    CSettings (const CSettings &other) = default;
+    CSettings &operator=(const CSettings &other) = default;
+
+    ~CSettings() = default;
+
+    /**
+     * Change settings.
+     * @param width Screen width in pixels
+     * @param height Screen height in pixels
+     * @param sound Enable sound?
+     */
     void ChangeSettings(std::size_t width, std::size_t height, bool sound)
     {
         this->m_ScreenWidth = width;

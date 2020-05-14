@@ -16,16 +16,15 @@ CTexturePack::CTexturePack(CSDLInterface *interface, std::map<ETextureType, cons
         i++;
     }
 }
-
+/*====================================================================================================================*/
 CTexturePack::~CTexturePack()
 {
-    std::cerr << "delete " << std::endl;
     for (auto i = this->m_Textures.begin(); i != this->m_Textures.end(); i++)
     {
         SDL_DestroyTexture(i->second);
     }
 }
-
+/*====================================================================================================================*/
 SDL_Texture *CTexturePack::GetTexture(ETextureType textureType) const
 {
     return this->m_Textures.find(textureType)->second;

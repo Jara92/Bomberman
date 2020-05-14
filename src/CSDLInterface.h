@@ -20,8 +20,8 @@ class CSDLInterface
 public:
     CSDLInterface();
 
+    /*I dont want to allow interface */
     CSDLInterface(const CSDLInterface &other) = delete;
-
     CSDLInterface operator=(const CSDLInterface &other) = delete;
 
     ~CSDLInterface();
@@ -29,19 +29,16 @@ public:
     /**
      * This functions inits main game Window.
      * @param title Window title
-     * @param width Window width in pixels
-     * @param height Window height in pixels
+     * @param settings Settings to be set
      * @return True - Success
      */
     bool InitInterface(const char *title, CSettings *settings);
 
+    /**
+     * Change settings.
+     * @param settings New settings
+     */
     void UpdateSettings(CSettings *settings);
-
-    /*SDL_Window *GetWindow() const
-    { return this->m_Window; }
-
-    SDL_Renderer *GetRenderer() const
-    { return this->m_Renderer; }*/
 
     CCoord GetWindowSize() const
     { return {static_cast<double>(m_WindowWidth), static_cast<double>(m_WindowHeight)}; }
@@ -110,7 +107,7 @@ public:
     *  @param title    UTF-8 title text
     *  @param message  UTF-8 message text
     */
-    void ShowMessageBox(Uint32 flags, const std::string title, const std::string message);
+    void ShowMessageBox(Uint32 flags, const std::string &title, const std::string &message);
 
 protected:
     size_t m_WindowWidth;

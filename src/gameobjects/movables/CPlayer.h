@@ -6,7 +6,7 @@
 #pragma once
 
 #include "CMovable.h"
-#include "../CControls.h"
+#include "../../CControls.h"
 
 class CPlayer : public CMovable
 {
@@ -17,13 +17,13 @@ public:
      * @param isPassable Is this object passable for movable objects?
     */
     explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord location, CControls *controls,
-                     double speed = 0.005)
+                     double speed = 0.0025)
             : CMovable(texturePack, location, speed, false), m_Controls(controls)
            /* m_HorizontalMoveDirection(EDirection::DIRECTION_NONE), m_VerticalMoveDirection(EDirection::DIRECTION_NONE)*/
     {}
 
-    CPlayer(const CPlayer &other) = default;
-
+    // I do not want to allow copying players. Every player object has his own controls and copying may cause troubles.
+    CPlayer(const CPlayer &other) = delete;
     CPlayer &operator=(const CPlayer &other) = delete;
 
     virtual ~CPlayer();

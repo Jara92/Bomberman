@@ -27,7 +27,7 @@ public:
 
     CGameObject(const CGameObject &other) = default;
 
-    CGameObject &operator=(const CGameObject &other) = delete;
+    CGameObject &operator=(const CGameObject &other) = default;
 
     virtual ~CGameObject() = default;
 

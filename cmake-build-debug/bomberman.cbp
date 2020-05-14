@@ -128,16 +128,13 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/EDirection.h">
 			<Option target="bomberman"/>
 		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/ETextureType.h">
+			<Option target="bomberman"/>
+		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CBomb.cpp">
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CBomb.h">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CEnemy.cpp">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CEnemy.h">
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CFire.cpp">
@@ -156,18 +153,6 @@
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CGround.h">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CMovable.cpp">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CMovable.h">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CPlayer.cpp">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CPlayer.h">
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CWall.cpp">
@@ -192,6 +177,36 @@
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CDoor.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CEnemy.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CEnemy.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CEnemyDump.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CEnemyDump.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CEnemySmart.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CEnemySmart.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CMovable.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CMovable.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CPlayer.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CPlayer.h">
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/main.cpp">

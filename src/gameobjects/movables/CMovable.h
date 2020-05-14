@@ -6,8 +6,8 @@
 #pragma once
 
 
-#include "CGameObject.h"
-#include "../EDirection.h"
+#include "../CGameObject.h"
+#include "../../EDirection.h"
 
 class CMovable : public CGameObject
 {
@@ -19,12 +19,13 @@ public:
     */
     explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord location, double speed, bool wallPass)
             : CGameObject(texturePack, true), // every movable object is passable
-              m_Location(location), m_Speed(speed), m_WallPass(wallPass), m_MovingDirection(EDirection::DIRECTION_NONE)
+              m_StartingLocation(location), m_Location(location), m_Speed(speed), m_WallPass(wallPass),
+              m_MovingDirection(EDirection::DIRECTION_NONE)
     {}
 
     CMovable(const CMovable &other) = default;
 
-    CMovable &operator=(const CMovable &other) = delete;
+    CMovable &operator=(const CMovable &other) = default;
 
     virtual ~CMovable() = default;
 
@@ -36,7 +37,11 @@ public:
      */
     virtual void Draw(CSDLInterface *interface, int cellSize, CCoord offset = CCoord(0, 0)) const;
 
+    void ResetLocation()
+    { this->m_Location = this->m_StartingLocation; }
+
 protected:
+    CCoord m_StartingLocation;
     CCoord m_Location;
     double m_Speed;
     bool m_WallPass;

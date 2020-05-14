@@ -9,29 +9,33 @@
 #include <map>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include "ETextureType.h"
 #include "CSDLInterface.h"
-
-enum ETextureType
-{
-    TEXTURE_STATIC,
-    TEXTURE_UP,
-    TEXTURE_DOWN,
-    TEXTURE_LEFT,
-    TEXTURE_RIGHT
-};
 
 class CTexturePack
 {
 public:
+    /**
+     *
+     * @param interface Interface
+     * @param textures Textures to be rendered.
+     * @param textureSize Texture size
+     */
     CTexturePack(CSDLInterface *interface, std::map<ETextureType, const std::string> textures,
                  CCoord textureSize = CCoord(1, 1));
 
-    CTexturePack(std::map<ETextureType, const char *> other) = delete;
-
+    /* I dont want to allow copying this objekt. It does not make sense to copy object which could not be changed.
+     * It is better to use pointer to 1 common objekt to save memory. */
+    CTexturePack(const CTexturePack &other) = delete;
     CTexturePack operator=(CTexturePack &other) = delete;
 
     ~CTexturePack();
 
+    /**
+     * Return texture by texturetype
+     * @param textureType Texturetype to be returned
+     * @return Texture or nullptr if not found.
+     */
     SDL_Texture *GetTexture(ETextureType textureType) const;
 
     CCoord GetTextureSize() const
