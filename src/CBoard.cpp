@@ -44,12 +44,18 @@ bool CBoard::IsPassable(CCoord coord, bool wallPass, bool bombPass, bool firePas
 }
 
 /*====================================================================================================================*/
+void CBoard::DetonateBombs(CPlayer *player)
+{
+
+}
+
+/*====================================================================================================================*/
 void CBoard::Draw(CSDLInterface *interface)
 {
     // TODO debug
 
     // Draw debug lines
-    interface->SetRenderColor(128, 0, 0, 255);
+  /*  interface->SetRenderColor(128, 0, 0, 255);
     for (double i = 0; i < interface->GetWindowSize().m_Y; i++)
     {
         interface->RenderLine(CCoord(0, 25 * i), CCoord(interface->GetWindowSize().m_X, 25 * i));
@@ -58,7 +64,7 @@ void CBoard::Draw(CSDLInterface *interface)
     for (double i = 0; i < interface->GetWindowSize().m_X - 1; i++)
     {
         interface->RenderLine(CCoord(25 * i, 0), CCoord(25 * i, interface->GetWindowSize().m_Y));
-    }
+    }*/
 
     // draw map
     for (size_t i = 0; i < this->m_BoardSize.m_X; i++)

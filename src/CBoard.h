@@ -41,6 +41,12 @@ public:
      */
     bool IsPassable(CCoord coord, bool wallPass, bool bombPass, bool firePass);
 
+    /**
+     * Detonate bombs owned by player
+     * @param player Player
+     */
+    void DetonateBombs(CPlayer * player);
+
     std::vector<CPlayer *> m_Players;
     std::vector<CEnemy *> m_Enemies;
     std::map<CCoord, CCollectible *> m_Boosts;

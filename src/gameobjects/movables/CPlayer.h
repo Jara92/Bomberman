@@ -34,29 +34,45 @@ public:
     */
     virtual void Update(CBoard *board, int deltaTime) override;
 
+    /**
+     * Movement along the axis Y
+     * @param board Game board
+     * @param deltaTime DeltaTime
+     */
     void VerticalMove(CBoard * board, int deltaTime);
+
+    /**
+     * Movement along the axis X
+     * @param board Game board
+     * @param deltaTime DeltaTime
+     */
     void HorizontalMove(CBoard * board, int deltaTime);
 
     /**
      * Center vertical players position.
      * @param board Game board
      * @param deltaTime DeltaTime
-     * @param direction
+     * @param direction Direction
      */
     void VerticalCenter(CBoard * board, int deltaTime, int direction);
+
+    /**
+    * Center horiz players position.
+    * @param board Game board
+    * @param deltaTime DeltaTime
+    * @param direction Direction
+    */
     void HorizontalCenter(CBoard * board, int deltaTime, int direction);
 
     /**
-     * Is the square determined by two points free?
-     * @param board Game board
-     * @param p1 First point
-     * @param p2 Second point
-     * @return True - Location is free; False - Location is not free
+     * Is current location free?
      */
-    bool LocationIsFree(CBoard *board, CCoord p1, CCoord p2) const;
+    bool LocationIsFree(CBoard *board) const;
 
-    bool LocationIsFree(CBoard *board, CCoord p1, CCoord p2, CCoord p3, CCoord p4) const;
-
+    /**
+     * Handle keyboard input.
+     * @param keyState Keyboard layout
+     */
     void HandleInput(const Uint8 *keyState);
 
     /**
@@ -157,10 +173,8 @@ protected:
     bool m_LevelUp;
 
     CControls *m_Controls;
-
-    /*EDirection m_HorizontalMoveDirection;
-    EDirection m_VerticalMoveDirection;*/
-    const Uint8 * m_Input;
+    static constexpr double MIN_TURNING_VALUE = 0.5;
+    static constexpr double MAX_TURNING_VALUE = 0.5;
 
 };
 
