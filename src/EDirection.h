@@ -4,10 +4,10 @@
 */
 
 enum struct EDirection{
-    DIRECTION_UP,
-    DIRECTION_DOWN,
-    DIRECTION_LEFT,
-    DIRECTION_RIGHT,
-    DIRECTION_NONE
+    DIRECTION_UP = -1,
+    DIRECTION_DOWN = 1,
+    DIRECTION_LEFT = -1,
+    DIRECTION_RIGHT = 1,
+    DIRECTION_NONE = 0
 };
 

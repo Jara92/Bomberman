@@ -37,22 +37,27 @@ public:
     void VerticalMove(CBoard * board, int deltaTime);
     void HorizontalMove(CBoard * board, int deltaTime);
 
-    void MoveLeft(CBoard * board, int deltaTime);
-    void MoveRight(CBoard * board, int deltaTime);
-    void MoveUp(CBoard * board, int deltaTime);
-    void MoveDown(CBoard * board, int deltaTime);
-
-    bool LocationIsFree(CBoard *board, CCoord p1, CCoord p2) const;
-
-    void HandleInput(const Uint8 *keyState);
+    /**
+     * Center vertical players position.
+     * @param board Game board
+     * @param deltaTime DeltaTime
+     * @param direction
+     */
+    void VerticalCenter(CBoard * board, int deltaTime, int direction);
+    void HorizontalCenter(CBoard * board, int deltaTime, int direction);
 
     /**
- * Draw gameobject
- * @param interface
- * @param cellSize
- * @param offset
- */
-  //  virtual void Draw(CSDLInterface *interface, int cellSize, CCoord offset = CCoord(0, 0)) const;
+     * Is the square determined by two points free?
+     * @param board Game board
+     * @param p1 First point
+     * @param p2 Second point
+     * @return True - Location is free; False - Location is not free
+     */
+    bool LocationIsFree(CBoard *board, CCoord p1, CCoord p2) const;
+
+    bool LocationIsFree(CBoard *board, CCoord p1, CCoord p2, CCoord p3, CCoord p4) const;
+
+    void HandleInput(const Uint8 *keyState);
 
     /**
     * Place bomb on the ground if it is possible.

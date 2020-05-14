@@ -40,51 +40,54 @@ void CPlayer::Update(CBoard *board, int deltaTime)
 void CPlayer::VerticalMove(CBoard *board, int deltaTime)
 {
     CCoord oldLocation = this->m_Location;
-
-    double fractPart, intpart;
-    fractPart = modf(this->m_Location.m_X, &intpart);
-    //std::cout << fractPart << std::endl;
-
     double val = (1 - this->m_Speed);
 
-    switch (this->m_VerticalMovingDirection)
+    this->m_Location.m_Y += (this->m_Speed * static_cast<int>(this->m_VerticalMovingDirection)) * deltaTime;
+
+    if (!this->LocationIsFree(board, CCoord(this->m_Location.m_X, this->m_Location.m_Y),
+                              CCoord(this->m_Location.m_X + val, this->m_Location.m_Y),
+                              CCoord(this->m_Location.m_X, this->m_Location.m_Y + val),
+                              CCoord(this->m_Location.m_X + val, this->m_Location.m_Y + val)))
+    {
+        this->m_Location = oldLocation;
+
+        this->HorizontalCenter(board, deltaTime, static_cast<int>(this->m_VerticalMovingDirection));
+    }
+
+    /*switch (this->m_VerticalMovingDirection)
     {
         case EDirection::DIRECTION_UP:
-            this->m_Location.m_Y -= this->m_Speed * deltaTime;
-          /*  if(!this->LocationIsFree(board, CCoord(this->m_Location.m_X, this->m_Location.m_Y), CCoord(this->m_Location.m_X + val, this->m_Location.m_Y)))*/
-                  if (!board->IsPassable(CCoord(this->m_Location.m_X, this->m_Location.m_Y), this->m_WallPass,
-                              this->m_BombPass, this->m_FireImmunity) ||
-           !board->IsPassable(CCoord(this->m_Location.m_X + val, this->m_Location.m_Y), this->m_WallPass,
-                              this->m_BombPass, this->m_FireImmunity)
-               )
+          //  this->m_Location.m_Y -= this->m_Speed * deltaTime;
+            // Check collisions with unpassable objects in the board.
+            if (!this->LocationIsFree(board, CCoord(this->m_Location.m_X, this->m_Location.m_Y),
+                                      CCoord(this->m_Location.m_X + val, this->m_Location.m_Y)))
             {
                 this->m_Location = oldLocation;
+
+                this->HorizontalCenter(board, deltaTime, -1);
             }
             break;
         case EDirection::DIRECTION_DOWN:
-            this->m_Location.m_Y += this->m_Speed * deltaTime;
+          //  this->m_Location.m_Y += this->m_Speed * deltaTime;
 
-            if(!this->LocationIsFree(board, CCoord(this->m_Location.m_X, this->m_Location.m_Y + val), CCoord(this->m_Location.m_X + val, this->m_Location.m_Y + val)))
-           /* if (!board->IsPassable(CCoord(this->m_Location.m_X, this->m_Location.m_Y + val), this->m_WallPass,
-                                   this->m_BombPass, this->m_FireImmunity) ||
-                !board->IsPassable(CCoord(this->m_Location.m_X + val, this->m_Location.m_Y + val), this->m_WallPass,
-                                   this->m_BombPass, this->m_FireImmunity)
-                    )*/
+            // Check collisions with unpassable objects in the board.
+            if (!this->LocationIsFree(board, CCoord(this->m_Location.m_X, this->m_Location.m_Y + val),
+                                      CCoord(this->m_Location.m_X + val, this->m_Location.m_Y + val)))
             {
                 this->m_Location = oldLocation;
+
+                this->HorizontalCenter(board, deltaTime, 1);
             }
             break;
-    }
+        default:
+            break;
+    }*/
 }
 
 /*====================================================================================================================*/
 void CPlayer::HorizontalMove(CBoard *board, int deltaTime)
 {
     CCoord oldLocation = this->m_Location;
-    double fractPart, intpart;
-    fractPart = modf(this->m_Location.m_Y, &intpart);
-    std::cout << fractPart << std::endl;
-
     double val = (1 - this->m_Speed);
 
     switch (this->m_HorizontalMovingDirection)
@@ -92,85 +95,73 @@ void CPlayer::HorizontalMove(CBoard *board, int deltaTime)
         case EDirection::DIRECTION_LEFT:
             this->m_Location.m_X -= this->m_Speed * deltaTime;
 
-            if(!this->LocationIsFree(board, CCoord(this->m_Location.m_X, this->m_Location.m_Y), CCoord(this->m_Location.m_X, this->m_Location.m_Y + val)))
-            // Check collisions
-           /* if (!board->IsPassable(CCoord(this->m_Location.m_X, this->m_Location.m_Y), this->m_WallPass,
-                                   this->m_BombPass, this->m_FireImmunity) ||
-                !board->IsPassable(CCoord(this->m_Location.m_X, this->m_Location.m_Y + val), this->m_WallPass,
-                                   this->m_BombPass, this->m_FireImmunity)
-                    )*/
+            // Check collisions with unpassable objects in the board.
+            if (!this->LocationIsFree(board, CCoord(this->m_Location.m_X, this->m_Location.m_Y),
+                                      CCoord(this->m_Location.m_X, this->m_Location.m_Y + val)))
             {
                 this->m_Location = oldLocation;
 
-
-                if ((fractPart >= 0.6) &&
-                    board->IsPassable(CCoord(this->m_Location.m_X - 1, std::ceil(this->m_Location.m_Y)),
-                                      this->m_WallPass, this->m_BombPass, this->m_FireImmunity))
-                {
-                    this->m_Location.m_Y = std::min(this->m_Location.m_Y + this->m_Speed * deltaTime,
-                                                    std::ceil(this->m_Location.m_Y));
-
-                } else if ((fractPart <= 0.4) &&
-                           board->IsPassable(CCoord(this->m_Location.m_X - 1, std::floor(this->m_Location.m_Y)),
-                                             this->m_WallPass, this->m_BombPass, this->m_FireImmunity))
-                {
-                    this->m_Location.m_Y = std::max(this->m_Location.m_Y - this->m_Speed * deltaTime,
-                                                    std::floor(this->m_Location.m_Y));
-                }
+                this->VerticalCenter(board, deltaTime, static_cast<int>(EDirection::DIRECTION_LEFT)); // todo remove -1
             }
             break;
         case EDirection::DIRECTION_RIGHT:
             this->m_Location.m_X += this->m_Speed * deltaTime;
-            if(!this->LocationIsFree(board, CCoord(this->m_Location.m_X + val, this->m_Location.m_Y), CCoord(this->m_Location.m_X + val, this->m_Location.m_Y + val)))
-            /*if (!board->IsPassable(CCoord(this->m_Location.m_X + val, this->m_Location.m_Y), this->m_WallPass,
-                                   this->m_BombPass, this->m_FireImmunity) ||
-                !board->IsPassable(CCoord(this->m_Location.m_X + val, this->m_Location.m_Y + val), this->m_WallPass,
-                                   this->m_BombPass, this->m_FireImmunity)
-                    )*/
+            // Check collisions with unpassable objects in the board.
+            if (!this->LocationIsFree(board, CCoord(this->m_Location.m_X + val, this->m_Location.m_Y),
+                                      CCoord(this->m_Location.m_X + val, this->m_Location.m_Y + val)))
             {
                 this->m_Location = oldLocation;
 
-                if ((fractPart >= 0.6) &&
-                    board->IsPassable(CCoord(this->m_Location.m_X + 1, std::ceil(this->m_Location.m_Y)),
-                                      this->m_WallPass, this->m_BombPass, this->m_FireImmunity))
-                {
-                    this->m_Location.m_Y = std::min(this->m_Location.m_Y + this->m_Speed * deltaTime,
-                                                    std::ceil(this->m_Location.m_Y));
-
-                } else if ((fractPart <= 0.4) &&
-                           board->IsPassable(CCoord(this->m_Location.m_X + 1, std::floor(this->m_Location.m_Y)),
-                                             this->m_WallPass, this->m_BombPass, this->m_FireImmunity))
-                {
-                    this->m_Location.m_Y = std::max(this->m_Location.m_Y - this->m_Speed * deltaTime,
-                                                    std::floor(this->m_Location.m_Y));
-                }
+                this->VerticalCenter(board, deltaTime, static_cast<int>(EDirection::DIRECTION_RIGHT));
             }
+            break;
+        default:
             break;
     }
 }
 
-/*====================================================================================================================*/
-void CPlayer::MoveLeft(CBoard *board, int deltaTime)
+void CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
 {
+    double fractPart, intpart;
+    fractPart = modf(this->m_Location.m_Y, &intpart);
+    std::cout << fractPart << std::endl;
 
+    if ((fractPart >= 0.4) &&
+        board->IsPassable(CCoord(this->m_Location.m_X + direction, std::ceil(this->m_Location.m_Y)),
+                          this->m_WallPass, this->m_BombPass, this->m_FireImmunity))
+    {
+        this->m_Location.m_Y = std::min(this->m_Location.m_Y + this->m_Speed * deltaTime,
+                                        std::ceil(this->m_Location.m_Y));
+
+    } else if ((fractPart <= 0.6) &&
+               board->IsPassable(CCoord(this->m_Location.m_X + direction, std::floor(this->m_Location.m_Y)),
+                                 this->m_WallPass, this->m_BombPass, this->m_FireImmunity))
+    {
+        this->m_Location.m_Y = std::max(this->m_Location.m_Y - this->m_Speed * deltaTime,
+                                        std::floor(this->m_Location.m_Y));
+    }
 }
 
-/*====================================================================================================================*/
-void CPlayer::MoveRight(CBoard *board, int deltaTime)
+void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
 {
+    double fractPart, intpart;
+    fractPart = modf(this->m_Location.m_X, &intpart);
+    std::cout << fractPart << std::endl;
 
-}
+    if ((fractPart >= 0.6) &&
+        board->IsPassable(CCoord(std::ceil(this->m_Location.m_X), this->m_Location.m_Y + direction),
+                          this->m_WallPass, this->m_BombPass, this->m_FireImmunity))
+    {
+        this->m_Location.m_X = std::min(this->m_Location.m_X + this->m_Speed * deltaTime,
+                                        std::ceil(this->m_Location.m_X));
 
-/*====================================================================================================================*/
-void CPlayer::MoveUp(CBoard *board, int deltaTime)
-{
-
-}
-
-/*====================================================================================================================*/
-void CPlayer::MoveDown(CBoard *board, int deltaTime)
-{
-
+    } else if ((fractPart <= 0.4) &&
+               board->IsPassable(CCoord(std::floor(this->m_Location.m_X), this->m_Location.m_Y + direction),
+                                 this->m_WallPass, this->m_BombPass, this->m_FireImmunity))
+    {
+        this->m_Location.m_X = std::max(this->m_Location.m_X - this->m_Speed * deltaTime,
+                                        std::floor(this->m_Location.m_X));
+    }
 }
 
 /*====================================================================================================================*/
@@ -178,6 +169,19 @@ bool CPlayer::LocationIsFree(CBoard *board, CCoord p1, CCoord p2) const
 {
     if (!board->IsPassable(p1, this->m_WallPass, this->m_BombPass, this->m_FireImmunity) ||
         !board->IsPassable(p2, this->m_WallPass, this->m_BombPass, this->m_FireImmunity))
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool CPlayer::LocationIsFree(CBoard *board, CCoord p1, CCoord p2, CCoord p3, CCoord p4) const
+{
+    if (!board->IsPassable(p1, this->m_WallPass, this->m_BombPass, this->m_FireImmunity) ||
+        !board->IsPassable(p2, this->m_WallPass, this->m_BombPass, this->m_FireImmunity) ||
+        !board->IsPassable(p3, this->m_WallPass, this->m_BombPass, this->m_FireImmunity) ||
+        !board->IsPassable(p4, this->m_WallPass, this->m_BombPass, this->m_FireImmunity))
     {
         return false;
     }
@@ -234,6 +238,8 @@ void CPlayer::TryPlaceBomb(CBoard *board)
     // TODO Po odchodu hráče z colliderboxu bomby se zapne detekce kolizí na bombě
     // TODO udělat kolize před trigger box
 }
+
+
 
 
 
