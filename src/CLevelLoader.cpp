@@ -6,14 +6,17 @@
 
 #include "CLevelLoader.h"
 
-// Define map file name
+// Define file names
 const std::string CLevelLoader::MAP_FILE_NAME = "map";
+const std::string CLevelLoader::LEVEL_FILE_NAME = "level";
 
-bool CLevelLoader::LoadLevel(CBoard &board, size_t level)
+/*====================================================================================================================*/
+bool CLevelLoader::LoadLevel(CBoard *board, size_t level)
 {
     return false;
 }
 
+/*====================================================================================================================*/
 CBoard *CLevelLoader::GetBoard(int playersCount, CSettings *settings)
 {
     // calc cellsize
@@ -25,6 +28,7 @@ CBoard *CLevelLoader::GetBoard(int playersCount, CSettings *settings)
     return new CBoard(map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), cellSize);
 }
 
+/*====================================================================================================================*/
 CGameObject ***CLevelLoader::LoadMap()
 {
     // create reference wall to make copies
@@ -66,7 +70,7 @@ CGameObject ***CLevelLoader::LoadMap()
                 // i-bite=1 -> Build wall on current position
                 if (input >> (7 - i) & 1)
                 {
-                    map[static_cast<int>(col * 8 + i)][row] = wall.Clone();
+                    map[static_cast<int>(col * 8 + i)][row] = new CWall(wall);
                 }
             }
 
@@ -93,6 +97,7 @@ CGameObject ***CLevelLoader::LoadMap()
     return map;
 }
 
+/*====================================================================================================================*/
 std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
 {
     count = 2;
@@ -117,7 +122,7 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
                                                       {ETextureType::TEXTURE_RIGHT,  "Bomberman/Right/Bman_F_f00.png"}}
     };
 
-    CCoord startingLocation[CLevelLoader::MAX_PLAYERS] = {{1, 1},
+    CCoord startingLocation[CLevelLoader::MAX_PLAYERS] = {{1,  1},
                                                           {21, 11}};
 
     std::vector<CPlayer *> players;
@@ -126,7 +131,8 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
     for (int i = 0; i < count; i++)
     {
         players.push_back(
-                new CPlayer(std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i], CCoord( 1,2)), startingLocation[i],
+                new CPlayer(std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i], CCoord(1, 2)),
+                            startingLocation[i],
                             controls[i]));
         controls[i] = nullptr;
     }

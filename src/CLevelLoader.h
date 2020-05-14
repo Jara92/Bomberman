@@ -28,10 +28,11 @@ public:
 
     CBoard *GetBoard(int playersCount, CSettings *settings);
 
-    bool LoadLevel(CBoard &board, size_t level);
+    bool LoadLevel(CBoard *board, size_t level);
 
 protected:
     static const std::string MAP_FILE_NAME;
+    static const std::string LEVEL_FILE_NAME;
     // map size
     static const size_t MAP_WIDTH = 24;
     static const size_t MAP_HEIGHT = 13;

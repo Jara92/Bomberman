@@ -4,7 +4,7 @@
 */
 
 #pragma once
-
+#include <cmath>
 #include "CMovable.h"
 #include "../../CControls.h"
 
@@ -18,8 +18,7 @@ public:
     */
     explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord location, CControls *controls,
                      double speed = 0.0025)
-            : CMovable(texturePack, location, speed, false), m_Controls(controls)
-           /* m_HorizontalMoveDirection(EDirection::DIRECTION_NONE), m_VerticalMoveDirection(EDirection::DIRECTION_NONE)*/
+            : CMovable(std::move(texturePack), location, speed, false), m_Controls(controls)
     {}
 
     // I do not want to allow copying players. Every player object has his own controls and copying may cause troubles.
@@ -34,6 +33,16 @@ public:
     * @param deltaTime DeltaTime
     */
     virtual void Update(CBoard *board, int deltaTime) override;
+
+    void VerticalMove(CBoard * board, int deltaTime);
+    void HorizontalMove(CBoard * board, int deltaTime);
+
+    void MoveLeft(CBoard * board, int deltaTime);
+    void MoveRight(CBoard * board, int deltaTime);
+    void MoveUp(CBoard * board, int deltaTime);
+    void MoveDown(CBoard * board, int deltaTime);
+
+    bool LocationIsFree(CBoard *board, CCoord p1, CCoord p2) const;
 
     void HandleInput(const Uint8 *keyState);
 

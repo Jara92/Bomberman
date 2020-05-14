@@ -24,34 +24,38 @@ CBoard::~CBoard()
     }
 }
 
+/*====================================================================================================================*/
 bool CBoard::IsPassable(CCoord coord, bool wallPass, bool bombPass, bool firePass)
 {
-    if(coord.m_X < 0 || coord.m_X >= CBoard::m_BoardSize.m_X ||
-            coord.m_Y < 0 || coord.m_Y >= CBoard::m_BoardSize.m_Y){
+    if (coord.m_X < 0 || coord.m_X >= CBoard::m_BoardSize.m_X ||
+        coord.m_Y < 0 || coord.m_Y >= CBoard::m_BoardSize.m_Y)
+    {
         throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND);
     }
 
-    CGameObject * gameObject = this->m_Map[static_cast<int>(floor(coord.m_X))][static_cast<int>( floor(coord.m_Y))];
+    CGameObject *gameObject = this->m_Map[static_cast<int>(floor(coord.m_X))][static_cast<int>( floor(coord.m_Y))];
 
-    if(gameObject && gameObject->IsAlive()){
+    if (gameObject && gameObject->IsAlive())
+    {
         return false;
     }
-return true;
+    return true;
     // todo other gameobjests
 }
 
+/*====================================================================================================================*/
 void CBoard::Draw(CSDLInterface *interface)
 {
     // TODO debug
 
     // Draw debug lines
-    interface->SetRenderColor( 255, 0, 0, 255);
+    interface->SetRenderColor(128, 0, 0, 255);
     for (double i = 0; i < interface->GetWindowSize().m_Y; i++)
     {
-        interface->RenderLine( CCoord(0, 25 * i), CCoord(interface->GetWindowSize().m_X, 25 * i));
+        interface->RenderLine(CCoord(0, 25 * i), CCoord(interface->GetWindowSize().m_X, 25 * i));
     }
 
-    for (double i = 0; i < interface->GetWindowSize().m_X; i++)
+    for (double i = 0; i < interface->GetWindowSize().m_X - 1; i++)
     {
         interface->RenderLine(CCoord(25 * i, 0), CCoord(25 * i, interface->GetWindowSize().m_Y));
     }
@@ -72,6 +76,7 @@ void CBoard::Draw(CSDLInterface *interface)
     }
 }
 
+/*====================================================================================================================*/
 void CBoard::Update(int deltaTime)
 {
     for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
