@@ -6,28 +6,42 @@
 
 #include "CTexturePack.h"
 
-CTexturePack::CTexturePack(CSDLInterface *interface, std::map<ETextureType, const std::string> textures,
-                           CCoord textureSize) : m_TextureSize(textureSize)
+CTexturePack::CTexturePack(CSDLInterface *interface,
+                           std::map<ETextureType, const std::map<unsigned int, const std::string  >> &textures,
+                           CCoord textureSize)
 {
+    // For every texture type create CAnimation object
     auto i = textures.begin();
     while (i != textures.end())
     {
-        this->m_Textures.insert(std::pair<ETextureType, SDL_Texture *>(i->first, interface->LoadTexture(i->second)));
+        this->m_Animations.insert(std::pair<ETextureType, CAnimation *>(i->first, new CAnimation(interface, i->second)));
         i++;
     }
 }
+
 /*====================================================================================================================*/
 CTexturePack::~CTexturePack()
 {
-    for (auto i = this->m_Textures.begin(); i != this->m_Textures.end(); i++)
+    for (auto i = this->m_Animations.begin(); i != this->m_Animations.end(); i++)
     {
-        SDL_DestroyTexture(i->second);
+       delete (i->second);
     }
 }
 /*====================================================================================================================*/
-SDL_Texture *CTexturePack::GetTexture(ETextureType textureType) const
+SDL_Texture *CTexturePack::GetTexture(ETextureType textureType, unsigned int * index) const
 {
-    return this->m_Textures.find(textureType)->second;
+    CAnimation * animation = this->m_Animations.find(textureType)->second;
+    if(animation)
+    {
+        return animation->GetTexture(index);
+    }
+
+    // SDL_Texture * is C pointer
+    return NULL;
 }
+
+
+
+
 
 

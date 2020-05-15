@@ -19,7 +19,7 @@ CSDLInterface::CSDLInterface()
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 }
 
-
+/*====================================================================================================================*/
 CSDLInterface::~CSDLInterface()
 {
     // SDL is C library and it uses NULL

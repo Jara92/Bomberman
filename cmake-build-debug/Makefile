@@ -123,6 +123,33 @@ bomberman/fast:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/build
 .PHONY : bomberman/fast
 
+src/CAnimation.o: src/CAnimation.cpp.o
+
+.PHONY : src/CAnimation.o
+
+# target to build an object file
+src/CAnimation.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CAnimation.cpp.o
+.PHONY : src/CAnimation.cpp.o
+
+src/CAnimation.i: src/CAnimation.cpp.i
+
+.PHONY : src/CAnimation.i
+
+# target to preprocess a source file
+src/CAnimation.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CAnimation.cpp.i
+.PHONY : src/CAnimation.cpp.i
+
+src/CAnimation.s: src/CAnimation.cpp.s
+
+.PHONY : src/CAnimation.s
+
+# target to generate assembly for a file
+src/CAnimation.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CAnimation.cpp.s
+.PHONY : src/CAnimation.cpp.s
+
 src/CApplication.o: src/CApplication.cpp.o
 
 .PHONY : src/CApplication.o
@@ -672,6 +699,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... bomberman"
 	@echo "... edit_cache"
+	@echo "... src/CAnimation.o"
+	@echo "... src/CAnimation.i"
+	@echo "... src/CAnimation.s"
 	@echo "... src/CApplication.o"
 	@echo "... src/CApplication.i"
 	@echo "... src/CApplication.s"

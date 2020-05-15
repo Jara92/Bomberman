@@ -32,10 +32,15 @@ CBoard *CLevelLoader::GetBoard(int playersCount, CSettings *settings)
 CGameObject ***CLevelLoader::LoadMap()
 {
     // create reference wall to make copies
-    std::shared_ptr<CTexturePack> texturePack = std::make_shared<CTexturePack>(this->m_Interface,
-                                                                               std::map<ETextureType,
-                                                                                       const std::string>{{ETextureType::TEXTURE_STATIC, "Blocks/SolidBlock.png"}});
+  /*  std::map<unsigned int, const std::string > mapa {{0, "ahoj"}};
+    std::shared_ptr<CTexturePack> texturePack =
+            std::make_shared<CTexturePack>(this->m_Interface,
+                    std::map<ETextureType, std::map<unsigned int, const std::string>>{{mapa}});*/
+
     CWall wall(texturePack);
+
+
+
 
     // init 2D array
     CGameObject ***map = new CGameObject **[MAP_WIDTH];
@@ -109,17 +114,17 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
     };
 
     std::vector<std::map<ETextureType, const std::string>> texturePacks{
-            std::map<ETextureType, const std::string>{{ETextureType::TEXTURE_STATIC, "Bomberman/Front/Bman_F_f00.png"},
-                                                      {ETextureType::TEXTURE_UP,     "Bomberman/Back/Bman_B_f00.png"},
-                                                      {ETextureType::TEXTURE_DOWN,   "Bomberman/Front/Bman_F_f00.png"},
-                                                      {ETextureType::TEXTURE_LEFT,   "Bomberman/Left/Bman_F_f00.png"},
-                                                      {ETextureType::TEXTURE_RIGHT,  "Bomberman/Right/Bman_F_f00.png"}},
+            std::map<ETextureType, const std::string>{{ETextureType::TEXTURE_STATIC, "Bomberman/Front/front0.png"},
+                                                      {ETextureType::TEXTURE_UP,     "Bomberman/Back/back0.png"},
+                                                      {ETextureType::TEXTURE_DOWN,   "Bomberman/Front/front0.png"},
+                                                      {ETextureType::TEXTURE_LEFT,   "Bomberman/Left/left0.png"},
+                                                      {ETextureType::TEXTURE_RIGHT,  "Bomberman/Right/right0.png"}},
 
-            std::map<ETextureType, const std::string>{{ETextureType::TEXTURE_STATIC, "Bomberman/Front/Bman_F_f00.png"},
-                                                      {ETextureType::TEXTURE_UP,     "Bomberman/Back/Bman_B_f00.png"},
-                                                      {ETextureType::TEXTURE_DOWN,   "Bomberman/Front/Bman_F_f00.png"},
-                                                      {ETextureType::TEXTURE_LEFT,   "Bomberman/Left/Bman_F_f00.png"},
-                                                      {ETextureType::TEXTURE_RIGHT,  "Bomberman/Right/Bman_F_f00.png"}}
+            std::map<ETextureType, const std::string>{{ETextureType::TEXTURE_STATIC, "Bomberman/Front/front0.png"},
+                                                      {ETextureType::TEXTURE_UP,     "Bomberman/Back/back0.png"},
+                                                      {ETextureType::TEXTURE_DOWN,   "Bomberman/Front/front0.png"},
+                                                      {ETextureType::TEXTURE_LEFT,   "Bomberman/Left/left0.png"},
+                                                      {ETextureType::TEXTURE_RIGHT,  "Bomberman/Right/right0.png"}}
     };
 
     CCoord startingLocation[CLevelLoader::MAX_PLAYERS] = {{1,  1},

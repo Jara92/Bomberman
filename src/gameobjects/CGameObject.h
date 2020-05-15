@@ -22,7 +22,8 @@ public:
      * @param isPassable Is this object passable for movable objects?
     */
     explicit CGameObject(std::shared_ptr<CTexturePack> texturePack, bool isPassable = false)
-            : m_TexturePack(std::move(texturePack)), m_ActualTexture(ETextureType::TEXTURE_STATIC), m_IsPassable(isPassable), m_IsAlive(true)
+            : m_TexturePack(std::move(texturePack)), m_ActualTexture(ETextureType::TEXTURE_STATIC),
+              m_IsPassable(isPassable), m_IsAlive(true), m_AnimationIndex(0)
     {}
 
     CGameObject(const CGameObject &other) = default;
@@ -30,13 +31,6 @@ public:
     CGameObject &operator=(const CGameObject &other) = default;
 
     virtual ~CGameObject() = default;
-
-    /**
-    * Returns the texture to be rendered.
-    * @return SDL_Texture * to be rendered. Nullptr if there is no texture (this should never happen).
-    */
-    SDL_Texture *GetTexture() const
-    { return this->m_TexturePack.get()->GetTexture(this->m_ActualTexture); }
 
     /**
      * Is this object alive?
@@ -57,7 +51,7 @@ public:
     * @param board Game board
     * @param deltaTime DeltaTime
     */
-    virtual void Update(CBoard * board, int deltaTime) = 0;
+    virtual void Update(CBoard *board, int deltaTime) = 0;
 
     /**
      * Draw the gameobject
@@ -66,12 +60,23 @@ public:
      * @param location Location
      * @param offset Offset
      */
-    virtual void Draw(CSDLInterface * interface,  int cellSize, CCoord location, CCoord offset = CCoord(0, 0)) const;
+    virtual void Draw(CSDLInterface *interface, int cellSize, CCoord location, CCoord offset = CCoord(0, 0)) const;
 
 protected:
     std::shared_ptr<CTexturePack> m_TexturePack;
     ETextureType m_ActualTexture;
     bool m_IsPassable;
     bool m_IsAlive;
+    /* Mutable keyword is very useful here. Animation index is not important for CGameObject, because it
+     * does not disrupt the internal structure of the object. It is just auxiliary variable.
+     */
+    mutable unsigned int m_AnimationIndex;
+
+    /**
+    * Returns the texture to be rendered.
+    * @return SDL_Texture * to be rendered. Nullptr if there is no texture (this should never happen).
+    */
+    SDL_Texture *GetTexture() const
+    { return this->m_TexturePack.get()->GetTexture(this->m_ActualTexture, &(this->m_AnimationIndex)); }
 };
 
