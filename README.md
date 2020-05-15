@@ -57,20 +57,21 @@ F3 - Přidej všem hráčům 10000 bodů.
 ...
 
 ### Kde mám polymorfismus?
-Polymorfismus používám u abstraktní třídy `CEnemy`, která má abstraktní metody `Update()` a `TryKill()`. Implementace `CEnemyDump` a `CEnemySmart` budou tyto metody přetěžovat. Z názvu vyplývá, že hlavní rozdíly budou chování a výdrži jednotlivých implementací. 
+Polymorfismus používám u abstraktní třídy `CEnemy`, která má abstraktní metody `Update()` a `TryKill()`. 
+Implementace `CEnemyDump` a `CEnemySmart` budou tyto metody přetěžovat. Z názvu vyplývá, že hlavní rozdíly budou chování a výdrži jednotlivých implementací. 
 Metoda `Update()` aktualizuje vnitřní stav objektu a je v ní nějakým způsobem realizován pohyb pomocí primitivní umělé inteligence.
-`TryKill()` se pokusí zabít daný objekt. Různé implementace mohou mít různý počet životů a pokus o zabití nemusí být vždy úspěšný.
+`TryKill()` se pokusí zabít daný objekt. Různé implementace mohou mít různý počet životů, různé chování AI a pokus o zabití nemusí být vždy úspěšný.
 Polymorfní volání je ve třídě `CBoard`, kde mám instnace tříd `CEnemyDump` a `CEnemySmart` uložené v jednom poli a pro každý snímek na nich volám jejich metodu`Update()`. 
 Při kolizi `CEnemy` s objektem typu `CFire` dojde k zavolání metody `TryKill()`.
 
 Polymorfismus také využívám u třídy `CCollectible`, která má abstraktní metody `Update()` a `Apply()`.
 Podtřídy `CDoor` a `CBoost` tyto metody přetěžují. 
 `CDoor` je takový sebratelný předmět, který hráče za určitých podmínek posune do dalšího levelu. 
-Tato implementace bude mít zatím metodu `Update()` prázdnou, ale je možné ji v budoucnu využít například pro animaci.
+Tato implementace bude mít zatím metodu `Update()` prázdnou, ale je možné ji v budoucnu využít.
 `Apply()` posune hráče do dalšího levelu (pokud to pravidla hry v daný moment povolí).
 `CBoost` je třída, která dává hráči nějakou výhodu (např. zrychlení). Tato výhoda může být i dočasná.
-Metoda `Update()` bude v této implementaci provádět odpočet (časově omezený výhoda) a může být využita i pro animaci objektu. 
-Také by se mohlo hodit v případě, že bychom chtěli přidat do hry sebratelný objekt, který po určitém čase zmízí a hráč tím přijde o možnost ho sebrat.
+Metoda `Update()` bude v této implementaci provádět odpočet (časově omezený výhoda).
+Také by se mohla hodit v případě, že bychom chtěli přidat do hry sebratelný objekt, který po určitém čase zmízí a hráč tím přijde o možnost ho sebrat (Nebo se jen přesune jinam a hráč ho musí znovu objevit).
 Metoda `Apply()` aktivuje hráči výhodu a zároveň může aktivovat odpočet do zavolání metody `Deactivate()`, která hráči výhodu sebere.
 Polymorfní volání mám ve třídě `CBoard`, která pro každý snímek volá správnou metodu `Update()`. 
 Pokud došlo ke kolizi mezi hráčem a objektem `CCollectible`, pak je na tomto objektu volána správná metoda `Apply()`.

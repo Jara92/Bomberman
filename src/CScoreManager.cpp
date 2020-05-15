@@ -13,7 +13,7 @@ unsigned int CScoreManager::GetTopScore() const
     //todo
     return 0;
 }
-
+/*====================================================================================================================*/
 bool CScoreManager::SetTopScore()
 {
     //todo

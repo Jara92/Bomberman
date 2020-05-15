@@ -9,6 +9,7 @@
 void CEnemyDump::Update(CBoard *board, int deltaTime)
 {
     // TODO Dump AI staff...
+    // zde budou volány metody hloupého nepřítele
 }
 
 /*====================================================================================================================*/

@@ -102,6 +102,10 @@ CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o: ../src/CSDLInterface.h
 CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o: ../src/CSettings.h
 CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o: ../src/Messages.h
 
+CMakeFiles/bomberman.dir/src/CScoreManager.cpp.o: ../src/CScoreManager.cpp
+CMakeFiles/bomberman.dir/src/CScoreManager.cpp.o: ../src/CScoreManager.h
+CMakeFiles/bomberman.dir/src/CScoreManager.cpp.o: ../src/CSettings.h
+
 CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o: ../src/CAnimation.h
 CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o: ../src/CCoord.h
 CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o: ../src/CSDLInterface.h
