@@ -24,21 +24,22 @@ void CGameManager::Run()
     while (this->m_GameIsRunning)
     {
         this->m_Clock.Tick();
+
         // read keyboard state
         SDL_PumpEvents();
         const Uint8 *keystate = SDL_GetKeyboardState(NULL);
 
         // send state to all players
-        auto i = this->m_Board->m_Players.begin();
-        while (i != this->m_Board->m_Players.end())
+        for(std::vector<CPlayer*>::size_type i = 0; i < this->m_Board->m_Players.size(); i++)
         {
-            (*((i++).base()))->HandleInput(keystate); // TODO removed i++;
+            this->m_Board->m_Players[i]->HandleInput(keystate);
         }
 
-        // Close window
+       // Check events
         SDL_Event e;
         while (SDL_PollEvent(&e) != 0)
-        { // taháme události z fronty událostí
+        {
+            // Close window
             if (e.type == SDL_QUIT)
             {
                 this->m_GameIsRunning = false;
@@ -46,9 +47,16 @@ void CGameManager::Run()
             }
         }
 
+        // Update objects in the board
         this->Update(this->m_Clock.DeltaTime());
 
+        // Update physics in the board
+        this->UpdatePhysics();
+
+        // Draw board and info table
         this->Draw();
+
+        SDL_Delay(25); // todo edit this
     }
 }
 
@@ -57,6 +65,8 @@ void CGameManager::Draw() const
 {
     this->m_Interface->SetRenderColor(0, 0, 0, 255);
     this->m_Interface->Clear();
+
+    // TODO Render Game menu
 
     this->m_Board->Draw(this->m_Interface);
 
@@ -70,10 +80,17 @@ void CGameManager::Update(int deltaTime)
 }
 
 /*====================================================================================================================*/
+void CGameManager::UpdatePhysics()
+{
+    this->m_Board->UpdatePhysics();
+}
+
+/*====================================================================================================================*/
 CGameManager::~CGameManager()
 {
     delete this->m_Board;
     delete this->m_LevelLoader;
 }
+
 
 

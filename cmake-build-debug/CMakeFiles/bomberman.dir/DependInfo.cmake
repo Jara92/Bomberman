@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/jaroslav/CLionProjects/bomberman/src/CGameManager.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/CGameManager.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/CLevelLoader.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/CSDLInterface.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o"
+  "/home/jaroslav/CLionProjects/bomberman/src/CScoreManager.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/CScoreManager.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/CTexturePack.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CBomb.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CFire.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.o"

@@ -17,8 +17,8 @@ public:
      * @param isPassable Is this object passable for movable objects?
     */
     explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord location, CControls *controls,
-                     double speed = 0.0025)
-            : CMovable(std::move(texturePack), location, speed, false), m_Controls(controls)
+                     double speed = 0.0025, int lives = 3)
+            : CMovable(std::move(texturePack), location, speed, false, lives), m_Controls(controls)
     {}
 
     // I do not want to allow copying players. Every player object has his own controls and copying may cause troubles.

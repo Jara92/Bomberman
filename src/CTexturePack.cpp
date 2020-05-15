@@ -7,8 +7,8 @@
 #include "CTexturePack.h"
 
 CTexturePack::CTexturePack(CSDLInterface *interface,
-                           std::map<ETextureType, const std::map<unsigned int, const std::string  >> &textures,
-                           CCoord textureSize)
+                           std::map<ETextureType, const std::vector< std::string > > &textures,
+                           CCoord textureSize) : m_TextureSize(textureSize)
 {
     // For every texture type create CAnimation object
     auto i = textures.begin();
@@ -30,10 +30,12 @@ CTexturePack::~CTexturePack()
 /*====================================================================================================================*/
 SDL_Texture *CTexturePack::GetTexture(ETextureType textureType, unsigned int * index) const
 {
-    CAnimation * animation = this->m_Animations.find(textureType)->second;
-    if(animation)
+    auto animation =  this->m_Animations.find(textureType);
+
+    // Return animation texture by index if animation exists
+    if(animation != this->m_Animations.end())
     {
-        return animation->GetTexture(index);
+        return animation->second->GetTexture(index);
     }
 
     // SDL_Texture * is C pointer

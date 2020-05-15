@@ -15,6 +15,7 @@ CPlayer::~CPlayer()
 /*====================================================================================================================*/
 void CPlayer::Update(CBoard *board, int deltaTime)
 {
+    this->Animate(deltaTime);
     //  std::cout << "dt: " <<  deltaTime << std::endl;
 
     // Movement
@@ -156,12 +157,12 @@ void CPlayer::HandleInput(const Uint8 *keyState)
     {
         this->m_MovingDirection = EDirection::DIRECTION_UP;
         this->m_VerticalMovingDirection = EDirection::DIRECTION_UP;
-        this->m_ActualTexture = ETextureType::TEXTURE_UP;
+        this->m_ActualTexture = ETextureType::TEXTURE_BACK;
     } else if (keyState[this->m_Controls->m_Down])
     {
         this->m_MovingDirection = EDirection::DIRECTION_DOWN;
         this->m_VerticalMovingDirection = EDirection::DIRECTION_DOWN;
-        this->m_ActualTexture = ETextureType::TEXTURE_DOWN;
+        this->m_ActualTexture = ETextureType::TEXTURE_FRONT;
     }
 
     if (keyState[this->m_Controls->m_Left])

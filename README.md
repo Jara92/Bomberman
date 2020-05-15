@@ -69,7 +69,7 @@ Podtřídy `CDoor` a `CBoost` tyto metody přetěžují.
 Tato implementace bude mít zatím metodu `Update()` prázdnou, ale je možné ji v budoucnu využít například pro animaci.
 `Apply()` posune hráče do dalšího levelu (pokud to pravidla hry v daný moment povolí).
 `CBoost` je třída, která dává hráči nějakou výhodu (např. zrychlení). Tato výhoda může být i dočasná.
-Metoda `Update()` bude v této implementaci prováděd odpočet (časově omezený výhoda) a může být využita i pro animaci objektu. 
+Metoda `Update()` bude v této implementaci provádět odpočet (časově omezený výhoda) a může být využita i pro animaci objektu. 
 Také by se mohlo hodit v případě, že bychom chtěli přidat do hry sebratelný objekt, který po určitém čase zmízí a hráč tím přijde o možnost ho sebrat.
 Metoda `Apply()` aktivuje hráči výhodu a zároveň může aktivovat odpočet do zavolání metody `Deactivate()`, která hráči výhodu sebere.
 Polymorfní volání mám ve třídě `CBoard`, která pro každý snímek volá správnou metodu `Update()`. 

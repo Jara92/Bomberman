@@ -75,16 +75,33 @@ void CBoard::Draw(CSDLInterface *interface)
         }
     }
 
+    // TODO změnit pořadí renderu tak, aby nejdříve byly renderovány objekty, které jsou vespod.
+
     // draw players
     for (size_t i = 0; i < this->m_Players.size(); i++)
     {
         this->m_Players[i]->Draw(interface, this->m_CellSize);
+    }
+
+    // Draw enemies
+    for(size_t i = 0; i < this->m_Enemies.size();i++)
+    {
+        // Polymorphic call
+        this->m_Enemies[i]->Draw(interface, this->m_CellSize);
+    }
+
+    // draw boosts
+    for(auto i = this->m_Boosts.begin(); i != this->m_Boosts.end(); i++)
+    {
+        // Polymorphic call
+        i->second->Draw(interface, this->m_CellSize, i->first);
     }
 }
 
 /*====================================================================================================================*/
 void CBoard::Update(int deltaTime)
 {
+    // Update map (Walls)
     for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
     {
         for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
@@ -102,8 +119,33 @@ void CBoard::Update(int deltaTime)
         }
     }
 
+    // Update players
     for (size_t i = 0; i < this->m_Players.size(); i++)
     {
         this->m_Players[i]->Update(this, deltaTime);
     }
+
+    // Update enemies
+    for(size_t i = 0; i < this->m_Enemies.size();i++)
+    {
+        // Polymorphic call
+        this->m_Enemies[i]->Update(this, deltaTime);
+    }
+
+    // Update boosts
+    for(auto i = this->m_Boosts.begin(); i != this->m_Boosts.end(); i++)
+    {
+        // Polymorphic call
+        i->second->Update(this, deltaTime);
+    }
+}
+
+/*====================================================================================================================*/
+void CBoard::UpdatePhysics()
+{
+   /* if({somePlayer} is coliding {someBoost} ))
+    {
+        // Polymorphic call
+         {someBoost}->Apply({somePlayer});
+    }*/
 }

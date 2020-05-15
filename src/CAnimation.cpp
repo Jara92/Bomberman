@@ -6,21 +6,19 @@
 
 #include "CAnimation.h"
 
-CAnimation::CAnimation(CSDLInterface *interface, const std::map<unsigned int, const std::string > &textures)
+CAnimation::CAnimation(CSDLInterface *interface, const std::vector< std::string > &textures)
 {
-    auto i = textures.begin();
-    while (i != textures.end())
+    for(std::vector<std::string>::size_type i = 0; i < textures.size(); i++)
     {
-        this->m_Textures.insert(std::pair<unsigned int, SDL_Texture *>(i->first, interface->LoadTexture(i->second)));
-        i++;
+        this->m_Textures.push_back(interface->LoadTexture(textures[i]));
     }
 }
 /*====================================================================================================================*/
 CAnimation::~CAnimation()
 {
-    for (auto i = this->m_Textures.begin(); i != this->m_Textures.end(); i++)
+    for(std::vector<std::string>::size_type i = 0; i < this->m_Textures.size(); i++)
     {
-        SDL_DestroyTexture(i->second);
+        delete (this->m_Textures[i]);
     }
 }
 /*====================================================================================================================*/
@@ -30,6 +28,13 @@ SDL_Texture *CAnimation::GetTexture(unsigned int * index) const
     if(*index >= this->m_Textures.size())
     {*index = 0; }
 
-    // Return correct texture
-    return this->m_Textures.find(*index)->second;
+    // Get correct texture
+    SDL_Texture * texture = this->m_Textures[*index];
+    if(texture)
+    {
+        return texture;
+    }
+
+    // SDL_Texture * is C pointer
+    return NULL;
 }

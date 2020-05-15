@@ -32,6 +32,8 @@ public:
 
     void Update(int deltaTime);
 
+    void UpdatePhysics();
+
     void Draw(CSDLInterface * interface);
 
     /**

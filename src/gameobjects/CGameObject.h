@@ -22,14 +22,12 @@ public:
      * @param isPassable Is this object passable for movable objects?
     */
     explicit CGameObject(std::shared_ptr<CTexturePack> texturePack, bool isPassable = false)
-            : m_TexturePack(std::move(texturePack)), m_ActualTexture(ETextureType::TEXTURE_STATIC),
-              m_IsPassable(isPassable), m_IsAlive(true), m_AnimationIndex(0)
+            : m_TexturePack(std::move(texturePack)), m_ActualTexture(ETextureType::TEXTURE_FRONT),
+              m_IsPassable(isPassable), m_IsAlive(true), m_AnimationIndex(0), m_AnimationUpdateInterval(100), m_AnimationTimer(0)
     {}
 
     CGameObject(const CGameObject &other) = default;
-
     CGameObject &operator=(const CGameObject &other) = default;
-
     virtual ~CGameObject() = default;
 
     /**
@@ -54,6 +52,22 @@ public:
     virtual void Update(CBoard *board, int deltaTime) = 0;
 
     /**
+     * Update animation state
+     * @param deltaTime DeltaTime
+     */
+    virtual void Animate(int deltaTime)
+    {
+        this->m_AnimationTimer += deltaTime;
+
+        if( this->m_AnimationTimer >= this->m_AnimationUpdateInterval)
+        {
+            this->m_AnimationIndex++;
+
+            this->m_AnimationTimer = 0;
+        }
+    }
+
+    /**
      * Draw the gameobject
      * @param interface Interface
      * @param cellSize Cellsize
@@ -67,16 +81,18 @@ protected:
     ETextureType m_ActualTexture;
     bool m_IsPassable;
     bool m_IsAlive;
+
     /* Mutable keyword is very useful here. Animation index is not important for CGameObject, because it
      * does not disrupt the internal structure of the object. It is just auxiliary variable.
      */
     mutable unsigned int m_AnimationIndex;
+    mutable unsigned int m_AnimationUpdateInterval;
+    mutable unsigned int m_AnimationTimer;
 
     /**
     * Returns the texture to be rendered.
     * @return SDL_Texture * to be rendered. Nullptr if there is no texture (this should never happen).
     */
-    SDL_Texture *GetTexture() const
-    { return this->m_TexturePack.get()->GetTexture(this->m_ActualTexture, &(this->m_AnimationIndex)); }
+    SDL_Texture *GetTexture() const;
 };
 

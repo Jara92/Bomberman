@@ -6,7 +6,7 @@
 #pragma once
 
 #include <iostream>
-#include <map>
+#include <vector>
 #include <memory>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -16,7 +16,7 @@
 class CAnimation
 {
 public:
-    CAnimation(CSDLInterface *interface, const std::map<unsigned int, const std::string > &textures);
+    CAnimation(CSDLInterface *interface, const std::vector< std::string > &textures);
 
     ~CAnimation();
 
@@ -29,6 +29,6 @@ public:
     SDL_Texture * GetTexture (unsigned int * index) const;
 
 protected:
-    std::map<unsigned int, SDL_Texture *> m_Textures;
+    std::vector<SDL_Texture *> m_Textures;
 };
 

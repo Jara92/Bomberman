@@ -22,7 +22,7 @@ public:
      * @param textures Textures to be rendered.
      * @param textureSize Texture size
      */
-    CTexturePack(CSDLInterface *interface, std::map<ETextureType, const std::map<unsigned int, const std::string >> & textures,
+    CTexturePack(CSDLInterface *interface, std::map<ETextureType, const std::vector< std::string > > & textures,
                  CCoord textureSize = CCoord(1, 1));
 
     /* I dont want to allow copying this objekt. It does not make sense to copy object which could not be changed.

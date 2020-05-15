@@ -17,11 +17,11 @@ public:
     * @param textures Texturepack to be rendered.
      * @param isPassable Is this object passable for movable objects?
     */
-    explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord location, double speed, bool wallPass)
+    explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord location, double speed, bool wallPass, int lives)
             : CGameObject(texturePack, true), // every movable object is passable
               m_StartingLocation(location), m_Location(location), m_Speed(speed), m_WallPass(wallPass),
               m_MovingDirection(EDirection::DIRECTION_NONE), m_HorizontalMovingDirection(EDirection::DIRECTION_NONE),
-              m_VerticalMovingDirection(EDirection::DIRECTION_NONE)
+              m_VerticalMovingDirection(EDirection::DIRECTION_NONE), m_Lives(lives)
     {}
 
     CMovable(const CMovable &other) = default;
@@ -38,6 +38,9 @@ public:
      */
     virtual void Draw(CSDLInterface *interface, int cellSize, CCoord offset = CCoord(0, 0)) const;
 
+
+    virtual void Animate(int deltaTime) override;
+
     void ResetLocation()
     { this->m_Location = this->m_StartingLocation; }
 
@@ -49,6 +52,7 @@ protected:
     EDirection m_MovingDirection;
     EDirection m_VerticalMovingDirection;
     EDirection m_HorizontalMovingDirection;
+    int m_Lives;
 
     /**
      * Draw gameobject at location.

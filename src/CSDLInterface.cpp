@@ -87,7 +87,7 @@ SDL_Texture *CSDLInterface::LoadTexture(const std::string &file) const
 {
     SDL_Texture *texture = IMG_LoadTexture(this->m_Renderer, (this->m_Settings->GetAssetsPath() + file).c_str());
 
-    if (!texture)
+    if (texture == nullptr || texture == NULL)
     {
         throw std::ios_base::failure(MESSAGE_TEXTURE_ERROR);
     }

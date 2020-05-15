@@ -30,5 +30,6 @@ protected:
 
     void Draw() const;
     void Update(int deltaTime);
+    void UpdatePhysics();
 };
 
