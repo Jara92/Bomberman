@@ -159,6 +159,15 @@ public:
         return this->m_LevelUp;
     }
 
+    bool GetWallPass() const
+    {return this->m_WallPass;}
+
+    bool GetBombPass() const
+    {return this->m_BombPass;}
+
+    bool GetFireImmunity() const
+    {return this->m_FireImmunity;}
+
 protected:
     size_t m_Score;
     size_t m_ExplosionRadius;

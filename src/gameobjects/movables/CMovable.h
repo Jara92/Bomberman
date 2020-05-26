@@ -41,6 +41,9 @@ public:
 
     virtual void Animate(int deltaTime) override;
 
+    CCoord GetLocation() const
+    {return this->m_Location;}
+
     void ResetLocation()
     { this->m_Location = this->m_StartingLocation; }
 

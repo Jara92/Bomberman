@@ -204,6 +204,33 @@ src/CBoard.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CBoard.cpp.s
 .PHONY : src/CBoard.cpp.s
 
+src/CCoord.o: src/CCoord.cpp.o
+
+.PHONY : src/CCoord.o
+
+# target to build an object file
+src/CCoord.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CCoord.cpp.o
+.PHONY : src/CCoord.cpp.o
+
+src/CCoord.i: src/CCoord.cpp.i
+
+.PHONY : src/CCoord.i
+
+# target to preprocess a source file
+src/CCoord.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CCoord.cpp.i
+.PHONY : src/CCoord.cpp.i
+
+src/CCoord.s: src/CCoord.cpp.s
+
+.PHONY : src/CCoord.s
+
+# target to generate assembly for a file
+src/CCoord.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CCoord.cpp.s
+.PHONY : src/CCoord.cpp.s
+
 src/CGameManager.o: src/CGameManager.cpp.o
 
 .PHONY : src/CGameManager.o
@@ -735,6 +762,9 @@ help:
 	@echo "... src/CBoard.o"
 	@echo "... src/CBoard.i"
 	@echo "... src/CBoard.s"
+	@echo "... src/CCoord.o"
+	@echo "... src/CCoord.i"
+	@echo "... src/CCoord.s"
 	@echo "... src/CGameManager.o"
 	@echo "... src/CGameManager.i"
 	@echo "... src/CGameManager.s"

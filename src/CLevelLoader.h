@@ -19,11 +19,14 @@
 class CLevelLoader
 {
 public:
-    CLevelLoader(CSDLInterface * interface)
+    CLevelLoader(CSDLInterface *interface)
             : m_Interface(interface)
     {}
+
     ~CLevelLoader() = default;
+
     CLevelLoader(const CLevelLoader &mapLoader) = delete;
+
     CLevelLoader operator=(const CLevelLoader &mapLoader) = delete;
 
     CBoard *GetBoard(int playersCount, CSettings *settings);
@@ -33,13 +36,28 @@ public:
 protected:
     static const std::string MAP_FILE_NAME;
     static const std::string LEVEL_FILE_NAME;
-    // map size
+    // Saved map size
+    static const size_t FILE_MAP_WIDTH = 24;
+    static const size_t FILE_MAP_HEIGHT = 13;
+    // Real map size (Real map is smaller because the map is saved as binary file. I have to remember which bits are valid)
     static const size_t MAP_WIDTH = 24;
     static const size_t MAP_HEIGHT = 13;
+
     static const size_t MAX_PLAYERS = 2;
     CSDLInterface *m_Interface;
 
-    CGameObject *** LoadMap();
+    CWall ***LoadMap(); // TODO CHANGE TO VECTOR OF VECTORs
     std::vector<CPlayer *> LoadPlayers(int count);
+
+    /**
+     * Generate obstacles for game map.
+     * @param board Gameboard
+     * @param level Level number
+     * @param count Obstacles count
+     * @return Container of obstacles.
+     */
+     void GenerateObstacles(CBoard *board, size_t level, size_t count);
+
+
 };
 

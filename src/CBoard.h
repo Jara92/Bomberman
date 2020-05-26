@@ -20,7 +20,7 @@
 class CBoard
 {
 public:
-    CBoard(CGameObject ***map, std::vector<CPlayer*> players, CCoord boardSize, int cellSize)
+    CBoard(CWall ***map, std::vector<CPlayer*> players, CCoord boardSize, int cellSize)
             :m_Players(std::move(players)),  m_Map(map), m_BoardSize(boardSize), m_CellSize(cellSize)
     {}
 
@@ -37,11 +37,19 @@ public:
     void Draw(CSDLInterface * interface);
 
     /**
-     * Is this coord passable?
-     * @param coord
-     * @return
+     * Is this coord passable for the player?
+     * @param coord Location
+     * @param player Player
+     * @return True if is passable.
      */
-    bool IsPassable(CCoord coord, bool wallPass, bool bombPass, bool firePass);
+    bool IsPassable(CCoord coord, const CPlayer * player);
+
+    /**
+     * Is this position totaly free?
+     * @param coord Position
+     * @return True - Totaly free
+     */
+    bool PositionFree(CCoord coord);
 
     /**
      * Detonate bombs owned by player
@@ -54,9 +62,17 @@ public:
     std::map<CCoord, CCollectible *> m_Boosts;
     std::map<CCoord, CFire *> m_Fires;
     std::map<CCoord, CBomb *> m_Bombs;
+    CWall ***m_Map;
+
+    CCoord GetBoardSize() const
+    {return this->m_BoardSize;}
+
+    /**
+     * Remove all dynamically added objects. (Bombs, Enemies, Boosts, DestructibleWalls)
+     */
+    void ClearBoard();
 
 protected:
-    CGameObject ***m_Map;
     CCoord m_BoardSize;
     int m_CellSize;
 };

@@ -17,13 +17,15 @@ public:
     * @param isDestructible Is this wall destructible?
     * @param collectible Attached collectible object which will be displayed when the wall is destroyed
     */
-    CWall(std::shared_ptr<CTexturePack> texturePack, bool isDestructible = false, CCollectible * collectible = nullptr)
+    CWall(std::shared_ptr<CTexturePack> texturePack, bool isDestructible = false, CCollectible *collectible = nullptr)
             : CGameObject(texturePack, false), // no wall is passable
-    m_IsDestructible(isDestructible), m_Collectible(collectible)
+              m_IsDestructible(isDestructible), m_Collectible(collectible)
     {}
 
     CWall(const CWall &other) = default;
+
     CWall &operator=(const CWall &other) = default;
+
     virtual ~CWall()
     {}
 
@@ -41,8 +43,11 @@ public:
     */
     void TryDestroy(int distance);
 
+    bool IsDestructible()
+    { return this->m_IsDestructible; }
+
 protected:
     bool m_IsDestructible;
-    CCollectible * m_Collectible;
+    CCollectible *m_Collectible;
 };
 

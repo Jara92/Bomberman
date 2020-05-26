@@ -92,7 +92,7 @@ void CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
 
     if ((decPart >= CPlayer::MIN_TURNING_VALUE) &&
         board->IsPassable(CCoord(this->m_Location.m_X + direction, std::ceil(this->m_Location.m_Y)),
-                          this->m_WallPass, this->m_BombPass, this->m_FireImmunity))
+                          this))
     {
         this->m_Location.m_Y = std::min(this->m_Location.m_Y + this->m_Speed * deltaTime,
                                         std::ceil(this->m_Location.m_Y));
@@ -101,7 +101,7 @@ void CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
     // TODO comment this
     else if ((decPart <= CPlayer::MAX_TURNING_VALUE) &&
                board->IsPassable(CCoord(this->m_Location.m_X + direction, std::floor(this->m_Location.m_Y)),
-                                 this->m_WallPass, this->m_BombPass, this->m_FireImmunity))
+                                 this))
     {
         this->m_Location.m_Y = std::max(this->m_Location.m_Y - this->m_Speed * deltaTime,
                                         std::floor(this->m_Location.m_Y));
@@ -117,7 +117,7 @@ void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
 
     if ((decPart >= CPlayer::MAX_TURNING_VALUE) &&
         board->IsPassable(CCoord(std::ceil(this->m_Location.m_X), this->m_Location.m_Y + direction),
-                          this->m_WallPass, this->m_BombPass, this->m_FireImmunity))
+                          this))
     {
         this->m_Location.m_X = std::min(this->m_Location.m_X + this->m_Speed * deltaTime,
                                         std::ceil(this->m_Location.m_X));
@@ -126,7 +126,7 @@ void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
     // TODO comment this
     else if ((decPart <= CPlayer::MIN_TURNING_VALUE) &&
                board->IsPassable(CCoord(std::floor(this->m_Location.m_X), this->m_Location.m_Y + direction),
-                                 this->m_WallPass, this->m_BombPass, this->m_FireImmunity))
+                                 this))
     {
         this->m_Location.m_X = std::max(this->m_Location.m_X - this->m_Speed * deltaTime,
                                         std::floor(this->m_Location.m_X));
@@ -138,10 +138,10 @@ bool CPlayer::LocationIsFree(CBoard *board) const
 {
     double val = (1 - this->m_Speed);
 
-    if (!board->IsPassable(CCoord(this->m_Location.m_X, this->m_Location.m_Y), this->m_WallPass, this->m_BombPass, this->m_FireImmunity) ||
-        !board->IsPassable(CCoord(this->m_Location.m_X + val, this->m_Location.m_Y), this->m_WallPass, this->m_BombPass, this->m_FireImmunity) ||
-        !board->IsPassable(CCoord(this->m_Location.m_X, this->m_Location.m_Y + val), this->m_WallPass, this->m_BombPass, this->m_FireImmunity) ||
-        !board->IsPassable(CCoord(this->m_Location.m_X + val, this->m_Location.m_Y + val), this->m_WallPass, this->m_BombPass, this->m_FireImmunity))
+    if (!board->IsPassable(CCoord(this->m_Location.m_X, this->m_Location.m_Y), this) ||
+        !board->IsPassable(CCoord(this->m_Location.m_X + val, this->m_Location.m_Y), this) ||
+        !board->IsPassable(CCoord(this->m_Location.m_X, this->m_Location.m_Y + val), this) ||
+        !board->IsPassable(CCoord(this->m_Location.m_X + val, this->m_Location.m_Y + val), this))
     {
         return false;
     }

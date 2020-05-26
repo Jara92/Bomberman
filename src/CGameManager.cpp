@@ -16,6 +16,14 @@ CGameManager::CGameManager(CSDLInterface *interface)
 void CGameManager::Init()
 {
     this->m_Board = this->m_LevelLoader->GetBoard(1, this->m_Interface->GetSettings());
+
+    this->m_LevelLoader->LoadLevel(this->m_Board, 1);
+
+    CCoord a, b;
+    if(a.AlmostEqual(b))
+    {
+        exit;
+    }
 }
 
 /*====================================================================================================================*/

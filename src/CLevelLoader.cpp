@@ -13,7 +13,17 @@ const std::string CLevelLoader::LEVEL_FILE_NAME = "level";
 /*====================================================================================================================*/
 bool CLevelLoader::LoadLevel(CBoard *board, size_t level)
 {
-    return false;
+    board->ClearBoard();
+
+    // TODO přidat algoritmus na zvyšování počtu zdí podle levelu - využít board->GetBoardSize()
+    size_t obstaclesCount = (board->GetBoardSize().m_X * board->GetBoardSize().m_Y) * 0.20;
+
+    this->GenerateObstacles(board, level, obstaclesCount);
+
+    // Load enemies and boosts
+    // TODO
+
+    return true;
 }
 
 /*====================================================================================================================*/
@@ -22,38 +32,29 @@ CBoard *CLevelLoader::GetBoard(int playersCount, CSettings *settings)
     // calc cellsize
     int cellSize = static_cast<int>(settings->GetScreenWidth() / CLevelLoader::MAP_WIDTH);
 
-    CGameObject ***map = this->LoadMap();
+    CWall ***map = this->LoadMap();
     std::vector<CPlayer *> players = this->LoadPlayers(playersCount);
 
     return new CBoard(map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), cellSize);
 }
 
 /*====================================================================================================================*/
-CGameObject ***CLevelLoader::LoadMap()
+CWall ***CLevelLoader::LoadMap()
 {
-    /*std::map<ETextureType, const std::map<unsigned int, const std::string >> tex
-            {{ETextureType::TEXTURE_STATIC, std::map<unsigned int, const std::string>{{0, "Blocks/SolidBlock.png"}}}};
-
-    std::shared_ptr<CTexturePack> texturePack =
-    std::make_shared<CTexturePack>(this->m_Interface,
-                                   tex);*/
-
     std::map<ETextureType, const std::vector<std::string>> textures
             {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/SolidBlock.png"}}}};
-
 
     std::shared_ptr<CTexturePack> texturePack =
             std::make_shared<CTexturePack>(this->m_Interface,
                                            textures);
     // create reference wall to make copies
-
     CWall wall(texturePack);
 
     // init 2D array
-    CGameObject ***map = new CGameObject **[MAP_WIDTH];
+    CWall ***map = new CWall **[MAP_WIDTH];
     for (size_t i = 0; i < CLevelLoader::MAP_WIDTH; i++)
     {
-        map[i] = new CGameObject *[CLevelLoader::MAP_HEIGHT];
+        map[i] = new CWall *[CLevelLoader::MAP_HEIGHT];
 
         for (size_t j = 0; j < CLevelLoader::MAP_HEIGHT; j++)
         {
@@ -190,6 +191,34 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
     }
 
     return players;
+}
+
+/*====================================================================================================================*/
+void CLevelLoader::GenerateObstacles(CBoard *board, size_t level , size_t count)
+{
+    std::map<ETextureType, const std::vector<std::string>> textures
+            {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/ExplodableBlock.png"}}}};
+
+    std::shared_ptr<CTexturePack> texturePack =
+            std::make_shared<CTexturePack>(this->m_Interface,
+                                           textures);
+    size_t randomX = 0, randomY = 0;
+int counter = 0;
+    for(size_t i = 0; i < count; i++)
+    {
+        std::cerr << count << std::endl;
+        // Generate random location until the location is free.
+        do
+        {
+            randomX = rand() % static_cast<int>(board->GetBoardSize().m_X);
+            randomY = rand() % static_cast<int>(board->GetBoardSize().m_Y);
+        }
+        while(!board->PositionFree(CCoord(randomX, randomY)));
+
+        board->m_Map[randomX][randomY] = new CWall(texturePack, true, nullptr);
+        counter ++;
+    }
+    std::cerr << "C"  << counter << board->GetBoardSize() <<  std::endl;
 }
 
 

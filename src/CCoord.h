@@ -66,6 +66,11 @@ public:
      */
     bool operator<(const CCoord &other) const;
 
+    bool operator == (const CCoord & other) const;
+
+    bool AlmostEqual(const CCoord & other) const;
+
+
     /**
      * Calculates distance between this and the other point
      * @param a
