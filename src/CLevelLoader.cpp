@@ -91,14 +91,14 @@ CWall ***CLevelLoader::LoadMap()
             col++;
 
             // Jump to next row
-            if (col >= MAP_WIDTH / 8)
+            if (col >= FILE_MAP_WIDTH / 8)
             {
                 col = 0;
                 row++;
             }
 
                 // End if my map is full.
-            else if (row >= MAP_HEIGHT)
+            else if (row >= FILE_MAP_HEIGHT)
             {
                 break;
             }

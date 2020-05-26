@@ -2,6 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/bomberman.dir/src/CAnimation.cpp.o"
   "CMakeFiles/bomberman.dir/src/CApplication.cpp.o"
   "CMakeFiles/bomberman.dir/src/CBoard.cpp.o"
+  "CMakeFiles/bomberman.dir/src/CCoord.cpp.o"
   "CMakeFiles/bomberman.dir/src/CGameManager.cpp.o"
   "CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o"
   "CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o"

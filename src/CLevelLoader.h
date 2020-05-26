@@ -40,7 +40,7 @@ protected:
     static const size_t FILE_MAP_WIDTH = 24;
     static const size_t FILE_MAP_HEIGHT = 13;
     // Real map size (Real map is smaller because the map is saved as binary file. I have to remember which bits are valid)
-    static const size_t MAP_WIDTH = 24;
+    static const size_t MAP_WIDTH = 23;
     static const size_t MAP_HEIGHT = 13;
 
     static const size_t MAX_PLAYERS = 2;

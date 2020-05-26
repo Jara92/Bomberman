@@ -7,6 +7,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/jaroslav/CLionProjects/bomberman/src/CAnimation.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/CAnimation.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/CApplication.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/CApplication.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/CBoard.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/CBoard.cpp.o"
+  "/home/jaroslav/CLionProjects/bomberman/src/CCoord.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/CCoord.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/CGameManager.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/CGameManager.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/CLevelLoader.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/CSDLInterface.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o"

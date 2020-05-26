@@ -18,7 +18,7 @@ public:
      * @param assetsPath Assets directory path
      * @param dataPath  Data directory path
      */
-    CSettings(std::size_t width = 1150, std::size_t height = 650, bool sound = false, std::string assetsPath = "./examples/assets/",
+    CSettings(std::size_t width = 1150, std::size_t height = 600, bool sound = false, std::string assetsPath = "./examples/assets/",
               std::string dataPath = "./examples/data/")
             : m_AssetsPath(std::move(assetsPath)), m_DataPath(std::move(dataPath))
     { this->ChangeSettings(width, height, sound); }
