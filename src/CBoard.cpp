@@ -22,6 +22,15 @@ CBoard::~CBoard()
     {
         delete this->m_Players[i];
     }
+
+    for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
+    {
+        // Polymorphic call
+        delete i->second;
+    }
+
+    delete (this->m_GroundObject);
+    delete (this->m_BombObject);
 }
 
 /*====================================================================================================================*/
@@ -44,7 +53,23 @@ bool CBoard::IsPassable(CCoord coord, const CPlayer * player)
 }
 
 /*====================================================================================================================*/
-void CBoard::DetonateBombs(CPlayer *player)
+void CBoard::PlaceBomb(CPlayer *player)
+{
+    CCoord location = player->GetLocationCell();
+
+    // If this location is free.
+    if(this->m_Bombs.find(location) == this->m_Bombs.end())
+    {
+        CBomb * bomb = new CBomb(*(this->m_BombObject));
+        bomb->SetOwner(player);
+
+        this->m_Bombs.insert(std::pair<CCoord, CBomb*>(location, bomb));
+    } else std::cerr << location << " is not empty. Svedek: " << this->m_Bombs.find(location)->first  << std::endl;
+}
+
+
+/*====================================================================================================================*/
+void CBoard::DetonateBombs(const CPlayer *player)
 {
 
 }
@@ -82,14 +107,6 @@ void CBoard::Draw(CSDLInterface *interface)
         }
     }
 
-    // TODO změnit pořadí renderu tak, aby nejdříve byly renderovány objekty, které jsou vespod.
-
-    // draw players
-    for (size_t i = 0; i < this->m_Players.size(); i++)
-    {
-        this->m_Players[i]->Draw(interface, this->m_CellSize);
-    }
-
     // Draw enemies
     for (size_t i = 0; i < this->m_Enemies.size(); i++)
     {
@@ -102,6 +119,27 @@ void CBoard::Draw(CSDLInterface *interface)
     {
         // Polymorphic call
         i->second->Draw(interface, this->m_CellSize, i->first);
+    }
+
+    // draw bombs
+    for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
+    {
+        // Polymorphic call
+        i->second->Draw(interface, this->m_CellSize, i->first);
+    }
+
+    // draw fires
+    for (auto i = this->m_Fires.begin(); i != this->m_Fires.end(); i++)
+    {
+        // Polymorphic call
+        i->second->Draw(interface, this->m_CellSize, i->first);
+    }
+
+    // TODO změnit pořadí renderu tak, aby nejdříve byly renderovány objekty, které jsou vespod.
+    // draw players
+    for (size_t i = 0; i < this->m_Players.size(); i++)
+    {
+        this->m_Players[i]->Draw(interface, this->m_CellSize);
     }
 }
 
@@ -203,6 +241,12 @@ void CBoard::ClearBoard()
         i->second = nullptr;
     }
     this->m_Fires.clear();
+
+    // Reset players locations
+    for(size_t i = 0; i < this->m_Players.size(); i++)
+    {
+        this->m_Players[i]->ResetLocation();
+    }
 }
 
 bool CBoard::PositionFree(CCoord coord)
@@ -240,3 +284,6 @@ bool CBoard::PositionFree(CCoord coord)
 
     return true;
 }
+
+
+

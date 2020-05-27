@@ -32,12 +32,13 @@ CBoard *CLevelLoader::GetBoard(int playersCount, CSettings *settings)
     // calc cellsize
     int cellSize = static_cast<int>(settings->GetScreenWidth() / CLevelLoader::MAP_WIDTH);
 
+    // Load important objects for new board.
     CWall ***map = this->LoadMap();
     std::vector<CPlayer *> players = this->LoadPlayers(playersCount);
-
     CGround * groundObject = this->LoadGround();
+    CBomb * bombObject = this->LoadBomb();
 
-    return new CBoard(map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), groundObject, cellSize);
+    return new CBoard(map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), groundObject, bombObject, cellSize);
 }
 
 /*====================================================================================================================*/
@@ -115,7 +116,6 @@ CWall ***CLevelLoader::LoadMap()
 /*========================================================================================== -==========================*/
 std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
 {
-    //return std::vector<CPlayer *>{};
    // count = 2; // todo remove
     CControls *controls[MAX_PLAYERS] = {
             new CControls(SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A,
@@ -180,7 +180,7 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
     for (int i = 0; i < count; i++)
     {
         players.push_back(
-                new CPlayer(std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i], CCoord(1, 2)),
+                new CPlayer(std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i], false, CCoord(1, 2)),
                             startingLocation[i],
                             controls[i]));
         controls[i] = nullptr;
@@ -232,6 +232,19 @@ CGround *CLevelLoader::LoadGround()
                                            textures);
     // create reference wall to make copies
    return new CGround(texturePack);
+}
+/*====================================================================================================================*/
+CBomb *CLevelLoader::LoadBomb()
+{
+    // TODO Use other bomb textures - change texture with bomb life
+    std::map<ETextureType, const std::vector<std::string>> textures
+            {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Bomb/Bomb_f01.png"}}}};
+
+    std::shared_ptr<CTexturePack> texturePack =
+            std::make_shared<CTexturePack>(this->m_Interface,
+                                           textures, true, CCoord(0.65,0.65));
+    // create reference wall to make copies
+    return new CBomb(texturePack, 0);
 }
 
 

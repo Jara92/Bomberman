@@ -21,8 +21,8 @@
 class CBoard
 {
 public:
-    CBoard(CWall ***map, std::vector<CPlayer*> players, CCoord boardSize, CGround * ground, int cellSize)
-            :m_Players(std::move(players)),  m_Map(map), m_BoardSize(boardSize), m_CellSize(cellSize), m_GroundObject(ground)
+    CBoard(CWall ***map, std::vector<CPlayer*> players, CCoord boardSize, CGround * ground, CBomb * bomb, int cellSize)
+            :m_Players(std::move(players)),  m_Map(map), m_BoardSize(boardSize), m_CellSize(cellSize), m_GroundObject(ground), m_BombObject(bomb)
     {}
 
     ~CBoard();
@@ -53,10 +53,16 @@ public:
     bool PositionFree(CCoord coord);
 
     /**
+     * Place bomb in game board.
+     * @param player Bomb owner.
+     */
+    void PlaceBomb(CPlayer * player);
+
+    /**
      * Detonate bombs owned by player
      * @param player Player
      */
-    void DetonateBombs(CPlayer * player);
+    void DetonateBombs(const CPlayer * player);
 
     std::vector<CPlayer *> m_Players;
     std::vector<CEnemy *> m_Enemies;
@@ -77,6 +83,9 @@ protected:
     CCoord m_BoardSize;
     int m_CellSize;
 
+    /** Ground object template */
     CGround * m_GroundObject;
+    /** Bomb object template */
+    CBomb * m_BombObject;
 };
 

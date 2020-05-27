@@ -7,8 +7,8 @@
 #include "CTexturePack.h"
 
 CTexturePack::CTexturePack(CSDLInterface *interface,
-                           std::map<ETextureType, const std::vector< std::string > > &textures,
-                           CCoord textureSize) : m_TextureSize(textureSize)
+                           std::map<ETextureType, const std::vector< std::string > > &textures, bool isCentered,
+                           CCoord textureSize) : m_TextureSize(textureSize), m_IsCentered(isCentered)
 {
     // For every texture type create CAnimation object
     auto i = textures.begin();

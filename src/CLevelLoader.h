@@ -53,6 +53,7 @@ protected:
      * @return Ground object
      */
     CGround * LoadGround();
+    CBomb * LoadBomb();
 
     /**
      * Generate obstacles for game map.

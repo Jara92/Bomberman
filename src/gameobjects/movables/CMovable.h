@@ -44,6 +44,13 @@ public:
     CCoord GetLocation() const
     {return this->m_Location;}
 
+    /**
+     * Get player location cell.
+     * @return Coordinates of cell where the left-top conrner of this movable is located.
+     */
+    CCoord GetLocationCell() const
+    {return CCoord(floor(this->m_Location.m_X + 0.5), floor(this->m_Location.m_Y + 0.5));}
+
     void ResetLocation()
     { this->m_Location = this->m_StartingLocation; }
 

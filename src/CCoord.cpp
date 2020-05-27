@@ -8,15 +8,21 @@
 
 bool CCoord::operator<(const CCoord &other) const
 {
-    CCoord zeroPoint;
+    if (this->m_X > other.m_X)
+    {
+        return true;
+    }
+    else if (this->m_Y > other.m_Y)
+    {
+        return true;
+    }
 
-    return this->CalcDistnance(zeroPoint) < other.CalcDistnance(zeroPoint);
-
+    return false;
 }
 
 bool CCoord::operator==(const CCoord &other) const
 {
-    if(this->m_X == other.m_X && this->m_Y == other.m_Y)
+    if (this->m_X == other.m_X && this->m_Y == other.m_Y)
     {
         return true;
     }
@@ -34,7 +40,8 @@ bool CCoord::AlmostEqual(const CCoord &other) const
 
 double CCoord::CalcDistnance(const CCoord &other) const
 {
-    return sqrt(((this->m_X - other.m_X) * (this->m_X - other.m_X)) + ((this->m_Y - other.m_Y) * (this->m_Y - other.m_Y)));
+    return sqrt(
+            ((this->m_X - other.m_X) * (this->m_X - other.m_X)) + ((this->m_Y - other.m_Y) * (this->m_Y - other.m_Y)));
 }
 
 

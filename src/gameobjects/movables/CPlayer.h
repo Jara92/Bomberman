@@ -4,6 +4,7 @@
 */
 
 #pragma once
+
 #include <cmath>
 #include "CMovable.h"
 #include "../../CControls.h"
@@ -18,11 +19,14 @@ public:
     */
     explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord location, CControls *controls,
                      double speed = 0.0025, int lives = 3)
-            : CMovable(std::move(texturePack), location, speed, false, lives), m_Controls(controls)
+            : CMovable(std::move(texturePack), location, speed, false, lives), m_Score(0), m_ExplosionRadius(1),
+              m_MaxBombs(1), m_ActiveBombs(0), m_RemoteExplosion(false), m_BombPass(false), m_FireImmunity(false),
+              m_IsPlanting(false), m_IsDetonating(false), m_LevelUp(false), m_Controls(controls)
     {}
 
     // I do not want to allow copying players. Every player object has his own controls and copying may cause troubles.
     CPlayer(const CPlayer &other) = delete;
+
     CPlayer &operator=(const CPlayer &other) = delete;
 
     virtual ~CPlayer();
@@ -53,10 +57,10 @@ public:
     { this->m_Score += ammount; }
 
     void SpeedUp()
-    { this->m_Speed *= 1.1; /* TODO setup contants */}
+    { this->m_Speed *= CPlayer::SPEED_UP; }
 
     void SpeedDown()
-    { this->m_Speed /= 1.1; /* TODO setup contants */    }
+    { this->m_Speed /= CPlayer::SPEED_UP; }
 
     void IncreseExplosionRadius()
     { this->m_ExplosionRadius++; }
@@ -119,18 +123,16 @@ public:
     { return this->m_Score; }
 
     bool GetLevelUp() const
-    {
-        return this->m_LevelUp;
-    }
+    { return this->m_LevelUp; }
 
     bool GetWallPass() const
-    {return this->m_WallPass;}
+    { return this->m_WallPass; }
 
     bool GetBombPass() const
-    {return this->m_BombPass;}
+    { return this->m_BombPass; }
 
     bool GetFireImmunity() const
-    {return this->m_FireImmunity;}
+    { return this->m_FireImmunity; }
 
 protected:
     size_t m_Score;
@@ -148,20 +150,21 @@ protected:
     CControls *m_Controls;
     static constexpr double MIN_TURNING_VALUE = 0.5;
     static constexpr double MAX_TURNING_VALUE = 0.5;
+    static constexpr double SPEED_UP = 1.1;
 
     /**
  * Movement along the axis Y
  * @param board Game board
  * @param deltaTime DeltaTime
  */
-    EDirection VerticalMove(CBoard * board, int deltaTime);
+    void VerticalMove(CBoard *board, int deltaTime);
 
     /**
      * Movement along the axis X
      * @param board Game board
      * @param deltaTime DeltaTime
      */
-    EDirection HorizontalMove(CBoard * board, int deltaTime);
+    void HorizontalMove(CBoard *board, int deltaTime);
 
     /**
      * Center vertical players position.
@@ -169,7 +172,7 @@ protected:
      * @param deltaTime DeltaTime
      * @param direction Direction
      */
-    EDirection VerticalCenter(CBoard * board, int deltaTime, int direction);
+    void VerticalCenter(CBoard *board, int deltaTime, int direction);
 
     /**
     * Center horiz players position.
@@ -177,14 +180,11 @@ protected:
     * @param deltaTime DeltaTime
     * @param direction Direction
     */
-    EDirection HorizontalCenter(CBoard * board, int deltaTime, int direction);
+    void HorizontalCenter(CBoard *board, int deltaTime, int direction);
 
     /**
      * Is current location free?
      */
     bool LocationIsFree(CBoard *board) const;
-
-    void Animate(EDirection verticalMove, EDirection horizontalMove, int deltaTime);
-
 };
 

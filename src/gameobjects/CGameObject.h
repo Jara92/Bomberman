@@ -71,8 +71,8 @@ public:
      * Draw the gameobject
      * @param interface Interface
      * @param cellSize Cellsize
-     * @param location Location
-     * @param offset Offset
+     * @param location Target cell location
+     * @param offset Texture global offset
      */
     virtual void Draw(CSDLInterface *interface, int cellSize, CCoord location, CCoord offset = CCoord(0, 0)) const;
 
@@ -86,8 +86,8 @@ protected:
      * does not disrupt the internal structure of the object. It is just auxiliary variable.
      */
     mutable unsigned int m_AnimationIndex;
-    mutable unsigned int m_AnimationUpdateInterval;
-    mutable unsigned int m_AnimationTimer;
+    unsigned int m_AnimationUpdateInterval;
+    unsigned int m_AnimationTimer;
 
     /**
     * Returns the texture to be rendered.

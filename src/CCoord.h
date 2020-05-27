@@ -22,11 +22,14 @@ public:
     CCoord(double x = 0, double y = 0)
             : m_X(x), m_Y(y)
     {}
-    CCoord(const CCoord & other) = default;
-    CCoord & operator= (const CCoord & other) = default;
+
+    CCoord(const CCoord &other) = default;
+
+    CCoord &operator=(const CCoord &other) = default;
+
     ~CCoord() = default;
 
-    /** Operators +, - and * */
+    /** Operators +, -, * and / */
     CCoord operator+(const CCoord &other) const
     { return CCoord(this->m_X + other.m_X, this->m_Y + other.m_Y); }
 
@@ -53,6 +56,22 @@ public:
     friend CCoord operator*(const double x, const CCoord &coord)
     { return CCoord(x * coord.m_X, x * coord.m_Y); }
 
+    CCoord operator/(const double x) const
+    {
+        if (x == 0) throw std::invalid_argument("Dividing by zero is forbidden!");
+        return CCoord(this->m_X / x, this->m_Y / x);
+    }
+
+    CCoord operator /= (const double x)
+    {
+        CCoord y = (*this) / x;
+
+        this->m_X = y.m_X;
+        this->m_Y = y.m_Y;
+
+        return *this;
+    }
+
     friend std::ostream &operator<<(std::ostream &ostream, const CCoord &coord)
     {
         ostream << "(" << coord.m_X << ", " << coord.m_Y << ")";
@@ -66,9 +85,9 @@ public:
      */
     bool operator<(const CCoord &other) const;
 
-    bool operator == (const CCoord & other) const;
+    bool operator==(const CCoord &other) const;
 
-    bool AlmostEqual(const CCoord & other) const;
+    bool AlmostEqual(const CCoord &other) const;
 
 
     /**

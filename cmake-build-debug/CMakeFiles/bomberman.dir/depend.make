@@ -121,11 +121,29 @@ CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o: ../src/CTexturePack.cpp
 CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o: ../src/CTexturePack.h
 CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o: ../src/ETextureType.h
 
+CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o: ../src/CAnimation.h
+CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o: ../src/CControls.h
+CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o: ../src/CCoord.h
+CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o: ../src/CSDLInterface.h
+CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o: ../src/CSettings.h
+CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o: ../src/CTexturePack.h
+CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o: ../src/EDirection.h
+CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o: ../src/ETextureType.h
 CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o: ../src/gameobjects/CBomb.cpp
 CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o: ../src/gameobjects/CBomb.h
+CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o: ../src/gameobjects/CGameObject.h
+CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o: ../src/gameobjects/movables/CMovable.h
+CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o: ../src/gameobjects/movables/CPlayer.h
 
+CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.o: ../src/CAnimation.h
+CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.o: ../src/CCoord.h
+CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.o: ../src/CSDLInterface.h
+CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.o: ../src/CSettings.h
+CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.o: ../src/CTexturePack.h
+CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.o: ../src/ETextureType.h
 CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.o: ../src/gameobjects/CFire.cpp
 CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.o: ../src/gameobjects/CFire.h
+CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.o: ../src/gameobjects/CGameObject.h
 
 CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/CAnimation.h
 CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/CBoard.h
