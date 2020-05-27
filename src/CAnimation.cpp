@@ -18,8 +18,9 @@ CAnimation::~CAnimation()
 {
     for(std::vector<std::string>::size_type i = 0; i < this->m_Textures.size(); i++)
     {
-        delete (this->m_Textures[i]);
+        SDL_DestroyTexture( this->m_Textures[i]);
     }
+    this->m_Textures.clear();
 }
 /*====================================================================================================================*/
 SDL_Texture *CAnimation::GetTexture(unsigned int * index) const

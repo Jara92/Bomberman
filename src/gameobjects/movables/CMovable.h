@@ -20,8 +20,8 @@ public:
     explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord location, double speed, bool wallPass, int lives)
             : CGameObject(texturePack, true), // every movable object is passable
               m_StartingLocation(location), m_Location(location), m_Speed(speed), m_WallPass(wallPass),
-              m_MovingDirection(EDirection::DIRECTION_NONE), m_HorizontalMovingDirection(EDirection::DIRECTION_NONE),
-              m_VerticalMovingDirection(EDirection::DIRECTION_NONE), m_Lives(lives)
+             /* m_MovingDirection(EDirection::DIRECTION_NONE),*/ m_VerticalMovingDirection(EDirection::DIRECTION_NONE),
+              m_HorizontalMovingDirection(EDirection::DIRECTION_NONE), m_Lives(lives)
     {}
 
     CMovable(const CMovable &other) = default;
@@ -52,7 +52,7 @@ protected:
     CCoord m_Location;
     double m_Speed;
     bool m_WallPass;
-    EDirection m_MovingDirection;
+   // EDirection m_MovingDirection;
     EDirection m_VerticalMovingDirection;
     EDirection m_HorizontalMovingDirection;
     int m_Lives;

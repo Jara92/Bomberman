@@ -28,6 +28,10 @@ CSDLInterface::~CSDLInterface()
         SDL_DestroyWindow(this->m_Window);
     }
 
+
+
+    SDL_RenderClear(this->m_Renderer);
+
     if (this->m_Renderer != NULL && this->m_Renderer != nullptr)
     {
         SDL_DestroyRenderer(this->m_Renderer);

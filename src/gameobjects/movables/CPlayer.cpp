@@ -36,7 +36,7 @@ void CPlayer::Update(CBoard *board, int deltaTime)
     // Clean input
     this->m_IsDetonating = false;
     this->m_IsPlanting = false;
-    this->m_MovingDirection = EDirection::DIRECTION_NONE; // todo remove
+//    this->m_MovingDirection = EDirection::DIRECTION_NONE; // todo remove
     this->m_VerticalMovingDirection = EDirection::DIRECTION_NONE;
     this->m_HorizontalMovingDirection = EDirection::DIRECTION_NONE;
 }
@@ -155,24 +155,24 @@ void CPlayer::HandleInput(const Uint8 *keyState)
     // movement
     if (keyState[this->m_Controls->m_Up])
     {
-        this->m_MovingDirection = EDirection::DIRECTION_UP;
+    //    this->m_MovingDirection = EDirection::DIRECTION_UP;
         this->m_VerticalMovingDirection = EDirection::DIRECTION_UP;
         this->m_ActualTexture = ETextureType::TEXTURE_BACK;
     } else if (keyState[this->m_Controls->m_Down])
     {
-        this->m_MovingDirection = EDirection::DIRECTION_DOWN;
+    //    this->m_MovingDirection = EDirection::DIRECTION_DOWN;
         this->m_VerticalMovingDirection = EDirection::DIRECTION_DOWN;
         this->m_ActualTexture = ETextureType::TEXTURE_FRONT;
     }
 
     if (keyState[this->m_Controls->m_Left])
     {
-        this->m_MovingDirection = EDirection::DIRECTION_LEFT;
+   //     this->m_MovingDirection = EDirection::DIRECTION_LEFT;
         this->m_HorizontalMovingDirection = EDirection::DIRECTION_LEFT;
         this->m_ActualTexture = ETextureType::TEXTURE_LEFT;
     } else if (keyState[this->m_Controls->m_Right])
     {
-        this->m_MovingDirection = EDirection::DIRECTION_RIGHT;
+    //    this->m_MovingDirection = EDirection::DIRECTION_RIGHT;
         this->m_HorizontalMovingDirection = EDirection::DIRECTION_RIGHT;
         this->m_ActualTexture = ETextureType::TEXTURE_RIGHT;
     }
