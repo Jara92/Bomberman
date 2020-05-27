@@ -59,6 +59,7 @@ void CGameManager::Run()
         this->Draw();
 
       //  SDL_Delay(25); // todo edit this
+      //std::cerr << this->m_Clock.DeltaTime() << std::endl;
     }
 }
 

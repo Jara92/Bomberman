@@ -15,12 +15,11 @@ CPlayer::~CPlayer()
 /*====================================================================================================================*/
 void CPlayer::Update(CBoard *board, int deltaTime)
 {
-    this->Animate(deltaTime);
-    //  std::cout << "dt: " <<  deltaTime << std::endl;
-
+    CCoord oldLoc = this->m_Location;
     // Movement
-    this->HorizontalMove(board, deltaTime);
-    this->VerticalMove(board, deltaTime);
+    EDirection horizontalMove = this->HorizontalMove(board, deltaTime);
+    EDirection verticalMove = this->VerticalMove(board, deltaTime);
+
 
     // Actions
     if (this->m_IsPlanting)
@@ -33,22 +32,26 @@ void CPlayer::Update(CBoard *board, int deltaTime)
         board->DetonateBombs(this);
     }
 
-    // Clean input
+    this->Animate(verticalMove, horizontalMove, deltaTime);
+
+    // Clear input
     this->m_IsDetonating = false;
     this->m_IsPlanting = false;
-//    this->m_MovingDirection = EDirection::DIRECTION_NONE; // todo remove
     this->m_VerticalMovingDirection = EDirection::DIRECTION_NONE;
     this->m_HorizontalMovingDirection = EDirection::DIRECTION_NONE;
+
+
 }
 
 /*====================================================================================================================*/
-void CPlayer::VerticalMove(CBoard *board, int deltaTime)
+EDirection CPlayer::VerticalMove(CBoard *board, int deltaTime)
 {
     // Save old location
     CCoord oldLocation = this->m_Location;
 
     // Move
-    this->m_Location.m_Y += (this->m_Speed * static_cast<int>(this->m_VerticalMovingDirection)) * deltaTime;
+    double movement = (this->m_Speed * static_cast<int>(this->m_VerticalMovingDirection)) * deltaTime;
+    this->m_Location.m_Y += movement;
 
     // Check collisions
     if (!this->LocationIsFree(board))
@@ -58,18 +61,21 @@ void CPlayer::VerticalMove(CBoard *board, int deltaTime)
 
         // Try center horizontal position if horizontal direction is none
         if (m_HorizontalMovingDirection == EDirection::DIRECTION_NONE)
-        { this->HorizontalCenter(board, deltaTime, static_cast<int>(this->m_VerticalMovingDirection)); }
+        { return this->HorizontalCenter(board, deltaTime, static_cast<int>(this->m_VerticalMovingDirection)); }
     }
+
+    return this->m_VerticalMovingDirection;
 }
 
 /*====================================================================================================================*/
-void CPlayer::HorizontalMove(CBoard *board, int deltaTime)
+EDirection CPlayer::HorizontalMove(CBoard *board, int deltaTime)
 {
     // Save old location
     CCoord oldLocation = this->m_Location;
 
     // Move
-    this->m_Location.m_X += (this->m_Speed * static_cast<int>(this->m_HorizontalMovingDirection)) * deltaTime;
+    double movement = (this->m_Speed * static_cast<int>(this->m_HorizontalMovingDirection)) * deltaTime;
+    this->m_Location.m_X += movement;
 
     // Check collisions
     if (!this->LocationIsFree(board))
@@ -79,12 +85,14 @@ void CPlayer::HorizontalMove(CBoard *board, int deltaTime)
 
         // Try center vertical position if vertical direction is none
         if (m_VerticalMovingDirection == EDirection::DIRECTION_NONE)
-        { this->VerticalCenter(board, deltaTime, static_cast<int>(this->m_HorizontalMovingDirection)); }
+        { return this->VerticalCenter(board, deltaTime, static_cast<int>(this->m_HorizontalMovingDirection)); }
     }
+
+    return this->m_HorizontalMovingDirection;
 }
 
 /*====================================================================================================================*/
-void CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
+EDirection CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
 {
     // Get decimal part of m_Location.m_Y
     double decPart, intpart;
@@ -96,6 +104,7 @@ void CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
     {
         this->m_Location.m_Y = std::min(this->m_Location.m_Y + this->m_Speed * deltaTime,
                                         std::ceil(this->m_Location.m_Y));
+        return EDirection ::DIRECTION_DOWN;
 
     }
     // TODO comment this
@@ -105,11 +114,15 @@ void CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
     {
         this->m_Location.m_Y = std::max(this->m_Location.m_Y - this->m_Speed * deltaTime,
                                         std::floor(this->m_Location.m_Y));
+
+        return EDirection ::DIRECTION_UP;
     }
+
+    return this->m_HorizontalMovingDirection;
 }
 
 /*====================================================================================================================*/
-void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
+EDirection CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
 {
     // Get decimal part of m_Location.m_X
     double decPart, intpart;
@@ -121,6 +134,7 @@ void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
     {
         this->m_Location.m_X = std::min(this->m_Location.m_X + this->m_Speed * deltaTime,
                                         std::ceil(this->m_Location.m_X));
+        return EDirection ::DIRECTION_LEFT;
 
     }
     // TODO comment this
@@ -130,7 +144,11 @@ void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
     {
         this->m_Location.m_X = std::max(this->m_Location.m_X - this->m_Speed * deltaTime,
                                         std::floor(this->m_Location.m_X));
+
+        return EDirection::DIRECTION_RIGHT;
     }
+
+    return this->m_VerticalMovingDirection;
 }
 
 /*====================================================================================================================*/
@@ -155,26 +173,22 @@ void CPlayer::HandleInput(const Uint8 *keyState)
     // movement
     if (keyState[this->m_Controls->m_Up])
     {
-    //    this->m_MovingDirection = EDirection::DIRECTION_UP;
         this->m_VerticalMovingDirection = EDirection::DIRECTION_UP;
-        this->m_ActualTexture = ETextureType::TEXTURE_BACK;
+     //   this->m_ActualTexture = ETextureType::TEXTURE_BACK;
     } else if (keyState[this->m_Controls->m_Down])
     {
-    //    this->m_MovingDirection = EDirection::DIRECTION_DOWN;
         this->m_VerticalMovingDirection = EDirection::DIRECTION_DOWN;
-        this->m_ActualTexture = ETextureType::TEXTURE_FRONT;
+       // this->m_ActualTexture = ETextureType::TEXTURE_FRONT;
     }
 
     if (keyState[this->m_Controls->m_Left])
     {
-   //     this->m_MovingDirection = EDirection::DIRECTION_LEFT;
         this->m_HorizontalMovingDirection = EDirection::DIRECTION_LEFT;
-        this->m_ActualTexture = ETextureType::TEXTURE_LEFT;
+    //    this->m_ActualTexture = ETextureType::TEXTURE_LEFT;
     } else if (keyState[this->m_Controls->m_Right])
     {
-    //    this->m_MovingDirection = EDirection::DIRECTION_RIGHT;
         this->m_HorizontalMovingDirection = EDirection::DIRECTION_RIGHT;
-        this->m_ActualTexture = ETextureType::TEXTURE_RIGHT;
+      //  this->m_ActualTexture = ETextureType::TEXTURE_RIGHT;
     }
 
     // actions
@@ -194,6 +208,45 @@ void CPlayer::TryPlaceBomb(CBoard *board)
 {
     // TODO Po odchodu hráče z colliderboxu bomby se zapne detekce kolizí na bombě
     // TODO udělat kolize před trigger box
+}
+
+void CPlayer::Animate(EDirection verticalMove, EDirection horizontalMove, int deltaTime)
+{
+    ETextureType oldTexture = this->m_ActualTexture;
+
+    switch (verticalMove)
+    {
+        case EDirection ::DIRECTION_UP:
+            this->m_ActualTexture = ETextureType ::TEXTURE_BACK;
+            break;
+        case EDirection ::DIRECTION_DOWN:
+            this->m_ActualTexture = ETextureType ::TEXTURE_FRONT;
+            break;
+        default:
+            break;
+    }
+
+    switch (horizontalMove)
+    {
+        case EDirection ::DIRECTION_LEFT:
+            this->m_ActualTexture = ETextureType ::TEXTURE_LEFT;
+            break;
+        case EDirection ::DIRECTION_RIGHT:
+            this->m_ActualTexture = ETextureType ::TEXTURE_RIGHT;
+            break;
+        default:
+            break;
+    }
+
+    if(this->m_ActualTexture != oldTexture)
+    {
+        this->m_AnimationIndex = 0;
+        this->m_AnimationTimer = 0;
+
+        return;
+    }
+
+    CMovable::Animate(deltaTime);
 }
 
 

@@ -71,7 +71,14 @@ void CBoard::Draw(CSDLInterface *interface)
     {
         for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
         {
-            if (this->m_Map[i][j]) this->m_Map[i][j]->Draw(interface, this->m_CellSize, CCoord(i, j));
+            if (this->m_Map[i][j])
+            {
+                this->m_Map[i][j]->Draw(interface, this->m_CellSize, CCoord(i, j));
+            }
+            else if(this->m_GroundObject)
+            {
+                this->m_GroundObject->Draw(interface, this->m_CellSize, CCoord(i,j));
+            }
         }
     }
 

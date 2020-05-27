@@ -35,41 +35,6 @@ public:
     virtual void Update(CBoard *board, int deltaTime) override;
 
     /**
-     * Movement along the axis Y
-     * @param board Game board
-     * @param deltaTime DeltaTime
-     */
-    void VerticalMove(CBoard * board, int deltaTime);
-
-    /**
-     * Movement along the axis X
-     * @param board Game board
-     * @param deltaTime DeltaTime
-     */
-    void HorizontalMove(CBoard * board, int deltaTime);
-
-    /**
-     * Center vertical players position.
-     * @param board Game board
-     * @param deltaTime DeltaTime
-     * @param direction Direction
-     */
-    void VerticalCenter(CBoard * board, int deltaTime, int direction);
-
-    /**
-    * Center horiz players position.
-    * @param board Game board
-    * @param deltaTime DeltaTime
-    * @param direction Direction
-    */
-    void HorizontalCenter(CBoard * board, int deltaTime, int direction);
-
-    /**
-     * Is current location free?
-     */
-    bool LocationIsFree(CBoard *board) const;
-
-    /**
      * Handle keyboard input.
      * @param keyState Keyboard layout
      */
@@ -81,10 +46,9 @@ public:
     */
     void TryPlaceBomb(CBoard *board);
 
-    /**
- * Boosts interface
- * @param ammount
- */
+    /**======================
+    * Boost interface.
+    =========================*/
     void IncreseScore(size_t ammount)
     { this->m_Score += ammount; }
 
@@ -184,6 +148,43 @@ protected:
     CControls *m_Controls;
     static constexpr double MIN_TURNING_VALUE = 0.5;
     static constexpr double MAX_TURNING_VALUE = 0.5;
+
+    /**
+ * Movement along the axis Y
+ * @param board Game board
+ * @param deltaTime DeltaTime
+ */
+    EDirection VerticalMove(CBoard * board, int deltaTime);
+
+    /**
+     * Movement along the axis X
+     * @param board Game board
+     * @param deltaTime DeltaTime
+     */
+    EDirection HorizontalMove(CBoard * board, int deltaTime);
+
+    /**
+     * Center vertical players position.
+     * @param board Game board
+     * @param deltaTime DeltaTime
+     * @param direction Direction
+     */
+    EDirection VerticalCenter(CBoard * board, int deltaTime, int direction);
+
+    /**
+    * Center horiz players position.
+    * @param board Game board
+    * @param deltaTime DeltaTime
+    * @param direction Direction
+    */
+    EDirection HorizontalCenter(CBoard * board, int deltaTime, int direction);
+
+    /**
+     * Is current location free?
+     */
+    bool LocationIsFree(CBoard *board) const;
+
+    void Animate(EDirection verticalMove, EDirection horizontalMove, int deltaTime);
 
 };
 

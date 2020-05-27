@@ -19,8 +19,13 @@ public:
 
     CGround(const CGround &other) = default;
 
-    CGround &operator=(const CGround &other) = delete;
+    CGround &operator=(const CGround &other) = default;
 
     virtual ~CGround() = default;
+
+    virtual void Update(CBoard * board, int deltaTime) override
+    {}
+
+
 };
 

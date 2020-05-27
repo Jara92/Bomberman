@@ -35,7 +35,9 @@ CBoard *CLevelLoader::GetBoard(int playersCount, CSettings *settings)
     CWall ***map = this->LoadMap();
     std::vector<CPlayer *> players = this->LoadPlayers(playersCount);
 
-    return new CBoard(map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), cellSize);
+    CGround * groundObject = this->LoadGround();
+
+    return new CBoard(map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), groundObject, cellSize);
 }
 
 /*====================================================================================================================*/
@@ -110,11 +112,11 @@ CWall ***CLevelLoader::LoadMap()
     return map;
 }
 
-/*====================================================================================================================*/
+/*========================================================================================== -==========================*/
 std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
 {
     //return std::vector<CPlayer *>{};
-    count = 2; // todo remove
+   // count = 2; // todo remove
     CControls *controls[MAX_PLAYERS] = {
             new CControls(SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A,
                           SDL_SCANCODE_D, SDL_SCANCODE_X, SDL_SCANCODE_C),
@@ -203,10 +205,9 @@ void CLevelLoader::GenerateObstacles(CBoard *board, size_t level , size_t count)
             std::make_shared<CTexturePack>(this->m_Interface,
                                            textures);
     size_t randomX = 0, randomY = 0;
-int counter = 0;
+
     for(size_t i = 0; i < count; i++)
     {
-        std::cerr << count << std::endl;
         // Generate random location until the location is free.
         do
         {
@@ -216,9 +217,21 @@ int counter = 0;
         while(!board->PositionFree(CCoord(randomX, randomY)));
 
         board->m_Map[randomX][randomY] = new CWall(texturePack, true, nullptr);
-        counter ++;
+
     }
-    std::cerr << "C"  << counter << board->GetBoardSize() <<  std::endl;
+
+}
+/*====================================================================================================================*/
+CGround *CLevelLoader::LoadGround()
+{
+    std::map<ETextureType, const std::vector<std::string>> textures
+            {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/BackgroundTile.png"}}}};
+
+    std::shared_ptr<CTexturePack> texturePack =
+            std::make_shared<CTexturePack>(this->m_Interface,
+                                           textures);
+    // create reference wall to make copies
+   return new CGround(texturePack);
 }
 
 

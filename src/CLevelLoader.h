@@ -48,6 +48,11 @@ protected:
 
     CWall ***LoadMap(); // TODO CHANGE TO VECTOR OF VECTORs
     std::vector<CPlayer *> LoadPlayers(int count);
+    /**
+     * Get object which will be rendered as ground.
+     * @return Ground object
+     */
+    CGround * LoadGround();
 
     /**
      * Generate obstacles for game map.

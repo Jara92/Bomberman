@@ -1,34 +1,53 @@
 CXX       = g++
-CXXFLAGS  = -Wall -pedantic -O3 -fsanitize=address -g -fno-omit-frame-pointer -fno-optimize-sibling-calls -std=c++14
-LIBFLAGS  = -L/usr/lib/x86_64-linux-gnu -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
-_DEPS     =			CApplication.h	CCoord.h	CAnimation.h	CTexturePack.h	gameobjects/CGameObject.h	gameobjects/collectibles/CCollectible.h	gameobjects/movables/CMovable.h	gameobjects/movables/CPlayer.h	CBoard.h	CSDLInterface.h	CGameManager.h	CLevelLoader.h
-_OBJ      = main.o	CApplication.o	CCoord.o	CAnimation.o	CTexturePack.o	gameobjects/CGameObject.o	gameobjects/collectibles/CCollectible.o	gameobjects/movables/CMovable.o	gameobjects/movables/CPlayer.o	CBoard.o	CSDLInterface.o	CGameManager.o	CLevelLoader.o
+CXXFLAGS  = -Wall -pedantic -O3 -std=c++14
+LD        = g++
+LIBS      = -L/usr/lib/x86_64-linux-gnu -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_net
 OBJDIR    = obj
 SRCDIR    = src
-DEPS      = $(patsubst %,$(SRCDIR)/%,$(_DEPS))
-OBJ       = $(patsubst %,$(OBJDIR)/%,$(_OBJ))
+DEPDIR    = dep
 
-all: bomberman doc
+rwildcard = $(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
 
-$(OBJDIR):
-	mkdir $(OBJDIR)
-	mkdir $(OBJDIR)/gameobjects
-	mkdir $(OBJDIR)/gameobjects/collectibles
-	mkdir $(OBJDIR)/gameobjects/movables
+SRC = $(call rwildcard,$(SRCDIR),*.cpp)
+OBJ = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SRC))
+HEADERS = $(call rwildcard,$(SRCDIR),*.h)
+DEP = $(patsubst $(SRCDIR)/%.cpp,$(DEPDIR)/%.d,$(SRC))
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(DEPS) $(OBJDIR)
-	$(CXX) -c -o $@ $< $(CXXFLAGS)
+
+
+all: compile doc
+
+compile: bomberman ;
 
 bomberman: $(OBJ)
-	$(CXX) -o $@ $^ $(CXXFLAGS) $(LIBFLAGS)
+	$(LD) -o bomberman $^ $(LIBS)
 
-doc:
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	@mkdir -p $(@D)
+	$(CXX) -c -o $@ $< $(CXXFLAGS)
+
+
+
+doc: $(HEADERS) $(SRC) Doxyfile README.md
 	doxygen
+
+
 
 clean:
 	rm -f bomberman
 	rm -rf doc
+	rm -rf $(DEPDIR)
 	rm -rf $(OBJDIR)
 
-run: bomberman
-		./bomberman
+
+
+run: compile
+	./bomberman
+
+
+
+$(DEPDIR)/%.d: $(SRCDIR)/%.cpp $(HEADERS)
+	@mkdir -p $(@D)
+	$(CXX) -MM $< -MT $(OBJDIR)/$*.o > $@
+
+-include $(DEP)
