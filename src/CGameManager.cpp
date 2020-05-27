@@ -64,7 +64,7 @@ void CGameManager::Run()
         // Draw board and info table
         this->Draw();
 
-        SDL_Delay(25); // todo edit this
+      //  SDL_Delay(25); // todo edit this
     }
 }
 
