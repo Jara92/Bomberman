@@ -15,7 +15,8 @@ CPlayer::~CPlayer()
 /*====================================================================================================================*/
 void CPlayer::Update(CBoard *board, int deltaTime)
 {
-    this->Animate(deltaTime);
+    CMovable::Update(board, deltaTime);
+    //this->Animate(deltaTime);
 
     // Movement in vertical and horizontal axis
     this->HorizontalMove(board, deltaTime);
@@ -48,6 +49,7 @@ void CPlayer::VerticalMove(CBoard *board, int deltaTime)
 
     // Move
     this->m_Location.m_Y += (this->m_Speed * static_cast<int>(this->m_VerticalMovingDirection)) * deltaTime;
+    //std::cout << "Step size " << (this->m_Speed * static_cast<int>(this->m_VerticalMovingDirection)) * deltaTime << std::endl;
 
     // Check collisions
     if (!this->LocationIsFree(board))
@@ -195,7 +197,7 @@ void CPlayer::TryPlaceBomb(CBoard *board)
     if(this->m_ActiveBombs < this->m_MaxBombs)
     {
         board->PlaceBomb(this);
-        this->m_ActiveBombs++;
+        //this->m_ActiveBombs++;
     }
 }
 

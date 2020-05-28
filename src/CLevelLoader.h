@@ -53,7 +53,6 @@ protected:
      * @return Ground object
      */
     CGround * LoadGround();
-    CBomb * LoadBomb();
 
     /**
      * Generate obstacles for game map.
@@ -65,5 +64,8 @@ protected:
      void GenerateObstacles(CBoard *board, size_t level, size_t count);
 
 
+    std::shared_ptr<CTexturePack> LoadBombTexturePack();
+
+    std::shared_ptr<CTexturePack> LoadFireTexturePack();
 };
 

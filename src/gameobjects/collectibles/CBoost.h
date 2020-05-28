@@ -14,10 +14,11 @@ public:
     /**
     * Collectible object contructor
     * @param textures Texturepack to be rendered.
+    * @param location Object location.
     * @param scoreBonus Bonus to be claimed by collector.
     * @param applyFunction Function which will handle boost Apply.
     */
-    explicit CBoost(std::shared_ptr<CTexturePack> texturePack, size_t scoreBonus,
+    explicit CBoost(std::shared_ptr<CTexturePack> texturePack, CCoord location, size_t scoreBonus,
                     std::function<void(const CPlayer *)> applyFunction)
             : CCollectible(std::move(texturePack), scoreBonus), m_Apply(std::move(applyFunction))
     {}

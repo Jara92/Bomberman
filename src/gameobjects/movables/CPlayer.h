@@ -112,7 +112,7 @@ public:
     void DeactivateLevelUp()
     { this->m_LevelUp = false; }
 
-    void DecreseActivateBombs()
+    void DecreseActiveBombs()
     {
         // Minimum value is 0
         if (this->m_ActiveBombs > 0)
@@ -133,6 +133,9 @@ public:
 
     bool GetFireImmunity() const
     { return this->m_FireImmunity; }
+
+    bool GetExplosionRadius() const
+    { return this->m_ExplosionRadius; }
 
 protected:
     size_t m_Score;

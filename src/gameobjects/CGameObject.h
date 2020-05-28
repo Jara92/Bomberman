@@ -21,9 +21,9 @@ public:
     * @param textures Texturepack to be rendered.
      * @param isPassable Is this object passable for movable objects?
     */
-    explicit CGameObject(std::shared_ptr<CTexturePack> texturePack, bool isPassable = false)
+    explicit CGameObject(std::shared_ptr<CTexturePack> texturePack, CCoord location = CCoord(0,0), bool isPassable = false)
             : m_TexturePack(std::move(texturePack)), m_ActualTexture(ETextureType::TEXTURE_FRONT),
-              m_IsPassable(isPassable), m_IsAlive(true), m_AnimationIndex(0), m_AnimationUpdateInterval(100),
+              m_IsPassable(isPassable), m_IsAlive(true), m_Location(location), m_AnimationIndex(0), m_AnimationUpdateInterval(100),
               m_AnimationTimer(0)
     {}
 
@@ -47,12 +47,16 @@ public:
     bool IsPassable() const
     { return this->m_IsPassable; }
 
+    CCoord GetLocation() const
+    {return this->m_Location;}
+
     /**
     * Updates object state using deltatime.
     * @param board Game board
     * @param deltaTime DeltaTime
     */
-    virtual void Update(CBoard *board, int deltaTime) = 0;
+    virtual void Update(CBoard *board, int deltaTime)
+    {this->Animate(deltaTime);}
 
     /**
      * Update animation state
@@ -81,20 +85,21 @@ public:
 
     /**
      * Are these objects in colliding?
-     * @param thisObjectLocation This object location
-     * @param otherObject Other object
-     * @param otherObjectLocation Other object location
-     * @param tolerance Collision tolerance
-     * @return True - Objects are colliding
+     * @param other Other object
+     * @param tolerance Tolerance
+     * @return True - Objects are colliding.
      */
-    bool IsColiding(CCoord thisObjectLocation, const CGameObject *otherObject, CCoord otherObjectLocation,
-                    double tolerance = 0) const;
+    bool IsColiding(const CGameObject * other, double tolerance = 0) const;
+
+    void SetLocation(CCoord location)
+    {this->m_Location = location;}
 
 protected:
     std::shared_ptr<CTexturePack> m_TexturePack;
     ETextureType m_ActualTexture;
     bool m_IsPassable;
     bool m_IsAlive;
+    CCoord m_Location;
 
     /* Mutable keyword is very useful here. Animation index is not important for CGameObject, because it
      * does not disrupt the internal structure of the object. It is just auxiliary variable.*/

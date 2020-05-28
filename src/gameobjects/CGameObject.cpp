@@ -33,17 +33,18 @@ SDL_Texture *CGameObject::GetTexture() const
 }
 
 /*====================================================================================================================*/
-bool CGameObject::IsColiding(CCoord thisObjectLocation, const CGameObject * otherObject, CCoord otherObjectLocation, double tolerance) const
+
+bool CGameObject::IsColiding(const CGameObject *other, double tolerance) const
 {
     double cellSize = (1 - tolerance);
-    // Do not check collisions if one of the objects is dead.
-    if (this->IsAlive() && otherObject->IsAlive())
-    {
-        if (thisObjectLocation.m_X < otherObjectLocation.m_X + cellSize && thisObjectLocation.m_X + cellSize > otherObjectLocation.m_X &&
-                thisObjectLocation.m_Y < otherObjectLocation.m_Y + cellSize && thisObjectLocation.m_Y + cellSize > otherObjectLocation.m_Y)
-        {
-            return true;
-        }
+    CCoord a = this->GetLocation();
+    CCoord b = other->GetLocation();
+
+    if (a.m_X < b.m_X + /*b.width*/cellSize &&
+        a.m_X + /*a.width*/cellSize > b.m_X &&
+        a.m_Y < b.m_Y + /*b.height*/cellSize &&
+        a.m_Y + /*a.height*/cellSize > b.m_Y) {
+        return true;
     }
 
     return false;

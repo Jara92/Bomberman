@@ -17,11 +17,13 @@ public:
     /**
      * Bomb contructor.
      * @param texturePack Texturepack to be rendered.
+     * @param location Object location.
+     * @param owner Object owner.
      * @param explosionDelay Time to explode. Set 0 to activate remote explosion (the bomb will explode only when player trigger explosion)
      */
-    CBomb(std::shared_ptr<CTexturePack> texturePack, unsigned int explosionDelay = 2000)
+    CBomb(std::shared_ptr<CTexturePack> texturePack, CCoord location, CPlayer * owner, unsigned int explosionDelay = 2000)
             : CGameObject(std::move(texturePack),
-                          false), m_Owner(nullptr), m_IsPassableForOwner(
+                          location, false), m_Owner(owner), m_IsPassableForOwner(
             true), // Bomb is not passable, but... For owner is passable until the player exits the area of this bomb.
     m_ExplosionDelay(explosionDelay), m_ExplosionCounter(0)
             {}
@@ -63,6 +65,7 @@ public:
      */
     void Detonate(CBoard * board);
 
+    static constexpr double COLLISION_TOLERANCE = 0.05;
 protected:
     CPlayer *m_Owner;
     /** Every bomb is passable for owner until the player left bombs cell. */

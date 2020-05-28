@@ -35,10 +35,12 @@ CBoard *CLevelLoader::GetBoard(int playersCount, CSettings *settings)
     // Load important objects for new board.
     CWall ***map = this->LoadMap();
     std::vector<CPlayer *> players = this->LoadPlayers(playersCount);
-    CGround * groundObject = this->LoadGround();
-    CBomb * bombObject = this->LoadBomb();
+    CGround *groundObject = this->LoadGround();
+    std::shared_ptr<CTexturePack> bombTexturePack = this->LoadBombTexturePack();
+    std::shared_ptr<CTexturePack> fireTexturePack = this->LoadFireTexturePack();
 
-    return new CBoard(map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), groundObject, bombObject, cellSize);
+    return new CBoard(map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), groundObject, bombTexturePack, fireTexturePack,
+                      cellSize);
 }
 
 /*====================================================================================================================*/
@@ -54,6 +56,7 @@ CWall ***CLevelLoader::LoadMap()
     CWall wall(texturePack);
 
     // init 2D array
+    // TODO IMPORTANT Change to 2D vector!!!!!!!!!!!!!!!!!!!!!!!!
     CWall ***map = new CWall **[MAP_WIDTH];
     for (size_t i = 0; i < CLevelLoader::MAP_WIDTH; i++)
     {
@@ -116,7 +119,7 @@ CWall ***CLevelLoader::LoadMap()
 /*========================================================================================== -==========================*/
 std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
 {
-   // count = 2; // todo remove
+    // count = 2; // todo remove
     CControls *controls[MAX_PLAYERS] = {
             new CControls(SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A,
                           SDL_SCANCODE_D, SDL_SCANCODE_X, SDL_SCANCODE_C),
@@ -196,7 +199,7 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
 }
 
 /*====================================================================================================================*/
-void CLevelLoader::GenerateObstacles(CBoard *board, size_t level , size_t count)
+void CLevelLoader::GenerateObstacles(CBoard *board, size_t level, size_t count)
 {
     std::map<ETextureType, const std::vector<std::string>> textures
             {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/ExplodableBlock.png"}}}};
@@ -206,21 +209,21 @@ void CLevelLoader::GenerateObstacles(CBoard *board, size_t level , size_t count)
                                            textures);
     size_t randomX = 0, randomY = 0;
 
-    for(size_t i = 0; i < count; i++)
+    for (size_t i = 0; i < count; i++)
     {
         // Generate random location until the location is free.
         do
         {
             randomX = rand() % static_cast<int>(board->GetBoardSize().m_X);
             randomY = rand() % static_cast<int>(board->GetBoardSize().m_Y);
-        }
-        while(!board->PositionFree(CCoord(randomX, randomY)));
+        } while (!board->PositionFree(CCoord(randomX, randomY)));
 
-        board->m_Map[randomX][randomY] = new CWall(texturePack, true, nullptr);
+        board->m_Map[randomX][randomY] = new CWall(texturePack, CCoord(randomX, randomY), true, nullptr);
 
     }
 
 }
+
 /*====================================================================================================================*/
 CGround *CLevelLoader::LoadGround()
 {
@@ -231,20 +234,32 @@ CGround *CLevelLoader::LoadGround()
             std::make_shared<CTexturePack>(this->m_Interface,
                                            textures);
     // create reference wall to make copies
-   return new CGround(texturePack);
+    return new CGround(texturePack);
 }
+
 /*====================================================================================================================*/
-CBomb *CLevelLoader::LoadBomb()
+std::shared_ptr<CTexturePack> CLevelLoader::LoadBombTexturePack()
 {
     // TODO Use other bomb textures - change texture with bomb life
     std::map<ETextureType, const std::vector<std::string>> textures
             {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Bomb/Bomb_f01.png"}}}};
 
-    std::shared_ptr<CTexturePack> texturePack =
-            std::make_shared<CTexturePack>(this->m_Interface,
-                                           textures, true, CCoord(0.65,0.65));
-    // create reference wall to make copies
-    return new CBomb(texturePack, 0);
+    return std::make_shared<CTexturePack>(this->m_Interface,
+                                          textures, true, CCoord(0.65, 0.65));
+}
+
+/*====================================================================================================================*/
+std::shared_ptr<CTexturePack> CLevelLoader::LoadFireTexturePack()
+{
+    std::map<ETextureType, const std::vector<std::string>> textures
+            {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Flame/Flame_f00.png"},
+                                                                    {"Flame/Flame_f01.png"},
+                                                                    {"Flame/Flame_f02.png"},
+                                                                    {"Flame/Flame_f03.png"},
+                                                                    {"Flame/Flame_f04.png"}}}};
+
+    return std::make_shared<CTexturePack>(this->m_Interface,
+                                          textures, true, CCoord(0.65, 0.65));
 }
 
 

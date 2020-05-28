@@ -7,7 +7,7 @@
 #include "CGameManager.h"
 
 CGameManager::CGameManager(CSDLInterface *interface)
-        : m_Interface(interface), m_GameIsRunning(true)
+        : m_Interface(interface), m_Board(nullptr), m_GameIsRunning(true)
 {
     this->m_LevelLoader = new CLevelLoader(interface);
 }
@@ -75,7 +75,7 @@ void CGameManager::Draw() const
 
     // DEBUG
     this->m_Interface->RenderText(std::to_string(this->m_Clock.GetFPS()), CCoord(10,10), CCoord(100,50));
-   // std::cout << "FPS: " << this->m_Clock.GetFPS() << std::endl;
+    //std::cout << "FPS: " << this->m_Clock.GetFPS() << std::endl;
 
     this->m_Interface->Present();
 }

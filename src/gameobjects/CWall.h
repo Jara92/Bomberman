@@ -14,11 +14,12 @@ public:
     /**
     * Game object contructor
     * @param textures Texturepack to be rendered.
+    * @param location Object location
     * @param isDestructible Is this wall destructible?
     * @param collectible Attached collectible object which will be displayed when the wall is destroyed
     */
-    CWall(std::shared_ptr<CTexturePack> texturePack, bool isDestructible = false, CCollectible *collectible = nullptr)
-            : CGameObject(texturePack, false), // no wall is passable
+    CWall(std::shared_ptr<CTexturePack> texturePack, CCoord location = CCoord(0,0), bool isDestructible = false, CCollectible *collectible = nullptr)
+            : CGameObject(std::move(texturePack), location, false), // no wall is passable
               m_IsDestructible(isDestructible), m_Collectible(collectible)
     {}
 
@@ -26,8 +27,7 @@ public:
 
     CWall &operator=(const CWall &other) = default;
 
-    virtual ~CWall()
-    {}
+    virtual ~CWall() = default;
 
     /**
     * Updates object state using deltatime.

@@ -14,12 +14,13 @@ class CFire : public CGameObject
 public:
     /**
      * Fire contructor.
-     * @param texturePack Textures.
-     * @param duration Duration of this fire.
+     * @param texturePack Textures to be rendered.
+     * @param location Object location.
+     * @param duration Duration of this fire in miliseconds.
      */
-    CFire(std::shared_ptr<CTexturePack> texturePack, unsigned int duration)
-    : CGameObject(std::move(texturePack), false) // Fire is not passable, but... For owner is passable until the player exits the area of this bomb.
-    , m_Duration(duration)
+    explicit CFire(std::shared_ptr<CTexturePack> texturePack, CCoord location = CCoord(0,0), unsigned int duration = 1000)
+    : CGameObject(std::move(texturePack), location, false) // Fire is not passable, but... For owner is passable until the player exits the area of this bomb.
+    , m_Duration(duration), m_DurationCounter(0)
     {}
 
     CFire(const CFire &other) = default;
@@ -28,10 +29,10 @@ public:
 
     virtual ~CFire() = default;
 
-    virtual void Update(CBoard * board, int deltaTime) override
-    {}
+    virtual void Update(CBoard * board, int deltaTime) override;
 
 protected:
     unsigned int m_Duration;
+    unsigned int m_DurationCounter;
 };
 

@@ -13,14 +13,18 @@ class CMovable : public CGameObject
 {
 public:
     /**
-    * Game object contructor
-    * @param textures Texturepack to be rendered.
-     * @param isPassable Is this object passable for movable objects?
-    */
-    explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord location, double speed, bool wallPass, int lives)
-            : CGameObject(texturePack, true), // every movable object is passable
-              m_StartingLocation(location), m_Location(location), m_Speed(speed), m_WallPass(wallPass),
-             /* m_MovingDirection(EDirection::DIRECTION_NONE),*/ m_VerticalMovingDirection(EDirection::DIRECTION_NONE),
+     * Object which can move in board.
+     * @param texturePack Textures to be rendered
+     * @param location Starting location
+     * @param speed  Starting speed
+     * @param wallPass Can this object walk through destructible walls?
+     * @param lives Starting lives count
+     */
+    explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord location, double speed, bool wallPass,
+                      int lives)
+            : CGameObject(std::move(texturePack), location, true), // every movable object is passable
+              m_StartingLocation(location), m_Speed(speed), m_WallPass(wallPass),
+              m_VerticalMovingDirection(EDirection::DIRECTION_NONE),
               m_HorizontalMovingDirection(EDirection::DIRECTION_NONE), m_Lives(lives)
     {}
 
@@ -38,30 +42,28 @@ public:
      */
     virtual void Draw(CSDLInterface *interface, int cellSize, CCoord offset = CCoord(0, 0)) const;
 
+    virtual void Update(CBoard *board, int deltaTime)
+    { CGameObject::Update(board, deltaTime); }
+
 
     virtual void Animate(int deltaTime) override;
 
-    CCoord GetLocation() const
-    {return this->m_Location;}
-
     /**
-     * Get player location cell.
-     * @return Coordinates of cell where the left-top conrner of this movable is located.
+     * Get object location cell.
+     * @return Coordinates of cell where the left-top corner of this object is located.
      */
     CCoord GetLocationCell() const
-    {return CCoord(floor(this->m_Location.m_X + 0.5), floor(this->m_Location.m_Y + 0.5));}
+    { return CCoord(floor(this->m_Location.m_X + 0.5), floor(this->m_Location.m_Y + 0.5)); }
 
     void ResetLocation()
     { this->m_Location = this->m_StartingLocation; }
 
 
-
 protected:
     CCoord m_StartingLocation;
-    CCoord m_Location;
     double m_Speed;
     bool m_WallPass;
-   // EDirection m_MovingDirection;
+    // EDirection m_MovingDirection;
     EDirection m_VerticalMovingDirection;
     EDirection m_HorizontalMovingDirection;
     int m_Lives;

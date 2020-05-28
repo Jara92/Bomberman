@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include <memory>
 #include <map>
 #include <vector>
 #include "Messages.h"
@@ -21,8 +22,11 @@
 class CBoard
 {
 public:
-    CBoard(CWall ***map, std::vector<CPlayer*> players, CCoord boardSize, CGround * ground, CBomb * bomb, int cellSize)
-            :m_Players(std::move(players)),  m_Map(map), m_BoardSize(boardSize), m_CellSize(cellSize), m_GroundObject(ground), m_BombObject(bomb)
+    CBoard(CWall ***map, std::vector<CPlayer *> players, CCoord boardSize, CGround *ground,
+           std::shared_ptr<CTexturePack> bombTexturePack, std::shared_ptr<CTexturePack> fireTexturePack, int cellSize)
+            : m_Players(std::move(players)), m_Map(map), m_BoardSize(boardSize), m_CellSize(cellSize),
+              m_GroundObject(ground), m_BombObjectTexturePack(std::move(bombTexturePack)),
+              m_FireObjectTexturePack(std::move(fireTexturePack))
     {}
 
     ~CBoard();
@@ -35,7 +39,7 @@ public:
 
     void UpdatePhysics();
 
-    void Draw(CSDLInterface * interface);
+    void Draw(CSDLInterface *interface);
 
     /**
      * Is this coord passable for the player?
@@ -43,7 +47,7 @@ public:
      * @param player Player
      * @return True if is passable.
      */
-    bool IsPassable(CCoord coord, const CPlayer * player);
+    bool IsPassable(CCoord coord, const CPlayer *player);
 
     /**
      * Is this position totaly free?
@@ -56,13 +60,29 @@ public:
      * Place bomb in game board.
      * @param player Bomb owner.
      */
-    void PlaceBomb(CPlayer * player);
+    void PlaceBomb(CPlayer *player);
 
     /**
      * Detonate bombs owned by player
      * @param player Player
      */
-    void DetonateBombs(const CPlayer * player);
+    void DetonateBombs(const CPlayer *player);
+
+    /**
+     * Trigger explosion in bombs location.
+     * @param bomb Exploding bomb.
+     */
+    void CreateExplosion(CBomb *bomb);
+
+    /**
+     * Trigger explosion in one direction.
+     * @param location Explosion location.
+     * @param direction Direction vector.
+     * @param explosionRadius Explosion radius.
+     */
+    void CreateExplosionWave(CCoord location, CCoord direction, unsigned int explosionRadius);
+
+    void DestroyExplosion(CFire * fire);
 
     std::vector<CPlayer *> m_Players;
     std::vector<CEnemy *> m_Enemies;
@@ -72,7 +92,7 @@ public:
     CWall ***m_Map;
 
     CCoord GetBoardSize() const
-    {return this->m_BoardSize;}
+    { return this->m_BoardSize; }
 
     /**
      * Remove all dynamically added objects. (Bombs, Enemies, Boosts, DestructibleWalls)
@@ -84,8 +104,10 @@ protected:
     int m_CellSize;
 
     /** Ground object template */
-    CGround * m_GroundObject;
-    /** Bomb object template */
-    CBomb * m_BombObject;
+    CGround *m_GroundObject;
+
+    /** Texturepack templates. */
+    std::shared_ptr<CTexturePack> m_BombObjectTexturePack;
+    std::shared_ptr<CTexturePack> m_FireObjectTexturePack;
 };
 

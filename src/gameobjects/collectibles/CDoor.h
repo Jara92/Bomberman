@@ -13,10 +13,11 @@ public:
     /**
     * Collectible object contructor
     * @param textures Texturepack to be rendered.
+    * @param location Object location.
     * @param scoreBonus Bonus to be claimed by collector.
     */
-    explicit CDoor(std::shared_ptr<CTexturePack> texturePack, size_t scoreBonus)
-            : CCollectible(texturePack, scoreBonus)
+    explicit CDoor(std::shared_ptr<CTexturePack> texturePack, CCoord location, size_t scoreBonus)
+            : CCollectible(std::move(texturePack), location, scoreBonus)
     {}
 
     CDoor(const CDoor &other) = default;
