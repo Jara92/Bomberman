@@ -197,7 +197,7 @@ void CPlayer::TryPlaceBomb(CBoard *board)
     if(this->m_ActiveBombs < this->m_MaxBombs)
     {
         board->PlaceBomb(this);
-        //this->m_ActiveBombs++;
+        //this->m_ActiveBombs++; // TODO uncomment this
     }
 }
 

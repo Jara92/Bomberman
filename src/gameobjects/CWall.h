@@ -41,7 +41,7 @@ public:
     * Try to destroy the wall.
     * @param distance Distance from the bomb.
     */
-    void TryDestroy(int distance);
+    virtual bool TryDestroy(int distance) override;
 
     bool IsDestructible()
     { return this->m_IsDestructible; }

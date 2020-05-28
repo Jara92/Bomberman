@@ -56,9 +56,9 @@ void CGameManager::Run()
         this->UpdatePhysics();
 
         // Draw board and info table
-       this->Draw();
+        this->Draw();
 
-       // Wait for few miliseconds to draw cca 60 frames per second
+        // Wait for few miliseconds to draw cca 60 frames per second
         SDL_Delay(this->m_Clock.GetDelay());
     }
 }
@@ -74,7 +74,7 @@ void CGameManager::Draw() const
     // TODO Render Game menu
 
     // DEBUG
-    this->m_Interface->RenderText(std::to_string(this->m_Clock.GetFPS()), CCoord(10,10), CCoord(100,50));
+    this->m_Interface->RenderText(std::to_string(this->m_Clock.GetFPS()), CCoord(10, 10), CCoord(100, 50));
     //std::cout << "FPS: " << this->m_Clock.GetFPS() << std::endl;
 
     this->m_Interface->Present();

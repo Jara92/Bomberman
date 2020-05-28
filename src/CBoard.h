@@ -22,9 +22,9 @@
 class CBoard
 {
 public:
-    CBoard(CWall ***map, std::vector<CPlayer *> players, CCoord boardSize, CGround *ground,
+    CBoard(std::vector<std::vector<CWall *>> map, std::vector<CPlayer *> players, CCoord boardSize, CGround *ground,
            std::shared_ptr<CTexturePack> bombTexturePack, std::shared_ptr<CTexturePack> fireTexturePack, int cellSize)
-            : m_Players(std::move(players)), m_Map(map), m_BoardSize(boardSize), m_CellSize(cellSize),
+            : m_Players(std::move(players)), m_Map(std::move(map)), m_BoardSize(boardSize), m_CellSize(cellSize),
               m_GroundObject(ground), m_BombObjectTexturePack(std::move(bombTexturePack)),
               m_FireObjectTexturePack(std::move(fireTexturePack))
     {}
@@ -89,7 +89,7 @@ public:
     std::map<CCoord, CCollectible *> m_Boosts;
     std::map<CCoord, CFire *> m_Fires;
     std::map<CCoord, CBomb *> m_Bombs;
-    CWall ***m_Map;
+    std::vector<std::vector<CWall *>> m_Map;
 
     CCoord GetBoardSize() const
     { return this->m_BoardSize; }

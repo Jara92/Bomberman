@@ -6,7 +6,7 @@
 
 #include "CWall.h"
 
-void CWall::TryDestroy(int distance)
+bool CWall::TryDestroy(int distance)
 {
     if(this->m_IsDestructible)
     {
@@ -21,5 +21,9 @@ void CWall::TryDestroy(int distance)
         this->m_Collectible = nullptr;
 
         this->m_IsAlive = false;
+
+        return true;
     }
+
+    return false;
 }

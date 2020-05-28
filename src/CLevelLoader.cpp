@@ -33,18 +33,19 @@ CBoard *CLevelLoader::GetBoard(int playersCount, CSettings *settings)
     int cellSize = static_cast<int>(settings->GetScreenWidth() / CLevelLoader::MAP_WIDTH);
 
     // Load important objects for new board.
-    CWall ***map = this->LoadMap();
+    std::vector<std::vector<CWall *>> map = this->LoadMap();
     std::vector<CPlayer *> players = this->LoadPlayers(playersCount);
     CGround *groundObject = this->LoadGround();
     std::shared_ptr<CTexturePack> bombTexturePack = this->LoadBombTexturePack();
     std::shared_ptr<CTexturePack> fireTexturePack = this->LoadFireTexturePack();
 
-    return new CBoard(map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), groundObject, bombTexturePack, fireTexturePack,
+    return new CBoard(map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), groundObject,
+                      bombTexturePack, fireTexturePack,
                       cellSize);
 }
 
 /*====================================================================================================================*/
-CWall ***CLevelLoader::LoadMap()
+std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
 {
     std::map<ETextureType, const std::vector<std::string>> textures
             {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/SolidBlock.png"}}}};
@@ -56,16 +57,12 @@ CWall ***CLevelLoader::LoadMap()
     CWall wall(texturePack);
 
     // init 2D array
-    // TODO IMPORTANT Change to 2D vector!!!!!!!!!!!!!!!!!!!!!!!!
-    CWall ***map = new CWall **[MAP_WIDTH];
-    for (size_t i = 0; i < CLevelLoader::MAP_WIDTH; i++)
-    {
-        map[i] = new CWall *[CLevelLoader::MAP_HEIGHT];
+    std::vector<std::vector<CWall *>> map;
+    map.resize(CLevelLoader::MAP_WIDTH);
 
-        for (size_t j = 0; j < CLevelLoader::MAP_HEIGHT; j++)
-        {
-            map[i][j] = nullptr;
-        }
+    for (size_t i = 0; i < map.size(); i++)
+    {
+        map[i].resize(CLevelLoader::MAP_HEIGHT, nullptr);
     }
 
     size_t row = 0, col = 0;

@@ -46,7 +46,7 @@ protected:
     static const size_t MAX_PLAYERS = 2;
     CSDLInterface *m_Interface;
 
-    CWall ***LoadMap(); // TODO CHANGE TO VECTOR OF VECTORs
+    std::vector<std::vector<CWall *>> LoadMap();
     std::vector<CPlayer *> LoadPlayers(int count);
     /**
      * Get object which will be rendered as ground.

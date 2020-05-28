@@ -94,6 +94,13 @@ public:
     void SetLocation(CCoord location)
     {this->m_Location = location;}
 
+    /**
+    * Try to destroy the wall.
+    * @param distance Distance from the bomb.
+    */
+    virtual bool TryDestroy(int distance)
+    {}
+
 protected:
     std::shared_ptr<CTexturePack> m_TexturePack;
     ETextureType m_ActualTexture;
