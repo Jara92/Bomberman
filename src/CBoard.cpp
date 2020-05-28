@@ -56,7 +56,6 @@ bool CBoard::IsPassable(CCoord coord, const CPlayer * player)
         // Player is not owner or the bomb is not passable for owner
         if(bomb->second->GetOwner() != player || !bomb->second->IsPassableForOwner())
         {
-            std::cerr << "svedek: " << bomb->first << std::endl;
             return false;
         }
     }
