@@ -8,7 +8,7 @@
 
 int CApplication::Run()
 {
-    CSettings settings (1.5 * 1150,1.5 * 650, true);
+    CSettings settings (1.5 * 1150,1.5 * 650);
     CSDLInterface interface;
 
     if(!interface.InitInterface("Bomberman", &settings)){

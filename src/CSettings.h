@@ -14,11 +14,12 @@ public:
      * Initializes a new instance of the CSettings.
      * @param width Screen width in pixels
      * @param height Screen height in pixels
+     * @param screenFPS Rendered frames per second
      * @param sound Enable sound?
      * @param assetsPath Assets directory path
      * @param dataPath  Data directory path
      */
-    CSettings(std::size_t width = 1150, std::size_t height = 600, bool sound = false, std::string assetsPath = "./examples/assets/",
+    CSettings(std::size_t width = 1150, std::size_t height = 600, size_t screenFPS = 60, bool sound = true, std::string assetsPath = "./examples/assets/",
               std::string dataPath = "./examples/data/")
             : m_AssetsPath(std::move(assetsPath)), m_DataPath(std::move(dataPath))
     { this->ChangeSettings(width, height, sound); }

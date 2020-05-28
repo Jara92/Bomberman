@@ -23,6 +23,13 @@ void CGameManager::Init()
 /*====================================================================================================================*/
 void CGameManager::Run()
 {
+    //The frames per second timer
+    LTimer fpsTimer;
+
+    //Start counting frames per second
+    int countedFrames = 0;
+    fpsTimer.start();
+
     while (this->m_GameIsRunning)
     {
         this->m_Clock.Tick();
@@ -58,8 +65,18 @@ void CGameManager::Run()
         // Draw board and info table
         this->Draw();
 
+        SDL_Delay(50/3 - fpsTimer.getTicks());
 
+        //Calculate and correct fps
+        float avgFPS = countedFrames / ( fpsTimer.getTicks() / 1000.f );
+        if( avgFPS > 2000000 )
+        {
+            avgFPS = 0;
+        }
 
+        std::cout << "FPS: " << avgFPS << std::endl;
+
+        countedFrames++;
 
 
      // SDL_Delay(25);///3-this->m_Clock.DeltaTime());
