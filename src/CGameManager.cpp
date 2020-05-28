@@ -26,6 +26,9 @@ void CGameManager::Run()
     //The frames per second timer
     LTimer fpsTimer;
 
+    //The frames per second cap timer
+    LTimer capTimer;
+
     //Start counting frames per second
     int countedFrames = 0;
     fpsTimer.start();
@@ -34,17 +37,20 @@ void CGameManager::Run()
     {
         this->m_Clock.Tick();
 
+        //Start cap timer
+        capTimer.start();
+
         // read keyboard state
         SDL_PumpEvents();
         const Uint8 *keystate = SDL_GetKeyboardState(NULL);
 
         // send state to all players
-        for(std::vector<CPlayer*>::size_type i = 0; i < this->m_Board->m_Players.size(); i++)
+        for (std::vector<CPlayer *>::size_type i = 0; i < this->m_Board->m_Players.size(); i++)
         {
             this->m_Board->m_Players[i]->HandleInput(keystate);
         }
 
-       // Check events
+        // Check events
         SDL_Event e;
         while (SDL_PollEvent(&e) != 0)
         {
@@ -58,18 +64,18 @@ void CGameManager::Run()
 
         // Update objects in the board
         this->Update(this->m_Clock.DeltaTime());
-
+//this->Update(fpsTimer.getTicks());
         // Update physics in the board
         this->UpdatePhysics();
 
         // Draw board and info table
         this->Draw();
 
-        SDL_Delay(50/3 - fpsTimer.getTicks());
+        // SDL_Delay(50/3 - fpsTimer.getTicks());
 
         //Calculate and correct fps
-        float avgFPS = countedFrames / ( fpsTimer.getTicks() / 1000.f );
-        if( avgFPS > 2000000 )
+        float avgFPS = countedFrames / (fpsTimer.getTicks() / 1000.f);
+        if (avgFPS > 2000000)
         {
             avgFPS = 0;
         }
@@ -78,16 +84,26 @@ void CGameManager::Run()
 
         countedFrames++;
 
+        unsigned frameTicks = capTimer.getTicks();
+        if (frameTicks < this->m_Interface->GetSettings()->GetTicksPerFrame())
+        {
+            //Wait remaining time
+            std::cout << "counted frames " << countedFrames << std::endl;
+            SDL_Delay(this->m_Interface->GetSettings()->GetTicksPerFrame() - frameTicks);
 
-     // SDL_Delay(25);///3-this->m_Clock.DeltaTime());
+        }
+
+
+
+        // SDL_Delay(25);///3-this->m_Clock.DeltaTime());
         /*  Uint32 wait = 0;
         while(wait < 50/3)
         {
             this->m_Clock.Tick();
             wait += this->m_Clock.DeltaTime();
         }*/
-      //  SDL_Delay(25); // todo edit this
-      //std::cerr << this->m_Clock.DeltaTime() << std::endl;
+        //  SDL_Delay(25); // todo edit this
+        //std::cerr << this->m_Clock.DeltaTime() << std::endl;
     }
 }
 

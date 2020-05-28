@@ -21,7 +21,7 @@ public:
      */
     CSettings(std::size_t width = 1150, std::size_t height = 600, size_t screenFPS = 60, bool sound = true, std::string assetsPath = "./examples/assets/",
               std::string dataPath = "./examples/data/")
-            : m_AssetsPath(std::move(assetsPath)), m_DataPath(std::move(dataPath))
+            : m_TicksPerFrame(1000 / screenFPS), m_AssetsPath(std::move(assetsPath)), m_DataPath(std::move(dataPath))
     { this->ChangeSettings(width, height, sound); }
 
     CSettings (const CSettings &other) = default;
@@ -42,15 +42,18 @@ public:
         this->m_Sound = sound;
     }
 
-    size_t GetScreenWidth() const
+    std::size_t GetScreenWidth() const
     {
         return m_ScreenWidth;
     }
 
-    size_t GetScreenHeight() const
+    std::size_t GetScreenHeight() const
     {
         return m_ScreenHeight;
     }
+
+    std::size_t GetTicksPerFrame() const
+    {return this->m_TicksPerFrame;}
 
     bool GetSound() const
     {
@@ -66,6 +69,7 @@ public:
 protected:
     std::size_t m_ScreenWidth;
     std::size_t m_ScreenHeight;
+    std::size_t m_TicksPerFrame;
     bool m_Sound;
 
     std::string m_AssetsPath;
