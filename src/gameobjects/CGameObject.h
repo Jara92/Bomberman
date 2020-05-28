@@ -23,11 +23,14 @@ public:
     */
     explicit CGameObject(std::shared_ptr<CTexturePack> texturePack, bool isPassable = false)
             : m_TexturePack(std::move(texturePack)), m_ActualTexture(ETextureType::TEXTURE_FRONT),
-              m_IsPassable(isPassable), m_IsAlive(true), m_AnimationIndex(0), m_AnimationUpdateInterval(100), m_AnimationTimer(0)
+              m_IsPassable(isPassable), m_IsAlive(true), m_AnimationIndex(0), m_AnimationUpdateInterval(100),
+              m_AnimationTimer(0)
     {}
 
     CGameObject(const CGameObject &other) = default;
+
     CGameObject &operator=(const CGameObject &other) = default;
+
     virtual ~CGameObject() = default;
 
     /**
@@ -59,7 +62,7 @@ public:
     {
         this->m_AnimationTimer += deltaTime;
 
-        if( this->m_AnimationTimer >= this->m_AnimationUpdateInterval)
+        if (this->m_AnimationTimer >= this->m_AnimationUpdateInterval)
         {
             this->m_AnimationIndex++;
 
@@ -76,6 +79,17 @@ public:
      */
     virtual void Draw(CSDLInterface *interface, int cellSize, CCoord location, CCoord offset = CCoord(0, 0)) const;
 
+    /**
+     * Are these objects in colliding?
+     * @param thisObjectLocation This object location
+     * @param otherObject Other object
+     * @param otherObjectLocation Other object location
+     * @param tolerance Collision tolerance
+     * @return True - Objects are colliding
+     */
+    bool IsColiding(CCoord thisObjectLocation, const CGameObject *otherObject, CCoord otherObjectLocation,
+                    double tolerance = 0) const;
+
 protected:
     std::shared_ptr<CTexturePack> m_TexturePack;
     ETextureType m_ActualTexture;
@@ -83,8 +97,7 @@ protected:
     bool m_IsAlive;
 
     /* Mutable keyword is very useful here. Animation index is not important for CGameObject, because it
-     * does not disrupt the internal structure of the object. It is just auxiliary variable.
-     */
+     * does not disrupt the internal structure of the object. It is just auxiliary variable.*/
     mutable unsigned int m_AnimationIndex;
     unsigned int m_AnimationUpdateInterval;
     unsigned int m_AnimationTimer;

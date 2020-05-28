@@ -204,6 +204,33 @@ src/CBoard.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CBoard.cpp.s
 .PHONY : src/CBoard.cpp.s
 
+src/CClock.o: src/CClock.cpp.o
+
+.PHONY : src/CClock.o
+
+# target to build an object file
+src/CClock.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CClock.cpp.o
+.PHONY : src/CClock.cpp.o
+
+src/CClock.i: src/CClock.cpp.i
+
+.PHONY : src/CClock.i
+
+# target to preprocess a source file
+src/CClock.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CClock.cpp.i
+.PHONY : src/CClock.cpp.i
+
+src/CClock.s: src/CClock.cpp.s
+
+.PHONY : src/CClock.s
+
+# target to generate assembly for a file
+src/CClock.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CClock.cpp.s
+.PHONY : src/CClock.cpp.s
+
 src/CCoord.o: src/CCoord.cpp.o
 
 .PHONY : src/CCoord.o
@@ -762,6 +789,9 @@ help:
 	@echo "... src/CBoard.o"
 	@echo "... src/CBoard.i"
 	@echo "... src/CBoard.s"
+	@echo "... src/CClock.o"
+	@echo "... src/CClock.i"
+	@echo "... src/CClock.s"
 	@echo "... src/CCoord.o"
 	@echo "... src/CCoord.i"
 	@echo "... src/CCoord.s"

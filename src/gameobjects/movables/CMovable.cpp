@@ -28,3 +28,4 @@ void CMovable::Animate(int deltaTime)
         CGameObject::Animate(deltaTime);
     }
 }
+

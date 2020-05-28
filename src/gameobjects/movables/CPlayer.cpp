@@ -157,24 +157,22 @@ void CPlayer::HandleInput(const Uint8 *keyState)
     // movement
     if (keyState[this->m_Controls->m_Up])
     {
-
         this->m_VerticalMovingDirection = EDirection::DIRECTION_UP;
         this->m_ActualTexture = ETextureType::TEXTURE_BACK;
-    } else if (keyState[this->m_Controls->m_Down])
+    }
+    else if (keyState[this->m_Controls->m_Down])
     {
-
         this->m_VerticalMovingDirection = EDirection::DIRECTION_DOWN;
         this->m_ActualTexture = ETextureType::TEXTURE_FRONT;
     }
 
     if (keyState[this->m_Controls->m_Left])
     {
-
         this->m_HorizontalMovingDirection = EDirection::DIRECTION_LEFT;
         this->m_ActualTexture = ETextureType::TEXTURE_LEFT;
-    } else if (keyState[this->m_Controls->m_Right])
+    }
+    else if (keyState[this->m_Controls->m_Right])
     {
-
         this->m_HorizontalMovingDirection = EDirection::DIRECTION_RIGHT;
         this->m_ActualTexture = ETextureType::TEXTURE_RIGHT;
     }
@@ -194,9 +192,11 @@ void CPlayer::HandleInput(const Uint8 *keyState)
 /*====================================================================================================================*/
 void CPlayer::TryPlaceBomb(CBoard *board)
 {
-    // TODO Po odchodu hráče z colliderboxu bomby se zapne detekce kolizí na bombě
-    // TODO udělat kolize před trigger box
-    board->PlaceBomb(this);
+    if(this->m_ActiveBombs < this->m_MaxBombs)
+    {
+        board->PlaceBomb(this);
+        this->m_ActiveBombs++;
+    }
 }
 
 

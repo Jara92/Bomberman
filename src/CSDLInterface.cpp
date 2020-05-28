@@ -68,7 +68,7 @@ bool CSDLInterface::InitInterface(const char *title, CSettings *settings)
     }
 
     // Init renderer
-    this->m_Renderer = SDL_CreateRenderer(this->m_Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
+    this->m_Renderer = SDL_CreateRenderer(this->m_Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | SDL_RENDERER_PRESENTVSYNC);
 
     // Check that the renderer was successfully created
     if (this->m_Window == NULL)

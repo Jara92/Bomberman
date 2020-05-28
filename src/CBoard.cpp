@@ -48,6 +48,19 @@ bool CBoard::IsPassable(CCoord coord, const CPlayer * player)
     {
         return false;
     }
+
+    // Search for bombs in location.
+    auto bomb = this->m_Bombs.find(CCoord(static_cast<int>(floor(coord.m_X)), static_cast<int>(floor(coord.m_Y))));
+    if(bomb != this->m_Bombs.end())
+    {
+        // Player is not owner or the bomb is not passable for owner
+        if(bomb->second->GetOwner() != player || !bomb->second->IsPassableForOwner())
+        {
+            std::cerr << "svedek: " << bomb->first << std::endl;
+            return false;
+        }
+    }
+
     return true;
     // todo other gameobjests
 }
@@ -64,7 +77,7 @@ void CBoard::PlaceBomb(CPlayer *player)
         bomb->SetOwner(player);
 
         this->m_Bombs.insert(std::pair<CCoord, CBomb*>(location, bomb));
-    } else std::cerr << location << " is not empty. Svedek: " << this->m_Bombs.find(location)->first  << std::endl;
+    }
 }
 
 
@@ -183,6 +196,13 @@ void CBoard::Update(int deltaTime)
         // Polymorphic call
         i->second->Update(this, deltaTime);
     }
+
+    // Update bombs
+    for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
+    {
+        // Polymorphic call
+        i->second->Update(this, deltaTime);
+    }
 }
 
 /*====================================================================================================================*/
@@ -193,6 +213,16 @@ void CBoard::UpdatePhysics()
          // Polymorphic call
           {someBoost}->Apply({somePlayer});
      }*/
+
+    for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
+    {
+        CPlayer * owner = i->second->GetOwner();
+
+        if(owner && !owner->IsColiding(owner->GetLocation(), i->second, i->first))
+        {
+            i->second->MakeUnpassableForOwner();
+        }
+    }
 }
 
 void CBoard::ClearBoard()

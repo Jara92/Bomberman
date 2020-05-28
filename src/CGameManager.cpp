@@ -58,6 +58,17 @@ void CGameManager::Run()
         // Draw board and info table
         this->Draw();
 
+
+
+
+
+     // SDL_Delay(25);///3-this->m_Clock.DeltaTime());
+        /*  Uint32 wait = 0;
+        while(wait < 50/3)
+        {
+            this->m_Clock.Tick();
+            wait += this->m_Clock.DeltaTime();
+        }*/
       //  SDL_Delay(25); // todo edit this
       //std::cerr << this->m_Clock.DeltaTime() << std::endl;
     }

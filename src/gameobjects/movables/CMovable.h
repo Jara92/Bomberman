@@ -54,6 +54,8 @@ public:
     void ResetLocation()
     { this->m_Location = this->m_StartingLocation; }
 
+
+
 protected:
     CCoord m_StartingLocation;
     CCoord m_Location;

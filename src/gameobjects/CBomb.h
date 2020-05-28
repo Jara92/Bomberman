@@ -21,7 +21,8 @@ public:
      */
     CBomb(std::shared_ptr<CTexturePack> texturePack, unsigned int explosionDelay = 2000)
             : CGameObject(std::move(texturePack),
-                          false) // Bomb is not passable, but... For owner is passable until the player exits the area of this bomb.
+                          false), m_Owner(nullptr), m_IsPassableForOwner(
+            true) // Bomb is not passable, but... For owner is passable until the player exits the area of this bomb.
     {}
 
     CBomb(const CBomb &other) = default;
@@ -44,10 +45,22 @@ public:
      * Get bombs owner.
      * @return Bombs owner. Nullptr if the bomb has no owner.
      */
-    CPlayer * GetOwner() const
-    {return this->m_Owner;}
+    CPlayer *GetOwner() const
+    { return this->m_Owner; }
+
+    /**
+     * Is this bomb passable for its owner?
+     * @return True - is passable.
+     */
+    bool IsPassableForOwner() const
+    { return this->m_IsPassableForOwner; }
+
+    void MakeUnpassableForOwner()
+    { this->m_IsPassableForOwner = false; }
 
 protected:
     CPlayer *m_Owner;
+    /** Every bomb is passable for owner until the player left bombs cell. */
+    bool m_IsPassableForOwner;
 };
 
