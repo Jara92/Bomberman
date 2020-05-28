@@ -25,7 +25,7 @@ protected:
     CSDLInterface * m_Interface;
     CBoard * m_Board;
     CLevelLoader * m_LevelLoader;
-    CClock m_Clock;
+    CGameClock m_Clock;
     bool m_GameIsRunning;
 
     void Draw() const;

@@ -4,20 +4,14 @@
 */
 
 
+
 #include "CSDLInterface.h"
-#include "Messages.h"
 
-CSDLInterface::CSDLInterface()
-        : m_WindowWidth(0), m_WindowHeight(0), m_Window(nullptr), m_Renderer(nullptr)
-{
-    // Init SDL
-    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 
-    IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
-
-    // Smooth texture rendering
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
-}
+CSDLInterface::CSDLInterface(const char *title, CSettings *settings)
+        : m_WindowWidth(settings->GetScreenWidth()), m_WindowHeight(settings->GetScreenHeight()),
+          m_WindowTitle(title), m_Settings(settings), m_Window(nullptr), m_Renderer(nullptr)
+{}
 
 /*====================================================================================================================*/
 CSDLInterface::~CSDLInterface()
@@ -29,7 +23,6 @@ CSDLInterface::~CSDLInterface()
     }
 
 
-
     SDL_RenderClear(this->m_Renderer);
 
     if (this->m_Renderer != NULL && this->m_Renderer != nullptr)
@@ -39,23 +32,33 @@ CSDLInterface::~CSDLInterface()
 
     // Quit SDL
     IMG_Quit();
+    TTF_Quit();
     SDL_QuitSubSystem(SDL_INIT_EVERYTHING);
     SDL_Quit();
 }
 
-bool CSDLInterface::InitInterface(const char *title, CSettings *settings)
+/*====================================================================================================================*/
+bool CSDLInterface::InitInterface()
 {
-    this->m_Settings = settings;
-    this->m_WindowWidth = settings->GetScreenWidth();
-    this->m_WindowHeight = settings->GetScreenHeight();
+    int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
+
+    // Init SDL
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 || IMG_Init(imgFlags) != imgFlags ||
+        TTF_Init() == -1)
+    {
+        throw std::runtime_error(SDL_GetError());
+    }
+
+    // Smooth texture rendering
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 
     // Create an application window with the following settings:
     this->m_Window = SDL_CreateWindow(
-            title,                  // window title
+            this->m_WindowTitle,                  // window title
             SDL_WINDOWPOS_CENTERED,           // initial x position
             SDL_WINDOWPOS_CENTERED,           // initial y position
-            settings->GetScreenWidth(),                               // width, in pixels
-            settings->GetScreenHeight(),                               // height, in pixels
+            this->m_WindowWidth,                         // width, in pixels
+            this->m_WindowHeight,                               // height, in pixels
             SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE                // flags - see below
     );
 
@@ -68,7 +71,8 @@ bool CSDLInterface::InitInterface(const char *title, CSettings *settings)
     }
 
     // Init renderer
-    this->m_Renderer = SDL_CreateRenderer(this->m_Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | SDL_RENDERER_PRESENTVSYNC);
+    this->m_Renderer = SDL_CreateRenderer(this->m_Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE |
+                                                              SDL_RENDERER_PRESENTVSYNC);
 
     // Check that the renderer was successfully created
     if (this->m_Window == NULL)
@@ -81,12 +85,14 @@ bool CSDLInterface::InitInterface(const char *title, CSettings *settings)
     return true;
 }
 
+/*====================================================================================================================*/
 void CSDLInterface::UpdateSettings(CSettings *settings)
 {
     this->m_Settings = settings;
     SDL_SetWindowSize(this->m_Window, settings->GetScreenWidth(), settings->GetScreenHeight());
 }
 
+/*====================================================================================================================*/
 SDL_Texture *CSDLInterface::LoadTexture(const std::string &file) const
 {
     SDL_Texture *texture = IMG_LoadTexture(this->m_Renderer, (this->m_Settings->GetAssetsPath() + file).c_str());
@@ -99,11 +105,13 @@ SDL_Texture *CSDLInterface::LoadTexture(const std::string &file) const
     return texture;
 }
 
+/*====================================================================================================================*/
 void CSDLInterface::ShowMessageBox(Uint32 flags, const std::string &title, const std::string &message)
 {
     SDL_ShowSimpleMessageBox(flags, title.c_str(), message.c_str(), this->m_Window);
 }
 
+/*====================================================================================================================*/
 void CSDLInterface::RenderTexture(SDL_Texture *texture, CCoord location, CCoord size)
 {
     SDL_Rect targetRect = {static_cast<int>(location.m_X), static_cast<int>(location.m_Y),
@@ -115,4 +123,41 @@ void CSDLInterface::RenderTexture(SDL_Texture *texture, CCoord location, CCoord 
     this->SetRenderColor(255, 0, 0, 255);
 
     SDL_RenderCopy(this->m_Renderer, texture, NULL, &targetRect);
+}
+
+/*====================================================================================================================*/
+bool CSDLInterface::RenderText(const std::string & text, CCoord location, CCoord size, SDL_Colour color)
+{
+    TTF_Font *font = TTF_OpenFont((this->m_Settings->GetAssetsPath() + "Fonts/Piedra-Regular.ttf").c_str(), 64);
+    if (font == NULL)
+    {
+        return false;
+    }
+
+    SDL_Surface *surfaceMessage = TTF_RenderText_Blended(font, ("FPS: " + text).c_str(), color);
+    if(surfaceMessage == NULL)
+    {
+        return false;
+    }
+
+    SDL_Texture *message = SDL_CreateTextureFromSurface(this->m_Renderer, surfaceMessage);
+    if(message == NULL)
+    {
+        return false;
+    }
+
+    SDL_Rect Message_rect; //create a rect
+    Message_rect.x = static_cast<int>(location.m_X);  //controls the rect's x coordinate
+    Message_rect.y = static_cast<int>(location.m_Y); // controls the rect's y coordinte
+    Message_rect.w = static_cast<int>(size.m_X);; // controls the width of the rect
+    Message_rect.h = static_cast<int>(size.m_Y);; // controls the height of the rect
+
+    bool success = SDL_RenderCopy(this->m_Renderer, message, NULL, &Message_rect) >= 0;
+
+    // Free surface and texture
+    TTF_CloseFont(font);
+    SDL_FreeSurface(surfaceMessage);
+    SDL_DestroyTexture(message);
+
+    return success;
 }

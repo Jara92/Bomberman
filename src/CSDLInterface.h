@@ -9,8 +9,11 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_system.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include "CCoord.h"
 #include "CSettings.h"
+#include "Messages.h"
+
 
 /**
  * Class which manages SDL resources.
@@ -18,7 +21,7 @@
 class CSDLInterface
 {
 public:
-    CSDLInterface();
+    CSDLInterface(const char *title, CSettings *settings);
 
     /*I dont want to allow interface */
     CSDLInterface(const CSDLInterface &other) = delete;
@@ -28,11 +31,9 @@ public:
 
     /**
      * This functions inits main game Window.
-     * @param title Window title
-     * @param settings Settings to be set
      * @return True - Success
      */
-    bool InitInterface(const char *title, CSettings *settings);
+    bool InitInterface();
 
     /**
      * Change settings.
@@ -91,6 +92,9 @@ public:
     void RenderLine(CCoord a, CCoord b)
     { SDL_RenderDrawLine(this->m_Renderer, a.m_X, a.m_Y, b.m_X, b.m_Y); }
 
+
+    bool RenderText(const std::string & text, CCoord location, CCoord size, SDL_Colour color = {255,255,255,255} );
+
     /**
     *  Set the color used for drawing operations (Rect, Line and Clear).
     *  @param r The red value used to draw on the rendering target.
@@ -112,6 +116,7 @@ public:
 protected:
     size_t m_WindowWidth;
     size_t m_WindowHeight;
+    const char * m_WindowTitle;
 
     CSettings *m_Settings;
     SDL_Window *m_Window;

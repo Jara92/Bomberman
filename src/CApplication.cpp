@@ -9,14 +9,11 @@
 int CApplication::Run()
 {
     CSettings settings (1.5 * 1150,1.5 * 650);
-    CSDLInterface interface;
-
-    if(!interface.InitInterface("Bomberman", &settings)){
-        std::cerr << MESSAGE_SDL_WINDOW_ERROR << std::endl;
-        return 1;
-    }
+    CSDLInterface interface ("Bomberman", &settings);
 
     try{
+        interface.InitInterface();
+
         // todo add menu
 
         CGameManager gameManager(&interface);

@@ -23,22 +23,9 @@ void CGameManager::Init()
 /*====================================================================================================================*/
 void CGameManager::Run()
 {
-    //The frames per second timer
-    LTimer fpsTimer;
-
-    //The frames per second cap timer
-    LTimer capTimer;
-
-    //Start counting frames per second
-    int countedFrames = 0;
-    fpsTimer.start();
-
     while (this->m_GameIsRunning)
     {
         this->m_Clock.Tick();
-
-        //Start cap timer
-        capTimer.start();
 
         // read keyboard state
         SDL_PumpEvents();
@@ -64,46 +51,15 @@ void CGameManager::Run()
 
         // Update objects in the board
         this->Update(this->m_Clock.DeltaTime());
-//this->Update(fpsTimer.getTicks());
+
         // Update physics in the board
         this->UpdatePhysics();
 
         // Draw board and info table
-        this->Draw();
+       this->Draw();
 
-        // SDL_Delay(50/3 - fpsTimer.getTicks());
-
-        //Calculate and correct fps
-        float avgFPS = countedFrames / (fpsTimer.getTicks() / 1000.f);
-        if (avgFPS > 2000000)
-        {
-            avgFPS = 0;
-        }
-
-        std::cout << "FPS: " << avgFPS << std::endl;
-
-        countedFrames++;
-
-        unsigned frameTicks = capTimer.getTicks();
-        if (frameTicks < this->m_Interface->GetSettings()->GetTicksPerFrame())
-        {
-            //Wait remaining time
-            std::cout << "counted frames " << countedFrames << std::endl;
-            SDL_Delay(this->m_Interface->GetSettings()->GetTicksPerFrame() - frameTicks);
-
-        }
-
-
-
-        // SDL_Delay(25);///3-this->m_Clock.DeltaTime());
-        /*  Uint32 wait = 0;
-        while(wait < 50/3)
-        {
-            this->m_Clock.Tick();
-            wait += this->m_Clock.DeltaTime();
-        }*/
-        //  SDL_Delay(25); // todo edit this
-        //std::cerr << this->m_Clock.DeltaTime() << std::endl;
+       // Wait for few miliseconds to draw cca 60 frames per second
+        SDL_Delay(this->m_Clock.GetDelay());
     }
 }
 
@@ -113,9 +69,13 @@ void CGameManager::Draw() const
     this->m_Interface->SetRenderColor(0, 0, 0, 255);
     this->m_Interface->Clear();
 
+    this->m_Board->Draw(this->m_Interface);
+
     // TODO Render Game menu
 
-    this->m_Board->Draw(this->m_Interface);
+    // DEBUG
+    this->m_Interface->RenderText(std::to_string(this->m_Clock.GetFPS()), CCoord(10,10), CCoord(100,50));
+   // std::cout << "FPS: " << this->m_Clock.GetFPS() << std::endl;
 
     this->m_Interface->Present();
 }
