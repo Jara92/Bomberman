@@ -61,9 +61,16 @@ public:
     { this->m_IsPassableForOwner = false; }
 
     /**
-     * Bomb explosion.
+     * Bomb detonation.
+     * Check if the bomb is ready to be detonated.
      */
     void Detonate(CBoard * board);
+
+    /**
+     * Bomb explosion.
+     * @param board
+     */
+    void Explode(CBoard * board);
 
     static constexpr double COLLISION_TOLERANCE = 0.05;
 protected:

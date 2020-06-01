@@ -86,7 +86,13 @@ void CBoard::PlaceBomb(CPlayer *player)
 /*====================================================================================================================*/
 void CBoard::DetonateBombs(const CPlayer *player)
 {
-
+    for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
+    {
+        if (i->second->GetOwner() == player)
+        {
+            i->second->Detonate(this);
+        }
+    }
 }
 
 /*====================================================================================================================*/
@@ -94,7 +100,6 @@ void CBoard::CreateExplosion(CBomb *bomb)
 {
     if (bomb)
     {
-        CCoord location = bomb->GetLocation();
         CPlayer *owner = bomb->GetOwner();
 
         if (owner)
@@ -105,29 +110,32 @@ void CBoard::CreateExplosion(CBomb *bomb)
             CCoord directions[4] = {CCoord(0, 1), CCoord(0, -1), CCoord(1, 0), CCoord(-1, 0)};
             for (int i = 0; i < 4; i++)
             {
-                this->CreateExplosionWave(location, directions[i], explosionRadius);
+                this->CreateExplosionWave(bomb, directions[i], explosionRadius);
             }
         }
 
+        CCoord location = bomb->GetLocation();
         auto bombToRemove = this->m_Bombs.find(location);
         if (bombToRemove != this->m_Bombs.end())
         {
             delete bombToRemove->second;
-            //bombToRemove->second = nullptr;
+            bombToRemove->second = nullptr;
             this->m_Bombs.erase(location);
-        } else
+        }
+            // Error message when the bomb is not found - this should never happen
+        else
         {
-            std::cerr << "bomb not found "<< std::endl;
+            std::cerr << "Bomb " << location << " not found " << std::endl;
         }
     }
 }
 
 /*====================================================================================================================*/
-void CBoard::CreateExplosionWave(CCoord location, CCoord direction, unsigned int explosionRadius)
+void CBoard::CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int explosionRadius)
 {
     for (int i = 0; i <= explosionRadius; i++)
     {
-        CCoord locationToExplode = location + (i * direction);
+        CCoord locationToExplode = bomb->GetLocation() + (i * direction);
 
         if (locationToExplode.m_X < 0 || locationToExplode.m_X >= CBoard::m_BoardSize.m_X ||
             locationToExplode.m_Y < 0 || locationToExplode.m_Y >= CBoard::m_BoardSize.m_Y)
@@ -150,14 +158,15 @@ void CBoard::CreateExplosionWave(CCoord location, CCoord direction, unsigned int
         }
 
         // Destroy potencialy existing fire is this location
-        auto existingFire = this->m_Fires.find(locationToExplode);
-
-        if(existingFire != this->m_Fires.end())
+        auto foundFire = this->m_Fires.find(locationToExplode);
+        if (foundFire != this->m_Fires.end())
         {
-            delete (existingFire->second);
+            delete (foundFire->second);
+            foundFire->second = nullptr;
             this->m_Fires.erase(locationToExplode);
         }
 
+        // Create new fire
         CFire *fire = new CFire(this->m_FireObjectTexturePack, locationToExplode);
         this->m_Fires.insert(std::pair<CCoord, CFire *>(locationToExplode, fire));
     }
@@ -172,15 +181,12 @@ void CBoard::DestroyExplosion(CFire *fire)
     {
         delete (fireToRemove->second);
         this->m_Fires.erase(fireLocation);
-    } else{
-
-        for(auto i = this->m_Fires.begin(); i != this->m_Fires.end(); i++)
-        {
-            std::cerr << "Fire at: " << i->second->GetLocation() << std::endl;
-        }
-        std::cerr << "fire " << fireLocation << "not found "<< std::endl;
     }
-
+        // Error message when the fire is not found - this should never happen
+    else
+    {
+        std::cerr << "Fire " << fireLocation << " not found " << std::endl;
+    }
 }
 
 /*====================================================================================================================*/
@@ -328,6 +334,7 @@ void CBoard::UpdatePhysics()
     }*/
 }
 
+/*====================================================================================================================*/
 void CBoard::ClearBoard()
 {
     // Delete walls
@@ -382,6 +389,7 @@ void CBoard::ClearBoard()
     }
 }
 
+/*====================================================================================================================*/
 bool CBoard::PositionFree(CCoord coord)
 {
     if (coord.m_X < 0 || coord.m_X >= CBoard::m_BoardSize.m_X ||
@@ -417,6 +425,42 @@ bool CBoard::PositionFree(CCoord coord)
 
     return true;
 }
+
+/*====================================================================================================================*/
+bool CBoard::PlayersAreaFree(CCoord coord)
+{
+    // Create direction vectors.
+    CCoord directions[4] = {CCoord(0, 1), CCoord(0, -1), CCoord(1, 0), CCoord(-1, 0)};
+
+    for (std::vector<CPlayer *>::size_type i = 0; i < this->m_Players.size(); i++)
+    {
+        for (unsigned int j = 0; j < 4; j++)
+        {
+            if(!this->PlayerDirectionFree(coord, this->m_Players[i], directions[j]))
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+/*====================================================================================================================*/
+bool CBoard::PlayerDirectionFree(CCoord location, CPlayer *player, CCoord direction)
+{
+    for(unsigned int i = 0; i <= player->GetExplosionRadius(); i++)
+    {
+        CCoord curLocation = (player->GetLocation() + (direction * i));
+
+        if(curLocation == location)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 
 
 

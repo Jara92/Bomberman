@@ -15,7 +15,7 @@ bool CLevelLoader::LoadLevel(CBoard *board, size_t level)
 {
     board->ClearBoard();
 
-    size_t obstaclesCount = (board->GetBoardSize().m_X * board->GetBoardSize().m_Y) * 0.20;
+    size_t obstaclesCount = (board->GetBoardSize().m_X * board->GetBoardSize().m_Y) * 0.15;
     this->GenerateObstacles(board, level, obstaclesCount);
 
     // Load enemies and boosts
@@ -37,7 +37,7 @@ CBoard *CLevelLoader::GetBoard(int playersCount, CSettings *settings)
     std::vector<CPlayer *> players = this->LoadPlayers(playersCount);
     CGround *groundObject = this->LoadGround();
 
-    return new CBoard(map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), groundObject,
+    return new CBoard(settings, map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), groundObject,
                       bombTexturePack, fireTexturePack,
                       cellSize);
 }
@@ -215,7 +215,7 @@ void CLevelLoader::GenerateObstacles(CBoard *board, size_t level, size_t count)
         {
             randomX = randomEngine() % static_cast<int>(board->GetBoardSize().m_X);
             randomY = randomEngine() % static_cast<int>(board->GetBoardSize().m_Y);
-        } while (!board->PositionFree(CCoord(randomX, randomY)));
+        } while (!board->PositionFree(CCoord(randomX, randomY)) || !board->PlayersAreaFree(CCoord(randomX, randomY)));
 
         board->m_Map[randomX][randomY] = new CWall(texturePack, CCoord(randomX, randomY), true, nullptr);
     }

@@ -22,23 +22,31 @@
 class CBoard
 {
 public:
-    CBoard(std::vector<std::vector<CWall *>> map, std::vector<CPlayer *> players, CCoord boardSize, CGround *ground,
+    CBoard(CSettings * settings, std::vector<std::vector<CWall *>> map, std::vector<CPlayer *> players, CCoord boardSize, CGround *ground,
            std::shared_ptr<CTexturePack> bombTexturePack, std::shared_ptr<CTexturePack> fireTexturePack, int cellSize)
             : m_Players(std::move(players)), m_Map(std::move(map)), m_BoardSize(boardSize), m_CellSize(cellSize),
               m_GroundObject(ground), m_BombObjectTexturePack(std::move(bombTexturePack)),
-              m_FireObjectTexturePack(std::move(fireTexturePack))
+              m_FireObjectTexturePack(std::move(fireTexturePack)), m_Settings(settings)
     {}
 
     ~CBoard();
 
-    CBoard(const CBoard &other) = delete;
+    CBoard(const CBoard &other) = default;
 
-    CBoard &operator=(const CBoard &other) = delete;
+    CBoard &operator=(const CBoard &other) = default; // todo check this
 
+    /**
+     * Update all objects in the board.
+     * @param deltaTime Deltatime
+     */
     void Update(int deltaTime);
 
     void UpdatePhysics();
 
+    /**
+     * Draw all objects in the board.
+     * @param interface Interface to be used.
+     */
     void Draw(CSDLInterface *interface);
 
     /**
@@ -55,6 +63,13 @@ public:
      * @return True - Totaly free
      */
     bool PositionFree(CCoord coord);
+
+    /**
+     * Is area around players free?
+     * @param coord Position
+     * @return True - Location free
+     */
+    bool PlayersAreaFree(CCoord coord);
 
     /**
      * Place bomb in game board.
@@ -80,16 +95,24 @@ public:
      * @param direction Direction vector.
      * @param explosionRadius Explosion radius.
      */
-    void CreateExplosionWave(CCoord location, CCoord direction, unsigned int explosionRadius);
+    void CreateExplosionWave(CBomb * bomb, CCoord direction, unsigned int explosionRadius);
 
+    /**
+     * Delete fire from the map.
+     * @param fire Fire to be removed.
+     */
     void DestroyExplosion(CFire * fire);
 
+    /** Saved objects */
     std::vector<CPlayer *> m_Players;
     std::vector<CEnemy *> m_Enemies;
     std::map<CCoord, CCollectible *> m_Boosts;
     std::map<CCoord, CFire *> m_Fires;
     std::map<CCoord, CBomb *> m_Bombs;
     std::vector<std::vector<CWall *>> m_Map;
+
+    /** Game settings */
+    CSettings * m_Settings;
 
     CCoord GetBoardSize() const
     { return this->m_BoardSize; }
@@ -100,7 +123,9 @@ public:
     void ClearBoard();
 
 protected:
+    /** Size of gameboard. */
     CCoord m_BoardSize;
+    /** Size of one cell in pixels. */
     int m_CellSize;
 
     /** Ground object template */
@@ -109,5 +134,14 @@ protected:
     /** Texturepack templates. */
     std::shared_ptr<CTexturePack> m_BombObjectTexturePack;
     std::shared_ptr<CTexturePack> m_FireObjectTexturePack;
+
+    /**
+     * Is this direction free to place?
+     * @param location Location
+     * @param player Player
+     * @param direction Direction vector.
+     * @return True - Direction is free.
+     */
+    bool PlayerDirectionFree(CCoord location, CPlayer * player, CCoord direction);
 };
 

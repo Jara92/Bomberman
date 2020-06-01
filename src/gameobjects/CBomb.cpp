@@ -41,11 +41,19 @@ void CBomb::Detonate(CBoard *board)
 {
     if (this->m_ExplosionDelay == 0)
     {
+        Explode(board);
+    }
+}
+/*====================================================================================================================*/
+void CBomb::Explode(CBoard *board)
+{
+    if(this->m_IsAlive)
+    {
+        this->m_IsAlive = false;
         board->CreateExplosion(this);
 
         this->m_Owner->DecreseActiveBombs();
         this->m_Owner = nullptr;
-
-        this->m_IsAlive = false;
     }
+
 }

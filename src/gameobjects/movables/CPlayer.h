@@ -134,7 +134,7 @@ public:
     bool GetFireImmunity() const
     { return this->m_FireImmunity; }
 
-    bool GetExplosionRadius() const
+    size_t GetExplosionRadius() const
     { return this->m_ExplosionRadius; }
 
 protected:
