@@ -39,6 +39,7 @@ CBoard::~CBoard()
 /*====================================================================================================================*/
 bool CBoard::IsPassable(CCoord coord, const CPlayer *player)
 {
+    // Array index check.
     if (coord.m_X < 0 || coord.m_X >= CBoard::m_BoardSize.m_X ||
         coord.m_Y < 0 || coord.m_Y >= CBoard::m_BoardSize.m_Y)
     {
@@ -108,12 +109,15 @@ void CBoard::CreateExplosion(CBomb *bomb)
             }
         }
 
-        auto bombToRemove = this->m_Bombs.find(bomb->GetLocation());
+        auto bombToRemove = this->m_Bombs.find(location);
         if (bombToRemove != this->m_Bombs.end())
         {
             delete bombToRemove->second;
             //bombToRemove->second = nullptr;
-            this->m_Bombs.erase(bomb->GetLocation());
+            this->m_Bombs.erase(location);
+        } else
+        {
+            std::cerr << "bomb not found "<< std::endl;
         }
     }
 }
@@ -145,6 +149,15 @@ void CBoard::CreateExplosionWave(CCoord location, CCoord direction, unsigned int
             this->m_Map[static_cast<int>(locationToExplode.m_X)][static_cast<int>(locationToExplode.m_Y)] = nullptr;
         }
 
+        // Destroy potencialy existing fire is this location
+        auto existingFire = this->m_Fires.find(locationToExplode);
+
+        if(existingFire != this->m_Fires.end())
+        {
+            delete (existingFire->second);
+            this->m_Fires.erase(locationToExplode);
+        }
+
         CFire *fire = new CFire(this->m_FireObjectTexturePack, locationToExplode);
         this->m_Fires.insert(std::pair<CCoord, CFire *>(locationToExplode, fire));
     }
@@ -153,11 +166,19 @@ void CBoard::CreateExplosionWave(CCoord location, CCoord direction, unsigned int
 /*====================================================================================================================*/
 void CBoard::DestroyExplosion(CFire *fire)
 {
-    auto fireToRemove = this->m_Fires.find(fire->GetLocation());
+    CCoord fireLocation = fire->GetLocation();
+    auto fireToRemove = this->m_Fires.find(fireLocation);
     if (fireToRemove != this->m_Fires.end())
     {
-        delete fireToRemove->second;
-        this->m_Fires.erase(fire->GetLocation());
+        delete (fireToRemove->second);
+        this->m_Fires.erase(fireLocation);
+    } else{
+
+        for(auto i = this->m_Fires.begin(); i != this->m_Fires.end(); i++)
+        {
+            std::cerr << "Fire at: " << i->second->GetLocation() << std::endl;
+        }
+        std::cerr << "fire " << fireLocation << "not found "<< std::endl;
     }
 
 }

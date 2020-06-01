@@ -8,11 +8,11 @@
 
 bool CCoord::operator<(const CCoord &other) const
 {
-    if (this->m_X > other.m_X)
+    if (this->m_X < other.m_X)
     {
         return true;
     }
-    else if (this->m_Y > other.m_Y)
+    else if (this->m_X == other.m_X && this->m_Y < other.m_Y)
     {
         return true;
     }

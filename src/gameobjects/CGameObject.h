@@ -11,15 +11,16 @@
 class CBoard;
 
 /**
- * Represents basic gameobject which has location and texture
+ * Represents basic gameobject which has location and texturepack.
  */
 class CGameObject
 {
 public:
     /**
-    * Game object contructor
+    * Game object contructor.
     * @param textures Texturepack to be rendered.
-     * @param isPassable Is this object passable for movable objects?
+    * @param location Starting location.
+    * @param isPassable Is this object passable for movable objects?
     */
     explicit CGameObject(std::shared_ptr<CTexturePack> texturePack, CCoord location = CCoord(0,0), bool isPassable = false)
             : m_TexturePack(std::move(texturePack)), m_ActualTexture(ETextureType::TEXTURE_FRONT),
@@ -91,9 +92,6 @@ public:
      */
     bool IsColiding(const CGameObject * other, double tolerance = 0) const;
 
-    void SetLocation(CCoord location)
-    {this->m_Location = location;}
-
     /**
     * Try to destroy the wall.
     * @param distance Distance from the bomb.
@@ -102,8 +100,11 @@ public:
     {}
 
 protected:
+    /** Texturepack which is used for rendering. */
     std::shared_ptr<CTexturePack> m_TexturePack;
+    /** Actual texture type to be rendered. */
     ETextureType m_ActualTexture;
+    /** Is this object passable for other objects? */
     bool m_IsPassable;
     bool m_IsAlive;
     CCoord m_Location;

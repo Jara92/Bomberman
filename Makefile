@@ -1,5 +1,5 @@
 CXX       = g++
-CXXFLAGS  = -Wall -pedantic -O3 -std=c++14 -fsanitize=address
+CXXFLAGS  = -Wall -pedantic -O3 -std=c++14
 LD        = g++
 LIBS      = -L/usr/lib/x86_64-linux-gnu -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_net
 OBJDIR    = obj
@@ -20,7 +20,7 @@ all: compile doc
 compile: bomberman ;
 
 bomberman: $(OBJ)
-	$(LD) -o bomberman $^ $(LIBS)
+	$(LD) -o bomberman -fsanitize=address $^ $(LIBS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(@D)

@@ -15,13 +15,11 @@ bool CLevelLoader::LoadLevel(CBoard *board, size_t level)
 {
     board->ClearBoard();
 
-    // TODO přidat algoritmus na zvyšování počtu zdí podle levelu - využít board->GetBoardSize()
     size_t obstaclesCount = (board->GetBoardSize().m_X * board->GetBoardSize().m_Y) * 0.20;
-
     this->GenerateObstacles(board, level, obstaclesCount);
 
     // Load enemies and boosts
-    // TODO
+   // TODO načíst soubor levelu a načíst data
 
     return true;
 }
@@ -33,11 +31,11 @@ CBoard *CLevelLoader::GetBoard(int playersCount, CSettings *settings)
     int cellSize = static_cast<int>(settings->GetScreenWidth() / CLevelLoader::MAP_WIDTH);
 
     // Load important objects for new board.
+    std::shared_ptr<CTexturePack> bombTexturePack = this->LoadBombTexturePack();
+    std::shared_ptr<CTexturePack> fireTexturePack = this->LoadFireTexturePack();
     std::vector<std::vector<CWall *>> map = this->LoadMap();
     std::vector<CPlayer *> players = this->LoadPlayers(playersCount);
     CGround *groundObject = this->LoadGround();
-    std::shared_ptr<CTexturePack> bombTexturePack = this->LoadBombTexturePack();
-    std::shared_ptr<CTexturePack> fireTexturePack = this->LoadFireTexturePack();
 
     return new CBoard(map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), groundObject,
                       bombTexturePack, fireTexturePack,
@@ -206,19 +204,21 @@ void CLevelLoader::GenerateObstacles(CBoard *board, size_t level, size_t count)
                                            textures);
     size_t randomX = 0, randomY = 0;
 
+    // Random number generator.
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine randomEngine(seed);
+
     for (size_t i = 0; i < count; i++)
     {
         // Generate random location until the location is free.
         do
         {
-            randomX = rand() % static_cast<int>(board->GetBoardSize().m_X);
-            randomY = rand() % static_cast<int>(board->GetBoardSize().m_Y);
+            randomX = randomEngine() % static_cast<int>(board->GetBoardSize().m_X);
+            randomY = randomEngine() % static_cast<int>(board->GetBoardSize().m_Y);
         } while (!board->PositionFree(CCoord(randomX, randomY)));
 
         board->m_Map[randomX][randomY] = new CWall(texturePack, CCoord(randomX, randomY), true, nullptr);
-
     }
-
 }
 
 /*====================================================================================================================*/
@@ -237,9 +237,10 @@ CGround *CLevelLoader::LoadGround()
 /*====================================================================================================================*/
 std::shared_ptr<CTexturePack> CLevelLoader::LoadBombTexturePack()
 {
-    // TODO Use other bomb textures - change texture with bomb life
     std::map<ETextureType, const std::vector<std::string>> textures
-            {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Bomb/Bomb_f01.png"}}}};
+            {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Bomb/Bomb_f01.png"},
+                                                                    {"Bomb/Bomb_f02.png"},
+                                                                    {"Bomb/Bomb_f03.png"}}}};
 
     return std::make_shared<CTexturePack>(this->m_Interface,
                                           textures, true, CCoord(0.65, 0.65));
