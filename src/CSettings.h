@@ -20,10 +20,10 @@ public:
      * @param assetsPath Assets directory path
      * @param dataPath  Data directory path
      */
-    CSettings(std::size_t width = 1150, std::size_t height = 600, size_t screenFPS = 60, bool sound = true,
+    CSettings(unsigned int width = 1150, unsigned int height = 600, size_t screenFPS = 60, bool sound = true,
               bool debugMode = false, std::string assetsPath = "./examples/assets/",
               std::string dataPath = "./examples/data/")
-            : m_TicksPerFrame(1000 / screenFPS), m_DebugMode(debugMode), m_AssetsPath(std::move(assetsPath)),
+            : m_DebugMode(debugMode), m_AssetsPath(std::move(assetsPath)),
               m_DataPath(std::move(dataPath))
     { this->ChangeSettings(width, height, sound); }
 
@@ -46,18 +46,15 @@ public:
         this->m_Sound = sound;
     }
 
-    std::size_t GetScreenWidth() const
+    unsigned int GetScreenWidth() const
     {
         return this->m_ScreenWidth;
     }
 
-    std::size_t GetScreenHeight() const
+    unsigned int GetScreenHeight() const
     {
         return this->m_ScreenHeight;
     }
-
-    std::size_t GetTicksPerFrame() const
-    { return this->m_TicksPerFrame; }
 
     bool GetSound() const
     { return this->m_Sound; }
@@ -72,9 +69,8 @@ public:
     { return this->m_DataPath; }
 
 protected:
-    std::size_t m_ScreenWidth;
-    std::size_t m_ScreenHeight;
-    std::size_t m_TicksPerFrame;
+    unsigned int m_ScreenWidth;
+    unsigned int m_ScreenHeight;
     bool m_Sound;
     bool m_DebugMode;
 

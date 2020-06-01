@@ -21,7 +21,8 @@ public:
                      double speed = 0.0025, int lives = 3)
             : CMovable(std::move(texturePack), location, speed, false, lives), m_Score(0), m_ExplosionRadius(1),
               m_MaxBombs(1), m_ActiveBombs(0), m_RemoteExplosion(false), m_BombPass(false), m_FireImmunity(false),
-              m_IsPlanting(false), m_IsDetonating(false), m_LevelUp(false), m_Controls(controls)
+              m_PlantingAvaible(false), m_IsPlanting(false), m_DetanatingAvaible(false), m_IsDetonating(false), m_LevelUp(false),
+              m_Controls(controls)
     {}
 
     // I do not want to allow copying players. Every player object has his own controls and copying may cause troubles.
@@ -49,6 +50,11 @@ public:
     * @param board Game board
     */
     void TryPlaceBomb(CBoard *board);
+
+    /**
+     * Kill the player.
+     */
+    void Kill();
 
     /**======================
     * Boost interface.
@@ -146,7 +152,9 @@ protected:
     bool m_BombPass;
     bool m_FireImmunity;
 
+    bool m_PlantingAvaible;
     bool m_IsPlanting;
+    bool m_DetanatingAvaible;
     bool m_IsDetonating;
     bool m_LevelUp;
 

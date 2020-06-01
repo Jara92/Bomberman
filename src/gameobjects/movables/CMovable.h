@@ -55,8 +55,10 @@ public:
     CCoord GetLocationCell() const
     { return CCoord(floor(this->m_Location.m_X + 0.5), floor(this->m_Location.m_Y + 0.5)); }
 
-    void ResetLocation()
-    { this->m_Location = this->m_StartingLocation; }
+    void Reset();
+
+    int GetLives() const
+    { return this->m_Lives; }
 
 
 protected:

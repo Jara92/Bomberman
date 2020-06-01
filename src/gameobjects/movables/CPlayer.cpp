@@ -29,8 +29,9 @@ void CPlayer::Update(CBoard *board, int deltaTime)
     }
 
     // Detonation action
-    if (this->m_IsDetonating && this->m_RemoteExplosion)
+    if (this->m_IsDetonating &&  this->m_DetanatingAvaible && this->m_RemoteExplosion)
     {
+        this->m_DetanatingAvaible = false;
         board->DetonateBombs(this);
     }
 
@@ -179,15 +180,28 @@ void CPlayer::HandleInput(const Uint8 *keyState)
         this->m_ActualTexture = ETextureType::TEXTURE_RIGHT;
     }
 
-    // actions
-    if (keyState[this->m_Controls->m_PlaceBomb])
+    // Planting action
+    if (keyState[this->m_Controls->m_PlaceBomb] && this->m_PlantingAvaible)
     {
         this->m_IsPlanting = true;
+        this->m_PlantingAvaible = false;
+    }
+    // Planting is not avaible until the button is released
+    else if(!keyState[this->m_Controls->m_PlaceBomb])
+    {
+        this->m_PlantingAvaible = true;
     }
 
-    if (keyState[this->m_Controls->m_TriggerBomb])
+    // Detonating action
+    if (keyState[this->m_Controls->m_Detonation] && this->m_DetanatingAvaible)
     {
+        this->m_DetanatingAvaible = false;
         this->m_IsDetonating = true;
+    }
+    // Detonating is not avaible until the button is released
+    else if(!keyState[this->m_Controls->m_Detonation])
+    {
+        this->m_DetanatingAvaible = true;
     }
 }
 
@@ -199,6 +213,12 @@ void CPlayer::TryPlaceBomb(CBoard *board)
         board->PlaceBomb(this);
         //this->m_ActiveBombs++; // TODO uncomment this
     }
+}
+
+/*====================================================================================================================*/
+void CPlayer::Kill()
+{
+    this->m_Lives--;
 }
 
 

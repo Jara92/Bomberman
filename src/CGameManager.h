@@ -9,6 +9,7 @@
 #include "CClock.h"
 #include "CBoard.h"
 #include "CLevelLoader.h"
+#include "EGameStatus.h"
 
 class CGameManager
 {
@@ -27,9 +28,15 @@ protected:
     CLevelLoader * m_LevelLoader;
     CGameClock m_Clock;
     bool m_GameIsRunning;
+    EGameStatus m_GameStatus;
+    unsigned int m_Level;
 
-    void Draw() const;
+    unsigned int Draw() const;
+    unsigned int DrawGame() const;
+    unsigned int DrawRoundOver() const;
+    unsigned int DrawNextRound() const;
+    unsigned int DrawGameOver() const;
     void Update(int deltaTime);
-    void UpdatePhysics();
+    void UpdateGameStatus();
 };
 

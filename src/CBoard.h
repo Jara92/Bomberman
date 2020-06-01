@@ -18,6 +18,7 @@
 #include "gameobjects/movables/CEnemy.h"
 #include "gameobjects/CBomb.h"
 #include "gameobjects/movables/CPlayer.h"
+#include "EGameStatus.h"
 
 class CBoard
 {
@@ -41,7 +42,7 @@ public:
      */
     void Update(int deltaTime);
 
-    void UpdatePhysics();
+    EGameStatus UpdatePhysics();
 
     /**
      * Draw all objects in the board.
@@ -103,6 +104,16 @@ public:
      */
     void DestroyExplosion(CFire * fire);
 
+    EGameStatus RoundOver(CPlayer * player);
+
+    /**
+     * Remove all dynamically added objects. (Bombs, Enemies, Boosts, DestructibleWalls)
+     */
+    void ClearBoard();
+
+    CCoord GetBoardSize() const
+    { return this->m_BoardSize; }
+
     /** Saved objects */
     std::vector<CPlayer *> m_Players;
     std::vector<CEnemy *> m_Enemies;
@@ -113,14 +124,6 @@ public:
 
     /** Game settings */
     CSettings * m_Settings;
-
-    CCoord GetBoardSize() const
-    { return this->m_BoardSize; }
-
-    /**
-     * Remove all dynamically added objects. (Bombs, Enemies, Boosts, DestructibleWalls)
-     */
-    void ClearBoard();
 
 protected:
     /** Size of gameboard. */

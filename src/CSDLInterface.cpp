@@ -134,7 +134,7 @@ bool CSDLInterface::RenderText(const std::string & text, CCoord location, CCoord
         return false;
     }
 
-    SDL_Surface *surfaceMessage = TTF_RenderText_Blended(font, ("FPS: " + text).c_str(), color);
+    SDL_Surface *surfaceMessage = TTF_RenderText_Blended(font, (text).c_str(), color);
     if(surfaceMessage == NULL)
     {
         return false;

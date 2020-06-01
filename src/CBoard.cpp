@@ -314,7 +314,7 @@ void CBoard::Update(int deltaTime)
 }
 
 /*====================================================================================================================*/
-void CBoard::UpdatePhysics()
+EGameStatus CBoard::UpdatePhysics()
 {
     /* if({somePlayer} is coliding {someBoost} ))
      {
@@ -332,6 +332,35 @@ void CBoard::UpdatePhysics()
             i->second->MakeUnpassableForOwner();
         }
     }*/
+    CCoord directions[4] = {CCoord(0, 1), CCoord(0, -1), CCoord(1, 0), CCoord(-1, 0)};
+    for(auto player = this->m_Players.begin(); player != this->m_Players.end(); player++)
+    {
+        CCoord playerCellLocation = (*(player.base()))->GetLocationCell();
+        for(unsigned int i = 0; i < 4; i++)
+        {
+            CCoord loc = playerCellLocation + directions[i];
+
+            auto fire = this->m_Fires.find(loc);
+            if(fire != this->m_Fires.end() && (*(player.base()))->IsColiding(fire->second))
+            {
+                std::cout << "Player is killed." << std::endl;
+                (*(player.base()))->Kill();
+                return this->RoundOver((*(player.base())));
+            }
+        }
+    }
+
+    return EGameStatus ::GAMESTATUS_RUNNING;
+}
+/*====================================================================================================================*/
+EGameStatus CBoard::RoundOver(CPlayer *player)
+{
+    if(player->GetLives() < 0)
+    {
+        return EGameStatus::GAME_STATUS_GAME_OVER;
+    }
+
+    return EGameStatus::GAMESTATUS_ROUND_OVER;
 }
 
 /*====================================================================================================================*/
@@ -385,7 +414,7 @@ void CBoard::ClearBoard()
     // Reset players locations
     for (size_t i = 0; i < this->m_Players.size(); i++)
     {
-        this->m_Players[i]->ResetLocation();
+        this->m_Players[i]->Reset();
     }
 }
 
@@ -401,8 +430,8 @@ bool CBoard::PositionFree(CCoord coord)
     // Check walls
     if (this->m_Map[static_cast<int>(coord.m_X)][static_cast<int>(coord.m_Y)] != nullptr ||
         this->m_Bombs.find(coord) != this->m_Bombs.end() ||
-        this->m_Boosts.find(coord) != this->m_Boosts.end() ||
-        this->m_Fires.find(coord) != this->m_Fires.end())
+        this->m_Fires.find(coord) != this->m_Fires.end() ||
+    this->m_Boosts.find(coord) != this->m_Boosts.end())
     {
         return false;
     }
@@ -460,6 +489,8 @@ bool CBoard::PlayerDirectionFree(CCoord location, CPlayer *player, CCoord direct
 
     return true;
 }
+
+
 
 
 

@@ -19,7 +19,7 @@ public:
      * @param duration Duration of this fire in miliseconds.
      */
     explicit CFire(std::shared_ptr<CTexturePack> texturePack, CCoord location = CCoord(0,0), unsigned int duration = 1000)
-    : CGameObject(std::move(texturePack), location, false) // Fire is not passable, but... For owner is passable until the player exits the area of this bomb.
+    : CGameObject(std::move(texturePack), location, false) // Fire is not passable
     , m_Duration(duration), m_DurationCounter(0)
     {}
 

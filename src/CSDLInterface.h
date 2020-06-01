@@ -112,10 +112,16 @@ public:
     *  @param message  UTF-8 message text
     */
     void ShowMessageBox(Uint32 flags, const std::string &title, const std::string &message);
+    /**
+     * Wait a specified number of milliseconds before returning.
+     * @param time Waiting time in milliseconds.
+     */
+    void Wait(Uint32 time)
+    {SDL_Delay(time);}
 
 protected:
-    size_t m_WindowWidth;
-    size_t m_WindowHeight;
+    unsigned int m_WindowWidth;
+    unsigned int m_WindowHeight;
     const char * m_WindowTitle;
 
     CSettings *m_Settings;

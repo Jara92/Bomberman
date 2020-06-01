@@ -152,6 +152,9 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/EDirection.h">
 			<Option target="bomberman"/>
 		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/EGameStatus.h">
+			<Option target="bomberman"/>
+		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/ETextureType.h">
 			<Option target="bomberman"/>
 		</Unit>

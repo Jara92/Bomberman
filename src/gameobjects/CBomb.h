@@ -21,7 +21,7 @@ public:
      * @param owner Object owner.
      * @param explosionDelay Time to explode. Set 0 to activate remote explosion (the bomb will explode only when player trigger explosion)
      */
-    CBomb(std::shared_ptr<CTexturePack> texturePack, CCoord location, CPlayer * owner, unsigned int explosionDelay = 2000)
+    CBomb(std::shared_ptr<CTexturePack> texturePack, CCoord location, CPlayer * owner, unsigned int explosionDelay = 1000)
             : CGameObject(std::move(texturePack),
                           location, false), m_Owner(owner), m_IsPassableForOwner(
             true), // Bomb is not passable, but... For owner is passable until the player exits the area of this bomb.
@@ -35,13 +35,6 @@ public:
     virtual ~CBomb() = default;
 
     virtual void Update(CBoard *board, int deltaTime) override;
-
-    /**
-     * Attach player to this bomb as its owner.
-     * @param player
-     */
-    void SetOwner(CPlayer *player)
-    { if (!this->m_Owner) this->m_Owner = player; }
 
     /**
      * Get bombs owner.

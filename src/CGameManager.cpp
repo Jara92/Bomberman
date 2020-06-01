@@ -7,7 +7,8 @@
 #include "CGameManager.h"
 
 CGameManager::CGameManager(CSDLInterface *interface)
-        : m_Interface(interface), m_Board(nullptr), m_GameIsRunning(true)
+        : m_Interface(interface), m_Board(nullptr), m_GameIsRunning(true), m_GameStatus(EGameStatus::GAMESTATUS_RUNNING),
+        m_Level(1)
 {
     this->m_LevelLoader = new CLevelLoader(interface);
 }
@@ -49,36 +50,106 @@ void CGameManager::Run()
             }
         }
 
+        // Check physics events physics in the board
+        this->UpdateGameStatus();
+
         // Update objects in the board
         this->Update(this->m_Clock.DeltaTime());
 
-        // Update physics in the board
-        this->UpdatePhysics();
-
-        // Draw board and info table
-        this->Draw();
+        // Draw game
+        unsigned int timeToWait = this->Draw();
 
         // Wait for few miliseconds to draw cca 60 frames per second
-        SDL_Delay(this->m_Clock.GetDelay());
+        this->m_Interface->Wait(timeToWait);
     }
 }
 
 /*====================================================================================================================*/
-void CGameManager::Draw() const
+unsigned int CGameManager::Draw() const
 {
     this->m_Interface->SetRenderColor(0, 0, 0, 255);
     this->m_Interface->Clear();
 
+    unsigned int waitingTime = 0;
+
+    // Render screen game game status
+    switch (this->m_GameStatus)
+    {
+        case EGameStatus::GAMESTATUS_RUNNING:
+            waitingTime = this->DrawGame();
+            break;
+        case EGameStatus::GAMESTATUS_ROUND_OVER:
+            waitingTime = this->DrawRoundOver();
+            break;
+        case EGameStatus::GAMESTATUS_NEXT_ROUND:
+            waitingTime = this->DrawNextRound();
+            break;
+        case EGameStatus::GAMESTATUS_PAUSED:
+            // TODO
+            break;
+        case EGameStatus::GAME_STATUS_GAME_OVER:
+            waitingTime = this->DrawGameOver();
+            break;
+        default:
+            break;
+    }
+
+    this->m_Interface->Present();
+
+    return waitingTime;
+}
+
+/*====================================================================================================================*/
+unsigned int CGameManager::DrawGame() const
+{
     this->m_Board->Draw(this->m_Interface);
 
     // TODO Render Game menu
 
     // DEBUG
-    this->m_Interface->RenderText(std::to_string(this->m_Clock.GetFPS()), CCoord(10, 10), CCoord(100, 50));
+    this->m_Interface->RenderText("FPS: " + std::to_string(this->m_Clock.GetFPS()), CCoord(10, 10), CCoord(100, 50));
     //std::cout << "FPS: " << this->m_Clock.GetFPS() << std::endl;
 
-    this->m_Interface->Present();
+    return this->m_Clock.GetDelay();
 }
+
+/*====================================================================================================================*/
+unsigned int CGameManager::DrawRoundOver() const
+{
+    CCoord textSize = CCoord(400, 100);
+    this->m_Interface->RenderText("Round over!",
+                                  CCoord((this->m_Interface->GetSettings()->GetScreenWidth() / 2) - textSize.m_X / 2,
+                                         (this->m_Interface->GetSettings()->GetScreenHeight() / 2) - textSize.m_Y / 2),
+                                  textSize);
+
+    return 2000;
+}
+
+/*====================================================================================================================*/
+unsigned int CGameManager::DrawNextRound() const
+{
+    CCoord textSize = CCoord(400, 100);
+    this->m_Interface->RenderText("Round " + std::to_string(this->m_Level) + "!",
+                                  CCoord((this->m_Interface->GetSettings()->GetScreenWidth() / 2) - textSize.m_X / 2,
+                                         (this->m_Interface->GetSettings()->GetScreenHeight() / 2) - textSize.m_Y / 2),
+                                  textSize);
+
+    return 2000;
+}
+
+/*====================================================================================================================*/
+unsigned int CGameManager::DrawGameOver() const
+{
+    CCoord textSize = CCoord(400, 100);
+    this->m_Interface->RenderText("!Game over!",
+                                  CCoord((this->m_Interface->GetSettings()->GetScreenWidth() / 2) - textSize.m_X / 2,
+                                         (this->m_Interface->GetSettings()->GetScreenHeight() / 2) - textSize.m_Y / 2),
+                                  textSize);
+    // TODO write score
+
+    return 5000;
+}
+
 
 /*====================================================================================================================*/
 void CGameManager::Update(int deltaTime)
@@ -87,9 +158,26 @@ void CGameManager::Update(int deltaTime)
 }
 
 /*====================================================================================================================*/
-void CGameManager::UpdatePhysics()
+void CGameManager::UpdateGameStatus()
 {
-    this->m_Board->UpdatePhysics();
+    this->m_GameStatus = this->m_Board->UpdatePhysics();
+
+    // Updating game using new gamestatus
+    switch (this->m_GameStatus)
+    {
+        case EGameStatus ::GAMESTATUS_NEXT_ROUND:
+            this->m_Level++;
+            this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
+            this->m_Clock.Reset();
+            break;
+        case EGameStatus ::GAMESTATUS_ROUND_OVER:
+            this->m_Board->ClearBoard();
+            this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
+            this->m_Clock.Reset();
+            break;
+        default:
+            break;
+    }
 }
 
 /*====================================================================================================================*/
@@ -98,6 +186,7 @@ CGameManager::~CGameManager()
     delete this->m_Board;
     delete this->m_LevelLoader;
 }
+
 
 
 

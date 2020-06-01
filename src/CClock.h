@@ -6,6 +6,7 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+#include <iostream>
 
 /**
  * Clock which controls game refresh rate.
@@ -28,10 +29,8 @@ public:
      */
     void Reset()
     {
-        this->m_StartTicks = this->m_LastTicks = SDL_GetTicks();
         this->m_DeltaTime = 0;
         this->m_FPS = 0;
-        this->m_FrameCounter = 0;
     }
 
     /**
@@ -39,22 +38,18 @@ public:
      */
     void Tick()
     {
-        this->m_ElapsedTicks = SDL_GetTicks() - this->m_StartTicks;
-
-        //Calculate FPS and repair hight values.
-        this->m_FPS = this->m_FrameCounter / (this->m_ElapsedTicks / 1000.f);
-        if (this->m_FPS > 2000000)
-        {
-            this->m_FPS = 0;
-        }
-
         // Calculate deltaTime
         Uint32 currentTime = SDL_GetTicks();
         this->m_DeltaTime = static_cast<int>(currentTime - this->m_LastTicks);
 
-        // Update lastticks value and framerate
+        // Calculate FPS
+        if(this->m_DeltaTime != 0)
+        {
+            this->m_FPS = 1000.f / this->m_DeltaTime;
+        }
+
+        // Update lastticks value
         this->m_LastTicks = currentTime;
-        this->m_FrameCounter++;
     }
 
     int DeltaTime() const
@@ -79,13 +74,10 @@ public:
 
 protected:
     int m_TicksPerFrame;
-    Uint32 m_StartTicks;
     Uint32 m_LastTicks;
-    Uint32 m_ElapsedTicks;
 
     int m_DeltaTime;
     double m_FPS;
-    Uint32 m_FrameCounter;
 };
 
 
