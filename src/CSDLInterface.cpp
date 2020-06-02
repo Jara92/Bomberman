@@ -17,17 +17,14 @@ CSDLInterface::CSDLInterface(const char *title, CSettings *settings)
 CSDLInterface::~CSDLInterface()
 {
     // SDL is C library and it uses NULL
-    if (this->m_Window != NULL && this->m_Window != nullptr)
-    {
-        SDL_DestroyWindow(this->m_Window);
-    }
-
-
-    SDL_RenderClear(this->m_Renderer);
-
     if (this->m_Renderer != NULL && this->m_Renderer != nullptr)
     {
         SDL_DestroyRenderer(this->m_Renderer);
+    }
+
+    if (this->m_Window != NULL && this->m_Window != nullptr)
+    {
+        SDL_DestroyWindow(this->m_Window);
     }
 
     // Quit SDL

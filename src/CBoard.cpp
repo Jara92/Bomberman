@@ -56,7 +56,7 @@ bool CBoard::IsPassable(CCoord coord, const CPlayer *player)
 
     // Search for bombs in location.
     auto bomb = this->m_Bombs.find(CCoord(static_cast<int>(floor(coord.m_X)), static_cast<int>(floor(coord.m_Y))));
-    if (bomb != this->m_Bombs.end() && player->IsColiding(bomb->second))
+    if (bomb != this->m_Bombs.end() && bomb->second && player->IsColiding(bomb->second))
     {
         // Player is not owner or the bomb is not passable for owner
         if (bomb->second->GetOwner() != player || !bomb->second->IsPassableForOwner())
@@ -75,7 +75,7 @@ void CBoard::PlaceBomb(CPlayer *player)
     CCoord location = player->GetLocationCell();
 
     // If this location is free.
-    if (this->m_Bombs.find(location) == this->m_Bombs.end())
+    if (this->m_Bombs.find(location) == this->m_Bombs.end() && this->m_Fires.find(location) == this->m_Fires.end())
     {
         CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, this->m_BombObjectTexturePack->GetTextureSize(),
                                 location, player);
@@ -122,7 +122,7 @@ void CBoard::CreateExplosion(CBomb *bomb)
         {
             delete bombToRemove->second;
             bombToRemove->second = nullptr;
-            this->m_Bombs.erase(location);
+            this->m_Bombs.erase(bombToRemove);
         }
             // Error message when the bomb is not found - this should never happen
         else
@@ -154,18 +154,21 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int exp
 
         if (target)
         {
-            target->TryDestroy(i);
-            delete target;
-            this->m_Map[static_cast<int>(locationToExplode.m_X)][static_cast<int>(locationToExplode.m_Y)] = nullptr;
+            if(target->TryDestroy(i))
+            {
+                delete target;
+                this->m_Map[static_cast<int>(locationToExplode.m_X)][static_cast<int>(locationToExplode.m_Y)] = nullptr;
+            }
         }
 
         // Destroy potencialy existing fire is this location
         auto foundFire = this->m_Fires.find(locationToExplode);
         if (foundFire != this->m_Fires.end())
         {
+            // Remove old fire.
             delete (foundFire->second);
             foundFire->second = nullptr;
-            this->m_Fires.erase(locationToExplode);
+            this->m_Fires.erase(foundFire);
         }
 
         // Create new fire
@@ -183,7 +186,8 @@ void CBoard::DestroyExplosion(CFire *fire)
     if (fireToRemove != this->m_Fires.end())
     {
         delete (fireToRemove->second);
-        this->m_Fires.erase(fireLocation);
+        fireToRemove->second = nullptr;
+        this->m_Fires.erase(fireToRemove);
     }
         // Error message when the fire is not found - this should never happen
     else
@@ -227,36 +231,47 @@ void CBoard::Draw(CSDLInterface *interface)
     // Draw enemies
     for (size_t i = 0; i < this->m_Enemies.size(); i++)
     {
-        // Polymorphic call
-        this->m_Enemies[i]->Draw(interface, this->m_CellSize);
+        if (this->m_Enemies[i])
+        {
+            this->m_Enemies[i]->Draw(interface, this->m_CellSize);
+        }
     }
 
     // draw boosts
     for (auto i = this->m_Boosts.begin(); i != this->m_Boosts.end(); i++)
     {
-        // Polymorphic call
-        i->second->Draw(interface, this->m_CellSize, i->first);
+        if (i->second)
+        {
+            i->second->Draw(interface, this->m_CellSize, i->first);
+        }
     }
 
     // draw bombs
     for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
     {
-        // Polymorphic call
-        i->second->Draw(interface, this->m_CellSize, i->first);
+        if (i->second)
+        {
+            i->second->Draw(interface, this->m_CellSize, i->first);
+        }
     }
 
     // draw fires
     for (auto i = this->m_Fires.begin(); i != this->m_Fires.end(); i++)
     {
-        // Polymorphic call
-        i->second->Draw(interface, this->m_CellSize, i->first);
+        if (i->second)
+        {
+            i->second->Draw(interface, this->m_CellSize, i->first);
+        }
     }
 
     // TODO změnit pořadí renderu tak, aby nejdříve byly renderovány objekty, které jsou vespod.
     // draw players
     for (size_t i = 0; i < this->m_Players.size(); i++)
     {
-        this->m_Players[i]->Draw(interface, this->m_CellSize);
+        if (this->m_Players[i])
+        {
+            this->m_Players[i]->Draw(interface, this->m_CellSize);
+        }
     }
 }
 
@@ -302,17 +317,35 @@ void CBoard::Update(int deltaTime)
     }
 
     // Update bombs
-    for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
+    for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end();/* i++*/)
     {
-        // Polymorphic call
-        i->second->Update(this, deltaTime);
+        // Save iterator to next object because current bomb could be removed in Update().
+        auto item = i++;
+        if (item->second)
+        {
+            item->second->Update(this, deltaTime);
+        }
+        else
+        {
+            // Remove null item
+            this->m_Bombs.erase(item);
+        }
     }
 
     // Update fires
-    for (auto i = this->m_Fires.begin(); i != this->m_Fires.end(); i++)
+    for (auto i = this->m_Fires.begin(); i != this->m_Fires.end(); )
     {
-        // Polymorphic call
-        i->second->Update(this, deltaTime);
+        // Save iterator to next object because current fire could be removed in Update().
+        auto item = i++;
+        if (item->second)
+        {
+            item->second->Update(this, deltaTime);
+        }
+        else
+        {
+            // Remove null item
+            this->m_Fires.erase(item);
+        }
     }
 }
 

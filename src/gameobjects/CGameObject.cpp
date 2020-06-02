@@ -26,7 +26,7 @@ void CGameObject::Draw(CSDLInterface *interface, int cellSize, CCoord location, 
 
 
     // FIXME debug
-  /*  CCoord center = ((CCoord(1, 1) - this->m_Size) / 2);
+    /*  CCoord center = ((CCoord(1, 1) - this->m_Size) / 2);
 
 
     interface->SetRenderColor(0, 255, 0, 255);
@@ -34,7 +34,8 @@ void CGameObject::Draw(CSDLInterface *interface, int cellSize, CCoord location, 
                   static_cast<int>((this->m_Location.m_Y + center.m_Y) * cellSize),
                   static_cast<int>(cellSize * this->GetSize().m_X ), static_cast<int>(cellSize * this->GetSize().m_Y)};
     interface->RenderRectangle(&rect);
-    interface->SetRenderColor(255, 0, 0, 255);*/
+    interface->SetRenderColor(255, 0, 0, 255);
+    */
 }
 
 /*====================================================================================================================*/
