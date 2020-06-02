@@ -15,12 +15,14 @@ public:
     * CEnemySmart contructor
     * @param textures Texturepack to be rendered.
     * @param location Starting location. (Must be passable)
+     * @param size Object size.
+     * @param score Score to be claimed.
     * @param speed Enemy speed
     * @param wallPass Can this Enemy walk through destructible walls?
     * @param lives How many lives doest this monster have?
     */
-    explicit CEnemySmart(std::shared_ptr<CTexturePack> texturePack, CCoord location, double speed = 0.005, bool wallPass = false, int lives = 1)
-    : CEnemy(std::move(texturePack), location, speed, wallPass, lives)
+    explicit CEnemySmart(std::shared_ptr<CTexturePack> texturePack, CCoord location, CCoord size = CCoord(1,1), int score = 0, double speed = 0.005, bool wallPass = false, int lives = 1)
+    : CEnemy(std::move(texturePack), location, size, score, speed, wallPass, lives)
     {}
 
     CEnemySmart(const CEnemySmart &other) = default;

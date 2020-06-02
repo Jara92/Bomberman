@@ -12,10 +12,11 @@ public:
     /**
     * Game object contructor
     * @param textures Texturepack to be rendered.
+    * @param size Object size.
     * @param location Object location.
     */
-    CGround(std::shared_ptr<CTexturePack> texturePack, CCoord location = CCoord(0,0))
-    : CGameObject(std::move(texturePack), location, true) // Every ground is passable...
+    CGround(std::shared_ptr<CTexturePack> texturePack, CCoord size = CCoord(1,1), CCoord location = CCoord(0,0))
+    : CGameObject(std::move(texturePack), size, location, true) // Every ground is passable...
     {}
 
     CGround(const CGround &other) = default;

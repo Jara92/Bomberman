@@ -4,6 +4,7 @@
 */
 
 
+#include <chrono>
 #include "CBoard.h"
 
 CBoard::~CBoard()
@@ -55,7 +56,7 @@ bool CBoard::IsPassable(CCoord coord, const CPlayer *player)
 
     // Search for bombs in location.
     auto bomb = this->m_Bombs.find(CCoord(static_cast<int>(floor(coord.m_X)), static_cast<int>(floor(coord.m_Y))));
-    if (bomb != this->m_Bombs.end() && player->IsColiding(bomb->second, CBomb::COLLISION_TOLERANCE))
+    if (bomb != this->m_Bombs.end() && player->IsColiding(bomb->second))
     {
         // Player is not owner or the bomb is not passable for owner
         if (bomb->second->GetOwner() != player || !bomb->second->IsPassableForOwner())
@@ -76,7 +77,8 @@ void CBoard::PlaceBomb(CPlayer *player)
     // If this location is free.
     if (this->m_Bombs.find(location) == this->m_Bombs.end())
     {
-        CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, location, player);
+        CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, this->m_BombObjectTexturePack->GetTextureSize(),
+                                location, player);
 
         this->m_Bombs.insert(std::pair<CCoord, CBomb *>(location, bomb));
     }
@@ -167,7 +169,8 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int exp
         }
 
         // Create new fire
-        CFire *fire = new CFire(this->m_FireObjectTexturePack, locationToExplode);
+        CFire *fire = new CFire(this->m_FireObjectTexturePack, this->m_FireObjectTexturePack->GetTextureSize(),
+                                locationToExplode);
         this->m_Fires.insert(std::pair<CCoord, CFire *>(locationToExplode, fire));
     }
 }
@@ -333,29 +336,34 @@ EGameStatus CBoard::UpdatePhysics()
         }
     }*/
     CCoord directions[4] = {CCoord(0, 1), CCoord(0, -1), CCoord(1, 0), CCoord(-1, 0)};
-    for(auto player = this->m_Players.begin(); player != this->m_Players.end(); player++)
+    for (auto player = this->m_Players.begin(); player != this->m_Players.end(); player++)
     {
         CCoord playerCellLocation = (*(player.base()))->GetLocationCell();
-        for(unsigned int i = 0; i < 4; i++)
+        for (unsigned int i = 0; i < 4; i++)
         {
             CCoord loc = playerCellLocation + directions[i];
 
             auto fire = this->m_Fires.find(loc);
-            if(fire != this->m_Fires.end() && (*(player.base()))->IsColiding(fire->second))
+            if (fire != this->m_Fires.end() && (*(player.base()))->IsColiding(fire->second))
             {
-                std::cout << "Player is killed." << std::endl;
+                std::cout << std::chrono::duration_cast<std::chrono::seconds>(
+                        std::chrono::system_clock::now().time_since_epoch()).count() << " Player is killed."
+                          << std::endl;
                 (*(player.base()))->Kill();
-                return this->RoundOver((*(player.base())));
+
+                // Doladit synchronizaci smrti a vybuchu - hrac zemre driv nez to stihne zjistit
+                //return this->RoundOver((*(player.base())));
             }
         }
     }
 
-    return EGameStatus ::GAMESTATUS_RUNNING;
+    return EGameStatus::GAMESTATUS_RUNNING;
 }
+
 /*====================================================================================================================*/
 EGameStatus CBoard::RoundOver(CPlayer *player)
 {
-    if(player->GetLives() < 0)
+    if (player->GetLives() < 0)
     {
         return EGameStatus::GAME_STATUS_GAME_OVER;
     }
@@ -431,7 +439,7 @@ bool CBoard::PositionFree(CCoord coord)
     if (this->m_Map[static_cast<int>(coord.m_X)][static_cast<int>(coord.m_Y)] != nullptr ||
         this->m_Bombs.find(coord) != this->m_Bombs.end() ||
         this->m_Fires.find(coord) != this->m_Fires.end() ||
-    this->m_Boosts.find(coord) != this->m_Boosts.end())
+        this->m_Boosts.find(coord) != this->m_Boosts.end())
     {
         return false;
     }
@@ -465,7 +473,7 @@ bool CBoard::PlayersAreaFree(CCoord coord)
     {
         for (unsigned int j = 0; j < 4; j++)
         {
-            if(!this->PlayerDirectionFree(coord, this->m_Players[i], directions[j]))
+            if (!this->PlayerDirectionFree(coord, this->m_Players[i], directions[j]))
             {
                 return false;
             }
@@ -474,14 +482,15 @@ bool CBoard::PlayersAreaFree(CCoord coord)
 
     return true;
 }
+
 /*====================================================================================================================*/
 bool CBoard::PlayerDirectionFree(CCoord location, CPlayer *player, CCoord direction)
 {
-    for(unsigned int i = 0; i <= player->GetExplosionRadius(); i++)
+    for (unsigned int i = 0; i <= player->GetExplosionRadius(); i++)
     {
         CCoord curLocation = (player->GetLocation() + (direction * i));
 
-        if(curLocation == location)
+        if (curLocation == location)
         {
             return false;
         }

@@ -16,13 +16,14 @@ public:
      * Object which can move in board.
      * @param texturePack Textures to be rendered
      * @param location Starting location
+     * @param size Object size.
      * @param speed  Starting speed
      * @param wallPass Can this object walk through destructible walls?
      * @param lives Starting lives count
      */
-    explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord location, double speed, bool wallPass,
-                      int lives)
-            : CGameObject(std::move(texturePack), location, true), // every movable object is passable
+    explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord size = CCoord(1,1), CCoord location = CCoord(0,0), double speed = 0.005, bool wallPass = false,
+                      int lives = 1)
+            : CGameObject(std::move(texturePack), size, location, true), // every movable object is passable
               m_StartingLocation(location), m_Speed(speed), m_WallPass(wallPass),
               m_VerticalMovingDirection(EDirection::DIRECTION_NONE),
               m_HorizontalMovingDirection(EDirection::DIRECTION_NONE), m_Lives(lives)
@@ -65,7 +66,7 @@ protected:
     CCoord m_StartingLocation;
     double m_Speed;
     bool m_WallPass;
-    // EDirection m_MovingDirection;
+
     EDirection m_VerticalMovingDirection;
     EDirection m_HorizontalMovingDirection;
     int m_Lives;

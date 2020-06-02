@@ -18,7 +18,7 @@ void CBomb::Update(CBoard *board, int deltaTime)
         if (this->m_IsPassableForOwner && this->m_Owner)
         {
             // If owner left bomb area the bomb will be unpassable for him.
-            if (!this->IsColiding(this->m_Owner, CBomb::COLLISION_TOLERANCE))
+            if (!this->IsColiding(this->m_Owner))
             {
                 this->m_IsPassableForOwner = false;
             }

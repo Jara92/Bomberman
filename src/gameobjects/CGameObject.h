@@ -19,12 +19,13 @@ public:
     /**
     * Game object contructor.
     * @param textures Texturepack to be rendered.
+    * @param size Object size.
     * @param location Starting location.
     * @param isPassable Is this object passable for movable objects?
     */
-    explicit CGameObject(std::shared_ptr<CTexturePack> texturePack, CCoord location = CCoord(0,0), bool isPassable = false)
+    explicit CGameObject(std::shared_ptr<CTexturePack> texturePack, CCoord size = CCoord(1,1), CCoord location = CCoord(0,0), bool isPassable = false)
             : m_TexturePack(std::move(texturePack)), m_ActualTexture(ETextureType::TEXTURE_FRONT),
-              m_IsPassable(isPassable), m_IsAlive(true), m_Location(location), m_AnimationIndex(0), m_AnimationUpdateInterval(100),
+              m_IsPassable(isPassable), m_IsAlive(true), m_Size(size), m_Location(location), m_AnimationIndex(0), m_AnimationUpdateInterval(100),
               m_AnimationTimer(0)
     {}
 
@@ -50,6 +51,9 @@ public:
 
     CCoord GetLocation() const
     {return this->m_Location;}
+
+    CCoord GetSize() const
+    {return this->m_Size;}
 
     /**
     * Updates object state using deltatime.
@@ -90,7 +94,7 @@ public:
      * @param tolerance Tolerance
      * @return True - Objects are colliding.
      */
-    bool IsColiding(const CGameObject * other, double tolerance = 0) const;
+    bool IsColiding(const CGameObject * other) const;
 
     /**
     * Try to destroy the wall.
@@ -107,6 +111,7 @@ protected:
     /** Is this object passable for other objects? */
     bool m_IsPassable;
     bool m_IsAlive;
+    CCoord m_Size;
     CCoord m_Location;
 
     /* Mutable keyword is very useful here. Animation index is not important for CGameObject, because it

@@ -15,11 +15,15 @@ public:
     /**
     * Game object contructor
     * @param textures Texturepack to be rendered.
-     * @param isPassable Is this object passable for movable objects?
+     * @param location Player starting location.
+     * @param size Object size.
+     * @param controls Controls object to be used.
+     * @param speed Object moving speed.
+     * @param lives Object starting lives.
     */
-    explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord location, CControls *controls,
+    explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord location, CCoord size = CCoord(1,1), CControls *controls = nullptr,
                      double speed = 0.0025, int lives = 3)
-            : CMovable(std::move(texturePack), location, speed, false, lives), m_Score(0), m_ExplosionRadius(1),
+            : CMovable(std::move(texturePack), size, location, speed, false, lives), m_Score(0), m_ExplosionRadius(1),
               m_MaxBombs(1), m_ActiveBombs(0), m_RemoteExplosion(false), m_BombPass(false), m_FireImmunity(false),
               m_PlantingAvaible(false), m_IsPlanting(false), m_DetanatingAvaible(false), m_IsDetonating(false), m_LevelUp(false),
               m_Controls(controls)

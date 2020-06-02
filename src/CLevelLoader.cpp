@@ -179,7 +179,7 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
     {
         players.push_back(
                 new CPlayer(std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i], false, CCoord(1, 2)),
-                            startingLocation[i],
+                            startingLocation[i], CCoord(0.5,0.75),
                             controls[i]));
         controls[i] = nullptr;
     }
@@ -217,7 +217,7 @@ void CLevelLoader::GenerateObstacles(CBoard *board, size_t level, size_t count)
             randomY = randomEngine() % static_cast<int>(board->GetBoardSize().m_Y);
         } while (!board->PositionFree(CCoord(randomX, randomY)) || !board->PlayersAreaFree(CCoord(randomX, randomY)));
 
-        board->m_Map[randomX][randomY] = new CWall(texturePack, CCoord(randomX, randomY), true, nullptr);
+        board->m_Map[randomX][randomY] = new CWall(texturePack, CCoord(1,1), CCoord(randomX, randomY), true, nullptr);
     }
 }
 

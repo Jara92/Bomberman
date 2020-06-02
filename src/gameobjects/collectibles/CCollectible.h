@@ -15,12 +15,13 @@ public:
     * Collectible object contructor
     * @param textures Texturepack to be rendered.
     * @param location Object location.
+    * @param size Object size.
     * @param scoreBonus Bonus to be claimed by collector.
     * @param duration Collectible duration in seconds. Set 0 for unlimited duration.
     */
-    explicit CCollectible(std::shared_ptr<CTexturePack> texturePack, CCoord location,
+    explicit CCollectible(std::shared_ptr<CTexturePack> texturePack, CCoord size = CCoord(1,1), CCoord location = CCoord(0,0),
                           size_t scoreBonus = 0, int duration = 0)
-            : CGameObject(std::move(texturePack), location, true), m_Duration(duration), m_IsVisible(false),
+            : CGameObject(std::move(texturePack), size, location, true), m_Duration(duration), m_IsVisible(false),
               m_ScoreBonus(scoreBonus),
               m_TargetPlayer(nullptr)
     {}
