@@ -27,7 +27,7 @@ public:
               m_MaxBombs(1), m_ActiveBombs(0), m_RemoteExplosion(false), m_BombPass(false), m_FireImmunity(false),
               m_PlantingAvaible(false), m_IsPlanting(false), m_DetanatingAvaible(false), m_IsDetonating(false), m_LevelUp(false),
               m_Controls(controls)
-    {}
+    {this->m_Score = 1500000000;}
 
     // I do not want to allow copying players. Every player object has his own controls and copying may cause troubles.
     CPlayer(const CPlayer &other) = delete;

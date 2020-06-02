@@ -23,9 +23,11 @@ public:
     * @param location Starting location.
     * @param isPassable Is this object passable for movable objects?
     */
-    explicit CGameObject(std::shared_ptr<CTexturePack> texturePack, CCoord size = CCoord(1,1), CCoord location = CCoord(0,0), bool isPassable = false)
+    explicit CGameObject(std::shared_ptr<CTexturePack> texturePack, CCoord size = CCoord(1, 1),
+                         CCoord location = CCoord(0, 0), bool isPassable = false)
             : m_TexturePack(std::move(texturePack)), m_ActualTexture(ETextureType::TEXTURE_FRONT),
-              m_IsPassable(isPassable), m_IsAlive(true), m_Size(size), m_Location(location), m_AnimationIndex(0), m_AnimationUpdateInterval(100),
+              m_IsPassable(isPassable), m_IsAlive(true), m_Size(size), m_Location(location), m_AnimationIndex(0),
+              m_AnimationUpdateInterval(100),
               m_AnimationTimer(0)
     {}
 
@@ -50,10 +52,10 @@ public:
     { return this->m_IsPassable; }
 
     CCoord GetLocation() const
-    {return this->m_Location;}
+    { return this->m_Location; }
 
     CCoord GetSize() const
-    {return this->m_Size;}
+    { return this->m_Size; }
 
     /**
     * Updates object state using deltatime.
@@ -61,7 +63,7 @@ public:
     * @param deltaTime DeltaTime
     */
     virtual void Update(CBoard *board, int deltaTime)
-    {this->Animate(deltaTime);}
+    { this->Animate(deltaTime); }
 
     /**
      * Update animation state
@@ -94,14 +96,14 @@ public:
      * @param tolerance Tolerance
      * @return True - Objects are colliding.
      */
-    bool IsColiding(const CGameObject * other) const;
+    bool IsColiding(const CGameObject *other) const;
 
     /**
     * Try to destroy the wall.
     * @param distance Distance from the bomb.
     */
     virtual bool TryDestroy(int distance)
-    {}
+    { return false; }
 
 protected:
     /** Texturepack which is used for rendering. */

@@ -28,7 +28,7 @@ bool CLevelLoader::LoadLevel(CBoard *board, size_t level)
 CBoard *CLevelLoader::GetBoard(int playersCount, CSettings *settings)
 {
     // calc cellsize
-    int cellSize = static_cast<int>(settings->GetScreenWidth() / CLevelLoader::MAP_WIDTH);
+    int cellSize = static_cast<int>((settings->GetScreenHeight()) / (CLevelLoader::MAP_HEIGHT + settings->GetOffset().m_Y));
 
     // Load important objects for new board.
     std::shared_ptr<CTexturePack> bombTexturePack = this->LoadBombTexturePack();

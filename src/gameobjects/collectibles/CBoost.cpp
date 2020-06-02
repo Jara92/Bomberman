@@ -5,6 +5,7 @@
 
 
 #include "CBoost.h"
+#include "../../CBoard.h"
 
 void CBoost::Apply(CPlayer *player)
 {
@@ -30,7 +31,7 @@ void CBoost::Apply(CPlayer *player)
 
 void CBoost::Update(CBoard *board, int deltaTime)
 {
-    (void *) (board);
+    board->m_Players; //fixme remove
 
     if (this->m_TargetPlayer)
     {

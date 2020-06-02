@@ -25,6 +25,7 @@ public:
 protected:
     CSDLInterface * m_Interface;
     CBoard * m_Board;
+    CCoord m_BoardOffset;
     CLevelLoader * m_LevelLoader;
     CGameClock m_Clock;
     bool m_GameIsRunning;

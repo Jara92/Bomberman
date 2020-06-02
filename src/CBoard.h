@@ -23,12 +23,14 @@
 class CBoard
 {
 public:
-    CBoard(CSettings * settings, std::vector<std::vector<CWall *>> map, std::vector<CPlayer *> players, CCoord boardSize, CGround *ground,
-           std::shared_ptr<CTexturePack> bombTexturePack, std::shared_ptr<CTexturePack> fireTexturePack, int cellSize)
-            : m_Players(std::move(players)), m_Map(std::move(map)), m_BoardSize(boardSize), m_CellSize(cellSize),
-              m_GroundObject(ground), m_BombObjectTexturePack(std::move(bombTexturePack)),
-              m_FireObjectTexturePack(std::move(fireTexturePack)), m_Settings(settings)
+    CBoard(CSettings *settings, std::vector<std::vector<CWall *>> map, std::vector<CPlayer *> players, CCoord boardSize,
+           CGround *ground,
+           std::shared_ptr<CTexturePack> bombTexturePack, std::shared_ptr<CTexturePack> fireTexturePack, unsigned int cellSize)
+            : m_Players(std::move(players)), m_Map(std::move(map)), m_Settings(settings), m_BoardSize(boardSize),
+              m_CellSize(cellSize), m_GroundObject(ground), m_BombObjectTexturePack(std::move(bombTexturePack)),
+              m_FireObjectTexturePack(std::move(fireTexturePack))
     {}
+
 
     ~CBoard();
 
@@ -48,7 +50,7 @@ public:
      * Draw all objects in the board.
      * @param interface Interface to be used.
      */
-    void Draw(CSDLInterface *interface);
+    void Draw(CSDLInterface *interface, CCoord offset = CCoord(0,0));
 
     /**
      * Is this coord passable for the player?
@@ -96,15 +98,15 @@ public:
      * @param direction Direction vector.
      * @param explosionRadius Explosion radius.
      */
-    void CreateExplosionWave(CBomb * bomb, CCoord direction, unsigned int explosionRadius);
+    void CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int explosionRadius);
 
     /**
      * Delete fire from the map.
      * @param fire Fire to be removed.
      */
-    void DestroyExplosion(CFire * fire);
+    void DestroyExplosion(CFire *fire);
 
-    EGameStatus RoundOver(CPlayer * player);
+    EGameStatus RoundOver(CPlayer *player);
 
     /**
      * Remove all dynamically added objects. (Bombs, Enemies, Boosts, DestructibleWalls)
@@ -113,6 +115,9 @@ public:
 
     CCoord GetBoardSize() const
     { return this->m_BoardSize; }
+
+    unsigned int GetCellSize() const
+    {return this->m_CellSize;}
 
     /** Saved objects */
     std::vector<CPlayer *> m_Players;
@@ -123,13 +128,13 @@ public:
     std::vector<std::vector<CWall *>> m_Map;
 
     /** Game settings */
-    CSettings * m_Settings;
+    CSettings *m_Settings;
 
 protected:
     /** Size of gameboard. */
     CCoord m_BoardSize;
     /** Size of one cell in pixels. */
-    int m_CellSize;
+    unsigned int m_CellSize;
 
     /** Ground object template */
     CGround *m_GroundObject;
@@ -145,6 +150,6 @@ protected:
      * @param direction Direction vector.
      * @return True - Direction is free.
      */
-    bool PlayerDirectionFree(CCoord location, CPlayer * player, CCoord direction);
+    bool PlayerDirectionFree(CCoord location, CPlayer *player, CCoord direction);
 };
 

@@ -31,6 +31,7 @@ public:
     {
         this->m_DeltaTime = 0;
         this->m_FPS = 0;
+        this->m_LastTicks = SDL_GetTicks();
     }
 
     /**
@@ -73,7 +74,7 @@ public:
     }
 
 protected:
-    int m_TicksPerFrame;
+    unsigned int m_TicksPerFrame;
     Uint32 m_LastTicks;
 
     int m_DeltaTime;

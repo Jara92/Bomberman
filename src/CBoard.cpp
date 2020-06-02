@@ -135,7 +135,7 @@ void CBoard::CreateExplosion(CBomb *bomb)
 /*====================================================================================================================*/
 void CBoard::CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int explosionRadius)
 {
-    for (int i = 0; i <= explosionRadius; i++)
+    for (unsigned int i = 0; i <= explosionRadius; i++)
     {
         CCoord locationToExplode = bomb->GetLocation() + (i * direction);
 
@@ -197,7 +197,7 @@ void CBoard::DestroyExplosion(CFire *fire)
 }
 
 /*====================================================================================================================*/
-void CBoard::Draw(CSDLInterface *interface)
+void CBoard::Draw(CSDLInterface *interface, CCoord offset)
 {
     // TODO debug
 
@@ -220,10 +220,10 @@ void CBoard::Draw(CSDLInterface *interface)
         {
             if (this->m_Map[i][j])
             {
-                this->m_Map[i][j]->Draw(interface, this->m_CellSize, CCoord(i, j));
+                this->m_Map[i][j]->Draw(interface, this->m_CellSize, CCoord(i, j), offset);
             } else if (this->m_GroundObject)
             {
-                this->m_GroundObject->Draw(interface, this->m_CellSize, CCoord(i, j));
+                this->m_GroundObject->Draw(interface, this->m_CellSize, CCoord(i, j), offset);
             }
         }
     }
@@ -233,7 +233,7 @@ void CBoard::Draw(CSDLInterface *interface)
     {
         if (this->m_Enemies[i])
         {
-            this->m_Enemies[i]->Draw(interface, this->m_CellSize);
+            this->m_Enemies[i]->Draw(interface, this->m_CellSize, this->m_Enemies[i]->GetLocation(), offset);
         }
     }
 
@@ -242,7 +242,7 @@ void CBoard::Draw(CSDLInterface *interface)
     {
         if (i->second)
         {
-            i->second->Draw(interface, this->m_CellSize, i->first);
+            i->second->Draw(interface, this->m_CellSize, i->first, offset);
         }
     }
 
@@ -251,7 +251,7 @@ void CBoard::Draw(CSDLInterface *interface)
     {
         if (i->second)
         {
-            i->second->Draw(interface, this->m_CellSize, i->first);
+            i->second->Draw(interface, this->m_CellSize, i->first, offset);
         }
     }
 
@@ -260,7 +260,7 @@ void CBoard::Draw(CSDLInterface *interface)
     {
         if (i->second)
         {
-            i->second->Draw(interface, this->m_CellSize, i->first);
+            i->second->Draw(interface, this->m_CellSize, i->first, offset);
         }
     }
 
@@ -270,7 +270,7 @@ void CBoard::Draw(CSDLInterface *interface)
     {
         if (this->m_Players[i])
         {
-            this->m_Players[i]->Draw(interface, this->m_CellSize);
+            this->m_Players[i]->Draw(interface, this->m_CellSize, this->m_Players[i]->GetLocation(), offset);
         }
     }
 }
@@ -358,16 +358,6 @@ EGameStatus CBoard::UpdatePhysics()
           {someBoost}->Apply({somePlayer});
      }*/
 
-    /*for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
-    {
-        CPlayer * owner = i->second->GetOwner();
-
-        if(owner && !owner->IsColiding(owner->GetLocation(), i->second, i->first))
-        {
-            std::cout << "unpass" << std::endl;
-            i->second->MakeUnpassableForOwner();
-        }
-    }*/
     CCoord directions[4] = {CCoord(0, 1), CCoord(0, -1), CCoord(1, 0), CCoord(-1, 0)};
     for (auto player = this->m_Players.begin(); player != this->m_Players.end(); player++)
     {

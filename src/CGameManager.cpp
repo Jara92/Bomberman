@@ -7,8 +7,9 @@
 #include "CGameManager.h"
 
 CGameManager::CGameManager(CSDLInterface *interface)
-        : m_Interface(interface), m_Board(nullptr), m_GameIsRunning(true), m_GameStatus(EGameStatus::GAMESTATUS_RUNNING),
-        m_Level(1)
+        : m_Interface(interface), m_Board(nullptr), m_BoardOffset(CCoord(0, 2)), m_GameIsRunning(true),
+          m_GameStatus(EGameStatus::GAMESTATUS_RUNNING),
+          m_Level(1)
 {
     this->m_LevelLoader = new CLevelLoader(interface);
 }
@@ -102,12 +103,24 @@ unsigned int CGameManager::Draw() const
 /*====================================================================================================================*/
 unsigned int CGameManager::DrawGame() const
 {
-    this->m_Board->Draw(this->m_Interface);
+    this->m_Board->Draw(this->m_Interface, this->m_Interface->GetSettings()->GetOffset());
 
-    // TODO Render Game menu
+    // Menu
+    this->m_Interface->RenderText("Time: XXX", CCoord(10, 10), CCoord(3 * this->m_Board->GetCellSize(), this->m_Board->GetCellSize() - 20));
+
+    if(this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
+    {
+        this->m_Interface->RenderText("Lives: " + std::to_string(this->m_Board->m_Players[0]->GetLives()),
+                                      CCoord(4 * this->m_Board->GetCellSize() + 10, 10),
+                                      CCoord(2 * this->m_Board->GetCellSize(), this->m_Board->GetCellSize() - 20));
+
+        this->m_Interface->RenderText("Score: " + std::to_string(this->m_Board->m_Players[0]->GetScore()),
+                                      CCoord(7 * this->m_Board->GetCellSize() + 10, 10),
+                                      CCoord(2 * this->m_Board->GetCellSize(), this->m_Board->GetCellSize() - 20));
+    }
 
     // DEBUG
-    this->m_Interface->RenderText("FPS: " + std::to_string(this->m_Clock.GetFPS()), CCoord(10, 10), CCoord(100, 50));
+    this->m_Interface->RenderText("FPS: " + std::to_string(this->m_Clock.GetFPS()), CCoord(10, this->m_Board->GetCellSize() + 10), CCoord(50, 25));
     //std::cout << "FPS: " << this->m_Clock.GetFPS() << std::endl;
 
     return this->m_Clock.GetDelay();
@@ -165,12 +178,12 @@ void CGameManager::UpdateGameStatus()
     // Updating game using new gamestatus
     switch (this->m_GameStatus)
     {
-        case EGameStatus ::GAMESTATUS_NEXT_ROUND:
+        case EGameStatus::GAMESTATUS_NEXT_ROUND:
             this->m_Level++;
             this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
             this->m_Clock.Reset();
             break;
-        case EGameStatus ::GAMESTATUS_ROUND_OVER:
+        case EGameStatus::GAMESTATUS_ROUND_OVER:
             this->m_Board->ClearBoard();
             this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
             this->m_Clock.Reset();
