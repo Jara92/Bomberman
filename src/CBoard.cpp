@@ -358,16 +358,11 @@ EGameStatus CBoard::UpdatePhysics()
           {someBoost}->Apply({somePlayer});
      }*/
 
-    CCoord directions[4] = {CCoord(0, 1), CCoord(0, -1), CCoord(1, 0), CCoord(-1, 0)};
     for (auto player = this->m_Players.begin(); player != this->m_Players.end(); player++)
     {
-        CCoord playerCellLocation = (*(player.base()))->GetLocationCell();
-        for (unsigned int i = 0; i < 4; i++)
+        for(auto fire = this->m_Fires.begin(); fire != this->m_Fires.end(); fire++)
         {
-            CCoord loc = playerCellLocation + directions[i];
-
-            auto fire = this->m_Fires.find(loc);
-            if (fire != this->m_Fires.end() && (*(player.base()))->IsColiding(fire->second))
+            if(player.base() && fire->second && (*(player.base()))->IsColiding(fire->second))
             {
                 std::cout << std::chrono::duration_cast<std::chrono::seconds>(
                         std::chrono::system_clock::now().time_since_epoch()).count() << " Player is killed."
@@ -375,7 +370,7 @@ EGameStatus CBoard::UpdatePhysics()
                 (*(player.base()))->Kill();
 
                 // Doladit synchronizaci smrti a vybuchu - hrac zemre driv nez to stihne zjistit
-                //return this->RoundOver((*(player.base())));
+                return this->RoundOver((*(player.base())));
             }
         }
     }

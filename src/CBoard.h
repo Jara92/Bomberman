@@ -130,6 +130,9 @@ public:
     /** Game settings */
     CSettings *m_Settings;
 
+    CGround * GetGroundObject() const
+    {return this->m_GroundObject;}
+
 protected:
     /** Size of gameboard. */
     CCoord m_BoardSize;

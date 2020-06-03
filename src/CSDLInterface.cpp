@@ -85,6 +85,7 @@ bool CSDLInterface::InitInterface()
 /*====================================================================================================================*/
 void CSDLInterface::UpdateSettings(CSettings *settings)
 {
+    // todo remove
     this->m_Settings = settings;
     SDL_SetWindowSize(this->m_Window, settings->GetScreenWidth(), settings->GetScreenHeight());
 }
@@ -109,7 +110,7 @@ void CSDLInterface::ShowMessageBox(Uint32 flags, const std::string &title, const
 }
 
 /*====================================================================================================================*/
-void CSDLInterface::RenderTexture(SDL_Texture *texture, CCoord location, CCoord size)
+bool CSDLInterface::RenderTexture(SDL_Texture *texture, CCoord location, CCoord size)
 {
     SDL_Rect targetRect = {static_cast<int>(location.m_X), static_cast<int>(location.m_Y),
                            static_cast<int>(size.m_X), static_cast<int>(size.m_Y)};
@@ -119,13 +120,13 @@ void CSDLInterface::RenderTexture(SDL_Texture *texture, CCoord location, CCoord 
     // this->RenderRectangle(&targetRect);
     this->SetRenderColor(255, 0, 0, 255);
 
-    SDL_RenderCopy(this->m_Renderer, texture, NULL, &targetRect);
+    return SDL_RenderCopy(this->m_Renderer, texture, NULL, &targetRect);
 }
 
 /*====================================================================================================================*/
 bool CSDLInterface::RenderText(const std::string & text, CCoord location, CCoord size, SDL_Colour color)
 {
-    TTF_Font *font = TTF_OpenFont((this->m_Settings->GetAssetsPath() + "Fonts/Piedra-Regular.ttf").c_str(), 64);
+    TTF_Font *font = TTF_OpenFont((this->m_Settings->GetAssetsPath() + "Fonts/Piedra-Regular.ttf").c_str(), 48);
     if (font == NULL)
     {
         return false;
@@ -146,8 +147,23 @@ bool CSDLInterface::RenderText(const std::string & text, CCoord location, CCoord
     SDL_Rect Message_rect; //create a rect
     Message_rect.x = static_cast<int>(location.m_X);  //controls the rect's x coordinate
     Message_rect.y = static_cast<int>(location.m_Y); // controls the rect's y coordinte
-    Message_rect.w = static_cast<int>(size.m_X);; // controls the width of the rect
-    Message_rect.h = static_cast<int>(size.m_Y);; // controls the height of the rect
+    if(size.m_X != 0)
+    {
+        Message_rect.w = static_cast<int>(size.m_X);; // controls the width of the rect
+    }
+    else
+    {
+        Message_rect.w = surfaceMessage->w; // controls the width of the rect
+    }
+
+    if(size.m_Y != 0)
+    {
+        Message_rect.h = static_cast<int>(size.m_Y);; // controls the height of the rect
+    }
+    else
+    {
+        Message_rect.h = surfaceMessage->h; // controls the height of the rect
+    }
 
     bool success = SDL_RenderCopy(this->m_Renderer, message, NULL, &Message_rect) >= 0;
 

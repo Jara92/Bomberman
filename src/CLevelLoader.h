@@ -23,7 +23,8 @@ class CLevelLoader
 public:
     CLevelLoader(CSDLInterface *interface)
             : m_Interface(interface)
-    {}
+    {
+    }
 
     ~CLevelLoader() = default;
 

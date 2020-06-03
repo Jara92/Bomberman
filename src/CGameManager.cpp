@@ -6,12 +6,17 @@
 
 #include "CGameManager.h"
 
+// Define file names
+const std::string CLevelLoader::MAP_FILE_NAME = "map";
+const std::string CLevelLoader::LEVEL_FILE_NAME = "level";
+
 CGameManager::CGameManager(CSDLInterface *interface)
         : m_Interface(interface), m_Board(nullptr), m_BoardOffset(CCoord(0, 2)), m_GameIsRunning(true),
           m_GameStatus(EGameStatus::GAMESTATUS_RUNNING),
-          m_Level(1)
+          m_Level(1), m_RemainingTime(CGameManager::STARTING_TIME)
 {
     this->m_LevelLoader = new CLevelLoader(interface);
+    m_RemainingTime = 2000;
 }
 
 /*====================================================================================================================*/
@@ -105,22 +110,31 @@ unsigned int CGameManager::DrawGame() const
 {
     this->m_Board->Draw(this->m_Interface, this->m_Interface->GetSettings()->GetOffset());
 
-    // Menu
-    this->m_Interface->RenderText("Time: XXX", CCoord(10, 10), CCoord(3 * this->m_Board->GetCellSize(), this->m_Board->GetCellSize() - 20));
+    // Top menu background
+    for (unsigned int i = 0; i < this->m_Board->GetBoardSize().m_X; i++)
+    {
+        this->m_Board->GetGroundObject()->Draw(this->m_Interface, this->m_Board->GetCellSize(), CCoord(i, 0));
+    }
 
-    if(this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
+    // Menu
+    int remaining = (this->m_RemainingTime / 1000);
+    this->m_Interface->RenderText("Time: " + std::to_string(remaining), CCoord(10, 10),
+                                  CCoord(0, this->m_Board->GetCellSize() - 20));
+
+    if (this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
     {
         this->m_Interface->RenderText("Lives: " + std::to_string(this->m_Board->m_Players[0]->GetLives()),
-                                      CCoord(4 * this->m_Board->GetCellSize() + 10, 10),
+                                      CCoord(20 * this->m_Board->GetCellSize() + 10, 10),
                                       CCoord(2 * this->m_Board->GetCellSize(), this->m_Board->GetCellSize() - 20));
 
         this->m_Interface->RenderText("Score: " + std::to_string(this->m_Board->m_Players[0]->GetScore()),
-                                      CCoord(7 * this->m_Board->GetCellSize() + 10, 10),
-                                      CCoord(2 * this->m_Board->GetCellSize(), this->m_Board->GetCellSize() - 20));
+                                      CCoord(8 * this->m_Board->GetCellSize() + 10, 10),
+                                      CCoord(0, this->m_Board->GetCellSize() - 20));
     }
 
-    // DEBUG
-    this->m_Interface->RenderText("FPS: " + std::to_string(this->m_Clock.GetFPS()), CCoord(10, this->m_Board->GetCellSize() + 10), CCoord(50, 25));
+    // FIXME DEBUG
+    this->m_Interface->RenderText("FPS: " + std::to_string(this->m_Clock.GetFPS()),
+                                  CCoord(10, this->m_Board->GetCellSize() + 10), CCoord(50, 25));
     //std::cout << "FPS: " << this->m_Clock.GetFPS() << std::endl;
 
     return this->m_Clock.GetDelay();
@@ -168,29 +182,50 @@ unsigned int CGameManager::DrawGameOver() const
 void CGameManager::Update(int deltaTime)
 {
     this->m_Board->Update(deltaTime);
+
+    this->m_RemainingTime -= deltaTime;
 }
 
 /*====================================================================================================================*/
 void CGameManager::UpdateGameStatus()
 {
-    this->m_GameStatus = this->m_Board->UpdatePhysics();
+    /*this->m_GameStatus = */this->m_Board->UpdatePhysics();
+
+    /* if(this->m_RemainingTime <= 0)
+     {
+         for(auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
+         {
+             (*(player.base()))->Kill();
+             this->m_GameStatus = this->m_Board->RoundOver((*(player.base())));
+
+             if(this->m_GameStatus == EGameStatus::GAME_STATUS_GAME_OVER)
+             {
+                 break;
+             }
+         }
+     }*/
 
     // Updating game using new gamestatus
-    switch (this->m_GameStatus)
-    {
-        case EGameStatus::GAMESTATUS_NEXT_ROUND:
-            this->m_Level++;
-            this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
-            this->m_Clock.Reset();
-            break;
-        case EGameStatus::GAMESTATUS_ROUND_OVER:
-            this->m_Board->ClearBoard();
-            this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
-            this->m_Clock.Reset();
-            break;
-        default:
-            break;
-    }
+    /* switch (this->m_GameStatus)
+     {
+         case EGameStatus::GAMESTATUS_NEXT_ROUND:
+             this->m_Interface->Wait(1500);
+             this->m_Level++;
+             this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
+             this->m_Clock.Reset();
+             break;
+         case EGameStatus::GAMESTATUS_ROUND_OVER:
+             this->m_Interface->Wait(1500);
+             this->m_Board->ClearBoard();
+             this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
+             this->m_Clock.Reset();
+             break;
+         case EGameStatus ::GAME_STATUS_GAME_OVER:
+             this->m_Interface->Wait(1500);
+             break;
+         default:
+             break;
+     }*/
 }
 
 /*====================================================================================================================*/

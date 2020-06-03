@@ -31,6 +31,9 @@ protected:
     bool m_GameIsRunning;
     EGameStatus m_GameStatus;
     unsigned int m_Level;
+    int m_RemainingTime;
+
+    static constexpr int STARTING_TIME = 201000;
 
     unsigned int Draw() const;
     unsigned int DrawGame() const;

@@ -23,5 +23,7 @@ void CMovable::Reset()
     this->m_Location = this->m_StartingLocation;
     this->m_AnimationIndex = 0;
     this->m_AnimationTimer = 0;
+
+    this->m_IsAlive = true;
 }
 

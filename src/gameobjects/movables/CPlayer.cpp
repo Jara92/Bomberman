@@ -156,52 +156,54 @@ bool CPlayer::LocationIsFree(CBoard *board) const
 /*====================================================================================================================*/
 void CPlayer::HandleInput(const Uint8 *keyState)
 {
-    // TODO change animation system. Animation setup should not be in Input method.
-    // movement
-    if (keyState[this->m_Controls->m_Up])
+    // Handle input when the player is alive
+    if(this->m_IsAlive)
     {
-        this->m_VerticalMovingDirection = EDirection::DIRECTION_UP;
-        this->m_ActualTexture = ETextureType::TEXTURE_BACK;
-    }
-    else if (keyState[this->m_Controls->m_Down])
-    {
-        this->m_VerticalMovingDirection = EDirection::DIRECTION_DOWN;
-        this->m_ActualTexture = ETextureType::TEXTURE_FRONT;
-    }
+        // TODO change animation system. Animation setup should not be in Input method.
+        // movement
+        if (keyState[this->m_Controls->m_Up])
+        {
+            this->m_VerticalMovingDirection = EDirection::DIRECTION_UP;
+            this->m_ActualTexture = ETextureType::TEXTURE_BACK;
+        } else if (keyState[this->m_Controls->m_Down])
+        {
+            this->m_VerticalMovingDirection = EDirection::DIRECTION_DOWN;
+            this->m_ActualTexture = ETextureType::TEXTURE_FRONT;
+        }
 
-    if (keyState[this->m_Controls->m_Left])
-    {
-        this->m_HorizontalMovingDirection = EDirection::DIRECTION_LEFT;
-        this->m_ActualTexture = ETextureType::TEXTURE_LEFT;
-    }
-    else if (keyState[this->m_Controls->m_Right])
-    {
-        this->m_HorizontalMovingDirection = EDirection::DIRECTION_RIGHT;
-        this->m_ActualTexture = ETextureType::TEXTURE_RIGHT;
-    }
+        if (keyState[this->m_Controls->m_Left])
+        {
+            this->m_HorizontalMovingDirection = EDirection::DIRECTION_LEFT;
+            this->m_ActualTexture = ETextureType::TEXTURE_LEFT;
+        } else if (keyState[this->m_Controls->m_Right])
+        {
+            this->m_HorizontalMovingDirection = EDirection::DIRECTION_RIGHT;
+            this->m_ActualTexture = ETextureType::TEXTURE_RIGHT;
+        }
 
-    // Planting action
-    if (keyState[this->m_Controls->m_PlaceBomb] && this->m_PlantingAvaible)
-    {
-        this->m_IsPlanting = true;
-        this->m_PlantingAvaible = false;
-    }
-    // Planting is not avaible until the button is released
-    else if(!keyState[this->m_Controls->m_PlaceBomb])
-    {
-        this->m_PlantingAvaible = true;
-    }
+        // Planting action
+        if (keyState[this->m_Controls->m_PlaceBomb] && this->m_PlantingAvaible)
+        {
+            this->m_IsPlanting = true;
+            this->m_PlantingAvaible = false;
+        }
+            // Planting is not avaible until the button is released
+        else if (!keyState[this->m_Controls->m_PlaceBomb])
+        {
+            this->m_PlantingAvaible = true;
+        }
 
-    // Detonating action
-    if (keyState[this->m_Controls->m_Detonation] && this->m_DetanatingAvaible)
-    {
-        this->m_DetanatingAvaible = false;
-        this->m_IsDetonating = true;
-    }
-    // Detonating is not avaible until the button is released
-    else if(!keyState[this->m_Controls->m_Detonation])
-    {
-        this->m_DetanatingAvaible = true;
+        // Detonating action
+        if (keyState[this->m_Controls->m_Detonation] && this->m_DetanatingAvaible)
+        {
+            this->m_DetanatingAvaible = false;
+            this->m_IsDetonating = true;
+        }
+            // Detonating is not avaible until the button is released
+        else if (!keyState[this->m_Controls->m_Detonation])
+        {
+            this->m_DetanatingAvaible = true;
+        }
     }
 }
 
@@ -218,7 +220,12 @@ void CPlayer::TryPlaceBomb(CBoard *board)
 /*====================================================================================================================*/
 void CPlayer::Kill()
 {
-    this->m_Lives--;
+    if (this->m_IsAlive)
+    {
+        this->m_Lives--;
+
+        this->m_IsAlive = false;
+    }
 }
 
 

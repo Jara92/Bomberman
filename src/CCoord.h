@@ -87,6 +87,9 @@ public:
 
     bool operator==(const CCoord &other) const;
 
+    bool operator != (const CCoord & other) const
+    {return !(*this == other);}
+
     bool AlmostEqual(const CCoord &other) const;
 
 

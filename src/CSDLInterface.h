@@ -75,7 +75,7 @@ public:
      * @param location Render location
      * @param size Texture size
      */
-    void RenderTexture(SDL_Texture *texture, CCoord location, CCoord size);
+    bool RenderTexture(SDL_Texture *texture, CCoord location, CCoord size);
 
     /**
      * Draw a rectangle on the current rendering target.
@@ -93,7 +93,7 @@ public:
     { SDL_RenderDrawLine(this->m_Renderer, a.m_X, a.m_Y, b.m_X, b.m_Y); }
 
 
-    bool RenderText(const std::string & text, CCoord location, CCoord size, SDL_Colour color = {255,255,255,255} );
+    bool RenderText(const std::string & text, CCoord location, CCoord size = CCoord(0,0), SDL_Colour color = {255,255,255,255} );
 
     /**
     *  Set the color used for drawing operations (Rect, Line and Clear).
