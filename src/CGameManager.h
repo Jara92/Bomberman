@@ -32,6 +32,7 @@ protected:
     EGameStatus m_GameStatus;
     unsigned int m_Level;
     int m_RemainingTime;
+    int m_WaitingTime;
 
     static constexpr int STARTING_TIME = 201000;
 

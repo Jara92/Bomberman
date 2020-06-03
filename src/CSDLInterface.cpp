@@ -56,7 +56,7 @@ bool CSDLInterface::InitInterface()
             SDL_WINDOWPOS_CENTERED,           // initial y position
             this->m_WindowWidth,                         // width, in pixels
             this->m_WindowHeight,                               // height, in pixels
-            SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE                // flags - see below
+            SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE                // flags
     );
 
     // Check that the window was successfully created

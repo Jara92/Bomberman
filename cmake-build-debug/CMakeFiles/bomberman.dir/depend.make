@@ -131,6 +131,9 @@ CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o: ../src/CTexturePack.h
 CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o: ../src/ETextureType.h
 CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o: ../src/Messages.h
 
+CMakeFiles/bomberman.dir/src/CTimer.cpp.o: ../src/CTimer.cpp
+CMakeFiles/bomberman.dir/src/CTimer.cpp.o: ../src/CTimer.h
+
 CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o: ../src/CAnimation.h
 CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o: ../src/CBoard.h
 CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o: ../src/CControls.h

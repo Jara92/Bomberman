@@ -393,6 +393,33 @@ src/CTexturePack.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CTexturePack.cpp.s
 .PHONY : src/CTexturePack.cpp.s
 
+src/CTimer.o: src/CTimer.cpp.o
+
+.PHONY : src/CTimer.o
+
+# target to build an object file
+src/CTimer.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CTimer.cpp.o
+.PHONY : src/CTimer.cpp.o
+
+src/CTimer.i: src/CTimer.cpp.i
+
+.PHONY : src/CTimer.i
+
+# target to preprocess a source file
+src/CTimer.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CTimer.cpp.i
+.PHONY : src/CTimer.cpp.i
+
+src/CTimer.s: src/CTimer.cpp.s
+
+.PHONY : src/CTimer.s
+
+# target to generate assembly for a file
+src/CTimer.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CTimer.cpp.s
+.PHONY : src/CTimer.cpp.s
+
 src/gameobjects/CBomb.o: src/gameobjects/CBomb.cpp.o
 
 .PHONY : src/gameobjects/CBomb.o
@@ -810,6 +837,9 @@ help:
 	@echo "... src/CTexturePack.o"
 	@echo "... src/CTexturePack.i"
 	@echo "... src/CTexturePack.s"
+	@echo "... src/CTimer.o"
+	@echo "... src/CTimer.i"
+	@echo "... src/CTimer.s"
 	@echo "... src/gameobjects/CBomb.o"
 	@echo "... src/gameobjects/CBomb.i"
 	@echo "... src/gameobjects/CBomb.s"

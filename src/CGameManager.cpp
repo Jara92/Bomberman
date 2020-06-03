@@ -13,7 +13,7 @@ const std::string CLevelLoader::LEVEL_FILE_NAME = "level";
 CGameManager::CGameManager(CSDLInterface *interface)
         : m_Interface(interface), m_Board(nullptr), m_BoardOffset(CCoord(0, 2)), m_GameIsRunning(true),
           m_GameStatus(EGameStatus::GAMESTATUS_RUNNING),
-          m_Level(1), m_RemainingTime(CGameManager::STARTING_TIME)
+          m_Level(1), m_RemainingTime(CGameManager::STARTING_TIME), m_WaitingTime(0)
 {
     this->m_LevelLoader = new CLevelLoader(interface);
     m_RemainingTime = 2000;
@@ -117,8 +117,13 @@ unsigned int CGameManager::DrawGame() const
     }
 
     // Menu
+    this->m_Interface->RenderText("Score: " + std::to_string(this->m_Board->m_Players[0]->GetScore()),
+                                  CCoord(10, 10),
+                                  CCoord(0, this->m_Board->GetCellSize() - 20));
+
     int remaining = (this->m_RemainingTime / 1000);
-    this->m_Interface->RenderText("Time: " + std::to_string(remaining), CCoord(10, 10),
+    this->m_Interface->RenderText("Time: " + std::to_string(remaining),
+                                  CCoord(10 * this->m_Board->GetCellSize() + 10, 10),
                                   CCoord(0, this->m_Board->GetCellSize() - 20));
 
     if (this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
@@ -126,16 +131,11 @@ unsigned int CGameManager::DrawGame() const
         this->m_Interface->RenderText("Lives: " + std::to_string(this->m_Board->m_Players[0]->GetLives()),
                                       CCoord(20 * this->m_Board->GetCellSize() + 10, 10),
                                       CCoord(2 * this->m_Board->GetCellSize(), this->m_Board->GetCellSize() - 20));
-
-        this->m_Interface->RenderText("Score: " + std::to_string(this->m_Board->m_Players[0]->GetScore()),
-                                      CCoord(8 * this->m_Board->GetCellSize() + 10, 10),
-                                      CCoord(0, this->m_Board->GetCellSize() - 20));
     }
 
-    // FIXME DEBUG
+    // Fps counter
     this->m_Interface->RenderText("FPS: " + std::to_string(this->m_Clock.GetFPS()),
                                   CCoord(10, this->m_Board->GetCellSize() + 10), CCoord(50, 25));
-    //std::cout << "FPS: " << this->m_Clock.GetFPS() << std::endl;
 
     return this->m_Clock.GetDelay();
 }
@@ -183,13 +183,30 @@ void CGameManager::Update(int deltaTime)
 {
     this->m_Board->Update(deltaTime);
 
-    this->m_RemainingTime -= deltaTime;
+    if (this->m_GameStatus == EGameStatus::GAMESTATUS_RUNNING)
+    {
+        this->m_RemainingTime -= deltaTime;
+    }
 }
 
 /*====================================================================================================================*/
 void CGameManager::UpdateGameStatus()
 {
     /*this->m_GameStatus = */this->m_Board->UpdatePhysics();
+    for (auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
+    {
+        if (!(*(player.base()))->IsAlive())
+        {
+            if ((*(player.base()))->GetLives() >= 0)
+            {
+                this->m_GameStatus = EGameStatus::GAMESTATUS_ROUND_OVER;
+            } else
+            {
+                this->m_GameStatus = EGameStatus::GAME_STATUS_GAME_OVER;
+            }
+        }
+    }
+
 
     /* if(this->m_RemainingTime <= 0)
      {

@@ -44,7 +44,7 @@ public:
      */
     void Update(int deltaTime);
 
-    EGameStatus UpdatePhysics();
+    void UpdatePhysics();
 
     /**
      * Draw all objects in the board.

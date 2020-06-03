@@ -154,7 +154,7 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int exp
 
         if (target)
         {
-            if(target->TryDestroy(i))
+            if (target->TryDestroy(i))
             {
                 delete target;
                 this->m_Map[static_cast<int>(locationToExplode.m_X)][static_cast<int>(locationToExplode.m_Y)] = nullptr;
@@ -324,8 +324,7 @@ void CBoard::Update(int deltaTime)
         if (item->second)
         {
             item->second->Update(this, deltaTime);
-        }
-        else
+        } else
         {
             // Remove null item
             this->m_Bombs.erase(item);
@@ -333,15 +332,14 @@ void CBoard::Update(int deltaTime)
     }
 
     // Update fires
-    for (auto i = this->m_Fires.begin(); i != this->m_Fires.end(); )
+    for (auto i = this->m_Fires.begin(); i != this->m_Fires.end();)
     {
         // Save iterator to next object because current fire could be removed in Update().
         auto item = i++;
         if (item->second)
         {
             item->second->Update(this, deltaTime);
-        }
-        else
+        } else
         {
             // Remove null item
             this->m_Fires.erase(item);
@@ -350,7 +348,7 @@ void CBoard::Update(int deltaTime)
 }
 
 /*====================================================================================================================*/
-EGameStatus CBoard::UpdatePhysics()
+void CBoard::UpdatePhysics()
 {
     /* if({somePlayer} is coliding {someBoost} ))
      {
@@ -360,22 +358,22 @@ EGameStatus CBoard::UpdatePhysics()
 
     for (auto player = this->m_Players.begin(); player != this->m_Players.end(); player++)
     {
-        for(auto fire = this->m_Fires.begin(); fire != this->m_Fires.end(); fire++)
+        for (auto fire = this->m_Fires.begin(); fire != this->m_Fires.end(); fire++)
         {
-            if(player.base() && fire->second && (*(player.base()))->IsColiding(fire->second))
+            // Kill player if player is valid pointer and colliding fire.
+            if (player.base() && (*(player.base()))->IsAlive() && fire->second &&
+                (*(player.base()))->IsColiding(fire->second))
             {
                 std::cout << std::chrono::duration_cast<std::chrono::seconds>(
                         std::chrono::system_clock::now().time_since_epoch()).count() << " Player is killed."
                           << std::endl;
                 (*(player.base()))->Kill();
-
-                // Doladit synchronizaci smrti a vybuchu - hrac zemre driv nez to stihne zjistit
-                return this->RoundOver((*(player.base())));
+               // return this->RoundOver((*(player.base())));
             }
         }
     }
 
-    return EGameStatus::GAMESTATUS_RUNNING;
+   // return EGameStatus::GAMESTATUS_RUNNING;
 }
 
 /*====================================================================================================================*/
