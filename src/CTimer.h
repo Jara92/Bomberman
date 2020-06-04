@@ -18,7 +18,7 @@ public:
      * Constructor.
      */
     CTimer()
-            : m_Time(0), m_InitTime(0), m_IsOn(false), m_IsRunning(false)
+            : m_Time(0), m_InitTime(0), m_IsOn(false)
     {}
 
     /**
@@ -33,12 +33,9 @@ public:
 
         bool done = this->Done();
 
-        if(done){
-            this->m_IsRunning = false;
-            if(this->m_Callback)
-            {
-                this->m_Callback();
-            }
+        if (done && this->m_Callback)
+        {
+            this->m_Callback();
         }
 
         return done;
@@ -49,16 +46,15 @@ public:
      * @return True - timer is done
      */
     bool Done() const
-    { return  (this->m_Time <= 0); }
+    { return (this->m_Time <= 0); }
 
     /**
-     * Rerun counter.
+     * Run counter again with same parameters.
      * @param initValue  Time in millisecond.
      */
     void Rerun(int initValue = 0)
     {
         this->m_IsOn = true;
-        this->m_IsRunning = true;
 
         if (initValue == 0)
         {
@@ -79,7 +75,6 @@ public:
     void Run(int value, std::function<void(void)> callBack = {})
     {
         this->m_IsOn = true;
-        this->m_IsRunning = true;
         this->m_Time = this->m_InitTime = value;
         this->m_Callback = std::move(callBack);
     }
@@ -91,14 +86,17 @@ public:
     { this->m_IsOn = false; }
 
     /**
+     * Turn on timer.
+     */
+    void Continue()
+    {this->m_IsOn = true;}
+
+    /**
      * Is this timer running?
      * @return True - running
      */
     bool IsOn() const
     { return this->m_IsOn; }
-
-    bool IsRunning() const
-    {return this->m_IsRunning;}
 
     /**
      * Get remaining time to be counted.
@@ -108,13 +106,12 @@ public:
     { return std::max(0, this->m_Time); }
 
     std::function<void(void)> GetCallback() const
-    {return this->m_Callback;}
+    { return this->m_Callback; }
 
 protected:
     int m_Time;
     int m_InitTime;
     bool m_IsOn;
-    bool m_IsRunning;
 
     std::function<void(void)> m_Callback;
 };

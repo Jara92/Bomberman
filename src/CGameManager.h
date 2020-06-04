@@ -41,10 +41,15 @@ protected:
     static constexpr int STARTING_TIME = 1000;//201000;
     static constexpr int GAME_STATUS_DELAY = 2000;
 
+    void GlobalInput(const Uint8 * input);
+
     void NextRound();
     void RoundOver();
     void GameOver();
     void RoundInit();
+
+    void SetStatus(EGameStatus newStatus);
+    void UpdateStatus();
 
     void Draw() const;
     void DrawGame() const;
@@ -52,6 +57,6 @@ protected:
     void DrawNextRound() const;
     void DrawGameOver() const;
     void Update(int deltaTime);
-    void UpdateGameStatus();
+    void UpdateEvents();
 };
 

@@ -21,6 +21,13 @@ CGameManager::CGameManager(CSDLInterface *interface)
 }
 
 /*====================================================================================================================*/
+CGameManager::~CGameManager()
+{
+    delete this->m_Board;
+    delete this->m_LevelLoader;
+}
+
+/*====================================================================================================================*/
 void CGameManager::Init()
 {
     this->m_Board = this->m_LevelLoader->GetBoard(1, this->m_Interface->GetSettings());
@@ -38,6 +45,9 @@ void CGameManager::Run()
         // read keyboard state
         SDL_PumpEvents();
         const Uint8 *keystate = SDL_GetKeyboardState(NULL);
+
+        // Catch global input keys.
+        this->GlobalInput(keystate);
 
         // send state to all players
         for (std::vector<CPlayer *>::size_type i = 0; i < this->m_Board->m_Players.size(); i++)
@@ -58,7 +68,7 @@ void CGameManager::Run()
         }
 
         // Check physics events physics in the board
-        this->UpdateGameStatus();
+        this->UpdateEvents();
 
         // Update objects in the board
         this->Update(this->m_Clock.DeltaTime());
@@ -174,7 +184,7 @@ void CGameManager::DrawGameOver() const
     if (this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
     {
         std::string text = "Achieved score: " + std::to_string(this->m_Board->m_Players[0]->GetScore());
-        text = "Achieved score: " + std::to_string(999999999999999999);
+     //   text = "Achieved score: " + std::to_string(999999999999999999);
 
         // FIXME upravit vypis skore
         this->m_Interface->RenderText(text,
@@ -185,6 +195,14 @@ void CGameManager::DrawGameOver() const
                                              textSize.m_Y / 2),
                                       CCoord(0, 50));
     }
+
+    this->m_Interface->RenderText("Press [enter] to return to the menu",
+                                  CCoord(this->m_Interface->GetSettings()->GetScreenWidth() / 2 -
+                                         1.2 * this->m_Board->GetCellSize(),
+                                         (this->m_Interface->GetSettings()->GetScreenHeight() / 2 + textSize.m_Y +
+                                          2 * this->m_Board->GetCellSize()) -
+                                         textSize.m_Y / 2),
+                                  CCoord(0, 50));
 }
 
 /*====================================================================================================================*/
@@ -200,7 +218,7 @@ void CGameManager::Update(int deltaTime)
 }
 
 /*====================================================================================================================*/
-void CGameManager::UpdateGameStatus()
+void CGameManager::UpdateEvents()
 {
     this->m_Board->UpdatePhysics();
 
@@ -285,13 +303,17 @@ void CGameManager::UpdateGameStatus()
 /*====================================================================================================================*/
 void CGameManager::RoundOver()
 {
+    // Clear board and load level.
     this->m_Board->ClearBoard();
     this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
 
     this->RoundInit();
 
-    this->m_NextGameStatus = EGameStatus::GAMESTATUS_RUNNING;
-    this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_DELAY, [=](void){this->m_GameStatus = this->m_NextGameStatus;});
+    this->SetStatus(EGameStatus::GAMESTATUS_RUNNING);
+
+    // Update game state when timer is done.
+    this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_DELAY, [=](void)
+    { this->UpdateStatus(); });
 }
 
 /*====================================================================================================================*/
@@ -300,13 +322,14 @@ void CGameManager::GameOver()
     if (this->m_Board->m_Players.size() == 0 || !this->m_Board->m_Players[0] ||
         !this->m_ScoreManager.TrySetTopScore(this->m_Board->m_Players[0]->GetScore()))
     {
-        this->m_Interface->ShowMessageBox(SDL_MESSAGEBOX_ERROR, "Runtime error", "Cannot save new score in the file.");
+        //this->m_Interface->ShowMessageBox(SDL_MESSAGEBOX_ERROR, "Runtime error", "Cannot save new score in the file.");
         std::cerr << "Runtime error: " << "Cannot save new score in the file." << std::endl;
     }
-    this->RoundInit();
 
-    this->m_NextGameStatus = EGameStatus::GAME_STATUS_EXIT;
-    this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_DELAY, [=](void){this->m_GameStatus = this->m_NextGameStatus;});
+    this->SetStatus(EGameStatus::GAME_STATUS_EXIT);
+
+    /*this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_DELAY, [=](void)
+    { this->UpdateStatus(); });*/
 
 }
 
@@ -321,29 +344,65 @@ void CGameManager::NextRound()
 
     this->RoundInit();
 
-    // Run game when the timer is done - "Next round" message will be displayed for 3000 ms
-    this->m_NextGameStatus = EGameStatus::GAMESTATUS_RUNNING;
-    this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_DELAY);
+    this->SetStatus(EGameStatus::GAMESTATUS_RUNNING);
+
+    this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_DELAY, [=](void)
+    { this->UpdateStatus(); });
 }
 
 /*====================================================================================================================*/
 void CGameManager::RoundInit()
 {
-    // Stop timer and update game status.
-    this->m_GameStatusDelay.Stop();
-    this->m_GameStatus = this->m_NextGameStatus;
-
     // Reset clock and rerun game end timer.
     this->m_Clock.Reset();
     this->m_GameEndDelay.Rerun();
 }
 
 /*====================================================================================================================*/
-CGameManager::~CGameManager()
+void CGameManager::SetStatus(EGameStatus newStatus)
 {
-    delete this->m_Board;
-    delete this->m_LevelLoader;
+    this->m_GameStatus = this->m_NextGameStatus;
+    this->m_NextGameStatus = newStatus;
 }
+
+/*====================================================================================================================*/
+void CGameManager::UpdateStatus()
+{
+    this->m_GameStatus = this->m_NextGameStatus;
+}
+
+/*====================================================================================================================*/
+
+
+void CGameManager::GlobalInput(const Uint8 *input)
+{
+    // Game is over. Press enter to leave game.
+    if (input[SDL_SCANCODE_RETURN]) // SDL_SCANCODE_RETURN = ENTER
+    {
+        if (this->m_GameStatus == EGameStatus::GAME_STATUS_GAME_OVER)
+        {
+            this->UpdateStatus();
+        }
+    }
+
+    // Pause game.
+    if (input[SDL_SCANCODE_ESCAPE])
+    {
+
+    }
+
+    // Debug options
+    if (this->m_Interface->GetSettings()->GetDebugMode())
+    {
+        if(input[SDL_SCANCODE_F1])
+        {
+
+        }
+    }
+}
+
+
+
 
 
 
