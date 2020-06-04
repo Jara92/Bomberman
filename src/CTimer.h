@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include <iostream>
+
 /**
  * Counter.
  */
@@ -13,10 +15,9 @@ class CTimer
 public:
     /**
      * Constructor.
-     * @param initValue Time in millisecond.
      */
-    CTimer(int initValue)
-    :m_Time(initValue)
+    CTimer()
+            : m_Time(0), m_InitTime(0), m_IsRunning(false)
     {}
 
     /**
@@ -26,8 +27,11 @@ public:
      */
     bool Tick(int deltaTime)
     {
-        this->m_Time -= deltaTime;
+        if (this->m_IsRunning)
+        { this->m_Time -= deltaTime; }
         return this->Done();
+
+
     }
 
     /**
@@ -35,7 +39,7 @@ public:
      * @return True - timer is done
      */
     bool Done() const
-    {return (this->m_Time <= 0);}
+    { return (this->m_IsRunning && this->m_Time <= 0); }
 
     /**
      * Reset counter.
@@ -43,11 +47,10 @@ public:
      */
     void Reset(int initValue = 0)
     {
-        if(initValue == 0)
+        if (initValue == 0)
         {
             initValue = this->m_InitTime;
-        }
-        else
+        } else
         {
             this->m_InitTime = initValue;
         }
@@ -55,8 +58,20 @@ public:
         this->m_Time = initValue;
     }
 
+    void Run(int value)
+    {this->m_IsRunning = true;
+    this->m_Time = this->m_InitTime = value;}
+
+    void Stop()
+    {this->m_IsRunning = false;}
+
+    bool IsRunning() const
+    {return this->m_IsRunning;}
+
+
 protected:
     int m_Time;
     int m_InitTime;
+    bool m_IsRunning;
 };
 

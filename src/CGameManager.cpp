@@ -13,10 +13,10 @@ const std::string CLevelLoader::LEVEL_FILE_NAME = "level";
 CGameManager::CGameManager(CSDLInterface *interface)
         : m_Interface(interface), m_Board(nullptr), m_BoardOffset(CCoord(0, 2)), m_GameIsRunning(true),
           m_GameStatus(EGameStatus::GAMESTATUS_RUNNING),
-          m_Level(1), m_RemainingTime(CGameManager::STARTING_TIME), m_WaitingTime(0)
+          m_Level(1), m_RemainingTime(CGameManager::STARTING_TIME), m_WaitingTime(0),
+          m_NextGameStatus(EGameStatus::GAMESTATUS_RUNNING)
 {
     this->m_LevelLoader = new CLevelLoader(interface);
-    m_RemainingTime = 2000;
 }
 
 /*====================================================================================================================*/
@@ -149,7 +149,7 @@ unsigned int CGameManager::DrawRoundOver() const
                                          (this->m_Interface->GetSettings()->GetScreenHeight() / 2) - textSize.m_Y / 2),
                                   textSize);
 
-    return 2000;
+    return 100;
 }
 
 /*====================================================================================================================*/
@@ -168,7 +168,7 @@ unsigned int CGameManager::DrawNextRound() const
 unsigned int CGameManager::DrawGameOver() const
 {
     CCoord textSize = CCoord(400, 100);
-    this->m_Interface->RenderText("!Game over!",
+    this->m_Interface->RenderText("Game over",
                                   CCoord((this->m_Interface->GetSettings()->GetScreenWidth() / 2) - textSize.m_X / 2,
                                          (this->m_Interface->GetSettings()->GetScreenHeight() / 2) - textSize.m_Y / 2),
                                   textSize);
@@ -181,68 +181,99 @@ unsigned int CGameManager::DrawGameOver() const
 /*====================================================================================================================*/
 void CGameManager::Update(int deltaTime)
 {
-    this->m_Board->Update(deltaTime);
-
     if (this->m_GameStatus == EGameStatus::GAMESTATUS_RUNNING)
     {
+        this->m_Board->Update(deltaTime);
         this->m_RemainingTime -= deltaTime;
     }
+
+    this->m_GameStatusDelay.Tick(deltaTime);
 }
 
 /*====================================================================================================================*/
 void CGameManager::UpdateGameStatus()
 {
-    /*this->m_GameStatus = */this->m_Board->UpdatePhysics();
-    for (auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
+    this->m_Board->UpdatePhysics();
+
+    if(this->m_GameStatus == EGameStatus::GAMESTATUS_RUNNING)
     {
-        if (!(*(player.base()))->IsAlive())
+        for (auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
         {
-            if ((*(player.base()))->GetLives() >= 0)
+            if (!(*(player.base()))->IsAlive())
             {
-                this->m_GameStatus = EGameStatus::GAMESTATUS_ROUND_OVER;
-            } else
+                if (!this->m_GameStatusDelay.IsRunning())
+                {
+                    this->m_GameStatusDelay.Run(3000);
+                }
+
+                if ((*(player.base()))->GetLives() >= 0)
+                {
+                    this->m_NextGameStatus = EGameStatus::GAMESTATUS_ROUND_OVER;
+                } else
+                {
+                    this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER;
+                }
+            }
+        }
+
+        if (this->m_RemainingTime <= 0)
+        {
+            for (auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
             {
-                this->m_GameStatus = EGameStatus::GAME_STATUS_GAME_OVER;
+                (*(player.base()))->Kill();
+                this->m_NextGameStatus = this->m_Board->RoundOver((*(player.base())));
+
+                if (this->m_NextGameStatus != this->m_GameStatus && !this->m_GameStatusDelay.IsRunning())
+                {
+                    this->m_GameStatusDelay.Run(3000);
+                }
+
+                if (this->m_NextGameStatus == EGameStatus::GAME_STATUS_GAME_OVER)
+                {
+                    break;
+                }
             }
         }
     }
 
-
-    /* if(this->m_RemainingTime <= 0)
-     {
-         for(auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
-         {
-             (*(player.base()))->Kill();
-             this->m_GameStatus = this->m_Board->RoundOver((*(player.base())));
-
-             if(this->m_GameStatus == EGameStatus::GAME_STATUS_GAME_OVER)
-             {
-                 break;
-             }
-         }
-     }*/
-
     // Updating game using new gamestatus
-    /* switch (this->m_GameStatus)
-     {
-         case EGameStatus::GAMESTATUS_NEXT_ROUND:
-             this->m_Interface->Wait(1500);
-             this->m_Level++;
-             this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
-             this->m_Clock.Reset();
-             break;
-         case EGameStatus::GAMESTATUS_ROUND_OVER:
-             this->m_Interface->Wait(1500);
-             this->m_Board->ClearBoard();
-             this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
-             this->m_Clock.Reset();
-             break;
-         case EGameStatus ::GAME_STATUS_GAME_OVER:
-             this->m_Interface->Wait(1500);
-             break;
-         default:
-             break;
-     }*/
+    switch (this->m_GameStatus)
+    {
+        case EGameStatus::GAMESTATUS_NEXT_ROUND:
+            this->m_Level++;
+            this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
+
+            this->m_NextGameStatus = EGameStatus::GAMESTATUS_RUNNING;
+            this->m_GameStatusDelay.Run(3000);
+            break;
+        case EGameStatus::GAMESTATUS_ROUND_OVER:
+            this->m_Board->ClearBoard();
+            this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
+
+            if(!this->m_GameStatusDelay.IsRunning())
+            {
+                this->m_NextGameStatus = EGameStatus::GAMESTATUS_RUNNING;
+                this->m_GameStatusDelay.Run(3000);
+            }
+
+            break;
+        case EGameStatus::GAME_STATUS_GAME_OVER:
+
+            break;
+        default:
+            break;
+    }
+
+    if (this->m_GameStatusDelay.Done())
+    {
+        this->m_GameStatusDelay.Stop();
+        this->m_GameStatus = this->m_NextGameStatus;
+
+        this->m_Clock.Reset();
+
+        this->m_RemainingTime = CGameManager::STARTING_TIME;
+
+    }
 }
 
 /*====================================================================================================================*/

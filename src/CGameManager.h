@@ -10,6 +10,7 @@
 #include "CBoard.h"
 #include "CLevelLoader.h"
 #include "EGameStatus.h"
+#include "CTimer.h"
 
 class CGameManager
 {
@@ -33,8 +34,10 @@ protected:
     unsigned int m_Level;
     int m_RemainingTime;
     int m_WaitingTime;
+    EGameStatus m_NextGameStatus;
+    CTimer m_GameStatusDelay;
 
-    static constexpr int STARTING_TIME = 201000;
+    static constexpr int STARTING_TIME = 2000;//201000;
 
     unsigned int Draw() const;
     unsigned int DrawGame() const;
