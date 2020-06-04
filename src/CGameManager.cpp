@@ -12,9 +12,8 @@ const std::string CLevelLoader::LEVEL_FILE_NAME = "level";
 
 CGameManager::CGameManager(CSDLInterface *interface)
         : m_Interface(interface), m_Board(nullptr), m_BoardOffset(CCoord(0, 2)),
-          m_GameStatus(EGameStatus::GAMESTATUS_RUNNING),
-          m_Level(1), m_RemainingTime(CGameManager::STARTING_TIME),
-          m_NextGameStatus(EGameStatus::GAMESTATUS_RUNNING)
+          m_GameStatus(EGameStatus::GAMESTATUS_RUNNING), m_NextGameStatus(EGameStatus::GAMESTATUS_RUNNING),
+          m_Level(1)
 {
     this->m_LevelLoader = new CLevelLoader(interface);
     this->m_GameEndDelay.Run(this->GAME_STATUS_DELAY);
@@ -184,7 +183,7 @@ void CGameManager::DrawGameOver() const
     if (this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
     {
         std::string text = "Achieved score: " + std::to_string(this->m_Board->m_Players[0]->GetScore());
-     //   text = "Achieved score: " + std::to_string(999999999999999999);
+        //   text = "Achieved score: " + std::to_string(999999999999999999);
 
         // FIXME upravit vypis skore
         this->m_Interface->RenderText(text,
@@ -303,11 +302,10 @@ void CGameManager::UpdateEvents()
 /*====================================================================================================================*/
 void CGameManager::RoundOver()
 {
-    // Clear board and load level.
+    // Clear board, load level and refresh game end delay.
     this->m_Board->ClearBoard();
     this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
-
-    this->RoundInit();
+    this->m_GameEndDelay.Rerun();
 
     this->SetStatus(EGameStatus::GAMESTATUS_RUNNING);
 
@@ -327,10 +325,6 @@ void CGameManager::GameOver()
     }
 
     this->SetStatus(EGameStatus::GAME_STATUS_EXIT);
-
-    /*this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_DELAY, [=](void)
-    { this->UpdateStatus(); });*/
-
 }
 
 /*====================================================================================================================*/
@@ -338,24 +332,15 @@ void CGameManager::NextRound()
 {
     this->m_Board->ClearBoard();
 
-    // Level up and load new level from the file.
+    // Level up, load new level from the file and refresh game end delay.
     this->m_Level++;
     this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
-
-    this->RoundInit();
+    this->m_GameEndDelay.Rerun();
 
     this->SetStatus(EGameStatus::GAMESTATUS_RUNNING);
 
     this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_DELAY, [=](void)
     { this->UpdateStatus(); });
-}
-
-/*====================================================================================================================*/
-void CGameManager::RoundInit()
-{
-    // Reset clock and rerun game end timer.
-    this->m_Clock.Reset();
-    this->m_GameEndDelay.Rerun();
 }
 
 /*====================================================================================================================*/
@@ -394,7 +379,7 @@ void CGameManager::GlobalInput(const Uint8 *input)
     // Debug options
     if (this->m_Interface->GetSettings()->GetDebugMode())
     {
-        if(input[SDL_SCANCODE_F1])
+        if (input[SDL_SCANCODE_F1])
         {
 
         }

@@ -9,6 +9,9 @@
 #include "CMovable.h"
 #include "../../CControls.h"
 
+/**
+ * Player which can be controlled. Every player has his own controls and can move in game map.
+ */
 class CPlayer : public CMovable
 {
 public:
@@ -28,12 +31,10 @@ public:
               m_MaxBombs(1), m_ActiveBombs(0), m_RemoteExplosion(false), m_BombPass(false), m_FireImmunity(false),
               m_PlantingAvaible(false), m_IsPlanting(false), m_DetanatingAvaible(false), m_IsDetonating(false),
               m_LevelUp(false), m_Controls(controls)
-    {this->m_Lives = 0;}
+    {/*this->m_Lives = 0;*/}
 
-    // I do not want to allow copying players. Every player object has his own controls and copying may cause troubles.
-    CPlayer(const CPlayer &other) = delete;
-
-    CPlayer &operator=(const CPlayer &other) = delete;
+    CPlayer(const CPlayer &other) = default;
+    CPlayer &operator=(const CPlayer &other) = default;
 
     virtual ~CPlayer();
 
@@ -61,12 +62,15 @@ public:
      */
     void Kill();
 
+    /**
+     * Reset the player and prepare for a next round.
+     */
     virtual void Reset();
 
     /**======================
     * Boost interface.
     =========================*/
-    void IncreseScore(size_t ammount)
+    void IncreseScore(std::size_t ammount)
     { this->m_Score += ammount; }
 
     void SpeedUp()
@@ -85,7 +89,7 @@ public:
         { this->m_ExplosionRadius--; }
     }
 
-    void IncreseMaxBombs(size_t ammount)
+    void IncreseMaxBombs(unsigned int ammount)
     { this->m_MaxBombs++; }
 
     void DecreseMaxBombs()
@@ -132,7 +136,7 @@ public:
         { this->m_ActiveBombs--; }
     }
 
-    size_t GetScore() const
+    std::size_t GetScore() const
     { return this->m_Score; }
 
     bool GetLevelUp() const
@@ -147,25 +151,34 @@ public:
     bool GetFireImmunity() const
     { return this->m_FireImmunity; }
 
-    size_t GetExplosionRadius() const
+    unsigned int GetExplosionRadius() const
     { return this->m_ExplosionRadius; }
 
 protected:
-    size_t m_Score;
-    size_t m_ExplosionRadius;
-    size_t m_MaxBombs;
-    size_t m_ActiveBombs;
+    /** Achieved score. */
+    std::size_t m_Score;
+
+    /*====================
+     * Player abilities.
+     =====================*/
+    unsigned int m_ExplosionRadius;
+    unsigned int m_MaxBombs;
+    unsigned int m_ActiveBombs;
     bool m_RemoteExplosion;
     bool m_BombPass;
     bool m_FireImmunity;
 
+    /*====================
+     * Player input
+     =====================*/
     bool m_PlantingAvaible;
     bool m_IsPlanting;
     bool m_DetanatingAvaible;
     bool m_IsDetonating;
     bool m_LevelUp;
 
-    CControls *m_Controls;
+    CControls *m_Controls; // TODO předělat (problém s kopírovacím konstruktorem)
+
     static constexpr double MIN_TURNING_VALUE = 0.5;
     static constexpr double MAX_TURNING_VALUE = 0.5;
     static constexpr double SPEED_UP = 1.1;
