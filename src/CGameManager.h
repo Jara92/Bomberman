@@ -11,6 +11,7 @@
 #include "CLevelLoader.h"
 #include "EGameStatus.h"
 #include "CTimer.h"
+#include "CScoreManager.h"
 
 class CGameManager
 {
@@ -26,6 +27,7 @@ public:
 protected:
     CSDLInterface * m_Interface;
     CBoard * m_Board;
+    CScoreManager m_ScoreManager;
     CCoord m_BoardOffset;
     CLevelLoader * m_LevelLoader;
     CGameClock m_Clock;
@@ -37,7 +39,7 @@ protected:
     CTimer m_GameStatusDelay;
 
     static constexpr int STARTING_TIME = 1000;//201000;
-    static constexpr int GAME_STATUS_DELAY = 2500;
+    static constexpr int GAME_STATUS_DELAY = 2000;
 
     void NextRound();
     void RoundOver();

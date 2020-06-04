@@ -14,7 +14,7 @@ unsigned int CScoreManager::GetTopScore() const
     return 0;
 }
 /*====================================================================================================================*/
-bool CScoreManager::SetTopScore(std::size_t newScore)
+bool CScoreManager::TrySetTopScore(std::size_t newScore)
 {
     //todo
     return false;

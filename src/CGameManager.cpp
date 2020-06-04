@@ -125,16 +125,17 @@ void CGameManager::DrawGame() const
     if (this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
     {
         // Pickup color
-        SDL_Color color = {255,255,255,255};
-        if(this->m_Board->m_Players[0]->GetLives() < 0)
+        SDL_Color color = {255, 255, 255, 255};
+        if (this->m_Board->m_Players[0]->GetLives() < 0)
         {
-            color = {128,0,0,255};
+            color = {128, 0, 0, 255};
         }
 
         // Render text
         this->m_Interface->RenderText("Lives: " + std::to_string(std::max(0, this->m_Board->m_Players[0]->GetLives())),
                                       CCoord(20 * this->m_Board->GetCellSize() + 10, 10),
-                                      CCoord(2 * this->m_Board->GetCellSize(), this->m_Board->GetCellSize() - 20), color);
+                                      CCoord(2 * this->m_Board->GetCellSize(), this->m_Board->GetCellSize() - 20),
+                                      color);
     }
 
     // Fps counter
@@ -170,7 +171,20 @@ void CGameManager::DrawGameOver() const
                                   CCoord((this->m_Interface->GetSettings()->GetScreenWidth() / 2) - textSize.m_X / 2,
                                          (this->m_Interface->GetSettings()->GetScreenHeight() / 2) - textSize.m_Y / 2),
                                   textSize);
-    // TODO write score
+    if (this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
+    {
+        std::string text = "Achieved score: " + std::to_string(this->m_Board->m_Players[0]->GetScore());
+        text = "Achieved score: " + std::to_string(999999999999999999);
+
+        // FIXME upravit vypis skore
+        this->m_Interface->RenderText(text,
+                                      CCoord(this->m_Interface->GetSettings()->GetScreenWidth() / 2 - text.size() / 2 *
+                                                                                                      (this->m_Board->GetCellSize() /
+                                                                                                       4),
+                                             (this->m_Interface->GetSettings()->GetScreenHeight() / 2 + textSize.m_Y) -
+                                             textSize.m_Y / 2),
+                                      CCoord(0, 50));
+    }
 }
 
 /*====================================================================================================================*/
@@ -190,6 +204,7 @@ void CGameManager::UpdateGameStatus()
 {
     this->m_Board->UpdatePhysics();
 
+    // If game is running.
     if (this->m_GameStatus == EGameStatus::GAMESTATUS_RUNNING && this->m_GameStatus == this->m_NextGameStatus)
     {
         // Check for dead players.
@@ -236,37 +251,33 @@ void CGameManager::UpdateGameStatus()
         }
     }
 
-    std::function<void(void)> callBack;
-    // Updating game using gamestatus
-    switch (this->m_NextGameStatus)
-    {
-        case EGameStatus::GAMESTATUS_NEXT_ROUND:
-            callBack = [=]()
-            { this->NextRound(); };
-            break;
-        case EGameStatus::GAMESTATUS_ROUND_OVER:
-            callBack = [=]()
-            { this->RoundOver(); };
-            break;
-        case EGameStatus::GAME_STATUS_GAME_OVER:
-            callBack = [=]()
-            { this->GameOver(); };
-            break;
-        default:
-            callBack = [=]()
-            {};
-            break;
-    }
-
-    // Game status will be changed when the timer is done.
+    // Set new callback when timer is done
     if (this->m_GameStatusDelay.Done())
     {
-        if (this->m_GameStatusDelay.GetCallback())
+        std::function<void(void)> callBack;
+
+        // Create callback functions for special states.
+        switch (this->m_NextGameStatus)
         {
-            this->m_GameStatusDelay.GetCallback()();
+            case EGameStatus::GAMESTATUS_NEXT_ROUND:
+                callBack = [=]()
+                { this->NextRound(); };
+                break;
+            case EGameStatus::GAMESTATUS_ROUND_OVER:
+                callBack = [=]()
+                { this->RoundOver(); };
+                break;
+            case EGameStatus::GAME_STATUS_GAME_OVER:
+                callBack = [=]()
+                { this->GameOver(); };
+                break;
+            default:
+                callBack = [=]()
+                {};
+                break;
         }
 
-        // Run callback function when timer GameStatusDelay is done.
+        // Set new callback.
         this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_DELAY, callBack);
     }
 }
@@ -280,17 +291,22 @@ void CGameManager::RoundOver()
     this->RoundInit();
 
     this->m_NextGameStatus = EGameStatus::GAMESTATUS_RUNNING;
-    this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_DELAY);
+    this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_DELAY, [=](void){this->m_GameStatus = this->m_NextGameStatus;});
 }
 
 /*====================================================================================================================*/
 void CGameManager::GameOver()
 {
-    // TODO save top score
+    if (this->m_Board->m_Players.size() == 0 || !this->m_Board->m_Players[0] ||
+        !this->m_ScoreManager.TrySetTopScore(this->m_Board->m_Players[0]->GetScore()))
+    {
+        this->m_Interface->ShowMessageBox(SDL_MESSAGEBOX_ERROR, "Runtime error", "Cannot save new score in the file.");
+        std::cerr << "Runtime error: " << "Cannot save new score in the file." << std::endl;
+    }
     this->RoundInit();
 
     this->m_NextGameStatus = EGameStatus::GAME_STATUS_EXIT;
-    this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_DELAY);
+    this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_DELAY, [=](void){this->m_GameStatus = this->m_NextGameStatus;});
 
 }
 

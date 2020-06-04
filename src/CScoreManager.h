@@ -12,8 +12,8 @@
 class CScoreManager
 {
 public:
-    CScoreManager(CSettings *settings)
-            : m_Settings(settings)
+    CScoreManager(/*CSettings *settings*/)
+           /* : m_Settings(settings)*/
     {}
 
     CScoreManager(const CScoreManager &other) = default;
@@ -26,13 +26,13 @@ public:
     unsigned int GetTopScore() const;
 
     /**
-     * Save new top score in file.
+     * Try save new top score in file if newscore is higher than old topscore.
      * @return True - success
      */
-    bool SetTopScore(std::size_t newScore);
+    bool TrySetTopScore(std::size_t newScore);
 
 protected:
     static const std::string TOP_SCORE_FILE_NAME;
-    CSettings *m_Settings;
+ //   CSettings *m_Settings;
 };
 
