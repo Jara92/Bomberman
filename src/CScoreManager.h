@@ -29,7 +29,7 @@ public:
      * Save new top score in file.
      * @return True - success
      */
-    bool SetTopScore();
+    bool SetTopScore(std::size_t newScore);
 
 protected:
     static const std::string TOP_SCORE_FILE_NAME;

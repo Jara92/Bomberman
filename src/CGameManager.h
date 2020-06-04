@@ -4,7 +4,7 @@
 */
 
 #pragma once
-
+#include <functional>
 #include "CSDLInterface.h"
 #include "CClock.h"
 #include "CBoard.h"
@@ -29,7 +29,6 @@ protected:
     CCoord m_BoardOffset;
     CLevelLoader * m_LevelLoader;
     CGameClock m_Clock;
-    bool m_GameIsRunning;
     EGameStatus m_GameStatus;
     unsigned int m_Level;
     int m_RemainingTime;
@@ -37,11 +36,13 @@ protected:
     EGameStatus m_NextGameStatus;
     CTimer m_GameStatusDelay;
 
-    static constexpr int STARTING_TIME = 2000;//201000;
+    static constexpr int STARTING_TIME = 1000;//201000;
     static constexpr int GAME_STATUS_DELAY = 2500;
 
-    void NextLevel();
-    void LevelOver();
+    void NextRound();
+    void RoundOver();
+    void GameOver();
+    void RoundInit();
 
     void Draw() const;
     void DrawGame() const;

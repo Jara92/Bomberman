@@ -6,6 +6,7 @@
 #pragma once
 
 #include <iostream>
+#include <functional>
 
 /**
  * Counter.
@@ -17,7 +18,7 @@ public:
      * Constructor.
      */
     CTimer()
-            : m_Time(0), m_InitTime(0), m_IsRunning(false)
+            : m_Time(0), m_InitTime(0), m_IsOn(false)
     {}
 
     /**
@@ -27,8 +28,9 @@ public:
      */
     bool Tick(int deltaTime)
     {
-        if (this->m_IsRunning)
+        if (this->m_IsOn)
         { this->m_Time -= deltaTime; }
+
         return this->Done();
     }
 
@@ -37,7 +39,7 @@ public:
      * @return True - timer is done
      */
     bool Done() const
-    { return (this->m_IsRunning && this->m_Time <= 0); }
+    { return (this->m_Time <= 0); }
 
     /**
      * Rerun counter.
@@ -45,7 +47,7 @@ public:
      */
     void Rerun(int initValue = 0)
     {
-        this->m_IsRunning = true;
+        this->m_IsOn = true;
 
         if (initValue == 0)
         {
@@ -58,23 +60,46 @@ public:
         this->m_Time = initValue;
     }
 
-    void Run(int value)
-    {this->m_IsRunning = true;
-    this->m_Time = this->m_InitTime = value;}
+    /**
+     * Turn on timer countdown.
+     * @param value Value to be counted.
+     * @param callBack Callback function which will be called when the timer is done.
+     */
+    void Run(int value, std::function<void(void)> callBack = {})
+    {
+        this->m_IsOn = true;
+        this->m_Time = this->m_InitTime = value;
+        this->m_Callback = std::move(callBack);
+    }
 
+    /**
+     * Turn off timer.
+     */
     void Stop()
-    {this->m_IsRunning = false;}
+    { this->m_IsOn = false; }
 
-    bool IsRunning() const
-    {return this->m_IsRunning;}
+    /**
+     * Is this timer running?
+     * @return True - running
+     */
+    bool IsOn() const
+    { return this->m_IsOn; }
 
+    /**
+     * Get remaining time to be counted.
+     * @return Time in milliseconds.
+     */
     int GetRemainingTime() const
-    {return std::max(0,this->m_Time);}
+    { return std::max(0, this->m_Time); }
 
+    std::function<void(void)> GetCallback() const
+    {return this->m_Callback;}
 
 protected:
     int m_Time;
     int m_InitTime;
-    bool m_IsRunning;
+    bool m_IsOn;
+
+    std::function<void(void)> m_Callback;
 };
 

@@ -379,7 +379,7 @@ void CBoard::UpdatePhysics()
 /*====================================================================================================================*/
 EGameStatus CBoard::RoundOver(CPlayer *player)
 {
-    if (player->GetLives() < 0)
+    if (player && player->GetLives() < 0)
     {
         return EGameStatus::GAME_STATUS_GAME_OVER;
     }
