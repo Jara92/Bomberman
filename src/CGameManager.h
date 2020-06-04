@@ -33,17 +33,21 @@ protected:
     EGameStatus m_GameStatus;
     unsigned int m_Level;
     int m_RemainingTime;
-    int m_WaitingTime;
+    CTimer m_GameEndDelay;
     EGameStatus m_NextGameStatus;
     CTimer m_GameStatusDelay;
 
     static constexpr int STARTING_TIME = 2000;//201000;
+    static constexpr int GAME_STATUS_DELAY = 2500;
 
-    unsigned int Draw() const;
-    unsigned int DrawGame() const;
-    unsigned int DrawRoundOver() const;
-    unsigned int DrawNextRound() const;
-    unsigned int DrawGameOver() const;
+    void NextLevel();
+    void LevelOver();
+
+    void Draw() const;
+    void DrawGame() const;
+    void DrawRoundOver() const;
+    void DrawNextRound() const;
+    void DrawGameOver() const;
     void Update(int deltaTime);
     void UpdateGameStatus();
 };

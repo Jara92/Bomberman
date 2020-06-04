@@ -13,10 +13,11 @@ const std::string CLevelLoader::LEVEL_FILE_NAME = "level";
 CGameManager::CGameManager(CSDLInterface *interface)
         : m_Interface(interface), m_Board(nullptr), m_BoardOffset(CCoord(0, 2)), m_GameIsRunning(true),
           m_GameStatus(EGameStatus::GAMESTATUS_RUNNING),
-          m_Level(1), m_RemainingTime(CGameManager::STARTING_TIME), m_WaitingTime(0),
+          m_Level(1), m_RemainingTime(CGameManager::STARTING_TIME),
           m_NextGameStatus(EGameStatus::GAMESTATUS_RUNNING)
 {
     this->m_LevelLoader = new CLevelLoader(interface);
+    this->m_GameEndDelay.Run(this->GAME_STATUS_DELAY);
 }
 
 /*====================================================================================================================*/
@@ -63,50 +64,46 @@ void CGameManager::Run()
         this->Update(this->m_Clock.DeltaTime());
 
         // Draw game
-        unsigned int timeToWait = this->Draw();
+        this->Draw();
 
         // Wait for few miliseconds to draw cca 60 frames per second
-        this->m_Interface->Wait(timeToWait);
+        this->m_Interface->Wait(this->m_Clock.GetDelay());
     }
 }
 
 /*====================================================================================================================*/
-unsigned int CGameManager::Draw() const
+void CGameManager::Draw() const
 {
     this->m_Interface->SetRenderColor(0, 0, 0, 255);
     this->m_Interface->Clear();
-
-    unsigned int waitingTime = 0;
 
     // Render screen game game status
     switch (this->m_GameStatus)
     {
         case EGameStatus::GAMESTATUS_RUNNING:
-            waitingTime = this->DrawGame();
+            this->DrawGame();
             break;
         case EGameStatus::GAMESTATUS_ROUND_OVER:
-            waitingTime = this->DrawRoundOver();
+            this->DrawRoundOver();
             break;
         case EGameStatus::GAMESTATUS_NEXT_ROUND:
-            waitingTime = this->DrawNextRound();
+            this->DrawNextRound();
             break;
         case EGameStatus::GAMESTATUS_PAUSED:
             // TODO
             break;
         case EGameStatus::GAME_STATUS_GAME_OVER:
-            waitingTime = this->DrawGameOver();
+            this->DrawGameOver();
             break;
         default:
             break;
     }
 
     this->m_Interface->Present();
-
-    return waitingTime;
 }
 
 /*====================================================================================================================*/
-unsigned int CGameManager::DrawGame() const
+void CGameManager::DrawGame() const
 {
     this->m_Board->Draw(this->m_Interface, this->m_Interface->GetSettings()->GetOffset());
 
@@ -121,14 +118,13 @@ unsigned int CGameManager::DrawGame() const
                                   CCoord(10, 10),
                                   CCoord(0, this->m_Board->GetCellSize() - 20));
 
-    int remaining = (this->m_RemainingTime / 1000);
-    this->m_Interface->RenderText("Time: " + std::to_string(remaining),
+    this->m_Interface->RenderText("Time: " + std::to_string(this->m_GameEndDelay.GetRemainingTime() / 1000),
                                   CCoord(10 * this->m_Board->GetCellSize() + 10, 10),
                                   CCoord(0, this->m_Board->GetCellSize() - 20));
 
     if (this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
     {
-        this->m_Interface->RenderText("Lives: " + std::to_string(this->m_Board->m_Players[0]->GetLives()),
+        this->m_Interface->RenderText("Lives: " + std::to_string(std::max(0, this->m_Board->m_Players[0]->GetLives())),
                                       CCoord(20 * this->m_Board->GetCellSize() + 10, 10),
                                       CCoord(2 * this->m_Board->GetCellSize(), this->m_Board->GetCellSize() - 20));
     }
@@ -136,36 +132,30 @@ unsigned int CGameManager::DrawGame() const
     // Fps counter
     this->m_Interface->RenderText("FPS: " + std::to_string(this->m_Clock.GetFPS()),
                                   CCoord(10, this->m_Board->GetCellSize() + 10), CCoord(50, 25));
-
-    return this->m_Clock.GetDelay();
 }
 
 /*====================================================================================================================*/
-unsigned int CGameManager::DrawRoundOver() const
+void CGameManager::DrawRoundOver() const
 {
     CCoord textSize = CCoord(400, 100);
     this->m_Interface->RenderText("Round over!",
                                   CCoord((this->m_Interface->GetSettings()->GetScreenWidth() / 2) - textSize.m_X / 2,
                                          (this->m_Interface->GetSettings()->GetScreenHeight() / 2) - textSize.m_Y / 2),
                                   textSize);
-
-    return 100;
 }
 
 /*====================================================================================================================*/
-unsigned int CGameManager::DrawNextRound() const
+void CGameManager::DrawNextRound() const
 {
     CCoord textSize = CCoord(400, 100);
     this->m_Interface->RenderText("Round " + std::to_string(this->m_Level) + "!",
                                   CCoord((this->m_Interface->GetSettings()->GetScreenWidth() / 2) - textSize.m_X / 2,
                                          (this->m_Interface->GetSettings()->GetScreenHeight() / 2) - textSize.m_Y / 2),
                                   textSize);
-
-    return 2000;
 }
 
 /*====================================================================================================================*/
-unsigned int CGameManager::DrawGameOver() const
+void CGameManager::DrawGameOver() const
 {
     CCoord textSize = CCoord(400, 100);
     this->m_Interface->RenderText("Game over",
@@ -173,8 +163,6 @@ unsigned int CGameManager::DrawGameOver() const
                                          (this->m_Interface->GetSettings()->GetScreenHeight() / 2) - textSize.m_Y / 2),
                                   textSize);
     // TODO write score
-
-    return 5000;
 }
 
 
@@ -184,7 +172,7 @@ void CGameManager::Update(int deltaTime)
     if (this->m_GameStatus == EGameStatus::GAMESTATUS_RUNNING)
     {
         this->m_Board->Update(deltaTime);
-        this->m_RemainingTime -= deltaTime;
+        this->m_GameEndDelay.Tick(deltaTime);
     }
 
     this->m_GameStatusDelay.Tick(deltaTime);
@@ -195,7 +183,7 @@ void CGameManager::UpdateGameStatus()
 {
     this->m_Board->UpdatePhysics();
 
-    if(this->m_GameStatus == EGameStatus::GAMESTATUS_RUNNING)
+    if (this->m_GameStatus == EGameStatus::GAMESTATUS_RUNNING)
     {
         for (auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
         {
@@ -216,8 +204,9 @@ void CGameManager::UpdateGameStatus()
             }
         }
 
-        if (this->m_RemainingTime <= 0)
+        if (this->m_GameEndDelay.Done())
         {
+            this->m_GameEndDelay.Stop();
             for (auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
             {
                 (*(player.base()))->Kill();
@@ -250,7 +239,7 @@ void CGameManager::UpdateGameStatus()
             this->m_Board->ClearBoard();
             this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
 
-            if(!this->m_GameStatusDelay.IsRunning())
+            if (!this->m_GameStatusDelay.IsRunning())
             {
                 this->m_NextGameStatus = EGameStatus::GAMESTATUS_RUNNING;
                 this->m_GameStatusDelay.Run(3000);
@@ -271,9 +260,14 @@ void CGameManager::UpdateGameStatus()
 
         this->m_Clock.Reset();
 
-        this->m_RemainingTime = CGameManager::STARTING_TIME;
+        this->m_GameEndDelay.Rerun();
 
     }
+}
+
+void CGameManager::LevelOver()
+{
+
 }
 
 /*====================================================================================================================*/
@@ -282,6 +276,8 @@ CGameManager::~CGameManager()
     delete this->m_Board;
     delete this->m_LevelLoader;
 }
+
+
 
 
 

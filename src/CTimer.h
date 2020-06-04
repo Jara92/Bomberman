@@ -30,8 +30,6 @@ public:
         if (this->m_IsRunning)
         { this->m_Time -= deltaTime; }
         return this->Done();
-
-
     }
 
     /**
@@ -42,11 +40,13 @@ public:
     { return (this->m_IsRunning && this->m_Time <= 0); }
 
     /**
-     * Reset counter.
+     * Rerun counter.
      * @param initValue  Time in millisecond.
      */
-    void Reset(int initValue = 0)
+    void Rerun(int initValue = 0)
     {
+        this->m_IsRunning = true;
+
         if (initValue == 0)
         {
             initValue = this->m_InitTime;
@@ -67,6 +67,9 @@ public:
 
     bool IsRunning() const
     {return this->m_IsRunning;}
+
+    int GetRemainingTime() const
+    {return std::max(0,this->m_Time);}
 
 
 protected:

@@ -25,7 +25,7 @@ public:
     }
 
     /**
-     * Reset clock status.
+     * Rerun clock status.
      */
     void Reset()
     {

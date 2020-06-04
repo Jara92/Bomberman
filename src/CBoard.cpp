@@ -435,7 +435,7 @@ void CBoard::ClearBoard()
     }
     this->m_Fires.clear();
 
-    // Reset players locations
+    // Rerun players locations
     for (size_t i = 0; i < this->m_Players.size(); i++)
     {
         this->m_Players[i]->Reset();
