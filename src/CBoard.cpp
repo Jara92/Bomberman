@@ -235,12 +235,21 @@ void CBoard::Draw(CSDLInterface *interface, CCoord offset)
         }
     }
 
-    // draw boosts
-    for (auto i = this->m_Boosts.begin(); i != this->m_Boosts.end(); i++)
+    // Draw boosts is visible
+    for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
     {
-        if (i->second)
+        // std::cout << i->second->GetLocation() << std::endl;
+        if (i->second && i->second->IsVisible())
         {
             i->second->Draw(interface, this->m_CellSize, i->first, offset);
+        }
+            /*==DEBUG==*/
+        else if (this->m_Settings->GetDebugMode())
+        {
+            SDL_Rect rect{static_cast<int>((i->second->GetLocation().GetFlooredX() + offset.m_X) * (m_CellSize)),
+                    static_cast<int>((i->second->GetLocation().GetFlooredY() + offset.m_Y) * (m_CellSize)),
+                          static_cast<int>(m_CellSize), static_cast<int>(m_CellSize)};
+            interface->RenderRectangle(&rect);
         }
     }
 
@@ -308,7 +317,7 @@ void CBoard::Update(int deltaTime)
     }
 
     // Update boosts
-    for (auto i = this->m_Boosts.begin(); i != this->m_Boosts.end(); i++)
+    for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
     {
         // Polymorphic call
         i->second->Update(this, deltaTime);
@@ -366,12 +375,12 @@ void CBoard::UpdatePhysics()
                         std::chrono::system_clock::now().time_since_epoch()).count() << " Player is killed."
                           << std::endl;
                 (*(player.base()))->Kill();
-               // return this->RoundOver((*(player.base())));
+                // return this->RoundOver((*(player.base())));
             }
         }
     }
 
-   // return EGameStatus::GAMESTATUS_RUNNING;
+    // return EGameStatus::GAMESTATUS_RUNNING;
 }
 
 /*====================================================================================================================*/
@@ -410,14 +419,14 @@ void CBoard::ClearBoard(bool clearBoosts)
     this->m_Enemies.clear();
 
     // Delete boosts
-    if(clearBoosts)
+    if (clearBoosts)
     {
-        for (auto i = this->m_Boosts.begin(); i != this->m_Boosts.end(); i++)
+        for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
         {
             delete (i->second);
             i->second = nullptr;
         }
-        this->m_Boosts.clear();
+        this->m_Collectibles.clear();
     }
 
     // Delete bombs
@@ -456,7 +465,7 @@ bool CBoard::PositionFree(CCoord coord)
     if (this->m_Map[static_cast<int>(coord.m_X)][static_cast<int>(coord.m_Y)] != nullptr ||
         this->m_Bombs.find(coord) != this->m_Bombs.end() ||
         this->m_Fires.find(coord) != this->m_Fires.end() ||
-        this->m_Boosts.find(coord) != this->m_Boosts.end())
+        this->m_Collectibles.find(coord) != this->m_Collectibles.end())
     {
         return false;
     }

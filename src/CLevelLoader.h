@@ -49,7 +49,7 @@ protected:
 
     static const size_t MAX_PLAYERS = 2;
     static const size_t COLLECTIBLE_ITEM_PROPERTIES_COUNT = 4;
-    static const size_t ENEMY_ITEM_PROPERTIES_COUNT = 6;
+    static const size_t ENEMY_ITEM_PROPERTIES_COUNT = 7;
 
     CSDLInterface *m_Interface;
 
@@ -93,11 +93,13 @@ protected:
      * @param level Level to be loaded.
      * @throws std::ios::failure When level file not found.
      */
-    void LoadLevelFile(const std::shared_ptr<CBoard> &board, unsigned int level,  bool loadCollectibles = true);
+    void LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level,  bool loadCollectibles = true);
+
+    void ReorganizeCollectibles(std::shared_ptr<CBoard> & board);
 
     std::string ReadProperty(const std::vector<std::string> & input, std::vector<std::string>::size_type index) const;
 
-    bool ReadItem(const std::shared_ptr<CBoard> &board, const std::vector<std::string> & input, const std::string & itemType);
+    bool ReadItem(std::shared_ptr<CBoard> &board, const std::vector<std::string> & input, const std::string & itemType);
 
     /**
      * Create new CCollectible at random location and attach it to CWall.

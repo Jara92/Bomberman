@@ -102,6 +102,12 @@ public:
      */
     double CalcDistnance(const CCoord &other) const;
 
+    int GetFlooredX() const
+    {return static_cast<int>(this->m_X);}
+
+    int GetFlooredY() const
+    {return static_cast<int>(this->m_Y);}
+
     /** Coordinates */
     double m_X;
     double m_Y;

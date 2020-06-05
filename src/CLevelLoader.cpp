@@ -33,7 +33,10 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level)
     this->GenerateObstacles(board, level, obstaclesCount);
 
     // Load enemies and boosts from the file.
-    this->LoadLevelFile(board, level, board->m_Boosts.empty());
+    this->LoadLevelFile(board, level, board->m_Collectibles.empty());
+
+    // Random location for every collectable object.
+    this->ReorganizeCollectibles(board);
 
     return true;
 }
@@ -283,20 +286,21 @@ std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadEnemyTexturePacks()
 /*====================================================================================================================*/
 std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadCollectiblesTexturePacks()
 {
+    // Save textures in right order - ECollectibleType texturePack = textures[(int)ECollectibleType)]
     std::vector<std::map<ETextureType, const std::vector<std::string>>> textures
-            {{
-                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}},
-                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/FlamePowerup.png"}}},
-                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}},
-                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}},
-                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}},
-                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}},
-                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}},
-                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}},
-                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}}}};
+            {
+                    {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}}},
+                    {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/FlamePowerup.png"}}}},
+                    {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}}},
+                    {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}}},
+                    {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}}},
+                    {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}}},
+                    {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}}},
+                    {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}}},
+                    {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/Portal.png"}}}}};
 
+    // Create texture packs shared pointers.
     std::vector<std::shared_ptr<CTexturePack>> texturePacks;
-
     for (size_t i = 0; i < textures.size(); i++)
     {
         texturePacks.push_back(std::make_shared<CTexturePack>(this->m_Interface, textures[i], true));
@@ -306,7 +310,7 @@ std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadCollectiblesTexture
 }
 
 /*====================================================================================================================*/
-void CLevelLoader::LoadLevelFile(const std::shared_ptr<CBoard> &board, unsigned int level, bool loadCollectibles)
+void CLevelLoader::LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level, bool loadCollectibles)
 {
     std::ifstream fileReader(
             (this->m_Interface->GetSettings()->GetDataPath() + CLevelLoader::LEVEL_FILE_NAME) + std::to_string(level),
@@ -340,8 +344,10 @@ void CLevelLoader::LoadLevelFile(const std::shared_ptr<CBoard> &board, unsigned 
         // TODO DUBUG
         /*  for (std::vector<std::string>::size_type i = 0; i < results.size(); i++)
           { std::cout << results[i] << "x"; }*/
-        std::cout << std::endl;
+        //std::cout << std::endl;
     }
+
+    fileReader.close();
 }
 
 /*====================================================================================================================*/
@@ -357,31 +363,67 @@ CLevelLoader::ReadProperty(const std::vector<std::string> &input, std::vector<st
 }
 
 /*====================================================================================================================*/
+void CLevelLoader::ReorganizeCollectibles(std::shared_ptr<CBoard> &board)
+{
+    std::map<CCoord, CCollectible * > collectibles;
+    for(auto collectible = board->m_Collectibles.begin(); collectible != board->m_Collectibles.end(); collectible++)
+    {
+        // Generate random location until the CWall at this location is null or indestructible or already has collectable object.
+        CCoord random;
+        do
+        {
+            random = this->RandomBoardLocation(board);
+        } while (!board->m_Map[random.GetFlooredX()][random.GetFlooredY()] ||
+                 !board->m_Map[random.GetFlooredX()][random.GetFlooredY()]->IsDestructible() ||
+                 board->m_Map[random.GetFlooredX()][random.GetFlooredY()]->HasCollectible());
+
+        // Insert collectible with new location to new map and attach it to the wall.
+        if (collectible->second && board->m_Map[random.GetFlooredX()][random.GetFlooredY()])
+        {
+            collectible->second->SetLocation(random);
+            board->m_Map[random.GetFlooredX()][random.GetFlooredY()]->AttachCollectible(collectible->second);
+            collectibles.insert(std::pair<CCoord, CCollectible *>(random, collectible->second));
+        }
+    }
+
+    board->m_Collectibles = collectibles;
+}
+
+/*====================================================================================================================*/
 bool CLevelLoader::CreateCollectibleAtRandomLocation(std::shared_ptr<CBoard> &board, ECollectibleType type,
                                                      std::size_t score, std::size_t duration)
 {
-    CCoord random;
-    do
-    {
-        random = this->RandomBoardLocation(board);
-    }
-    while(board->m_Map[])
+    // Generate totaly random inicialization location.
+    CCoord random = this->RandomBoardLocation(board);
+
+    // Lamda which are used to apply / deactivate collectable item.
+    std::function<void(CPlayer *)> applyFunc;
+    std::function<void(CPlayer *)> deactivateFunc;
+
+    // Create new boost.
     switch (type)
     {
         case ECollectibleType::COLLECTIBLE_TYPE_SPEED:
-
+            applyFunc = [](CPlayer *player)
+            { player->SpeedUp(); };
+            board->m_Collectibles.insert(std::pair<CCoord, CCollectible *>(random, (new CBoost(
+                    this->m_CollectibleTexturePacks[static_cast<int>(type)], applyFunc, CCoord(1, 1), random,
+                    score))));
+            break;
+        case ECollectibleType::COLLECTIBLE_TYPE_DOOR:
+            board->m_Collectibles.insert(std::pair<CCoord, CCollectible *>(random, (new CDoor(
+                    this->m_CollectibleTexturePacks[static_cast<int>(type)], CCoord(1, 1), random, score))));
             break;
         default:
-        {
             throw std::invalid_argument(UNKNOWN_COLLECTIBLE_TYPE);
-        }
+            break;
     }
 
     return true;
 }
 
 /*====================================================================================================================*/
-bool CLevelLoader::ReadItem(const std::shared_ptr<CBoard> &board, const std::vector<std::string> &input,
+bool CLevelLoader::ReadItem(std::shared_ptr<CBoard> &board, const std::vector<std::string> &input,
                             const std::string &itemType)
 {
     try
@@ -396,13 +438,16 @@ bool CLevelLoader::ReadItem(const std::shared_ptr<CBoard> &board, const std::vec
 
             // Invalid collectible type id detection.
             if (collectibleTypeId >= this->m_CollectibleTexturePacks.size())
-            { throw std::invalid_argument(UNKNOWN_COLLECTIBLE_TYPE); }
+            {
+                throw std::invalid_argument(UNKNOWN_COLLECTIBLE_TYPE + std::to_string(collectibleTypeId) + " " +
+                                            std::to_string(this->m_CollectibleTexturePacks.size()));
+            }
 
             ECollectibleType collectibleType = static_cast<ECollectibleType >(collectibleTypeId);
 
-            this->CreateCollectibleAtRandomLocation(collectibleType, score, duration);
+            this->CreateCollectibleAtRandomLocation(board, collectibleType, score, duration);
         }
-            // Enemy
+            // Enemy+ std::to_string(" ")
         else if (itemType == "enemy" && input.size() == ENEMY_ITEM_PROPERTIES_COUNT)
         {
 
@@ -410,16 +455,16 @@ bool CLevelLoader::ReadItem(const std::shared_ptr<CBoard> &board, const std::vec
             // Unknown type
         else
         {
-            std::cerr << INVALID_ITEM << std::endl;
+            std::cerr << INVALID_ITEM << itemType << " Input size: " << input.size() << std::endl;
             for (std::vector<std::string>::size_type i = 0; i < input.size(); i++)
-            { std::cerr << input[i] << "x"; }
+            { std::cerr << input[i] << " "; }
             std::cerr << std::endl;
             return false;
         }
     }
     catch (std::invalid_argument &ex)
     {
-        std::cerr << UNKNOWN_ITEM_TYPE << std::endl;
+        std::cerr << INVALID_ARGUMENT << " " << ex.what() << std::endl;
         return false;
     }
     catch (std::out_of_range &ex)
@@ -430,6 +475,7 @@ bool CLevelLoader::ReadItem(const std::shared_ptr<CBoard> &board, const std::vec
 
     return true;
 }
+
 
 
 

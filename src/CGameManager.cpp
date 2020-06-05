@@ -18,7 +18,7 @@ CGameManager::CGameManager(CSDLInterface *interface)
     this->m_LevelLoader = std::make_unique<CLevelLoader>(interface);
 
     // Kill all players when the time runs out.
-    this->m_GameEndDelay.Run(this->GAME_STATUS_DELAY, [=](void){this->KillAllPlayers();});
+    this->m_GameEndDelay.Run(2000/*this->STARTING_TIME*/, [=](void){this->KillAllPlayers();});
 }
 
 /*====================================================================================================================*/

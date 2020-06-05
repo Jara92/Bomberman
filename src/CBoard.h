@@ -123,7 +123,7 @@ public:
     /** Saved objects */
     std::vector<CPlayer *> m_Players;
     std::vector<CEnemy *> m_Enemies;
-    std::map<CCoord, CCollectible *> m_Boosts;
+    std::map<CCoord, CCollectible *> m_Collectibles;
     std::map<CCoord, CFire *> m_Fires;
     std::map<CCoord, CBomb *> m_Bombs;
     std::vector<std::vector<CWall *>> m_Map;

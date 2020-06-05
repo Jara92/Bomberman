@@ -105,6 +105,9 @@ public:
     virtual bool TryDestroy(int distance)
     { return false; }
 
+    void SetLocation(CCoord location)
+    {this->m_Location = location;}
+
 protected:
     /** Texturepack which is used for rendering. */
     std::shared_ptr<CTexturePack> m_TexturePack;

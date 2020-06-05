@@ -8,7 +8,7 @@
 
 int CApplication::Run()
 {
-    CSettings settings(1.3 * 1150, 1.3 * 700, CCoord(0, 1));
+    CSettings settings(1.3 * 1150, 1.3 * 700, CCoord(0, 1), 60, true, true);
     CSDLInterface interface("Bomberman", &settings);
 
     try
