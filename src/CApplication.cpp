@@ -29,20 +29,20 @@ int CApplication::Run()
 
         return 1;
     }
-    /*catch (std::exception &ex)
+    catch (std::exception &ex)
     {
         std::cerr << ex.what() << std::endl;
-        interface.ShowMessageBox(SDL_MESSAGEBOX_ERROR, MESSAGE_ERROR, ex.what());
+        interface.ShowMessageBox(SDL_MESSAGEBOX_ERROR, UNKNOWN_ERROR, ex.what());
 
         return 1;
     }
     catch (...)
     {
-        std::cerr << MESSAGE_ERROR << std::endl;
-        interface.ShowMessageBox(SDL_MESSAGEBOX_ERROR, MESSAGE_ERROR, MESSAGE_ERROR);
+        std::cerr << UNKNOWN_ERROR << std::endl;
+        interface.ShowMessageBox(SDL_MESSAGEBOX_ERROR, UNKNOWN_ERROR, UNKNOWN_ERROR);
 
         return 1;
-    }*/
+    }
 
     return 0;
 }

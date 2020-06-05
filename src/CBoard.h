@@ -106,7 +106,11 @@ public:
      */
     void DestroyExplosion(CFire *fire);
 
-    EGameStatus RoundOver(CPlayer *player);
+    /**
+     * Delete collectible from the map.
+     * @param collectible Collectible to be removed.
+     */
+    void DestroyCollectible(CCollectible * collectible);
 
     /**
      * Remove all dynamically added objects. (Bombs, Enemies, Boosts, DestructibleWalls)

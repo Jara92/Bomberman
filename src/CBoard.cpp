@@ -82,7 +82,6 @@ void CBoard::PlaceBomb(CPlayer *player)
     }
 }
 
-
 /*====================================================================================================================*/
 void CBoard::DetonateBombs(const CPlayer *player)
 {
@@ -147,7 +146,7 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int exp
         CWall *target = this->m_Map[static_cast<int>(locationToExplode.m_X)][static_cast<int>(locationToExplode.m_Y)];
         if ((target && !target->IsDestructible()))
         {
-            return;
+            break; // Leave for loop - The wave was stopped by this indestructible wall.
         }
 
         if (target)
@@ -156,10 +155,22 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int exp
             {
                 delete target;
                 this->m_Map[static_cast<int>(locationToExplode.m_X)][static_cast<int>(locationToExplode.m_Y)] = nullptr;
+            } else
+            {
+                break; // Leave for loop - The wave was stopped by this wall.
             }
         }
 
-        // Destroy potencialy existing fire is this location
+        // Find collectible in location to explode.
+        auto collectible = this->m_Collectibles.find(
+                CCoord(locationToExplode.GetFlooredX(), locationToExplode.GetFlooredY()));
+        if (collectible != this->m_Collectibles.end())
+        {
+            break; // leave for loop - We dont want burning collectibles
+        }
+
+
+        // Destroy potencialy existing fire is this location.
         auto foundFire = this->m_Fires.find(locationToExplode);
         if (foundFire != this->m_Fires.end())
         {
@@ -169,7 +180,7 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int exp
             this->m_Fires.erase(foundFire);
         }
 
-        // Create new fire
+        // Create new fire.
         CFire *fire = new CFire(this->m_FireObjectTexturePack, this->m_FireObjectTexturePack->GetTextureSize(),
                                 locationToExplode);
         this->m_Fires.insert(std::pair<CCoord, CFire *>(locationToExplode, fire));
@@ -191,6 +202,24 @@ void CBoard::DestroyExplosion(CFire *fire)
     else
     {
         std::cerr << "Fire " << fireLocation << " not found " << std::endl;
+    }
+}
+
+/*====================================================================================================================*/
+void CBoard::DestroyCollectible(CCollectible *collectible)
+{
+    CCoord collectibleLocation = collectible->GetLocation();
+    auto collectibleToRemove = this->m_Collectibles.find(collectibleLocation);
+    if (collectibleToRemove != this->m_Collectibles.end())
+    {
+        delete (collectibleToRemove->second);
+        collectibleToRemove->second = nullptr;
+        this->m_Collectibles.erase(collectibleToRemove);
+    }
+    // Error message when the collectible is not found - this should never happen
+    else
+    {
+        std::cerr << "Collectible " << collectibleLocation << " not found " << std::endl;
     }
 }
 
@@ -247,7 +276,7 @@ void CBoard::Draw(CSDLInterface *interface, CCoord offset)
         else if (this->m_Settings->GetDebugMode())
         {
             SDL_Rect rect{static_cast<int>((i->second->GetLocation().GetFlooredX() + offset.m_X) * (m_CellSize)),
-                    static_cast<int>((i->second->GetLocation().GetFlooredY() + offset.m_Y) * (m_CellSize)),
+                          static_cast<int>((i->second->GetLocation().GetFlooredY() + offset.m_Y) * (m_CellSize)),
                           static_cast<int>(m_CellSize), static_cast<int>(m_CellSize)};
             interface->RenderRectangle(&rect);
         }
@@ -316,11 +345,19 @@ void CBoard::Update(int deltaTime)
         this->m_Enemies[i]->Update(this, deltaTime);
     }
 
-    // Update boosts
-    for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
+    // Update collectibles
+    for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end();/* i++*/)
     {
-        // Polymorphic call
-        i->second->Update(this, deltaTime);
+        // Save iterator to next object because current bomb could be removed in Update().
+        auto item = i++;
+        if (item->second)
+        {
+            item->second->Update(this, deltaTime);
+        } else
+        {
+            // Remove null item
+            this->m_Collectibles.erase(item);
+        }
     }
 
     // Update bombs
@@ -365,33 +402,33 @@ void CBoard::UpdatePhysics()
 
     for (auto player = this->m_Players.begin(); player != this->m_Players.end(); player++)
     {
-        for (auto fire = this->m_Fires.begin(); fire != this->m_Fires.end(); fire++)
+        if (player.base() && (*(player.base()))->IsAlive())
         {
-            // Kill player if player is valid pointer and colliding fire.
-            if (player.base() && (*(player.base()))->IsAlive() && fire->second &&
-                (*(player.base()))->IsColiding(fire->second))
+            // Fire collision
+            for (auto fire = this->m_Fires.begin(); fire != this->m_Fires.end(); fire++)
             {
-                std::cout << std::chrono::duration_cast<std::chrono::seconds>(
-                        std::chrono::system_clock::now().time_since_epoch()).count() << " Player is killed."
-                          << std::endl;
-                (*(player.base()))->Kill();
-                // return this->RoundOver((*(player.base())));
+                // Kill player if player is valid pointer and colliding fire.
+                if (fire->second && (*(player.base()))->IsColiding(fire->second))
+                {
+                    std::cout << std::chrono::duration_cast<std::chrono::seconds>(
+                            std::chrono::system_clock::now().time_since_epoch()).count() << " Player is killed."
+                              << std::endl;
+                    (*(player.base()))->Kill();
+
+                    return; // player is dead and he cant pickup collectible items.
+                }
+            }
+
+            // Collectible collision
+            for (auto collect = this->m_Collectibles.begin(); collect != this->m_Collectibles.end(); collect++)
+            {
+                if(collect->second && (*(player.base()))->IsColiding(collect->second))
+                {
+                    collect->second->Apply((*(player.base()))); // Apply item
+                }
             }
         }
     }
-
-    // return EGameStatus::GAMESTATUS_RUNNING;
-}
-
-/*====================================================================================================================*/
-EGameStatus CBoard::RoundOver(CPlayer *player)
-{
-    if (player && player->GetLives() < 0)
-    {
-        return EGameStatus::GAME_STATUS_GAME_OVER;
-    }
-
-    return EGameStatus::GAMESTATUS_ROUND_OVER;
 }
 
 /*====================================================================================================================*/
@@ -524,6 +561,7 @@ bool CBoard::PlayerDirectionFree(CCoord location, CPlayer *player, CCoord direct
 
     return true;
 }
+
 
 
 

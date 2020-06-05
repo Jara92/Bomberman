@@ -9,30 +9,33 @@
 
 void CBoost::Apply(CPlayer *player)
 {
-    if (this->m_Apply)
+    if(this->m_IsAlive)
     {
-        this->m_Apply(player);
-    }
-    player->IncreseScore(this->m_ScoreBonus);
+        if (this->m_Apply)
+        {
+            this->m_Apply(player);
+        }
 
-    this->m_ScoreBonus = 0;
+        player->IncreseScore(this->m_ScoreBonus);
 
-    // save target player
-    if (this->m_Duration != 0)
-    {
-        this->m_TargetPlayer = player;
-    }
-        // kill object
-    else
-    {
-        this->m_IsAlive = false;
+
+        this->m_ScoreBonus = 0;
+
+        // save target player
+        if (this->m_Duration != 0)
+        {
+            this->m_TargetPlayer = player;
+        }
+            // kill object
+        else
+        {
+            this->m_IsAlive = false;
+        }
     }
 }
 
 void CBoost::Update(CBoard *board, int deltaTime)
 {
-    board->m_Players; //fixme remove
-
     if (this->m_TargetPlayer)
     {
         this->m_Duration -= deltaTime;
@@ -41,6 +44,11 @@ void CBoost::Update(CBoard *board, int deltaTime)
         {
             this->Deactivate();
         }
+    }
+
+    if(!this->m_IsAlive)
+    {
+        board->DestroyCollectible(this);
     }
 }
 

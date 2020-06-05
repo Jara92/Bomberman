@@ -14,7 +14,7 @@ CLevelLoader::CLevelLoader(CSDLInterface *interface)
 }
 
 /*====================================================================================================================*/
-CCoord CLevelLoader::RandomBoardLocation(std::shared_ptr<CBoard> &board)
+CCoord CLevelLoader::GetRandomBoardLocation(std::shared_ptr<CBoard> &board) const
 {
     // Random number generator.
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -130,7 +130,7 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
     return map;
 }
 
-/*========================================================================================== -==========================*/
+/*====================================================================================================================*/
 std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
 {
     // count = 2; // todo remove
@@ -226,7 +226,7 @@ void CLevelLoader::GenerateObstacles(std::shared_ptr<CBoard> &board, size_t leve
         CCoord random;
         do
         {
-            random = this->RandomBoardLocation(board);
+            random = this->GetRandomBoardLocation(board);
         } while (!board->PositionFree(random) || !board->PlayersAreaFree(random));
 
         board->m_Map[static_cast<int>(random.m_X)][static_cast<int>(random.m_Y)] = new CWall(texturePack, CCoord(1, 1),
@@ -237,7 +237,7 @@ void CLevelLoader::GenerateObstacles(std::shared_ptr<CBoard> &board, size_t leve
 }
 
 /*====================================================================================================================*/
-std::shared_ptr<CGround> CLevelLoader::LoadGround()
+std::shared_ptr<CGround> CLevelLoader::LoadGround() const
 {
     std::map<ETextureType, const std::vector<std::string>> textures
             {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/BackgroundTile.png"}}}};
@@ -250,7 +250,7 @@ std::shared_ptr<CGround> CLevelLoader::LoadGround()
 }
 
 /*====================================================================================================================*/
-std::shared_ptr<CTexturePack> CLevelLoader::LoadBombTexturePack()
+std::shared_ptr<CTexturePack> CLevelLoader::LoadBombTexturePack() const
 {
     std::map<ETextureType, const std::vector<std::string>> textures
             {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Bomb/Bomb_f01.png"},
@@ -262,7 +262,7 @@ std::shared_ptr<CTexturePack> CLevelLoader::LoadBombTexturePack()
 }
 
 /*====================================================================================================================*/
-std::shared_ptr<CTexturePack> CLevelLoader::LoadFireTexturePack()
+std::shared_ptr<CTexturePack> CLevelLoader::LoadFireTexturePack() const
 {
     std::map<ETextureType, const std::vector<std::string>> textures
             {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Flame/Flame_f00.png"},
@@ -276,7 +276,7 @@ std::shared_ptr<CTexturePack> CLevelLoader::LoadFireTexturePack()
 }
 
 /*====================================================================================================================*/
-std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadEnemyTexturePacks()
+std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadEnemyTexturePacks() const
 {
     std::vector<std::shared_ptr<CTexturePack>> textures;
 
@@ -284,7 +284,7 @@ std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadEnemyTexturePacks()
 }
 
 /*====================================================================================================================*/
-std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadCollectiblesTexturePacks()
+std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadCollectiblesTexturePacks() const
 {
     // Save textures in right order - ECollectibleType texturePack = textures[(int)ECollectibleType)]
     std::vector<std::map<ETextureType, const std::vector<std::string>>> textures
@@ -372,7 +372,7 @@ void CLevelLoader::ReorganizeCollectibles(std::shared_ptr<CBoard> &board)
         CCoord random;
         do
         {
-            random = this->RandomBoardLocation(board);
+            random = this->GetRandomBoardLocation(board);
         } while (!board->m_Map[random.GetFlooredX()][random.GetFlooredY()] ||
                  !board->m_Map[random.GetFlooredX()][random.GetFlooredY()]->IsDestructible() ||
                  board->m_Map[random.GetFlooredX()][random.GetFlooredY()]->HasCollectible());
@@ -394,7 +394,7 @@ bool CLevelLoader::CreateCollectibleAtRandomLocation(std::shared_ptr<CBoard> &bo
                                                      std::size_t score, std::size_t duration)
 {
     // Generate totaly random inicialization location.
-    CCoord random = this->RandomBoardLocation(board);
+    CCoord random = this->GetRandomBoardLocation(board);
 
     // Lamda which are used to apply / deactivate collectable item.
     std::function<void(CPlayer *)> applyFunc;

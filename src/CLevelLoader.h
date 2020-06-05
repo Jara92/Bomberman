@@ -48,15 +48,23 @@ protected:
     static const size_t MAP_HEIGHT = 13;
 
     static const size_t MAX_PLAYERS = 2;
+    /** How many properties collectible item should have? */
     static const size_t COLLECTIBLE_ITEM_PROPERTIES_COUNT = 4;
+    /** How many properties enemy item should have? */
     static const size_t ENEMY_ITEM_PROPERTIES_COUNT = 7;
 
     CSDLInterface *m_Interface;
 
+    /* Texture packs used for dynamically added objects. */
     std::vector<std::shared_ptr<CTexturePack>> m_EnemyTexturePacks;
     std::vector<std::shared_ptr<CTexturePack>> m_CollectibleTexturePacks;
 
-    CCoord RandomBoardLocation(std::shared_ptr<CBoard> & board);
+    /**
+     * Get random location in game board.
+     * @param board Game board.
+     * @return Random location.
+     */
+    CCoord GetRandomBoardLocation(std::shared_ptr<CBoard> & board) const;
 
     /**
      * Load map from the file.
@@ -76,7 +84,7 @@ protected:
      * Get object which will be rendered as ground.
      * @return Ground object
      */
-    std::shared_ptr<CGround> LoadGround();
+    std::shared_ptr<CGround> LoadGround() const;
 
     /**
      * Generate obstacles for game map.
@@ -95,10 +103,27 @@ protected:
      */
     void LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level,  bool loadCollectibles = true);
 
+    /**
+     * Move every collectible to random location and attach it to assign it to the wall in the same position.
+     * @param board Game board.
+     */
     void ReorganizeCollectibles(std::shared_ptr<CBoard> & board);
 
+    /**
+     * Read one property from the input array.
+     * @param input Input array.
+     * @param index Index to be read.
+     * @return Property value.
+     */
     std::string ReadProperty(const std::vector<std::string> & input, std::vector<std::string>::size_type index) const;
 
+    /**
+     * Decode input and save new item from the file input.
+     * @param board Game board.
+     * @param input Input array.
+     * @param itemType Item type.
+     * @return True - success.
+     */
     bool ReadItem(std::shared_ptr<CBoard> &board, const std::vector<std::string> & input, const std::string & itemType);
 
     /**
@@ -115,24 +140,24 @@ protected:
     * Get bomb texture pack.
     * @return Texture pack
     */
-    std::shared_ptr<CTexturePack> LoadBombTexturePack();
+    std::shared_ptr<CTexturePack> LoadBombTexturePack() const;
 
     /**
      * Get fire texture pack.
      * @return Texture pack
      */
-    std::shared_ptr<CTexturePack> LoadFireTexturePack();
+    std::shared_ptr<CTexturePack> LoadFireTexturePack() const;
 
     /**
      * Get texture packs for enemies.
      * @return Texture packs.
      */
-    std::vector<std::shared_ptr<CTexturePack>> LoadEnemyTexturePacks();
+    std::vector<std::shared_ptr<CTexturePack>> LoadEnemyTexturePacks() const;
 
     /**
      * Get texture packs for collectibles.
      * @return Texture packs.
      */
-    std::vector<std::shared_ptr<CTexturePack>> LoadCollectiblesTexturePacks();
+    std::vector<std::shared_ptr<CTexturePack>> LoadCollectiblesTexturePacks() const;
 };
 
