@@ -6,6 +6,7 @@
 #pragma once
 
 #include <cmath>
+#include <set>
 #include "CMovable.h"
 #include "../../CControls.h"
 

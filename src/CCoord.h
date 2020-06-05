@@ -11,6 +11,7 @@
 /**
  * Represents point in 2D space
  */
+
 class CCoord
 {
 public:

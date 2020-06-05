@@ -386,7 +386,7 @@ EGameStatus CBoard::RoundOver(CPlayer *player)
 }
 
 /*====================================================================================================================*/
-void CBoard::ClearBoard()
+void CBoard::ClearBoard(bool clearBoosts)
 {
     // Delete walls
     for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
@@ -410,12 +410,15 @@ void CBoard::ClearBoard()
     this->m_Enemies.clear();
 
     // Delete boosts
-    for (auto i = this->m_Boosts.begin(); i != this->m_Boosts.end(); i++)
+    if(clearBoosts)
     {
-        delete (i->second);
-        i->second = nullptr;
+        for (auto i = this->m_Boosts.begin(); i != this->m_Boosts.end(); i++)
+        {
+            delete (i->second);
+            i->second = nullptr;
+        }
+        this->m_Boosts.clear();
     }
-    this->m_Boosts.clear();
 
     // Delete bombs
     for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)

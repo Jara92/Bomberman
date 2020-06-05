@@ -6,16 +6,34 @@
 
 #include "CLevelLoader.h"
 
-/*====================================================================================================================*/
-bool CLevelLoader::LoadLevel(const std::shared_ptr<CBoard> & board, size_t level)
+CLevelLoader::CLevelLoader(CSDLInterface *interface)
+        : m_Interface(interface)
 {
-    board->ClearBoard();
+    this->m_EnemyTexturePacks = this->LoadEnemyTexturePacks();
+    this->m_CollectibleTexturePacks = this->LoadCollectiblesTexturePacks();
+}
 
+/*====================================================================================================================*/
+CCoord CLevelLoader::RandomBoardLocation(std::shared_ptr<CBoard> &board)
+{
+    // Random number generator.
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine randomEngine(seed);
+
+    // Return random location on the board.
+    return CCoord(static_cast<double>(randomEngine() % static_cast<int>(board->GetBoardSize().m_X)),
+                  static_cast<double>(randomEngine() % static_cast<int>(board->GetBoardSize().m_Y)));
+}
+
+/*====================================================================================================================*/
+bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level)
+{
+    // Generate random obstacles.
     size_t obstaclesCount = (board->GetBoardSize().m_X * board->GetBoardSize().m_Y) * 0.15;
     this->GenerateObstacles(board, level, obstaclesCount);
 
-    // Load enemies and boosts
-   // TODO načíst soubor levelu a načíst data
+    // Load enemies and boosts from the file.
+    this->LoadLevelFile(board, level, board->m_Boosts.empty());
 
     return true;
 }
@@ -24,7 +42,8 @@ bool CLevelLoader::LoadLevel(const std::shared_ptr<CBoard> & board, size_t level
 std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, CSettings *settings)
 {
     // calc cellsize
-    int cellSize = static_cast<int>((settings->GetScreenHeight()) / (CLevelLoader::MAP_HEIGHT + settings->GetOffset().m_Y));
+    int cellSize = static_cast<int>((settings->GetScreenHeight()) /
+                                    (CLevelLoader::MAP_HEIGHT + settings->GetOffset().m_Y));
 
     // Load important objects for new board.
     std::shared_ptr<CTexturePack> bombTexturePack = this->LoadBombTexturePack();
@@ -33,9 +52,10 @@ std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, CSettings *sett
     std::vector<CPlayer *> players = this->LoadPlayers(playersCount);
     std::shared_ptr<CGround> groundObject = this->LoadGround();
 
-    return std::make_shared<CBoard>(settings, map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), groundObject,
-                            bombTexturePack, fireTexturePack,
-                            cellSize);
+    return std::make_shared<CBoard>(settings, map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT),
+                                    groundObject,
+                                    bombTexturePack, fireTexturePack,
+                                    cellSize);
 }
 
 /*====================================================================================================================*/
@@ -66,7 +86,7 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
     // Is file reader ok?
     if (!fileReader || !fileReader.is_open() || fileReader.eof() || fileReader.bad())
     {
-        throw std::ios::failure(MESSAGE_MAP_ERROR);
+        throw std::ios::failure(MESSAGE_MAP_NOT_FOUND);
     }
 
     unsigned char input = '\0';
@@ -175,7 +195,7 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
     {
         players.push_back(
                 new CPlayer(std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i], false, CCoord(1, 2)),
-                            startingLocation[i], CCoord(0.5,0.75),
+                            startingLocation[i], CCoord(0.5, 0.75),
                             controls[i]));
         controls[i] = nullptr;
     }
@@ -190,30 +210,26 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
 }
 
 /*====================================================================================================================*/
-void CLevelLoader::GenerateObstacles(std::shared_ptr<CBoard> board, size_t level, size_t count)
+void CLevelLoader::GenerateObstacles(std::shared_ptr<CBoard> &board, size_t level, size_t count)
 {
     std::map<ETextureType, const std::vector<std::string>> textures
             {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/ExplodableBlock.png"}}}};
 
-    std::shared_ptr<CTexturePack> texturePack =
-            std::make_shared<CTexturePack>(this->m_Interface,
-                                           textures);
-    size_t randomX = 0, randomY = 0;
-
-    // Random number generator.
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine randomEngine(seed);
+    std::shared_ptr<CTexturePack> texturePack = std::make_shared<CTexturePack>(this->m_Interface, textures);
 
     for (size_t i = 0; i < count; i++)
     {
         // Generate random location until the location is free.
+        CCoord random;
         do
         {
-            randomX = randomEngine() % static_cast<int>(board->GetBoardSize().m_X);
-            randomY = randomEngine() % static_cast<int>(board->GetBoardSize().m_Y);
-        } while (!board->PositionFree(CCoord(randomX, randomY)) || !board->PlayersAreaFree(CCoord(randomX, randomY)));
+            random = this->RandomBoardLocation(board);
+        } while (!board->PositionFree(random) || !board->PlayersAreaFree(random));
 
-        board->m_Map[randomX][randomY] = new CWall(texturePack, CCoord(1,1), CCoord(randomX, randomY), true, nullptr);
+        board->m_Map[static_cast<int>(random.m_X)][static_cast<int>(random.m_Y)] = new CWall(texturePack, CCoord(1, 1),
+                                                                                             CCoord(static_cast<int>(random.m_X),
+                                                                                                    static_cast<int>(random.m_Y)),
+                                                                                             true, nullptr);
     }
 }
 
@@ -255,5 +271,170 @@ std::shared_ptr<CTexturePack> CLevelLoader::LoadFireTexturePack()
     return std::make_shared<CTexturePack>(this->m_Interface,
                                           textures, true, CCoord(0.65, 0.65));
 }
+
+/*====================================================================================================================*/
+std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadEnemyTexturePacks()
+{
+    std::vector<std::shared_ptr<CTexturePack>> textures;
+
+    return textures;
+}
+
+/*====================================================================================================================*/
+std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadCollectiblesTexturePacks()
+{
+    std::vector<std::map<ETextureType, const std::vector<std::string>>> textures
+            {{
+                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}},
+                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/FlamePowerup.png"}}},
+                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}},
+                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}},
+                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}},
+                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}},
+                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}},
+                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}},
+                     {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}}}};
+
+    std::vector<std::shared_ptr<CTexturePack>> texturePacks;
+
+    for (size_t i = 0; i < textures.size(); i++)
+    {
+        texturePacks.push_back(std::make_shared<CTexturePack>(this->m_Interface, textures[i], true));
+    }
+
+    return texturePacks;
+}
+
+/*====================================================================================================================*/
+void CLevelLoader::LoadLevelFile(const std::shared_ptr<CBoard> &board, unsigned int level, bool loadCollectibles)
+{
+    std::ifstream fileReader(
+            (this->m_Interface->GetSettings()->GetDataPath() + CLevelLoader::LEVEL_FILE_NAME) + std::to_string(level),
+            std::ios::in);
+
+    // Is file reader ok?
+    if (!fileReader || !fileReader.is_open() || fileReader.eof() || fileReader.bad())
+    {
+        throw std::ios::failure(MESSAGE_LEVEL_NOT_FOUND);
+    }
+
+    // Read all lines and crate object for every line
+    std::string line;
+    while (std::getline(fileReader, line))
+    {
+        // Split string
+        std::istringstream iss(line);
+        std::vector<std::string> results(std::istream_iterator<std::string>{iss},
+                                         std::istream_iterator<std::string>());
+        // Skip empty lines
+        if (results.empty())
+        { break; }
+
+        // Read item type and
+        std::string itemType = this->ReadProperty(results, 0);
+
+        // Do not load collectibles when loadCollectibles = false.
+        if (loadCollectibles || itemType != "collectible")
+        { this->ReadItem(board, results, itemType); }
+
+        // TODO DUBUG
+        /*  for (std::vector<std::string>::size_type i = 0; i < results.size(); i++)
+          { std::cout << results[i] << "x"; }*/
+        std::cout << std::endl;
+    }
+}
+
+/*====================================================================================================================*/
+std::string
+CLevelLoader::ReadProperty(const std::vector<std::string> &input, std::vector<std::string>::size_type index) const
+{
+    if (index >= input.size())
+    {
+        throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND);
+    }
+
+    return input[index];
+}
+
+/*====================================================================================================================*/
+bool CLevelLoader::CreateCollectibleAtRandomLocation(std::shared_ptr<CBoard> &board, ECollectibleType type,
+                                                     std::size_t score, std::size_t duration)
+{
+    CCoord random;
+    do
+    {
+        random = this->RandomBoardLocation(board);
+    }
+    while(board->m_Map[])
+    switch (type)
+    {
+        case ECollectibleType::COLLECTIBLE_TYPE_SPEED:
+
+            break;
+        default:
+        {
+            throw std::invalid_argument(UNKNOWN_COLLECTIBLE_TYPE);
+        }
+    }
+
+    return true;
+}
+
+/*====================================================================================================================*/
+bool CLevelLoader::ReadItem(const std::shared_ptr<CBoard> &board, const std::vector<std::string> &input,
+                            const std::string &itemType)
+{
+    try
+    {
+        // Collectible item
+        if (itemType == "collectible" && input.size() == COLLECTIBLE_ITEM_PROPERTIES_COUNT)
+        {
+            // Load other properties.
+            int collectibleTypeId = std::stoi(this->ReadProperty(input, 1));
+            std::size_t score = std::stoi(this->ReadProperty(input, 2));
+            std::size_t duration = std::stoi(this->ReadProperty(input, 3));
+
+            // Invalid collectible type id detection.
+            if (collectibleTypeId >= this->m_CollectibleTexturePacks.size())
+            { throw std::invalid_argument(UNKNOWN_COLLECTIBLE_TYPE); }
+
+            ECollectibleType collectibleType = static_cast<ECollectibleType >(collectibleTypeId);
+
+            this->CreateCollectibleAtRandomLocation(collectibleType, score, duration);
+        }
+            // Enemy
+        else if (itemType == "enemy" && input.size() == ENEMY_ITEM_PROPERTIES_COUNT)
+        {
+
+        }
+            // Unknown type
+        else
+        {
+            std::cerr << INVALID_ITEM << std::endl;
+            for (std::vector<std::string>::size_type i = 0; i < input.size(); i++)
+            { std::cerr << input[i] << "x"; }
+            std::cerr << std::endl;
+            return false;
+        }
+    }
+    catch (std::invalid_argument &ex)
+    {
+        std::cerr << UNKNOWN_ITEM_TYPE << std::endl;
+        return false;
+    }
+    catch (std::out_of_range &ex)
+    {
+        std::cerr << INT_OVERFLOW << std::endl;
+        return false;
+    }
+
+    return true;
+}
+
+
+
+
+
+
 
 

@@ -110,8 +110,9 @@ public:
 
     /**
      * Remove all dynamically added objects. (Bombs, Enemies, Boosts, DestructibleWalls)
+     * @param clearBoosts Remove boosts from the board?
      */
-    void ClearBoard();
+    void ClearBoard(bool clearBoosts = true);
 
     CCoord GetBoardSize() const
     { return this->m_BoardSize; }

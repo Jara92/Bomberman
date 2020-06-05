@@ -155,6 +155,9 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CTimer.h">
 			<Option target="bomberman"/>
 		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/ECollectibleType.h">
+			<Option target="bomberman"/>
+		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/EDirection.h">
 			<Option target="bomberman"/>
 		</Unit>

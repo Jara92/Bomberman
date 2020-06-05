@@ -11,29 +11,31 @@
 #include <memory>
 #include <random>
 #include <chrono>
+#include <sstream>
+#include <iterator>
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "CBoard.h"
 #include "CSDLInterface.h"
+#include "gameobjects/collectibles/CBoost.h"
+#include "gameobjects/collectibles/CDoor.h"
 #include "Messages.h"
-
+#include "ECollectibleType.h"
 
 class CLevelLoader
 {
 public:
-    CLevelLoader(CSDLInterface *interface)
-            : m_Interface(interface)
-    { }
+    CLevelLoader(CSDLInterface *interface);
 
     ~CLevelLoader() = default;
 
-    CLevelLoader(const CLevelLoader &mapLoader) = delete;
+    CLevelLoader(const CLevelLoader &mapLoader) = default;
 
-    CLevelLoader operator=(const CLevelLoader &mapLoader) = delete;
+    CLevelLoader & operator=(const CLevelLoader &mapLoader) = default;
 
     std::shared_ptr<CBoard> GetBoard(int playersCount, CSettings *settings);
 
-    bool LoadLevel(const std::shared_ptr<CBoard> &board, size_t level);
+    bool LoadLevel(std::shared_ptr<CBoard> &board, size_t level);
 
 protected:
     static const std::string MAP_FILE_NAME;
@@ -46,7 +48,15 @@ protected:
     static const size_t MAP_HEIGHT = 13;
 
     static const size_t MAX_PLAYERS = 2;
+    static const size_t COLLECTIBLE_ITEM_PROPERTIES_COUNT = 4;
+    static const size_t ENEMY_ITEM_PROPERTIES_COUNT = 6;
+
     CSDLInterface *m_Interface;
+
+    std::vector<std::shared_ptr<CTexturePack>> m_EnemyTexturePacks;
+    std::vector<std::shared_ptr<CTexturePack>> m_CollectibleTexturePacks;
+
+    CCoord RandomBoardLocation(std::shared_ptr<CBoard> & board);
 
     /**
      * Load map from the file.
@@ -75,7 +85,29 @@ protected:
      * @param count Obstacles count
      * @return Container of obstacles.
      */
-    void GenerateObstacles(std::shared_ptr<CBoard> board, size_t level, size_t count);
+    void GenerateObstacles(std::shared_ptr<CBoard> & board, size_t level, size_t count);
+
+    /**
+     * Load config data from file.
+     * @param board Game board.
+     * @param level Level to be loaded.
+     * @throws std::ios::failure When level file not found.
+     */
+    void LoadLevelFile(const std::shared_ptr<CBoard> &board, unsigned int level,  bool loadCollectibles = true);
+
+    std::string ReadProperty(const std::vector<std::string> & input, std::vector<std::string>::size_type index) const;
+
+    bool ReadItem(const std::shared_ptr<CBoard> &board, const std::vector<std::string> & input, const std::string & itemType);
+
+    /**
+     * Create new CCollectible at random location and attach it to CWall.
+     * @param type Collectible type.
+     * @param score Score to be achieved.
+     * @param duration Collectible duration.
+     * @throws std::invalid_argument Unknown collectible type.
+     * @return True - success.
+     */
+    bool CreateCollectibleAtRandomLocation(std::shared_ptr<CBoard> &board, ECollectibleType type, std::size_t score, std::size_t duration);
 
     /**
     * Get bomb texture pack.
@@ -88,5 +120,17 @@ protected:
      * @return Texture pack
      */
     std::shared_ptr<CTexturePack> LoadFireTexturePack();
+
+    /**
+     * Get texture packs for enemies.
+     * @return Texture packs.
+     */
+    std::vector<std::shared_ptr<CTexturePack>> LoadEnemyTexturePacks();
+
+    /**
+     * Get texture packs for collectibles.
+     * @return Texture packs.
+     */
+    std::vector<std::shared_ptr<CTexturePack>> LoadCollectiblesTexturePacks();
 };
 

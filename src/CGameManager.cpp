@@ -288,7 +288,7 @@ void CGameManager::KillAllPlayers()
 void CGameManager::RoundOver()
 {
     // Clear board, load level and refresh game end delay.
-    this->m_Board->ClearBoard();
+    this->m_Board->ClearBoard(false);
     this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
     this->m_GameEndDelay.Rerun();
 

@@ -63,7 +63,7 @@ bool CSDLInterface::InitInterface()
     if (this->m_Window == NULL)
     {
         // In the case that the window could not be made...
-        std::cerr << "Could not create window: \n" << SDL_GetError() << std::endl;
+        std::cerr << MESSAGE_SDL_WINDOW_ERROR << "\n" << SDL_GetError() << std::endl;
         return false;
     }
 
@@ -75,7 +75,7 @@ bool CSDLInterface::InitInterface()
     if (this->m_Window == NULL)
     {
         // In the case that the window could not be made...
-        std::cerr << "Could not create renderer: \n" << SDL_GetError() << std::endl;
+        std::cerr << MESSAGE_SDL_RENDERER_ERROR << "\n" << SDL_GetError() << std::endl;
         return false;
     }
 
