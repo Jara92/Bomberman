@@ -175,33 +175,19 @@ void CGameManager::DrawNextRound() const
 /*====================================================================================================================*/
 void CGameManager::DrawGameOver() const
 {
-    CCoord textSize = CCoord(400, 100);
+    CCoord screenSize = CCoord(this->m_Interface->GetSettings()->GetScreenWidth(),
+                               this->m_Interface->GetSettings()->GetScreenHeight());
+    CCoord textSize = CCoord(screenSize.m_X / 4, screenSize.m_X / 14);
     this->m_Interface->RenderText("Game over",
-                                  CCoord((this->m_Interface->GetSettings()->GetScreenWidth() / 2) - textSize.m_X / 2,
-                                         (this->m_Interface->GetSettings()->GetScreenHeight() / 2) - textSize.m_Y / 2),
+                                  CCoord(screenSize.m_X / 2 - (textSize.m_X / 2),
+                                         (screenSize.m_Y / 2) - (textSize.m_Y / 2)),
                                   textSize);
-    if (this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
-    {
-        std::string text = "Achieved score: " + std::to_string(this->m_Board->m_Players[0]->GetScore());
-        //   text = "Achieved score: " + std::to_string(999999999999999999);
 
-        // FIXME upravit vypis skore
-        this->m_Interface->RenderText(text,
-                                      CCoord(this->m_Interface->GetSettings()->GetScreenWidth() / 2 - text.size() / 2 *
-                                                                                                      (this->m_Board->GetCellSize() /
-                                                                                                       4),
-                                             (this->m_Interface->GetSettings()->GetScreenHeight() / 2 + textSize.m_Y) -
-                                             textSize.m_Y / 2),
-                                      CCoord(0, 50));
-    }
-
-    this->m_Interface->RenderText("Press [enter] to return to the menu",
-                                  CCoord(this->m_Interface->GetSettings()->GetScreenWidth() / 2 -
-                                         1.2 * this->m_Board->GetCellSize(),
-                                         (this->m_Interface->GetSettings()->GetScreenHeight() / 2 + textSize.m_Y +
-                                          2 * this->m_Board->GetCellSize()) -
-                                         textSize.m_Y / 2),
-                                  CCoord(0, 50));
+    textSize = CCoord(screenSize.m_X / 3, screenSize.m_X / 30);
+    this->m_Interface->RenderText("Press [ENTER] to return to the menu",
+                                  CCoord(screenSize.m_X / 2 - (textSize.m_X / 2),
+                                         (screenSize.m_Y / 2 + textSize.m_Y + 2 * this->m_Board->GetCellSize()) -
+                                         textSize.m_Y / 2), textSize);
 }
 
 /*====================================================================================================================*/
