@@ -7,6 +7,7 @@
 
 #include "CGameObject.h"
 #include "movables/CPlayer.h"
+#include "../CTimer.h"
 
 /**
  * Represents object which could explode - Bomb. Bomb can be triggered by remote control or by timer.
@@ -28,7 +29,7 @@ public:
                           location, false), m_Owner(owner), m_IsPassableForOwner(
             true), // Bomb is not passable, but... For owner is passable until the player exits the area of this bomb.
               m_ExplosionDelay(explosionDelay), m_ExplosionCounter(0)
-    {}
+    { }
 
     CBomb(const CBomb &other) = default;
 
@@ -52,12 +53,8 @@ public:
     bool IsPassableForOwner() const
     { return this->m_IsPassableForOwner; }
 
-    void MakeUnpassableForOwner()
-    { this->m_IsPassableForOwner = false; }
-
     /**
-     * Bomb detonation.
-     * Check if the bomb is ready to be detonated.
+     * Explodes the bomb if m_ExplosionDelay = 0.
      */
     void Detonate(CBoard *board);
 

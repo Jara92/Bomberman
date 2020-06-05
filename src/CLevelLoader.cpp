@@ -7,7 +7,7 @@
 #include "CLevelLoader.h"
 
 /*====================================================================================================================*/
-bool CLevelLoader::LoadLevel(CBoard *board, size_t level)
+bool CLevelLoader::LoadLevel(const std::shared_ptr<CBoard> & board, size_t level)
 {
     board->ClearBoard();
 
@@ -21,7 +21,7 @@ bool CLevelLoader::LoadLevel(CBoard *board, size_t level)
 }
 
 /*====================================================================================================================*/
-CBoard *CLevelLoader::GetBoard(int playersCount, CSettings *settings)
+std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, CSettings *settings)
 {
     // calc cellsize
     int cellSize = static_cast<int>((settings->GetScreenHeight()) / (CLevelLoader::MAP_HEIGHT + settings->GetOffset().m_Y));
@@ -31,11 +31,11 @@ CBoard *CLevelLoader::GetBoard(int playersCount, CSettings *settings)
     std::shared_ptr<CTexturePack> fireTexturePack = this->LoadFireTexturePack();
     std::vector<std::vector<CWall *>> map = this->LoadMap();
     std::vector<CPlayer *> players = this->LoadPlayers(playersCount);
-    CGround *groundObject = this->LoadGround();
+    std::shared_ptr<CGround> groundObject = this->LoadGround();
 
-    return new CBoard(settings, map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), groundObject,
-                      bombTexturePack, fireTexturePack,
-                      cellSize);
+    return std::make_shared<CBoard>(settings, map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT), groundObject,
+                            bombTexturePack, fireTexturePack,
+                            cellSize);
 }
 
 /*====================================================================================================================*/
@@ -190,7 +190,7 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
 }
 
 /*====================================================================================================================*/
-void CLevelLoader::GenerateObstacles(CBoard *board, size_t level, size_t count)
+void CLevelLoader::GenerateObstacles(std::shared_ptr<CBoard> board, size_t level, size_t count)
 {
     std::map<ETextureType, const std::vector<std::string>> textures
             {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/ExplodableBlock.png"}}}};
@@ -218,7 +218,7 @@ void CLevelLoader::GenerateObstacles(CBoard *board, size_t level, size_t count)
 }
 
 /*====================================================================================================================*/
-CGround *CLevelLoader::LoadGround()
+std::shared_ptr<CGround> CLevelLoader::LoadGround()
 {
     std::map<ETextureType, const std::vector<std::string>> textures
             {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/BackgroundTile.png"}}}};
@@ -227,7 +227,7 @@ CGround *CLevelLoader::LoadGround()
             std::make_shared<CTexturePack>(this->m_Interface,
                                            textures);
     // create reference wall to make copies
-    return new CGround(texturePack);
+    return std::make_shared<CGround>(CGround(texturePack));
 }
 
 /*====================================================================================================================*/

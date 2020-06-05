@@ -3,5 +3,5 @@
  * 
 */
 
-#include "CClock.h"
+#include "CGameClock.h"
 

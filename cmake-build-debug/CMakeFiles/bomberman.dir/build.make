@@ -356,18 +356,18 @@ CMakeFiles/bomberman.dir/src/CScoreManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bomberman.dir/src/CScoreManager.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaroslav/CLionProjects/bomberman/src/CScoreManager.cpp -o CMakeFiles/bomberman.dir/src/CScoreManager.cpp.s
 
-CMakeFiles/bomberman.dir/src/CClock.cpp.o: CMakeFiles/bomberman.dir/flags.make
-CMakeFiles/bomberman.dir/src/CClock.cpp.o: ../src/CClock.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/bomberman.dir/src/CClock.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/CClock.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/CClock.cpp
+CMakeFiles/bomberman.dir/src/CGameClock.cpp.o: CMakeFiles/bomberman.dir/flags.make
+CMakeFiles/bomberman.dir/src/CGameClock.cpp.o: ../src/CGameClock.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/bomberman.dir/src/CGameClock.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/CGameClock.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/CGameClock.cpp
 
-CMakeFiles/bomberman.dir/src/CClock.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bomberman.dir/src/CClock.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jaroslav/CLionProjects/bomberman/src/CClock.cpp > CMakeFiles/bomberman.dir/src/CClock.cpp.i
+CMakeFiles/bomberman.dir/src/CGameClock.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bomberman.dir/src/CGameClock.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jaroslav/CLionProjects/bomberman/src/CGameClock.cpp > CMakeFiles/bomberman.dir/src/CGameClock.cpp.i
 
-CMakeFiles/bomberman.dir/src/CClock.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bomberman.dir/src/CClock.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaroslav/CLionProjects/bomberman/src/CClock.cpp -o CMakeFiles/bomberman.dir/src/CClock.cpp.s
+CMakeFiles/bomberman.dir/src/CGameClock.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bomberman.dir/src/CGameClock.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaroslav/CLionProjects/bomberman/src/CGameClock.cpp -o CMakeFiles/bomberman.dir/src/CGameClock.cpp.s
 
 CMakeFiles/bomberman.dir/src/CTimer.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/CTimer.cpp.o: ../src/CTimer.cpp
@@ -407,7 +407,7 @@ bomberman_OBJECTS = \
 "CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.o" \
 "CMakeFiles/bomberman.dir/src/CAnimation.cpp.o" \
 "CMakeFiles/bomberman.dir/src/CScoreManager.cpp.o" \
-"CMakeFiles/bomberman.dir/src/CClock.cpp.o" \
+"CMakeFiles/bomberman.dir/src/CGameClock.cpp.o" \
 "CMakeFiles/bomberman.dir/src/CTimer.cpp.o"
 
 # External object files for target bomberman
@@ -436,7 +436,7 @@ bomberman: CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/CAnimation.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/CScoreManager.cpp.o
-bomberman: CMakeFiles/bomberman.dir/src/CClock.cpp.o
+bomberman: CMakeFiles/bomberman.dir/src/CGameClock.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/CTimer.cpp.o
 bomberman: CMakeFiles/bomberman.dir/build.make
 bomberman: CMakeFiles/bomberman.dir/link.txt

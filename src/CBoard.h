@@ -24,10 +24,10 @@ class CBoard
 {
 public:
     CBoard(CSettings *settings, std::vector<std::vector<CWall *>> map, std::vector<CPlayer *> players, CCoord boardSize,
-           CGround *ground,
+           std::shared_ptr<CGround> ground,
            std::shared_ptr<CTexturePack> bombTexturePack, std::shared_ptr<CTexturePack> fireTexturePack, unsigned int cellSize)
             : m_Players(std::move(players)), m_Map(std::move(map)), m_Settings(settings), m_BoardSize(boardSize),
-              m_CellSize(cellSize), m_GroundObject(ground), m_BombObjectTexturePack(std::move(bombTexturePack)),
+              m_CellSize(cellSize), m_GroundObject(std::move(ground)), m_BombObjectTexturePack(std::move(bombTexturePack)),
               m_FireObjectTexturePack(std::move(fireTexturePack))
     {}
 
@@ -130,7 +130,7 @@ public:
     /** Game settings */
     CSettings *m_Settings;
 
-    CGround * GetGroundObject() const
+    std::shared_ptr<CGround> GetGroundObject() const
     {return this->m_GroundObject;}
 
 protected:
@@ -140,7 +140,7 @@ protected:
     unsigned int m_CellSize;
 
     /** Ground object template */
-    CGround *m_GroundObject;
+    std::shared_ptr<CGround> m_GroundObject;
 
     /** Texturepack templates. */
     std::shared_ptr<CTexturePack> m_BombObjectTexturePack;

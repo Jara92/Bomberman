@@ -15,15 +15,16 @@ CGameManager::CGameManager(CSDLInterface *interface)
           m_GameStatus(EGameStatus::GAMESTATUS_RUNNING), m_NextGameStatus(EGameStatus::GAMESTATUS_RUNNING),
           m_Level(1)
 {
-    this->m_LevelLoader = new CLevelLoader(interface);
-    this->m_GameEndDelay.Run(this->GAME_STATUS_DELAY);
+    this->m_LevelLoader = std::make_unique<CLevelLoader>(interface);
+
+    // Kill all players when the time runs out.
+    this->m_GameEndDelay.Run(this->GAME_STATUS_DELAY, [=](void){this->KillAllPlayers();});
 }
 
 /*====================================================================================================================*/
 CGameManager::~CGameManager()
 {
-    delete this->m_Board;
-    delete this->m_LevelLoader;
+
 }
 
 /*====================================================================================================================*/
@@ -229,29 +230,6 @@ void CGameManager::UpdateEvents()
                 }
             }
         }
-
-        // Round (Game) over when the time is up.
-        if (this->m_GameEndDelay.Done())
-        {
-            this->m_GameEndDelay.Stop();
-
-            // Kill all players.
-            for (auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
-            {
-                (*(player.base()))->Kill();
-
-                // Player is totally dead - game over.
-                if ((*(player.base())) && (*(player.base()))->GetLives() < 0)
-                {
-                    this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER;
-                }
-                    // Player is not totally dead - round over.
-                else if ((*(player.base())) && (*(player.base()))->GetLives() >= 0)
-                {
-                    this->m_NextGameStatus = EGameStatus::GAMESTATUS_ROUND_OVER;
-                }
-            }
-        }
     }
 
     // Set new callback when timer is done
@@ -282,6 +260,27 @@ void CGameManager::UpdateEvents()
 
         // Set new callback.
         this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_DELAY, callBack);
+    }
+}
+
+/*====================================================================================================================*/
+void CGameManager::KillAllPlayers()
+{
+    // Kill all players.
+    for (auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
+    {
+        (*(player.base()))->Kill();
+
+        // Player is totally dead - game over.
+        if ((*(player.base())) && (*(player.base()))->GetLives() < 0)
+        {
+            this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER;
+        }
+            // Player is not totally dead - round over.
+        else if ((*(player.base())) && (*(player.base()))->GetLives() >= 0)
+        {
+            this->m_NextGameStatus = EGameStatus::GAMESTATUS_ROUND_OVER;
+        }
     }
 }
 
@@ -343,8 +342,6 @@ void CGameManager::UpdateStatus()
 }
 
 /*====================================================================================================================*/
-
-
 void CGameManager::GlobalInput(const Uint8 *input)
 {
     // Game is over. Press enter to leave game.
@@ -371,6 +368,7 @@ void CGameManager::GlobalInput(const Uint8 *input)
         }
     }
 }
+
 
 
 

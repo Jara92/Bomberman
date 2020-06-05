@@ -7,6 +7,8 @@
 
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <stdint.h>
+#include "Messages.h"
 
 /**
  * Clock which controls game refresh rate.
@@ -36,11 +38,19 @@ public:
 
     /**
      * Update clock status.
+     * @throws std::runtime_error When program runs for more than ~49 days.
      */
     void Tick()
     {
         // Calculate deltaTime
         Uint32 currentTime = SDL_GetTicks();
+
+        // Check ticks validity because tick value wraps if the program runs for more than ~49 days.
+        if(currentTime >= UINT32_MAX - 100)
+        {
+            throw std::runtime_error(MAXIMUM_RUNTIME);
+        }
+
         this->m_DeltaTime = static_cast<int>(currentTime - this->m_LastTicks);
 
         // Calculate FPS

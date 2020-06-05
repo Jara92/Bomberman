@@ -11,3 +11,4 @@ const char * const MESSAGE_FILESYSTEM_ERROR = "Filesystem error";
 const char * const MESSAGE_ERROR = "Unknown error";
 const char * const MESSAGE_MAP_ERROR = "Map file is not avaible";
 const char * const MESSAGE_INDEX_OUT_OF_BOUND = "Index out of bound";
+const char * const MAXIMUM_RUNTIME = "Maximum runtime exceeded.";

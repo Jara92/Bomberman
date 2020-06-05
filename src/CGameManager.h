@@ -6,7 +6,7 @@
 #pragma once
 #include <functional>
 #include "CSDLInterface.h"
-#include "CClock.h"
+#include "CGameClock.h"
 #include "CBoard.h"
 #include "CLevelLoader.h"
 #include "EGameStatus.h"
@@ -36,11 +36,11 @@ public:
 
 protected:
     CSDLInterface * m_Interface;
-    CBoard * m_Board;
+    std::shared_ptr<CBoard> m_Board;
     CScoreManager m_ScoreManager;
     /** The board must be drawn shifted because of top menu. */
     CCoord m_BoardOffset;
-    CLevelLoader * m_LevelLoader;
+    std::unique_ptr<CLevelLoader> m_LevelLoader;
     CGameClock m_Clock;
     /** Current game state. */
     EGameStatus m_GameStatus;
@@ -92,6 +92,7 @@ protected:
      * Fill game state with value of next game state.
      */
     void UpdateStatus();
+    void KillAllPlayers();
 
     /**
      * Draw game by the game state.

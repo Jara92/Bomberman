@@ -204,33 +204,6 @@ src/CBoard.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CBoard.cpp.s
 .PHONY : src/CBoard.cpp.s
 
-src/CClock.o: src/CClock.cpp.o
-
-.PHONY : src/CClock.o
-
-# target to build an object file
-src/CClock.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CClock.cpp.o
-.PHONY : src/CClock.cpp.o
-
-src/CClock.i: src/CClock.cpp.i
-
-.PHONY : src/CClock.i
-
-# target to preprocess a source file
-src/CClock.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CClock.cpp.i
-.PHONY : src/CClock.cpp.i
-
-src/CClock.s: src/CClock.cpp.s
-
-.PHONY : src/CClock.s
-
-# target to generate assembly for a file
-src/CClock.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CClock.cpp.s
-.PHONY : src/CClock.cpp.s
-
 src/CCoord.o: src/CCoord.cpp.o
 
 .PHONY : src/CCoord.o
@@ -257,6 +230,33 @@ src/CCoord.s: src/CCoord.cpp.s
 src/CCoord.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CCoord.cpp.s
 .PHONY : src/CCoord.cpp.s
+
+src/CGameClock.o: src/CGameClock.cpp.o
+
+.PHONY : src/CGameClock.o
+
+# target to build an object file
+src/CGameClock.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CGameClock.cpp.o
+.PHONY : src/CGameClock.cpp.o
+
+src/CGameClock.i: src/CGameClock.cpp.i
+
+.PHONY : src/CGameClock.i
+
+# target to preprocess a source file
+src/CGameClock.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CGameClock.cpp.i
+.PHONY : src/CGameClock.cpp.i
+
+src/CGameClock.s: src/CGameClock.cpp.s
+
+.PHONY : src/CGameClock.s
+
+# target to generate assembly for a file
+src/CGameClock.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CGameClock.cpp.s
+.PHONY : src/CGameClock.cpp.s
 
 src/CGameManager.o: src/CGameManager.cpp.o
 
@@ -816,12 +816,12 @@ help:
 	@echo "... src/CBoard.o"
 	@echo "... src/CBoard.i"
 	@echo "... src/CBoard.s"
-	@echo "... src/CClock.o"
-	@echo "... src/CClock.i"
-	@echo "... src/CClock.s"
 	@echo "... src/CCoord.o"
 	@echo "... src/CCoord.i"
 	@echo "... src/CCoord.s"
+	@echo "... src/CGameClock.o"
+	@echo "... src/CGameClock.i"
+	@echo "... src/CGameClock.s"
 	@echo "... src/CGameManager.o"
 	@echo "... src/CGameManager.i"
 	@echo "... src/CGameManager.s"

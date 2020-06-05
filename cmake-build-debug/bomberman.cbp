@@ -104,12 +104,6 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CBoard.h">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CClock.cpp">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CClock.h">
-			<Option target="bomberman"/>
-		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CControls.h">
 			<Option target="bomberman"/>
 		</Unit>
@@ -117,6 +111,12 @@
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CCoord.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CGameClock.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CGameClock.h">
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CGameManager.cpp">
