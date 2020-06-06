@@ -6,6 +6,7 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 #include "CCoord.h"
 
 class CSettings
@@ -21,12 +22,14 @@ public:
      * @param assetsPath Assets directory path
      * @param dataPath  Data directory path
      */
-    CSettings(unsigned int width = 1150, unsigned int height = 600, CCoord offset = CCoord(0,0), size_t screenFPS = 60, bool sound = true,
-              bool debugMode = false, std::string assetsPath = "./examples/assets/",
+    CSettings(unsigned int width = 1150, unsigned int height = 600, CCoord offset = CCoord(0, 0), size_t screenFPS = 60,
+              bool sound = true, bool debugMode = false, std::string assetsPath = "./examples/assets/",
               std::string dataPath = "./examples/data/")
-            : m_DebugMode(debugMode), m_AssetsPath(std::move(assetsPath)),
-              m_DataPath(std::move(dataPath)), m_Offset(offset)
-    { this->ChangeSettings(width, height, sound); }
+            : m_DebugMode(debugMode), m_AssetsPath(std::move(assetsPath)), m_DataPath(std::move(dataPath)),
+              m_Offset(offset)
+    {
+        this->ChangeSettings(width, height, sound);
+    }
 
     CSettings(const CSettings &other) = default;
 
@@ -48,14 +51,10 @@ public:
     }
 
     unsigned int GetScreenWidth() const
-    {
-        return this->m_ScreenWidth;
-    }
+    { return this->m_ScreenWidth; }
 
     unsigned int GetScreenHeight() const
-    {
-        return this->m_ScreenHeight;
-    }
+    { return this->m_ScreenHeight; }
 
     bool GetSound() const
     { return this->m_Sound; }
@@ -73,6 +72,9 @@ public:
     { return this->m_Offset; }
 
 protected:
+    std::vector<CCoord> m_GameScreenSizePrefabs;
+    std::vector<CCoord> m_MenuScreenSizePrefabs;
+
     unsigned int m_ScreenWidth;
     unsigned int m_ScreenHeight;
     bool m_Sound;

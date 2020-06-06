@@ -97,7 +97,7 @@ SDL_Texture *CSDLInterface::LoadTexture(const std::string &file) const
 
     if (texture == nullptr || texture == NULL)
     {
-        throw std::ios_base::failure(MESSAGE_TEXTURE_ERROR);
+        throw std::ios_base::failure(MESSAGE_TEXTURE_ERROR/* + (this->m_Settings->GetAssetsPath() + file)*/);
     }
 
     return texture;
