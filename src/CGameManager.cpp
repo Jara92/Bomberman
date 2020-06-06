@@ -6,10 +6,6 @@
 
 #include "CGameManager.h"
 
-// Define file names
-const std::string CLevelLoader::MAP_FILE_NAME = "map";
-const std::string CLevelLoader::LEVEL_FILE_NAME = "level";
-
 CGameManager::CGameManager(CSDLInterface *interface)
         : m_Interface(interface), m_Board(nullptr), m_BoardOffset(CCoord(0, 2)),
           m_GameStatus(EGameStatus::GAMESTATUS_RUNNING), m_NextGameStatus(EGameStatus::GAMESTATUS_RUNNING),

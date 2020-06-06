@@ -47,6 +47,12 @@ public:
     { this->m_IsVisible = true; }
 
     /**
+     * Make collectible object invisible again.
+     */
+    void MakeInvisible()
+    {this->m_IsVisible = false;}
+
+    /**
      * Is this collectible object visible?
      * @return True - Is visible; False - Is invisible
      */

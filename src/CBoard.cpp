@@ -149,12 +149,15 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int exp
             break; // Leave for loop - The wave was stopped by this indestructible wall.
         }
 
+        bool wallDestroyed = false;
+
         if (target)
         {
             if (target->TryDestroy(i))
             {
                 delete target;
                 this->m_Map[static_cast<int>(locationToExplode.m_X)][static_cast<int>(locationToExplode.m_Y)] = nullptr;
+                wallDestroyed = true;
             } else
             {
                 break; // Leave for loop - The wave was stopped by this wall.
@@ -162,11 +165,17 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int exp
         }
 
         // Find collectible in location to explode.
-        auto collectible = this->m_Collectibles.find(
+        auto foundCollectible = this->m_Collectibles.find(
                 CCoord(locationToExplode.GetFlooredX(), locationToExplode.GetFlooredY()));
-        if (collectible != this->m_Collectibles.end())
+        if (foundCollectible != this->m_Collectibles.end())
         {
             break; // leave for loop - We dont want burning collectibles
+        }
+
+        auto foundBomb = this->m_Bombs.find(CCoord(locationToExplode.GetFlooredX(), locationToExplode.GetFlooredY()));
+        if (foundBomb != this->m_Bombs.end() && foundBomb->second != bomb)
+        {
+            break; // leave for loop - We dont want burning bombs.
         }
 
 
@@ -184,6 +193,11 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int exp
         CFire *fire = new CFire(this->m_FireObjectTexturePack, this->m_FireObjectTexturePack->GetTextureSize(),
                                 locationToExplode);
         this->m_Fires.insert(std::pair<CCoord, CFire *>(locationToExplode, fire));
+
+        if (wallDestroyed)
+        {
+            break;
+        }
     }
 }
 
@@ -216,7 +230,7 @@ void CBoard::DestroyCollectible(CCollectible *collectible)
         collectibleToRemove->second = nullptr;
         this->m_Collectibles.erase(collectibleToRemove);
     }
-    // Error message when the collectible is not found - this should never happen
+        // Error message when the collectible is not found - this should never happen
     else
     {
         std::cerr << "Collectible " << collectibleLocation << " not found " << std::endl;
@@ -422,7 +436,7 @@ void CBoard::UpdatePhysics()
             // Collectible collision
             for (auto collect = this->m_Collectibles.begin(); collect != this->m_Collectibles.end(); collect++)
             {
-                if(collect->second && (*(player.base()))->IsColiding(collect->second))
+                if (collect->second && (*(player.base()))->IsColiding(collect->second))
                 {
                     collect->second->Apply((*(player.base()))); // Apply item
                 }
@@ -455,16 +469,21 @@ void CBoard::ClearBoard(bool clearBoosts)
     }
     this->m_Enemies.clear();
 
-    // Delete boosts
-    if (clearBoosts)
+
+    for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
     {
-        for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
+        // Delete boost
+        if (clearBoosts)
         {
             delete (i->second);
             i->second = nullptr;
+        } else if (i->second)
+        {
+            i->second->MakeInvisible();
         }
-        this->m_Collectibles.clear();
     }
+    if (clearBoosts)
+    { this->m_Collectibles.clear(); }
 
     // Delete bombs
     for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)

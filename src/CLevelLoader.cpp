@@ -6,8 +6,8 @@
 
 #include "CLevelLoader.h"
 
-CLevelLoader::CLevelLoader(CSDLInterface *interface)
-        : m_Interface(interface)
+CLevelLoader::CLevelLoader(CSDLInterface *interface, std::string mapFileName, std::string levelFileName)
+        : m_MapFileName(std::move(mapFileName)), m_LevelFileName(std::move(levelFileName)), m_Interface(interface)
 {
     this->m_EnemyTexturePacks = this->LoadEnemyTexturePacks();
     this->m_CollectibleTexturePacks = this->LoadCollectiblesTexturePacks();
@@ -83,7 +83,7 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
     }
 
     size_t row = 0, col = 0;
-    std::ifstream fileReader(this->m_Interface->GetSettings()->GetDataPath() + CLevelLoader::MAP_FILE_NAME,
+    std::ifstream fileReader(this->m_Interface->GetSettings()->GetDataPath() + this->m_MapFileName,
                              std::ios::binary | std::ios::in);
 
     // Is file reader ok?
@@ -291,7 +291,7 @@ std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadCollectiblesTexture
             {
                     {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}}},
                     {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/FlamePowerup.png"}}}},
-                    {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}}},
+                    {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/BombPowerup.png"}}}},
                     {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}}},
                     {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}}},
                     {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}}},
@@ -299,11 +299,21 @@ std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadCollectiblesTexture
                     {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}}},
                     {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/Portal.png"}}}}};
 
+    std::vector<CCoord> sizes{{0.7, 0.7},
+                              {0.7, 0.7},
+                              {0.7, 0.7},
+                              {1,   1},
+                              {1,   1},
+                              {1,   1},
+                              {1,   1},
+                              {1,   1},
+                              {1,   1}};
+
     // Create texture packs shared pointers.
     std::vector<std::shared_ptr<CTexturePack>> texturePacks;
     for (size_t i = 0; i < textures.size(); i++)
     {
-        texturePacks.push_back(std::make_shared<CTexturePack>(this->m_Interface, textures[i], true));
+        texturePacks.push_back(std::make_shared<CTexturePack>(this->m_Interface, textures[i], true, sizes[i]));
     }
 
     return texturePacks;
@@ -313,7 +323,7 @@ std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadCollectiblesTexture
 void CLevelLoader::LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level, bool loadCollectibles)
 {
     std::ifstream fileReader(
-            (this->m_Interface->GetSettings()->GetDataPath() + CLevelLoader::LEVEL_FILE_NAME) + std::to_string(level),
+            (this->m_Interface->GetSettings()->GetDataPath() + this->m_LevelFileName) + std::to_string(level),
             std::ios::in);
 
     // Is file reader ok?
@@ -330,7 +340,7 @@ void CLevelLoader::LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int le
         std::istringstream iss(line);
         std::vector<std::string> results(std::istream_iterator<std::string>{iss},
                                          std::istream_iterator<std::string>());
-        // Skip empty lines
+        // Skip empty
         if (results.empty())
         { break; }
 
@@ -340,11 +350,6 @@ void CLevelLoader::LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int le
         // Do not load collectibles when loadCollectibles = false.
         if (loadCollectibles || itemType != "collectible")
         { this->ReadItem(board, results, itemType); }
-
-        // TODO DUBUG
-        /*  for (std::vector<std::string>::size_type i = 0; i < results.size(); i++)
-          { std::cout << results[i] << "x"; }*/
-        //std::cout << std::endl;
     }
 
     fileReader.close();
@@ -365,8 +370,8 @@ CLevelLoader::ReadProperty(const std::vector<std::string> &input, std::vector<st
 /*====================================================================================================================*/
 void CLevelLoader::ReorganizeCollectibles(std::shared_ptr<CBoard> &board)
 {
-    std::map<CCoord, CCollectible * > collectibles;
-    for(auto collectible = board->m_Collectibles.begin(); collectible != board->m_Collectibles.end(); collectible++)
+    std::map<CCoord, CCollectible *> collectibles;
+    for (auto collectible = board->m_Collectibles.begin(); collectible != board->m_Collectibles.end(); collectible++)
     {
         // Generate random location until the CWall at this location is null or indestructible or already has collectable object.
         CCoord random;
@@ -407,12 +412,41 @@ bool CLevelLoader::CreateCollectibleAtRandomLocation(std::shared_ptr<CBoard> &bo
             applyFunc = [](CPlayer *player)
             { player->SpeedUp(); };
             board->m_Collectibles.insert(std::pair<CCoord, CCollectible *>(random, (new CBoost(
-                    this->m_CollectibleTexturePacks[static_cast<int>(type)], applyFunc, CCoord(1, 1), random,
+                    this->m_CollectibleTexturePacks[static_cast<int>(type)], applyFunc, CCoord(0.7, 0.7), random,
                     score))));
+            break;
+        case ECollectibleType::COLLECTIBLE_TYPE_EXPLOSION_RADIUS:
+            applyFunc = [](CPlayer *player)
+            { player->IncreseExplosionRadius(); };
+            board->m_Collectibles.insert(std::pair<CCoord, CCollectible *>(random, (new CBoost(
+                    this->m_CollectibleTexturePacks[static_cast<int>(type)], applyFunc, CCoord(0.7, 0.7), random,
+                    score))));
+            break;
+        case ECollectibleType::COLLECTIBLE_TYPE_MAX_BOMBS:
+            applyFunc = [](CPlayer *player)
+            { player->IncreseMaxBombs(); };
+            board->m_Collectibles.insert(std::pair<CCoord, CCollectible *>(random, (new CBoost(
+                    this->m_CollectibleTexturePacks[static_cast<int>(type)], applyFunc, CCoord(0.7, 0.7), random,
+                    score))));
+            break;
+        case ECollectibleType::COLLECTIBLE_TYPE_REMOTE_EXPLOSION:
+            // TODO
+            break;
+        case ECollectibleType::COLLECTIBLE_TYPE_BOMB_PASS:
+            // TODO
+            break;
+        case ECollectibleType::COLLECTIBLE_TYPE_WALL_PASS:
+            // TODO
+            break;
+        case ECollectibleType::COLLECTIBLE_TYPE_FIRE_IMUNITY:
+            // TODO
+            break;
+        case ECollectibleType::COLLECTIBLE_TYPE_SCORE_BONUS:
+            // TODO
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_DOOR:
             board->m_Collectibles.insert(std::pair<CCoord, CCollectible *>(random, (new CDoor(
-                    this->m_CollectibleTexturePacks[static_cast<int>(type)], CCoord(1, 1), random, score))));
+                    this->m_CollectibleTexturePacks[static_cast<int>(type)], CCoord(0.8, 0.8), random, score))));
             break;
         default:
             throw std::invalid_argument(UNKNOWN_COLLECTIBLE_TYPE);
@@ -450,12 +484,12 @@ bool CLevelLoader::ReadItem(std::shared_ptr<CBoard> &board, const std::vector<st
             // Enemy+ std::to_string(" ")
         else if (itemType == "enemy" && input.size() == ENEMY_ITEM_PROPERTIES_COUNT)
         {
-
+            // TODO
         }
-            // Unknown type
+        // Invalid item format.
         else
         {
-            std::cerr << INVALID_ITEM << itemType << " Input size: " << input.size() << std::endl;
+            std::cerr << INVALID_ITEM << itemType << std::endl;
             for (std::vector<std::string>::size_type i = 0; i < input.size(); i++)
             { std::cerr << input[i] << " "; }
             std::cerr << std::endl;
@@ -469,7 +503,7 @@ bool CLevelLoader::ReadItem(std::shared_ptr<CBoard> &board, const std::vector<st
     }
     catch (std::out_of_range &ex)
     {
-        std::cerr << INT_OVERFLOW << std::endl;
+        std::cerr << ARGUMENT_OUT_OF_RANGE << " " << ex.what() << std::endl;
         return false;
     }
 

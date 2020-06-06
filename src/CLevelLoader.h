@@ -25,7 +25,7 @@
 class CLevelLoader
 {
 public:
-    CLevelLoader(CSDLInterface *interface);
+    CLevelLoader(CSDLInterface *interface, std::string mapFileName = "map", std::string levelFileName = "levels/level");
 
     ~CLevelLoader() = default;
 
@@ -38,8 +38,8 @@ public:
     bool LoadLevel(std::shared_ptr<CBoard> &board, size_t level);
 
 protected:
-    static const std::string MAP_FILE_NAME;
-    static const std::string LEVEL_FILE_NAME;
+    std::string m_MapFileName;
+    std::string m_LevelFileName;
     /* Saved map size */
     static const size_t FILE_MAP_WIDTH = 24;
     static const size_t FILE_MAP_HEIGHT = 13;
@@ -114,6 +114,7 @@ protected:
      * @param input Input array.
      * @param index Index to be read.
      * @return Property value.
+     * @throws std::out_of_range If index doesnt exist.
      */
     std::string ReadProperty(const std::vector<std::string> & input, std::vector<std::string>::size_type index) const;
 

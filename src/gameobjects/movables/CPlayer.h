@@ -90,7 +90,7 @@ public:
         { this->m_ExplosionRadius--; }
     }
 
-    void IncreseMaxBombs(unsigned int ammount)
+    void IncreseMaxBombs()
     { this->m_MaxBombs++; }
 
     void DecreseMaxBombs()
