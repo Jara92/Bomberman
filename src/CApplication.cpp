@@ -9,7 +9,7 @@
 int CApplication::Run(int argc, char *argv[])
 {
     std::shared_ptr<CSettings> settings = this->Init(argc, argv);
-    std::shared_ptr<CSDLInterface> interface = std::make_shared<CSDLInterface>("Bomberman", settings);
+    std::shared_ptr<CSDLInterface> interface = std::make_shared<CSDLInterface>("Bomberman", settings, "Fonts/Piedra-Regular.ttf");
 
     try
     {

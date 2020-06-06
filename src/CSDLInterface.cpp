@@ -8,9 +8,10 @@
 #include "CSDLInterface.h"
 
 
-CSDLInterface::CSDLInterface(const char *title, std::shared_ptr<CSettings> settings)
+CSDLInterface::CSDLInterface(const char *title, std::shared_ptr<CSettings> settings, const std::string &defaultFont)
         : m_WindowWidth(settings->GetMenuScreenWidth()), m_WindowHeight(settings->GetMenuScreenHeight()),
-          m_WindowTitle(title), m_Settings(std::move(settings)), m_Window(nullptr), m_Renderer(nullptr)
+          m_WindowTitle(title), m_Settings(std::move(settings)), m_Font(defaultFont), m_Window(nullptr),
+          m_Renderer(nullptr)
 {}
 
 /*====================================================================================================================*/
@@ -124,22 +125,22 @@ bool CSDLInterface::RenderTexture(SDL_Texture *texture, CCoord location, CCoord 
 }
 
 /*====================================================================================================================*/
-bool CSDLInterface::RenderText(const std::string & text, CCoord location, CCoord size, SDL_Colour color)
+bool CSDLInterface::RenderText(const std::string &text, CCoord location, CCoord size, SDL_Colour color)
 {
-    TTF_Font *font = TTF_OpenFont((this->m_Settings->GetAssetsPath() + "Fonts/Piedra-Regular.ttf").c_str(), 48);
+    TTF_Font *font = TTF_OpenFont((this->m_Settings->GetAssetsPath() + this->m_Font).c_str(), 48);
     if (font == NULL)
     {
         return false;
     }
 
     SDL_Surface *surfaceMessage = TTF_RenderText_Blended(font, (text).c_str(), color);
-    if(surfaceMessage == NULL)
+    if (surfaceMessage == NULL)
     {
         return false;
     }
 
     SDL_Texture *message = SDL_CreateTextureFromSurface(this->m_Renderer, surfaceMessage);
-    if(message == NULL)
+    if (message == NULL)
     {
         return false;
     }
@@ -147,20 +148,18 @@ bool CSDLInterface::RenderText(const std::string & text, CCoord location, CCoord
     SDL_Rect Message_rect; //create a rect
     Message_rect.x = static_cast<int>(location.m_X);  //controls the rect's x coordinate
     Message_rect.y = static_cast<int>(location.m_Y); // controls the rect's y coordinte
-    if(size.m_X != 0)
+    if (size.m_X != 0)
     {
         Message_rect.w = static_cast<int>(size.m_X);; // controls the width of the rect
-    }
-    else
+    } else
     {
         Message_rect.w = surfaceMessage->w; // controls the width of the rect
     }
 
-    if(size.m_Y != 0)
+    if (size.m_Y != 0)
     {
         Message_rect.h = static_cast<int>(size.m_Y);; // controls the height of the rect
-    }
-    else
+    } else
     {
         Message_rect.h = surfaceMessage->h; // controls the height of the rect
     }
@@ -195,4 +194,36 @@ void CSDLInterface::UpdateWindowSize()
 {
     SDL_SetWindowSize(this->m_Window, this->m_WindowWidth, this->m_WindowHeight);
     SDL_SetWindowPosition(this->m_Window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+}
+
+SDL_Texture *CSDLInterface::LoadTextureFromText(const std::string &text, CCoord & size, SDL_Color color) const
+{
+    TTF_Font *font = TTF_OpenFont((this->m_Settings->GetAssetsPath() + this->m_Font).c_str(), 48);
+    if (font == NULL)
+    {
+        return NULL;
+    }
+
+    SDL_Surface *surfaceMessage = TTF_RenderText_Blended(font, (text).c_str(), color);
+    if (surfaceMessage == NULL)
+    {
+        return NULL;
+    }
+
+    SDL_Texture *message = SDL_CreateTextureFromSurface(this->m_Renderer, surfaceMessage);
+    if (message == NULL)
+    {
+        return NULL;
+    }
+
+    // Set size
+    // TODO předělat na konstruktor
+    size.m_X = surfaceMessage->w;
+    size.m_Y = surfaceMessage->h;
+
+    // Free surface and texture
+    TTF_CloseFont(font);
+    SDL_FreeSurface(surfaceMessage);
+
+    return message;
 }

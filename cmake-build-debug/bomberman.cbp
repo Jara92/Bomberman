@@ -254,6 +254,12 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CInterfaceItem.h">
 			<Option target="bomberman"/>
 		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CText.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CText.h">
+			<Option target="bomberman"/>
+		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/main.cpp">
 			<Option target="bomberman"/>
 		</Unit>

@@ -8,6 +8,7 @@
 #include <memory>
 #include "CWindowManager.h"
 #include "../interfaceitems/CImage.h"
+#include "../interfaceitems/CText.h"
 
 class CMenuManager : public CWindowManager
 {

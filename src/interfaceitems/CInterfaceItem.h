@@ -57,6 +57,12 @@ public:
     void SetSize(CCoord size)
     { this->m_Size = size; }
 
+    CCoord GetLocation() const
+    {return this->m_Location;}
+
+    CCoord GetSize() const
+    {return this->m_Size;}
+
 protected:
     CCoord m_Location;
     CCoord m_Size;

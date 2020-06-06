@@ -798,6 +798,33 @@ src/interfaceitems/CInterfaceItem.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.s
 .PHONY : src/interfaceitems/CInterfaceItem.cpp.s
 
+src/interfaceitems/CText.o: src/interfaceitems/CText.cpp.o
+
+.PHONY : src/interfaceitems/CText.o
+
+# target to build an object file
+src/interfaceitems/CText.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.o
+.PHONY : src/interfaceitems/CText.cpp.o
+
+src/interfaceitems/CText.i: src/interfaceitems/CText.cpp.i
+
+.PHONY : src/interfaceitems/CText.i
+
+# target to preprocess a source file
+src/interfaceitems/CText.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.i
+.PHONY : src/interfaceitems/CText.cpp.i
+
+src/interfaceitems/CText.s: src/interfaceitems/CText.cpp.s
+
+.PHONY : src/interfaceitems/CText.s
+
+# target to generate assembly for a file
+src/interfaceitems/CText.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.s
+.PHONY : src/interfaceitems/CText.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -1017,6 +1044,9 @@ help:
 	@echo "... src/interfaceitems/CInterfaceItem.o"
 	@echo "... src/interfaceitems/CInterfaceItem.i"
 	@echo "... src/interfaceitems/CInterfaceItem.s"
+	@echo "... src/interfaceitems/CText.o"
+	@echo "... src/interfaceitems/CText.i"
+	@echo "... src/interfaceitems/CText.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

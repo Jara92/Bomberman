@@ -27,7 +27,7 @@ public:
      * @param title Window title.
      * @param settings Setting to be used.
      */
-    CSDLInterface(const char *title, std::shared_ptr<CSettings> settings);
+    CSDLInterface(const char *title, std::shared_ptr<CSettings> settings, const std::string & defaultFont);
     CSDLInterface(const CSDLInterface &other) = default;
     CSDLInterface & operator=(const CSDLInterface &other) = default;
 
@@ -75,6 +75,8 @@ public:
      * @return Texture pointer.
      */
     SDL_Texture *LoadTexture(const std::string file) const;
+
+    SDL_Texture *LoadTextureFromText(const std::string & text, CCoord & size, SDL_Colour color = {255,255,255,255}) const;
 
     /**
      * Clear the current rendering target with the drawing color
@@ -144,6 +146,7 @@ protected:
     const char * m_WindowTitle;
 
     std::shared_ptr<CSettings> m_Settings;
+    std::string m_Font;
     SDL_Window *m_Window;
     SDL_Renderer *m_Renderer;
 };

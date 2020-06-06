@@ -24,6 +24,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o"
   "CMakeFiles/bomberman.dir/src/interfaceitems/CImage.cpp.o"
   "CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.o"
+  "CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.o"
   "CMakeFiles/bomberman.dir/src/main.cpp.o"
   "CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o"
   "CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.o"
