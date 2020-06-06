@@ -6,7 +6,7 @@
 
 #include "CApplication.h"
 
-int CApplication::Run(int argc, char * argv[])
+int CApplication::Run(int argc, char *argv[])
 {
     std::shared_ptr<CSettings> settings = this->Init(argc, argv);
     std::shared_ptr<CSDLInterface> interface = std::make_shared<CSDLInterface>("Bomberman", settings);
@@ -14,9 +14,9 @@ int CApplication::Run(int argc, char * argv[])
     try
     {
         interface->InitInterface();
-        EApplicationStatus applicationStatus = EApplicationStatus ::APPLICATION_STATUS_MENU;
+        EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_MENU;
 
-        while(applicationStatus != EApplicationStatus::APPLICATION_STATUS_EXIT)
+        while (applicationStatus != EApplicationStatus::APPLICATION_STATUS_EXIT)
         {
             // Get manager to be run.
             std::shared_ptr<CWindowManager> manager = this->GetWindowManagerByState(interface.get(), applicationStatus);
@@ -49,6 +49,7 @@ int CApplication::Run(int argc, char * argv[])
 
     return 0;
 }
+
 /*====================================================================================================================*/
 std::shared_ptr<CSettings> CApplication::Init(int argc, char *argv[])
 {
@@ -61,13 +62,14 @@ std::shared_ptr<CSettings> CApplication::Init(int argc, char *argv[])
             debug = true;
         }
     }
-    catch(...)
+    catch (...)
     {
         std::cerr << INVALID_INPUT_PARAMETERS << std::endl;
     }
 
 
-    return std::make_shared<CSettings>(1.3 * 1150, 1.3 * 700, CCoord(0, 1), 60, true, debug);
+    return std::make_shared<CSettings>(1.3 * 1150, 1.3 * 700, 1.3 * 700,
+                                       1.3 * 700, CCoord(0, 1), 60, true, debug);
 }
 
 std::shared_ptr<CWindowManager>
@@ -75,13 +77,13 @@ CApplication::GetWindowManagerByState(CSDLInterface *interface, EApplicationStat
 {
     switch (applicationStatus)
     {
-        case EApplicationStatus ::APPLICATION_STATUS_MENU:
+        case EApplicationStatus::APPLICATION_STATUS_MENU:
             return std::make_shared<CMenuManager>(interface);
-        case EApplicationStatus ::APPLICATION_STATUS_SETTINGS:
+        case EApplicationStatus::APPLICATION_STATUS_SETTINGS:
             return std::make_shared<CSettingsManager>(interface);
-        case EApplicationStatus ::APPLICATION_STATUS_SOLO_GAME:
+        case EApplicationStatus::APPLICATION_STATUS_SOLO_GAME:
             return std::make_shared<CGameManager>(interface);
-        case EApplicationStatus ::APPLICATION_STATUS_MULTI_GAME:
+        case EApplicationStatus::APPLICATION_STATUS_MULTI_GAME:
             return std::make_shared<CGameManager>(interface);
         default:
             break;

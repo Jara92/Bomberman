@@ -9,7 +9,7 @@
 
 
 CSDLInterface::CSDLInterface(const char *title, std::shared_ptr<CSettings> settings)
-        : m_WindowWidth(settings->GetScreenWidth()), m_WindowHeight(settings->GetScreenHeight()),
+        : m_WindowWidth(settings->GetGameScreenWidth()), m_WindowHeight(settings->GetGameScreenHeight()),
           m_WindowTitle(title), m_Settings(settings), m_Window(nullptr), m_Renderer(nullptr)
 {}
 
@@ -87,7 +87,7 @@ void CSDLInterface::UpdateSettings(std::shared_ptr<CSettings> settings)
 {
     // todo remove
     this->m_Settings = settings;
-    SDL_SetWindowSize(this->m_Window, settings->GetScreenWidth(), settings->GetScreenHeight());
+    SDL_SetWindowSize(this->m_Window, settings->GetGameScreenWidth(), settings->GetGameScreenHeight());
 }
 
 /*====================================================================================================================*/
@@ -173,4 +173,25 @@ bool CSDLInterface::RenderText(const std::string & text, CCoord location, CCoord
     SDL_DestroyTexture(message);
 
     return success;
+}
+
+void CSDLInterface::SetMenuScreenSize()
+{
+    this->m_WindowWidth = this->m_Settings->GetMenuScreenWidth();
+    this->m_WindowHeight = this->m_Settings->GetMenuCreenHeight();
+
+    this->UpdateWindowSize();
+}
+
+void CSDLInterface::SetGameScreenSize()
+{
+    this->m_WindowWidth = this->m_Settings->GetGameScreenWidth();
+    this->m_WindowHeight = this->m_Settings->GetGameScreenHeight();
+
+    this->UpdateWindowSize();
+}
+
+void CSDLInterface::UpdateWindowSize()
+{
+    SDL_SetWindowSize(this->m_Window, this->m_WindowWidth, this->m_WindowHeight);
 }

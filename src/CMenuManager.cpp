@@ -9,6 +9,7 @@
 CMenuManager::CMenuManager(CSDLInterface *interface)
         : CWindowManager(interface), m_IsRunning(true)
 {
+    this->m_Interface->SetMenuScreenSize();
     // Load textures
     this->m_Backround = this->m_Interface->LoadTexture("Menu/title_background.jpg");
     this->m_Title = this->m_Interface->LoadTexture("Menu/title_titletext.png");

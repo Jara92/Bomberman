@@ -45,7 +45,7 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level)
 std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, const std::shared_ptr<CSettings> & settings)
 {
     // calc cellsize
-    int cellSize = static_cast<int>((settings->GetScreenHeight()) /
+    int cellSize = static_cast<int>((settings->GetGameScreenHeight()) /
                                     (CLevelLoader::MAP_HEIGHT + settings->GetOffset().m_Y));
 
     // Load important objects for new board.

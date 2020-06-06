@@ -42,6 +42,11 @@ public:
      */
     void UpdateSettings(std::shared_ptr<CSettings> settings);
 
+    void SetMenuScreenSize();
+    void SetGameScreenSize();
+
+    void UpdateWindowSize();
+
     CCoord GetWindowSize() const
     { return {static_cast<double>(m_WindowWidth), static_cast<double>(m_WindowHeight)}; }
 

@@ -11,6 +11,8 @@ CGameManager::CGameManager(CSDLInterface *interface)
           m_GameStatus(EGameStatus::GAMESTATUS_RUNNING), m_NextGameStatus(EGameStatus::GAMESTATUS_RUNNING),
           m_Level(1)
 {
+    this->m_Interface->SetGameScreenSize();
+
     this->m_LevelLoader = std::make_unique<CLevelLoader>(interface);
 
     // Kill all players when the time runs out.
@@ -138,8 +140,8 @@ void CGameManager::DrawRoundOver() const
 {
     CCoord textSize = CCoord(400, 100);
     this->m_Interface->RenderText("Round over!",
-                                  CCoord((this->m_Interface->GetSettings()->GetScreenWidth() / 2) - textSize.m_X / 2,
-                                         (this->m_Interface->GetSettings()->GetScreenHeight() / 2) - textSize.m_Y / 2),
+                                  CCoord((this->m_Interface->GetSettings()->GetGameScreenWidth() / 2) - textSize.m_X / 2,
+                                         (this->m_Interface->GetSettings()->GetGameScreenHeight() / 2) - textSize.m_Y / 2),
                                   textSize);
 }
 
@@ -148,16 +150,16 @@ void CGameManager::DrawNextRound() const
 {
     CCoord textSize = CCoord(400, 100);
     this->m_Interface->RenderText("Round " + std::to_string(this->m_Level) + "!",
-                                  CCoord((this->m_Interface->GetSettings()->GetScreenWidth() / 2) - textSize.m_X / 2,
-                                         (this->m_Interface->GetSettings()->GetScreenHeight() / 2) - textSize.m_Y / 2),
+                                  CCoord((this->m_Interface->GetSettings()->GetGameScreenWidth() / 2) - textSize.m_X / 2,
+                                         (this->m_Interface->GetSettings()->GetGameScreenHeight() / 2) - textSize.m_Y / 2),
                                   textSize);
 }
 
 /*====================================================================================================================*/
 void CGameManager::DrawGameOver() const
 {
-    CCoord screenSize = CCoord(this->m_Interface->GetSettings()->GetScreenWidth(),
-                               this->m_Interface->GetSettings()->GetScreenHeight());
+    CCoord screenSize = CCoord(this->m_Interface->GetSettings()->GetGameScreenWidth(),
+                               this->m_Interface->GetSettings()->GetGameScreenHeight());
     CCoord textSize = CCoord(screenSize.m_X / 4, screenSize.m_X / 14);
     this->m_Interface->RenderText("Game over",
                                   CCoord(screenSize.m_X / 2 - (textSize.m_X / 2),
