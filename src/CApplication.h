@@ -7,6 +7,8 @@
 #include <queue>
 #include "CSDLInterface.h"
 #include "CGameManager.h"
+#include "CMenuManager.h"
+#include "CSettingsManager.h"
 #include "Messages.h"
 
 class CApplication
@@ -21,5 +23,7 @@ public:
 
 protected:
     std::shared_ptr<CSettings> Init(int argc, char * argv[]);
+
+    std::shared_ptr<CWindowManager> GetWindowManagerByState(CSDLInterface * interface, EApplicationStatus applicationStatus) const;
 };
 

@@ -34,11 +34,14 @@ void CGameManager::Init()
 }
 
 /*====================================================================================================================*/
-int CGameManager::Run()
+EApplicationStatus CGameManager::Run()
 {
     while (this->m_GameStatus != EGameStatus::GAME_STATUS_EXIT)
     {
-        this->m_Clock.Tick();
+        if(CWindowManager::Run() == EApplicationStatus::APPLICATION_STATUS_EXIT)
+        {
+            return EApplicationStatus ::APPLICATION_STATUS_EXIT;
+        }
 
         // read keyboard state
         SDL_PumpEvents();
@@ -52,33 +55,10 @@ int CGameManager::Run()
         {
             this->m_Board->m_Players[i]->HandleInput(keystate);
         }
-
-        // Check events
-        SDL_Event e;
-        while (SDL_PollEvent(&e) != 0)
-        {
-            // Close window
-            if (e.type == SDL_QUIT)
-            {
-                this->m_GameStatus = EGameStatus::GAME_STATUS_EXIT;
-                return 0;
-            }
-        }
-
-        // Check physics events physics in the board
-        this->UpdateEvents();
-
-        // Update objects in the board
-        this->Update(this->m_Clock.DeltaTime());
-
-        // Draw game
-        this->Draw();
-
-        // Wait for few miliseconds to draw cca 60 frames per second
-        this->m_Interface->Wait(this->m_Clock.GetDelay());
     }
 
-    return 0;
+    //return EApplicationStatus ::APPLICATION_STATUS_MENU;
+    return EApplicationStatus ::APPLICATION_STATUS_EXIT;
 }
 
 /*====================================================================================================================*/

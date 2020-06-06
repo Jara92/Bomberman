@@ -408,18 +408,18 @@ CMakeFiles/bomberman.dir/src/CWindowManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bomberman.dir/src/CWindowManager.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaroslav/CLionProjects/bomberman/src/CWindowManager.cpp -o CMakeFiles/bomberman.dir/src/CWindowManager.cpp.s
 
-CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.o: CMakeFiles/bomberman.dir/flags.make
-CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.o: ../src/EApplicationStatus.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/EApplicationStatus.cpp
+CMakeFiles/bomberman.dir/src/CSettingsManager.cpp.o: CMakeFiles/bomberman.dir/flags.make
+CMakeFiles/bomberman.dir/src/CSettingsManager.cpp.o: ../src/CSettingsManager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/bomberman.dir/src/CSettingsManager.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/CSettingsManager.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/CSettingsManager.cpp
 
-CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jaroslav/CLionProjects/bomberman/src/EApplicationStatus.cpp > CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.i
+CMakeFiles/bomberman.dir/src/CSettingsManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bomberman.dir/src/CSettingsManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jaroslav/CLionProjects/bomberman/src/CSettingsManager.cpp > CMakeFiles/bomberman.dir/src/CSettingsManager.cpp.i
 
-CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaroslav/CLionProjects/bomberman/src/EApplicationStatus.cpp -o CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.s
+CMakeFiles/bomberman.dir/src/CSettingsManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bomberman.dir/src/CSettingsManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaroslav/CLionProjects/bomberman/src/CSettingsManager.cpp -o CMakeFiles/bomberman.dir/src/CSettingsManager.cpp.s
 
 # Object files for target bomberman
 bomberman_OBJECTS = \
@@ -450,7 +450,7 @@ bomberman_OBJECTS = \
 "CMakeFiles/bomberman.dir/src/CTimer.cpp.o" \
 "CMakeFiles/bomberman.dir/src/CMenuManager.cpp.o" \
 "CMakeFiles/bomberman.dir/src/CWindowManager.cpp.o" \
-"CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.o"
+"CMakeFiles/bomberman.dir/src/CSettingsManager.cpp.o"
 
 # External object files for target bomberman
 bomberman_EXTERNAL_OBJECTS =
@@ -482,7 +482,7 @@ bomberman: CMakeFiles/bomberman.dir/src/CGameClock.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/CTimer.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/CMenuManager.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/CWindowManager.cpp.o
-bomberman: CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.o
+bomberman: CMakeFiles/bomberman.dir/src/CSettingsManager.cpp.o
 bomberman: CMakeFiles/bomberman.dir/build.make
 bomberman: CMakeFiles/bomberman.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Linking CXX executable bomberman"

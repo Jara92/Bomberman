@@ -5,6 +5,8 @@
 
 #pragma once
 #include "CSDLInterface.h"
+#include "EApplicationStatus.h"
+#include "CGameClock.h"
 
 
 class CWindowManager
@@ -30,10 +32,13 @@ public:
     /**
      * Run window.
      */
-    virtual int Run() = 0;
+    virtual EApplicationStatus Run();
 
 protected:
     CSDLInterface * m_Interface;
+    CGameClock m_Clock;
+
+    bool IsClosed() const;
 
     /**
      * Update window state.

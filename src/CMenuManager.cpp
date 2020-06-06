@@ -6,12 +6,16 @@
 
 #include "CMenuManager.h"
 
-int CMenuManager::Run()
+EApplicationStatus CMenuManager::Run()
 {
-    while(this->m_IsRunning)
+    // Did user close this window?
+    while(!this->IsClosed())
     {
+        CWindowManager::Run();
 
     }
+
+    return EApplicationStatus ::APPLICATION_STATUS_EXIT;
 }
 /*====================================================================================================================*/
 void CMenuManager::Update(int deltaTime)

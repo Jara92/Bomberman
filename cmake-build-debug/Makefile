@@ -393,6 +393,33 @@ src/CScoreManager.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CScoreManager.cpp.s
 .PHONY : src/CScoreManager.cpp.s
 
+src/CSettingsManager.o: src/CSettingsManager.cpp.o
+
+.PHONY : src/CSettingsManager.o
+
+# target to build an object file
+src/CSettingsManager.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CSettingsManager.cpp.o
+.PHONY : src/CSettingsManager.cpp.o
+
+src/CSettingsManager.i: src/CSettingsManager.cpp.i
+
+.PHONY : src/CSettingsManager.i
+
+# target to preprocess a source file
+src/CSettingsManager.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CSettingsManager.cpp.i
+.PHONY : src/CSettingsManager.cpp.i
+
+src/CSettingsManager.s: src/CSettingsManager.cpp.s
+
+.PHONY : src/CSettingsManager.s
+
+# target to generate assembly for a file
+src/CSettingsManager.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CSettingsManager.cpp.s
+.PHONY : src/CSettingsManager.cpp.s
+
 src/CTexturePack.o: src/CTexturePack.cpp.o
 
 .PHONY : src/CTexturePack.o
@@ -473,33 +500,6 @@ src/CWindowManager.s: src/CWindowManager.cpp.s
 src/CWindowManager.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CWindowManager.cpp.s
 .PHONY : src/CWindowManager.cpp.s
-
-src/EApplicationStatus.o: src/EApplicationStatus.cpp.o
-
-.PHONY : src/EApplicationStatus.o
-
-# target to build an object file
-src/EApplicationStatus.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.o
-.PHONY : src/EApplicationStatus.cpp.o
-
-src/EApplicationStatus.i: src/EApplicationStatus.cpp.i
-
-.PHONY : src/EApplicationStatus.i
-
-# target to preprocess a source file
-src/EApplicationStatus.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.i
-.PHONY : src/EApplicationStatus.cpp.i
-
-src/EApplicationStatus.s: src/EApplicationStatus.cpp.s
-
-.PHONY : src/EApplicationStatus.s
-
-# target to generate assembly for a file
-src/EApplicationStatus.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.s
-.PHONY : src/EApplicationStatus.cpp.s
 
 src/gameobjects/CBomb.o: src/gameobjects/CBomb.cpp.o
 
@@ -918,6 +918,9 @@ help:
 	@echo "... src/CScoreManager.o"
 	@echo "... src/CScoreManager.i"
 	@echo "... src/CScoreManager.s"
+	@echo "... src/CSettingsManager.o"
+	@echo "... src/CSettingsManager.i"
+	@echo "... src/CSettingsManager.s"
 	@echo "... src/CTexturePack.o"
 	@echo "... src/CTexturePack.i"
 	@echo "... src/CTexturePack.s"
@@ -927,9 +930,6 @@ help:
 	@echo "... src/CWindowManager.o"
 	@echo "... src/CWindowManager.i"
 	@echo "... src/CWindowManager.s"
-	@echo "... src/EApplicationStatus.o"
-	@echo "... src/EApplicationStatus.i"
-	@echo "... src/EApplicationStatus.s"
 	@echo "... src/gameobjects/CBomb.o"
 	@echo "... src/gameobjects/CBomb.i"
 	@echo "... src/gameobjects/CBomb.s"

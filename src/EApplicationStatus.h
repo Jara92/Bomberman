@@ -17,6 +17,8 @@ enum class EApplicationStatus
     /** Run game for more players.*/
     APPLICATION_STATUS_MULTI_GAME = 3,
     /** Exit application. */
-    APPLICATION_STATUS_EXIT = 4
+    APPLICATION_STATUS_EXIT = 4,
+    /** Neutral apllication state. */
+    APPLICATON_STATUS_NONE = 5
 };
 

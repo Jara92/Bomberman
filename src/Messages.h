@@ -19,3 +19,4 @@ const char * const UNKNOWN_COLLECTIBLE_TYPE = "Unknown collectible type.";
 const char * const INVALID_ITEM = "Invalid item: ";
 const char * const ARGUMENT_OUT_OF_RANGE = "Argument out of range.";
 const char * const INVALID_INPUT_PARAMETERS = "Invalid input parameters.";
+const char * const INVALID_APPLICATION_STATE = "Invalid application state.";

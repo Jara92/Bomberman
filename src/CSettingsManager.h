@@ -4,23 +4,22 @@
 */
 
 #pragma once
-
 #include "CWindowManager.h"
 
-class CMenuManager : public CWindowManager
+class CSettingsManager : public CWindowManager
 {
 public:
     /**
  * Constructor.
  * @param interface Interface to be used.
  */
-    explicit CMenuManager(CSDLInterface *interface)
-            : CWindowManager(interface), m_IsRunning(true)
+    explicit CSettingsManager(CSDLInterface *interface)
+    : CWindowManager(interface), m_IsRunning(true)
     {}
 
-    ~CMenuManager() = default;
-    CMenuManager(const CMenuManager &other) = delete;
-    CMenuManager &operator=(const CMenuManager &other) = delete;
+    ~CSettingsManager() = default;
+    CSettingsManager(const CSettingsManager &other) = delete;
+    CSettingsManager &operator=(const CSettingsManager &other) = delete;
 
     virtual EApplicationStatus Run() override ;
 
@@ -33,5 +32,4 @@ protected:
 
     virtual void Draw() const override ;
 };
-
 

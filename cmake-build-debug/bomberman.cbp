@@ -149,6 +149,12 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CScoreManager.h">
 			<Option target="bomberman"/>
 		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CSettingsManager.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CSettingsManager.h">
+			<Option target="bomberman"/>
+		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CTexturePack.cpp">
 			<Option target="bomberman"/>
 		</Unit>
@@ -165,9 +171,6 @@
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CWindowManager.h">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/EApplicationStatus.cpp">
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/EApplicationStatus.h">

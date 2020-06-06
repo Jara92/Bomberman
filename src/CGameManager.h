@@ -33,7 +33,7 @@ public:
     /**
      * Run the game.
      */
-    virtual int Run() override ;
+    virtual EApplicationStatus Run() override ;
 
 protected:
     std::shared_ptr<CBoard> m_Board;
@@ -41,7 +41,6 @@ protected:
     /** The board must be drawn shifted because of top menu. */
     CCoord m_BoardOffset;
     std::unique_ptr<CLevelLoader> m_LevelLoader;
-    CGameClock m_Clock;
     /** Current game state. */
     EGameStatus m_GameStatus;
     /** next game state which will be set when m_GameStatusDelay is done. */
