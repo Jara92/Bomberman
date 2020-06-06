@@ -20,7 +20,7 @@ public:
      * Constructor.
      * @param interface Interface to be used.
      */
-    CGameManager(CSDLInterface *interface);
+    explicit CGameManager(CSDLInterface *interface);
     ~CGameManager();
     CGameManager (const CGameManager & other) = delete;
     CGameManager & operator = (const CGameManager & other) = delete;

@@ -16,6 +16,9 @@ public:
     CApplication (const CApplication & other) = default;
     CApplication & operator = (const CApplication & other) = default;
 
-    int Run();
+    int Run(int argc, char * argv[]);
+
+protected:
+    std::shared_ptr<CSettings> Init(int argc, char * argv[]);
 };
 

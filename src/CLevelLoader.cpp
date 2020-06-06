@@ -42,7 +42,7 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level)
 }
 
 /*====================================================================================================================*/
-std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, CSettings *settings)
+std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, const std::shared_ptr<CSettings> & settings)
 {
     // calc cellsize
     int cellSize = static_cast<int>((settings->GetScreenHeight()) /
@@ -466,7 +466,7 @@ bool CLevelLoader::ReadItem(std::shared_ptr<CBoard> &board, const std::vector<st
         if (itemType == "collectible" && input.size() == COLLECTIBLE_ITEM_PROPERTIES_COUNT)
         {
             // Load other properties.
-            int collectibleTypeId = std::stoi(this->ReadProperty(input, 1));
+            unsigned int collectibleTypeId = std::stoi(this->ReadProperty(input, 1));
             std::size_t score = std::stoi(this->ReadProperty(input, 2));
             std::size_t duration = std::stoi(this->ReadProperty(input, 3));
 

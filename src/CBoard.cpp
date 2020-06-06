@@ -4,7 +4,6 @@
 */
 
 
-#include <chrono>
 #include "CBoard.h"
 
 CBoard::~CBoard()
@@ -24,11 +23,15 @@ CBoard::~CBoard()
 
     for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
     {
-        // Polymorphic call
         delete i->second;
     }
 
     for (auto i = this->m_Fires.begin(); i != this->m_Fires.end(); i++)
+    {
+        delete i->second;
+    }
+
+    for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
     {
         // Polymorphic call
         delete i->second;
@@ -172,6 +175,7 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int exp
             break; // leave for loop - We dont want burning collectibles
         }
 
+        // Find bomb in location to explode.
         auto foundBomb = this->m_Bombs.find(CCoord(locationToExplode.GetFlooredX(), locationToExplode.GetFlooredY()));
         if (foundBomb != this->m_Bombs.end() && foundBomb->second != bomb)
         {
@@ -408,12 +412,6 @@ void CBoard::Update(int deltaTime)
 /*====================================================================================================================*/
 void CBoard::UpdatePhysics()
 {
-    /* if({somePlayer} is coliding {someBoost} ))
-     {
-         // Polymorphic call
-          {someBoost}->Apply({somePlayer});
-     }*/
-
     for (auto player = this->m_Players.begin(); player != this->m_Players.end(); player++)
     {
         if (player.base() && (*(player.base()))->IsAlive())
@@ -438,6 +436,7 @@ void CBoard::UpdatePhysics()
             {
                 if (collect->second && (*(player.base()))->IsColiding(collect->second))
                 {
+                    // Polymorphic call
                     collect->second->Apply((*(player.base()))); // Apply item
                 }
             }

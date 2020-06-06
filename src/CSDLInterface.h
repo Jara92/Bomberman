@@ -6,6 +6,7 @@
 #pragma once
 
 #include <iostream>
+#include <memory>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_system.h>
 #include <SDL2/SDL_image.h>
@@ -21,7 +22,7 @@
 class CSDLInterface
 {
 public:
-    CSDLInterface(const char *title, CSettings *settings);
+    CSDLInterface(const char *title, std::shared_ptr<CSettings> settings);
 
     /*I dont want to allow interface */
     CSDLInterface(const CSDLInterface &other) = delete;
@@ -39,12 +40,12 @@ public:
      * Change settings.
      * @param settings New settings
      */
-    void UpdateSettings(CSettings *settings);
+    void UpdateSettings(std::shared_ptr<CSettings> settings);
 
     CCoord GetWindowSize() const
     { return {static_cast<double>(m_WindowWidth), static_cast<double>(m_WindowHeight)}; }
 
-    CSettings *GetSettings()
+    std::shared_ptr<CSettings> GetSettings()
     {
         return this->m_Settings;
     }
@@ -124,7 +125,7 @@ protected:
     unsigned int m_WindowHeight;
     const char * m_WindowTitle;
 
-    CSettings *m_Settings;
+    std::shared_ptr<CSettings> m_Settings;
     SDL_Window *m_Window;
     SDL_Renderer *m_Renderer;
 };

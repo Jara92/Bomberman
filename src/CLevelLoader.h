@@ -33,7 +33,7 @@ public:
 
     CLevelLoader & operator=(const CLevelLoader &mapLoader) = default;
 
-    std::shared_ptr<CBoard> GetBoard(int playersCount, CSettings *settings);
+    std::shared_ptr<CBoard> GetBoard(int playersCount, const std::shared_ptr<CSettings> & settings);
 
     bool LoadLevel(std::shared_ptr<CBoard> &board, size_t level);
 

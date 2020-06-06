@@ -8,7 +8,7 @@
 #include "CSDLInterface.h"
 
 
-CSDLInterface::CSDLInterface(const char *title, CSettings *settings)
+CSDLInterface::CSDLInterface(const char *title, std::shared_ptr<CSettings> settings)
         : m_WindowWidth(settings->GetScreenWidth()), m_WindowHeight(settings->GetScreenHeight()),
           m_WindowTitle(title), m_Settings(settings), m_Window(nullptr), m_Renderer(nullptr)
 {}
@@ -83,7 +83,7 @@ bool CSDLInterface::InitInterface()
 }
 
 /*====================================================================================================================*/
-void CSDLInterface::UpdateSettings(CSettings *settings)
+void CSDLInterface::UpdateSettings(std::shared_ptr<CSettings> settings)
 {
     // todo remove
     this->m_Settings = settings;
