@@ -4,9 +4,10 @@
 */
 
 #pragma once
-#include "CSDLInterface.h"
-#include "EApplicationStatus.h"
-#include "CGameClock.h"
+#include <memory>
+#include "../CSDLInterface.h"
+#include "../EApplicationStatus.h"
+#include "../CGameClock.h"
 
 
 class CWindowManager

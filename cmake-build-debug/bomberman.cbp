@@ -119,22 +119,10 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CGameClock.h">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CGameManager.cpp">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CGameManager.h">
-			<Option target="bomberman"/>
-		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CLevelLoader.cpp">
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CLevelLoader.h">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CMenuManager.cpp">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CMenuManager.h">
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CSDLInterface.cpp">
@@ -149,12 +137,6 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CScoreManager.h">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CSettingsManager.cpp">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CSettingsManager.h">
-			<Option target="bomberman"/>
-		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CTexturePack.cpp">
 			<Option target="bomberman"/>
 		</Unit>
@@ -165,12 +147,6 @@
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CTimer.h">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CWindowManager.cpp">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CWindowManager.h">
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/EApplicationStatus.h">
@@ -266,7 +242,43 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CPlayer.h">
 			<Option target="bomberman"/>
 		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CImage.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CImage.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CInterfaceItem.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CInterfaceItem.h">
+			<Option target="bomberman"/>
+		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/main.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/managers/CGameManager.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/managers/CGameManager.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/managers/CMenuManager.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/managers/CMenuManager.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/managers/CSettingsManager.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/managers/CSettingsManager.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/managers/CWindowManager.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/managers/CWindowManager.h">
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/CMakeLists.txt">

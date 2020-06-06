@@ -6,9 +6,9 @@
 #pragma once
 #include <queue>
 #include "CSDLInterface.h"
-#include "CGameManager.h"
-#include "CMenuManager.h"
-#include "CSettingsManager.h"
+#include "managers/CGameManager.h"
+#include "managers/CMenuManager.h"
+#include "managers/CSettingsManager.h"
 #include "Messages.h"
 
 class CApplication

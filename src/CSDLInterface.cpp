@@ -9,8 +9,8 @@
 
 
 CSDLInterface::CSDLInterface(const char *title, std::shared_ptr<CSettings> settings)
-        : m_WindowWidth(settings->GetGameScreenWidth()), m_WindowHeight(settings->GetGameScreenHeight()),
-          m_WindowTitle(title), m_Settings(settings), m_Window(nullptr), m_Renderer(nullptr)
+        : m_WindowWidth(settings->GetMenuScreenWidth()), m_WindowHeight(settings->GetMenuScreenHeight()),
+          m_WindowTitle(title), m_Settings(std::move(settings)), m_Window(nullptr), m_Renderer(nullptr)
 {}
 
 /*====================================================================================================================*/
@@ -91,13 +91,13 @@ void CSDLInterface::UpdateSettings(std::shared_ptr<CSettings> settings)
 }
 
 /*====================================================================================================================*/
-SDL_Texture *CSDLInterface::LoadTexture(const std::string &file) const
+SDL_Texture *CSDLInterface::LoadTexture(const std::string file) const
 {
     SDL_Texture *texture = IMG_LoadTexture(this->m_Renderer, (this->m_Settings->GetAssetsPath() + file).c_str());
 
     if (texture == nullptr || texture == NULL)
     {
-        throw std::ios_base::failure(MESSAGE_TEXTURE_ERROR/* + (this->m_Settings->GetAssetsPath() + file)*/);
+        throw std::ios_base::failure(MESSAGE_TEXTURE_ERROR + (this->m_Settings->GetAssetsPath() + file));
     }
 
     return texture;
@@ -178,7 +178,7 @@ bool CSDLInterface::RenderText(const std::string & text, CCoord location, CCoord
 void CSDLInterface::SetMenuScreenSize()
 {
     this->m_WindowWidth = this->m_Settings->GetMenuScreenWidth();
-    this->m_WindowHeight = this->m_Settings->GetMenuCreenHeight();
+    this->m_WindowHeight = this->m_Settings->GetMenuScreenHeight();
 
     this->UpdateWindowSize();
 }
@@ -194,4 +194,5 @@ void CSDLInterface::SetGameScreenSize()
 void CSDLInterface::UpdateWindowSize()
 {
     SDL_SetWindowSize(this->m_Window, this->m_WindowWidth, this->m_WindowHeight);
+    SDL_SetWindowPosition(this->m_Window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 }

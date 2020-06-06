@@ -4,8 +4,10 @@
 */
 
 #pragma once
-
+#include <vector>
+#include <memory>
 #include "CWindowManager.h"
+#include "../interfaceitems/CImage.h"
 
 class CMenuManager : public CWindowManager
 {
@@ -25,8 +27,8 @@ public:
 protected:
     bool m_IsRunning;
 
-    SDL_Texture * m_Backround;
-    SDL_Texture * m_Title;
+    std::vector<std::unique_ptr<CInterfaceItem>> m_InterfaceItems;
+
     SDL_Texture * m_OnePlayerNormal;
     SDL_Texture * m_OnePlayerHover;
     SDL_Texture * m_TwoPlayersNormal;

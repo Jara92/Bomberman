@@ -6,13 +6,13 @@
 #pragma once
 #include <functional>
 #include "CWindowManager.h"
-#include "CSDLInterface.h"
-#include "CGameClock.h"
-#include "CBoard.h"
-#include "CLevelLoader.h"
-#include "EGameStatus.h"
-#include "CTimer.h"
-#include "CScoreManager.h"
+#include "../CSDLInterface.h"
+#include "../CGameClock.h"
+#include "../CBoard.h"
+#include "../CLevelLoader.h"
+#include "../EGameStatus.h"
+#include "../CTimer.h"
+#include "../CScoreManager.h"
 
 class CGameManager : public CWindowManager
 {

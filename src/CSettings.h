@@ -68,7 +68,7 @@ public:
     unsigned int GetMenuScreenWidth() const
     { return this->m_MenuScreenWidth; }
 
-    unsigned int GetMenuCreenHeight() const
+    unsigned int GetMenuScreenHeight() const
     { return this->m_MenuScreenHeight; }
 
     bool GetSound() const

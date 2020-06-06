@@ -22,11 +22,14 @@
 class CSDLInterface
 {
 public:
+    /**
+     * Constructor.
+     * @param title Window title.
+     * @param settings Setting to be used.
+     */
     CSDLInterface(const char *title, std::shared_ptr<CSettings> settings);
-
-    /*I dont want to allow interface */
-    CSDLInterface(const CSDLInterface &other) = delete;
-    CSDLInterface operator=(const CSDLInterface &other) = delete;
+    CSDLInterface(const CSDLInterface &other) = default;
+    CSDLInterface & operator=(const CSDLInterface &other) = default;
 
     ~CSDLInterface();
 
@@ -42,9 +45,19 @@ public:
      */
     void UpdateSettings(std::shared_ptr<CSettings> settings);
 
+    /**
+     * Set window size for Menu.
+     */
     void SetMenuScreenSize();
+
+    /**
+     * Set window size for Game.
+     */
     void SetGameScreenSize();
 
+    /**
+     * Update window size according to m_WindowWidth and m_WindowHeight and center it.
+     */
     void UpdateWindowSize();
 
     CCoord GetWindowSize() const
@@ -58,10 +71,10 @@ public:
     /**
      * Load an image into a render texture
      * @param file  File path
-     * @throws std::ios_base::failure If file is not avaible.
+     * @throws std::ios_base::failure If texture is not avaible.
      * @return Texture pointer.
      */
-    SDL_Texture *LoadTexture(const std::string &file) const;
+    SDL_Texture *LoadTexture(const std::string file) const;
 
     /**
      * Clear the current rendering target with the drawing color
