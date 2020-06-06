@@ -30,7 +30,7 @@ public:
     CBoard(std::shared_ptr<CSettings> settings, std::vector<std::vector<CWall *>> map, std::vector<CPlayer *> players, CCoord boardSize,
            std::shared_ptr<CGround> ground, std::shared_ptr<CTexturePack> bombTexturePack,
            std::shared_ptr<CTexturePack> fireTexturePack, unsigned int cellSize)
-            : m_Players(std::move(players)), m_Map(std::move(map)), m_Settings(settings), m_BoardSize(boardSize),
+            : m_Players(std::move(players)), m_Map(std::move(map)), m_Settings(std::move(settings)), m_BoardSize(boardSize),
               m_CellSize(cellSize), m_GroundObject(std::move(ground)),
               m_BombObjectTexturePack(std::move(bombTexturePack)),
               m_FireObjectTexturePack(std::move(fireTexturePack))

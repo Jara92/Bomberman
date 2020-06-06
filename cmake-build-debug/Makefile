@@ -312,6 +312,33 @@ src/CLevelLoader.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.s
 .PHONY : src/CLevelLoader.cpp.s
 
+src/CMenuManager.o: src/CMenuManager.cpp.o
+
+.PHONY : src/CMenuManager.o
+
+# target to build an object file
+src/CMenuManager.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CMenuManager.cpp.o
+.PHONY : src/CMenuManager.cpp.o
+
+src/CMenuManager.i: src/CMenuManager.cpp.i
+
+.PHONY : src/CMenuManager.i
+
+# target to preprocess a source file
+src/CMenuManager.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CMenuManager.cpp.i
+.PHONY : src/CMenuManager.cpp.i
+
+src/CMenuManager.s: src/CMenuManager.cpp.s
+
+.PHONY : src/CMenuManager.s
+
+# target to generate assembly for a file
+src/CMenuManager.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CMenuManager.cpp.s
+.PHONY : src/CMenuManager.cpp.s
+
 src/CSDLInterface.o: src/CSDLInterface.cpp.o
 
 .PHONY : src/CSDLInterface.o
@@ -419,6 +446,60 @@ src/CTimer.s: src/CTimer.cpp.s
 src/CTimer.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CTimer.cpp.s
 .PHONY : src/CTimer.cpp.s
+
+src/CWindowManager.o: src/CWindowManager.cpp.o
+
+.PHONY : src/CWindowManager.o
+
+# target to build an object file
+src/CWindowManager.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CWindowManager.cpp.o
+.PHONY : src/CWindowManager.cpp.o
+
+src/CWindowManager.i: src/CWindowManager.cpp.i
+
+.PHONY : src/CWindowManager.i
+
+# target to preprocess a source file
+src/CWindowManager.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CWindowManager.cpp.i
+.PHONY : src/CWindowManager.cpp.i
+
+src/CWindowManager.s: src/CWindowManager.cpp.s
+
+.PHONY : src/CWindowManager.s
+
+# target to generate assembly for a file
+src/CWindowManager.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CWindowManager.cpp.s
+.PHONY : src/CWindowManager.cpp.s
+
+src/EApplicationStatus.o: src/EApplicationStatus.cpp.o
+
+.PHONY : src/EApplicationStatus.o
+
+# target to build an object file
+src/EApplicationStatus.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.o
+.PHONY : src/EApplicationStatus.cpp.o
+
+src/EApplicationStatus.i: src/EApplicationStatus.cpp.i
+
+.PHONY : src/EApplicationStatus.i
+
+# target to preprocess a source file
+src/EApplicationStatus.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.i
+.PHONY : src/EApplicationStatus.cpp.i
+
+src/EApplicationStatus.s: src/EApplicationStatus.cpp.s
+
+.PHONY : src/EApplicationStatus.s
+
+# target to generate assembly for a file
+src/EApplicationStatus.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/EApplicationStatus.cpp.s
+.PHONY : src/EApplicationStatus.cpp.s
 
 src/gameobjects/CBomb.o: src/gameobjects/CBomb.cpp.o
 
@@ -828,6 +909,9 @@ help:
 	@echo "... src/CLevelLoader.o"
 	@echo "... src/CLevelLoader.i"
 	@echo "... src/CLevelLoader.s"
+	@echo "... src/CMenuManager.o"
+	@echo "... src/CMenuManager.i"
+	@echo "... src/CMenuManager.s"
 	@echo "... src/CSDLInterface.o"
 	@echo "... src/CSDLInterface.i"
 	@echo "... src/CSDLInterface.s"
@@ -840,6 +924,12 @@ help:
 	@echo "... src/CTimer.o"
 	@echo "... src/CTimer.i"
 	@echo "... src/CTimer.s"
+	@echo "... src/CWindowManager.o"
+	@echo "... src/CWindowManager.i"
+	@echo "... src/CWindowManager.s"
+	@echo "... src/EApplicationStatus.o"
+	@echo "... src/EApplicationStatus.i"
+	@echo "... src/EApplicationStatus.s"
 	@echo "... src/gameobjects/CBomb.o"
 	@echo "... src/gameobjects/CBomb.i"
 	@echo "... src/gameobjects/CBomb.s"

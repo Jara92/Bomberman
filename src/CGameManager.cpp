@@ -7,7 +7,7 @@
 #include "CGameManager.h"
 
 CGameManager::CGameManager(CSDLInterface *interface)
-        : m_Interface(interface), m_Board(nullptr), m_BoardOffset(CCoord(0, 2)),
+        : CWindowManager(interface), m_Board(nullptr), m_BoardOffset(CCoord(0, 2)),
           m_GameStatus(EGameStatus::GAMESTATUS_RUNNING), m_NextGameStatus(EGameStatus::GAMESTATUS_RUNNING),
           m_Level(1)
 {
@@ -15,6 +15,10 @@ CGameManager::CGameManager(CSDLInterface *interface)
 
     // Kill all players when the time runs out.
     this->m_GameEndDelay.Run(this->STARTING_TIME, [=](void){this->KillAllPlayers();});
+
+    // Get board and load first level
+    this->m_Board = this->m_LevelLoader->GetBoard(1, this->m_Interface->GetSettings());
+    this->m_LevelLoader->LoadLevel(this->m_Board, 1);
 }
 
 /*====================================================================================================================*/
@@ -26,13 +30,11 @@ CGameManager::~CGameManager()
 /*====================================================================================================================*/
 void CGameManager::Init()
 {
-    this->m_Board = this->m_LevelLoader->GetBoard(1, this->m_Interface->GetSettings());
 
-    this->m_LevelLoader->LoadLevel(this->m_Board, 1);
 }
 
 /*====================================================================================================================*/
-void CGameManager::Run()
+int CGameManager::Run()
 {
     while (this->m_GameStatus != EGameStatus::GAME_STATUS_EXIT)
     {
@@ -59,7 +61,7 @@ void CGameManager::Run()
             if (e.type == SDL_QUIT)
             {
                 this->m_GameStatus = EGameStatus::GAME_STATUS_EXIT;
-                return;
+                return 0;
             }
         }
 
@@ -75,6 +77,8 @@ void CGameManager::Run()
         // Wait for few miliseconds to draw cca 60 frames per second
         this->m_Interface->Wait(this->m_Clock.GetDelay());
     }
+
+    return 0;
 }
 
 /*====================================================================================================================*/
@@ -364,7 +368,6 @@ void CGameManager::GlobalInput(const Uint8 *input)
         }
     }
 }
-
 
 
 

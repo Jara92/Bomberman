@@ -11,6 +11,8 @@ int CApplication::Run(int argc, char * argv[])
     std::shared_ptr<CSettings> settings = this->Init(argc, argv);
     std::shared_ptr<CSDLInterface> interface = std::make_shared<CSDLInterface>("Bomberman", settings);
 
+    std::queue<CWindowManager> managers;
+
     try
     {
         interface->InitInterface();
@@ -18,7 +20,6 @@ int CApplication::Run(int argc, char * argv[])
         // todo add menu
 
         CGameManager gameManager(interface.get());
-        gameManager.Init();
 
         gameManager.Run();
     }

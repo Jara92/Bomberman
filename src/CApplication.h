@@ -4,6 +4,7 @@
 */
 
 #pragma once
+#include <queue>
 #include "CSDLInterface.h"
 #include "CGameManager.h"
 #include "Messages.h"

@@ -5,6 +5,7 @@
 
 #pragma once
 #include <functional>
+#include "CWindowManager.h"
 #include "CSDLInterface.h"
 #include "CGameClock.h"
 #include "CBoard.h"
@@ -13,7 +14,7 @@
 #include "CTimer.h"
 #include "CScoreManager.h"
 
-class CGameManager
+class CGameManager : public CWindowManager
 {
 public:
     /**
@@ -28,14 +29,13 @@ public:
     /**
      * Prepare game.
      */
-    void Init();
+    virtual void Init() override ;
     /**
      * Run the game.
      */
-    void Run();
+    virtual int Run() override ;
 
 protected:
-    CSDLInterface * m_Interface;
     std::shared_ptr<CBoard> m_Board;
     CScoreManager m_ScoreManager;
     /** The board must be drawn shifted because of top menu. */
@@ -97,7 +97,7 @@ protected:
     /**
      * Draw game by the game state.
      */
-    void Draw() const;
+    virtual void Draw() const override ;
     void DrawGame() const;
     void DrawRoundOver() const;
     void DrawNextRound() const;
@@ -107,11 +107,11 @@ protected:
      * Update game.
      * @param deltaTime Delta time.
      */
-    void Update(int deltaTime);
+    virtual void Update(int deltaTime) override ;
 
     /**
      * Check and handle important game events. Update game state.
      */
-    void UpdateEvents();
+    virtual void UpdateEvents() override ;
 };
 
