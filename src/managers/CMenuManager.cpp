@@ -7,7 +7,8 @@
 #include "CMenuManager.h"
 
 CMenuManager::CMenuManager(CSDLInterface *interface)
-        : CWindowManager(interface), m_IsRunning(true)
+        : CWindowManager(interface), m_IsRunning(true),
+          m_NextApplicationState(EApplicationStatus::APPLICATON_STATUS_NONE)
 {
     this->m_Interface->SetMenuScreenSize();
     CCoord windowSize = this->m_Interface->GetWindowSize();
@@ -17,33 +18,66 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
     // Background image
     this->m_InterfaceItems.push_back(std::make_unique<CImage>(interface, CCoord(0, 0), windowSize,
                                                               "Menu/title_background.jpg"));
-    // Title
-    this->m_InterfaceItems.push_back(std::make_unique<CImage>(interface, CCoord(0, 0), windowSize,
-                                                              "Menu/title_titletext.png"));
+    // Title text
+    this->m_InterfaceItems.push_back(std::make_unique<CText>(interface, CCoord(0, 0), "Bomberman!", CCoord(0, 150)));
+    itemSize = this->m_InterfaceItems.back()->GetSize();
+    this->m_InterfaceItems.back()->SetLocation(
+            CCoord((windowSize.m_X / 2) - (itemSize.m_X / 2), 50));
+
+    // One player button
+    this->m_InterfaceItems.push_back(
+            std::make_unique<CButton>(std::make_unique<CText>(interface, CCoord(0, 0), "One player", CCoord(0, 100)),
+                                      [=]()
+                                      { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME; },
+                                      std::make_unique<CText>(interface, CCoord(0, 0), "One player", CCoord(0, 100), SDL_Color{255,128,0,255})));
+    itemSize = this->m_InterfaceItems.back()->GetSize();
+    this->m_InterfaceItems.back()->SetLocation(
+            CCoord((windowSize.m_X / 2) - (itemSize.m_X / 2), 200));
+
+    // Two players button
+    this->m_InterfaceItems.push_back(
+            std::make_unique<CButton>(std::make_unique<CText>(interface, CCoord(0, 0), "Two players", CCoord(0, 100)),
+                                      [=]()
+                                      { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME; },
+                                      std::make_unique<CText>(interface, CCoord(0, 0), "Two players", CCoord(0, 100), SDL_Color{255,128,0,255})));
+    itemSize = this->m_InterfaceItems.back()->GetSize();
+    this->m_InterfaceItems.back()->SetLocation(
+            CCoord((windowSize.m_X / 2) - (itemSize.m_X / 2), 300));
+
+    // Settings button
+    this->m_InterfaceItems.push_back(
+            std::make_unique<CButton>(std::make_unique<CText>(interface, CCoord(0, 0), "Settings", CCoord(0, 100)),
+                                      [=]()
+                                      { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME; },
+                                      std::make_unique<CText>(interface, CCoord(0, 0), "Settings", CCoord(0, 100), SDL_Color{255,128,0,255})));
+    itemSize = this->m_InterfaceItems.back()->GetSize();
+    this->m_InterfaceItems.back()->SetLocation(
+            CCoord((windowSize.m_X / 2) - (itemSize.m_X / 2), 400));
+
+    // Exit button
+    this->m_InterfaceItems.push_back(
+            std::make_unique<CButton>(std::make_unique<CText>(interface, CCoord(0, 0), "Exit", CCoord(0, 100)),
+                                      [=]()
+                                      { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME; },
+                                      std::make_unique<CText>(interface, CCoord(0, 0), "Exit", CCoord(0, 100), SDL_Color{255,128,0,255})));
+    itemSize = this->m_InterfaceItems.back()->GetSize();
+    this->m_InterfaceItems.back()->SetLocation(
+            CCoord((windowSize.m_X / 2) - (itemSize.m_X / 2), 500));
+
     // Footer
     this->m_InterfaceItems.push_back(
             std::make_unique<CText>(interface, CCoord(0, 0), "Jaroslav Fikar 2020", CCoord(0, 30),
                                     SDL_Color{0, 0, 0, 255}));
     // Move footer in right-bottom corner
-    itemSize = this->m_InterfaceItems[2]->GetSize();
-    this->m_InterfaceItems[2]->SetLocation(
+    itemSize = this->m_InterfaceItems.back()->GetSize();
+    this->m_InterfaceItems.back()->SetLocation(
             CCoord(windowSize.m_X - itemSize.m_X - offset, windowSize.m_Y - itemSize.m_Y - offset));
 
-    // Load textures
-    this->m_OnePlayerNormal = this->m_Interface->LoadTexture("Menu/One_Player_Normal.png");
-    this->m_OnePlayerHover = this->m_Interface->LoadTexture("Menu/One_Player_Hover.png");
-    this->m_TwoPlayersNormal = this->m_Interface->LoadTexture("Menu/Two_Players_Normal.png");
-    this->m_TwoPlayersHover = this->m_Interface->LoadTexture("Menu/Two_Players_Hover.png");
 }
 
 /*====================================================================================================================*/
 CMenuManager::~CMenuManager()
 {
-    // Delete textures
-    SDL_DestroyTexture(this->m_OnePlayerNormal);
-    SDL_DestroyTexture(this->m_OnePlayerHover);
-    SDL_DestroyTexture(this->m_TwoPlayersNormal);
-    SDL_DestroyTexture(this->m_TwoPlayersHover);
 }
 
 

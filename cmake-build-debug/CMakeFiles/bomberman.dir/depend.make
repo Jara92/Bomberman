@@ -39,6 +39,7 @@ CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/gameobjects/collectibles
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/gameobjects/movables/CEnemy.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/gameobjects/movables/CMovable.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/gameobjects/movables/CPlayer.h
+CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/interfaceitems/CButton.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/interfaceitems/CImage.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/interfaceitems/CInterfaceItem.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/interfaceitems/CText.h
@@ -357,6 +358,15 @@ CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o: ../src/gameobje
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o: ../src/gameobjects/movables/CPlayer.cpp
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o: ../src/gameobjects/movables/CPlayer.h
 
+CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o: ../src/CCoord.h
+CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o: ../src/CSDLInterface.h
+CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o: ../src/CSettings.h
+CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o: ../src/Messages.h
+CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o: ../src/interfaceitems/CButton.cpp
+CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o: ../src/interfaceitems/CButton.h
+CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o: ../src/interfaceitems/CInterfaceItem.h
+CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o: ../src/interfaceitems/CText.h
+
 CMakeFiles/bomberman.dir/src/interfaceitems/CImage.cpp.o: ../src/CCoord.h
 CMakeFiles/bomberman.dir/src/interfaceitems/CImage.cpp.o: ../src/CSDLInterface.h
 CMakeFiles/bomberman.dir/src/interfaceitems/CImage.cpp.o: ../src/CSettings.h
@@ -409,6 +419,7 @@ CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/gameobjects/collectibles/CDoor.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/gameobjects/movables/CEnemy.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/gameobjects/movables/CMovable.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/gameobjects/movables/CPlayer.h
+CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/interfaceitems/CButton.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/interfaceitems/CImage.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/interfaceitems/CInterfaceItem.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/interfaceitems/CText.h
@@ -456,6 +467,7 @@ CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.o: ../src/CSDLInterface.h
 CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.o: ../src/CSettings.h
 CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.o: ../src/EApplicationStatus.h
 CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.o: ../src/Messages.h
+CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.o: ../src/interfaceitems/CButton.h
 CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.o: ../src/interfaceitems/CImage.h
 CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.o: ../src/interfaceitems/CInterfaceItem.h
 CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.o: ../src/interfaceitems/CText.h

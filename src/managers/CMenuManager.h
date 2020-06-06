@@ -9,6 +9,7 @@
 #include "CWindowManager.h"
 #include "../interfaceitems/CImage.h"
 #include "../interfaceitems/CText.h"
+#include "../interfaceitems/CButton.h"
 
 class CMenuManager : public CWindowManager
 {
@@ -27,13 +28,9 @@ public:
 
 protected:
     bool m_IsRunning;
+    EApplicationStatus m_NextApplicationState;
 
     std::vector<std::unique_ptr<CInterfaceItem>> m_InterfaceItems;
-
-    SDL_Texture * m_OnePlayerNormal;
-    SDL_Texture * m_OnePlayerHover;
-    SDL_Texture * m_TwoPlayersNormal;
-    SDL_Texture * m_TwoPlayersHover;
 
     virtual void Update(int deltaTime) override ;
 

@@ -22,6 +22,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.o"
   "CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.o"
   "CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o"
+  "CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o"
   "CMakeFiles/bomberman.dir/src/interfaceitems/CImage.cpp.o"
   "CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.o"
   "CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.o"

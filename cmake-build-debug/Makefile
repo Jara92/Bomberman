@@ -744,6 +744,33 @@ src/gameobjects/movables/CPlayer.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.s
 .PHONY : src/gameobjects/movables/CPlayer.cpp.s
 
+src/interfaceitems/CButton.o: src/interfaceitems/CButton.cpp.o
+
+.PHONY : src/interfaceitems/CButton.o
+
+# target to build an object file
+src/interfaceitems/CButton.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o
+.PHONY : src/interfaceitems/CButton.cpp.o
+
+src/interfaceitems/CButton.i: src/interfaceitems/CButton.cpp.i
+
+.PHONY : src/interfaceitems/CButton.i
+
+# target to preprocess a source file
+src/interfaceitems/CButton.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.i
+.PHONY : src/interfaceitems/CButton.cpp.i
+
+src/interfaceitems/CButton.s: src/interfaceitems/CButton.cpp.s
+
+.PHONY : src/interfaceitems/CButton.s
+
+# target to generate assembly for a file
+src/interfaceitems/CButton.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.s
+.PHONY : src/interfaceitems/CButton.cpp.s
+
 src/interfaceitems/CImage.o: src/interfaceitems/CImage.cpp.o
 
 .PHONY : src/interfaceitems/CImage.o
@@ -1038,6 +1065,9 @@ help:
 	@echo "... src/gameobjects/movables/CPlayer.o"
 	@echo "... src/gameobjects/movables/CPlayer.i"
 	@echo "... src/gameobjects/movables/CPlayer.s"
+	@echo "... src/interfaceitems/CButton.o"
+	@echo "... src/interfaceitems/CButton.i"
+	@echo "... src/interfaceitems/CButton.s"
 	@echo "... src/interfaceitems/CImage.o"
 	@echo "... src/interfaceitems/CImage.i"
 	@echo "... src/interfaceitems/CImage.s"

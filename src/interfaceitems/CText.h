@@ -13,7 +13,7 @@ public:
     /**
      * Constructor.
      * @param interface Interface used for texture setup.
-     * @param location Item location. Use {0,0} to center location. Use {0, X} or {X, 0} to center one direction.
+     * @param location Item location.
      * @param text Text to be rendered.
      * @param size Item size. Set {0,0} to autosize. Set {0, X} or {X, 0} to autosize one dimension.
      * @param texturePath Path to texture.

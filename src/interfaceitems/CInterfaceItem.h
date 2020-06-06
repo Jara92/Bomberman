@@ -47,14 +47,14 @@ public:
      * Set item location.
      * @param location New location.
      */
-    void SetLocation(CCoord location)
+    virtual void SetLocation(CCoord location)
     { this->m_Location = location; }
 
     /**
      * Set item size.
      * @param size New size.
      */
-    void SetSize(CCoord size)
+   virtual  void SetSize(CCoord size)
     { this->m_Size = size; }
 
     CCoord GetLocation() const

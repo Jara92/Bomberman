@@ -242,6 +242,12 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CPlayer.h">
 			<Option target="bomberman"/>
 		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CButton.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CButton.h">
+			<Option target="bomberman"/>
+		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CImage.cpp">
 			<Option target="bomberman"/>
 		</Unit>
