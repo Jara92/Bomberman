@@ -50,12 +50,6 @@ public:
     virtual void SetLocation(CCoord location)
     { this->m_Location = location; }
 
-    virtual void MouseButtonEventHandler(SDL_MouseButtonEvent & e)
-    {}
-
-    virtual void MouseMoveEventHandler(SDL_MouseMotionEvent & e)
-    {}
-
     virtual void MouseEventHandler(SDL_Event & e)
     {}
 
@@ -75,5 +69,11 @@ public:
 protected:
     CCoord m_Location;
     CCoord m_Size;
+
+    virtual void MouseButtonEventHandler(SDL_MouseButtonEvent & e)
+    {}
+
+    virtual void MouseMoveEventHandler(SDL_MouseMotionEvent & e)
+    {}
 };
 

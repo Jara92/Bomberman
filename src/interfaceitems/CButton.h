@@ -21,11 +21,20 @@ public:
      * @param text Text to be rendered.
      * @param hoveredText Text to be rendered when the button is being hovered.
     */
-    CButton(std::unique_ptr<CText> text, std::function<void(void)> clickCallBack = []()
-    {}, std::unique_ptr<CText> hoveredText = {})
-            : CInterfaceItem(text->GetLocation(), text->GetSize()), m_Text(std::move(text)),
-              m_HoveredText(std::move(hoveredText)), m_IsHovering(false), m_ClickCallBack(std::move(clickCallBack))
-    {}
+    CButton(CSDLInterface *interface, const std::string &text, CCoord location, SDL_Colour textColor,
+            SDL_Colour textHoverColor, CCoord size = {0, 0},
+            std::function<void(void)> clickCallBack = []()
+            {})
+            : CInterfaceItem(location, size),
+              m_IsHovering(false),m_ClickCallBack(std::move(clickCallBack))
+    {
+        // Create textures.
+        this->m_Text = std::make_unique<CText>(interface, location, text, size, textColor);
+        this->m_TextHover = std::make_unique<CText>(interface, location, text, size, textHoverColor);
+
+        // Set size.
+        this->m_Size = this->m_Text->GetSize();
+    }
 
     virtual ~CButton() = default;
 
@@ -59,11 +68,16 @@ public:
      */
     virtual void MouseEventHandler(SDL_Event &e) override;
 
+    void SetColor(CSDLInterface * interface, SDL_Colour color)
+    {this->m_Text->SetColor(interface, color);}
+
+    void SetHoverColor(CSDLInterface * interface, SDL_Colour color)
+    {this->m_TextHover->SetColor(interface, color);}
+
 protected:
     /** Text to be rendered. */
     std::unique_ptr<CText> m_Text;
-    /** Text to be rendered in hover mode. */
-    std::unique_ptr<CText> m_HoveredText;
+    std::unique_ptr<CText> m_TextHover;
     /** Is player hovering this object? */
     bool m_IsHovering;
     /** Function to be called on click event.*/
@@ -78,6 +92,6 @@ protected:
      * @param mouseLocation Current mouse location.
      * @return True - Colliding.
      */
-    bool MouseCollision(CCoord mouseLocation) const ;
+    bool MouseCollision(CCoord mouseLocation) const;
 };
 

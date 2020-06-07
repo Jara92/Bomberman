@@ -23,6 +23,9 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
     unsigned int basicFontSize = 64;
     unsigned int yButtonMargin = 80;
 
+    SDL_Colour textColor = {255, 255, 255, 255};
+    SDL_Colour textHoverColor = {255, 128, 0, 255};
+
     // Background image
     this->m_InterfaceItems.push_back(std::make_unique<CImage>(interface, CCoord(0, 0), windowSize,
                                                               "Menu/title_background.jpg"));
@@ -34,12 +37,10 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
 
     // One player button
     this->m_InterfaceItems.push_back(
-            std::make_unique<CButton>(
-                    std::make_unique<CText>(interface, CCoord(0, 0), "One player", CCoord(0, basicFontSize)),
-                    [=]()
-                    { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME; },
-                    std::make_unique<CText>(interface, CCoord(0, 0), "One player", CCoord(0, basicFontSize),
-                                            SDL_Color{255, 128, 0, 255})));
+            std::make_unique<CButton>(interface, "One player", CCoord(0, 0), textColor, textHoverColor,
+                                      CCoord(0, basicFontSize), [=]()
+                                      { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME; }));
+
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
             CCoord((windowSize.m_X / 2) - (itemSize.m_X / 2),
@@ -47,36 +48,30 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
 
     // Two players button
     this->m_InterfaceItems.push_back(
-            std::make_unique<CButton>(
-                    std::make_unique<CText>(interface, CCoord(0, 0), "Two players", CCoord(0, basicFontSize)),
-                    [=]()
-                    { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME; },
-                    std::make_unique<CText>(interface, CCoord(0, 0), "Two players", CCoord(0, basicFontSize),
-                                            SDL_Color{255, 128, 0, 255})));
+            std::make_unique<CButton>(interface, "Two players", CCoord(0, 0), textColor, textHoverColor,
+                                      CCoord(0, basicFontSize), [=]()
+                                      { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME; }));
+
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
             CCoord((windowSize.m_X / 2) - (itemSize.m_X / 2), yLocation += yButtonMargin));
 
     // Settings button
     this->m_InterfaceItems.push_back(
-            std::make_unique<CButton>(
-                    std::make_unique<CText>(interface, CCoord(0, 0), "Settings", CCoord(0, basicFontSize)),
-                    [=]()
-                    { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_SETTINGS; },
-                    std::make_unique<CText>(interface, CCoord(0, 0), "Settings", CCoord(0, basicFontSize),
-                                            SDL_Color{255, 128, 0, 255})));
+            std::make_unique<CButton>(interface, "Settings", CCoord(0, 0), textColor, textHoverColor,
+                                      CCoord(0, basicFontSize), [=]()
+                                      { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_SETTINGS; }));
+
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
             CCoord((windowSize.m_X / 2) - (itemSize.m_X / 2), yLocation += yButtonMargin));
 
     // Exit button
     this->m_InterfaceItems.push_back(
-            std::make_unique<CButton>(
-                    std::make_unique<CText>(interface, CCoord(0, 0), "Exit", CCoord(0, basicFontSize)),
-                    [=]()
-                    { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_EXIT; },
-                    std::make_unique<CText>(interface, CCoord(0, 0), "Exit", CCoord(0, basicFontSize),
-                                            SDL_Color{255, 128, 0, 255})));
+            std::make_unique<CButton>(interface, "Exit", CCoord(0, 0), textColor, textHoverColor,
+                                      CCoord(0, basicFontSize), [=]()
+                                      { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_EXIT; }));
+
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
             CCoord((windowSize.m_X / 2) - (itemSize.m_X / 2), yLocation += yButtonMargin));

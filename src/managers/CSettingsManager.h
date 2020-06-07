@@ -28,5 +28,7 @@ protected:
     virtual void UpdateEvents() override ;
 
     virtual void Draw() const override ;
+
+    virtual void ProcessEvent(SDL_Event & e) override ;
 };
 

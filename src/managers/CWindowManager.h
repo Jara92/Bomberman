@@ -10,6 +10,7 @@
 #include "../EApplicationStatus.h"
 #include "../CGameClock.h"
 #include "../interfaceitems/CInterfaceItem.h"
+#include "../interfaceitems/CSelectBox.h"
 
 /**
  * Class which manages content rendering.

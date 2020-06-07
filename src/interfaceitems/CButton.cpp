@@ -8,9 +8,10 @@
 
 void CButton::Draw(CSDLInterface *interface)
 {
-    if (this->m_IsHovering)
-    { this->m_HoveredText->Draw(interface); }
-    else this->m_Text->Draw(interface);
+    if(this->m_IsHovering)
+    {this->m_TextHover->Draw(interface);}
+    else
+    {this->m_Text->Draw(interface);}
 }
 
 /*====================================================================================================================*/
@@ -19,7 +20,7 @@ void CButton::SetLocation(CCoord location)
     CInterfaceItem::SetLocation(location);
 
     this->m_Text->SetLocation(location);
-    this->m_HoveredText->SetLocation(location);
+    this->m_TextHover->SetLocation(location);
 }
 
 /*====================================================================================================================*/
@@ -28,7 +29,7 @@ void CButton::SetSize(CCoord size)
     CInterfaceItem::SetSize(size);
 
     this->m_Text->SetSize(size);
-    this->m_HoveredText->SetSize(size);
+    this->m_TextHover->SetSize(size);
 }
 
 /*====================================================================================================================*/

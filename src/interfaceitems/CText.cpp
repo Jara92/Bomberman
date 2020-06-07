@@ -37,7 +37,7 @@ void CText::SetText(CSDLInterface *interface, const std::string &text, SDL_Color
         this->m_Size.m_Y = size.m_Y * q;
     }
 }
-
+/*====================================================================================================================*/
 void CText::SetColor(CSDLInterface *interface, SDL_Color color)
 {
     this->SetText(interface, this->m_Text, color);
