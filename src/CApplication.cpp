@@ -68,8 +68,8 @@ std::shared_ptr<CSettings> CApplication::Init(int argc, char *argv[])
     }
 
 
-    return std::make_shared<CSettings>(1.3 * 1150, 1.3 * 700, 1.3 * 700,
-                                       1.3 * 700, CCoord(0, 1), 60, true, debug);
+    return std::make_shared<CSettings>(1.3 * 1150, 1.3 * 700, 512,
+                                       512, CCoord(0, 1), 60, true, debug);
 }
 
 std::shared_ptr<CWindowManager>
