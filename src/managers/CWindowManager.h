@@ -5,9 +5,11 @@
 
 #pragma once
 #include <memory>
+#include <queue>
 #include "../CSDLInterface.h"
 #include "../EApplicationStatus.h"
 #include "../CGameClock.h"
+#include "../interfaceitems/CInterfaceItem.h"
 
 /**
  * Class which manages content rendering.
@@ -22,7 +24,7 @@ public:
     explicit CWindowManager(CSDLInterface *interface)
     : m_Interface(interface), m_NextApplicationState(EApplicationStatus::APPLICATON_STATUS_NONE)
     {}
-    ~CWindowManager() = default;
+    virtual ~CWindowManager() = default;
     CWindowManager (const CWindowManager & other) = delete;
     CWindowManager & operator = (const CWindowManager & other) = delete;
 
@@ -33,7 +35,10 @@ public:
 
 protected:
     CSDLInterface * m_Interface;
+    /** Interface items in the view. */
+    std::vector<std::unique_ptr<CInterfaceItem>> m_InterfaceItems;
     EApplicationStatus m_NextApplicationState;
+    /** Application refresh clock. */
     CGameClock m_Clock;
 
     /**
@@ -57,6 +62,6 @@ protected:
     /**
      * Draw window.
      */
-    virtual void Draw() const = 0;
+    virtual void Draw() const;
 };
 

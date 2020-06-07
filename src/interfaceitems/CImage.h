@@ -22,7 +22,7 @@ public:
         this->m_Texture = interface->LoadTexture( texturePath);
     }
 
-    ~CImage()
+    virtual ~CImage()
     {SDL_DestroyTexture(this->m_Texture);}
 
     /* I dont want allow copying this object. It is unnecessary.

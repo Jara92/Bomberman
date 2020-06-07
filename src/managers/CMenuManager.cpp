@@ -11,7 +11,7 @@
  * @param interface Interface to be used.
  */
 CMenuManager::CMenuManager(CSDLInterface *interface)
-        : CWindowManager(interface), m_IsRunning(true)
+        : CWindowManager(interface)
 {
     // Set menu window size.
     this->m_Interface->SetMenuScreenSize();
@@ -90,7 +90,6 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
             CCoord(windowSize.m_X - itemSize.m_X - offset, windowSize.m_Y - itemSize.m_Y - offset));
-
 }
 
 /*====================================================================================================================*/
@@ -133,11 +132,7 @@ void CMenuManager::Draw() const
     this->m_Interface->SetRenderColor(0, 0, 0, 255);
     this->m_Interface->Clear();
 
-    // Draw every UI item.
-    for (auto item = this->m_InterfaceItems.begin(); item != this->m_InterfaceItems.end(); item++)
-    {
-        item->get()->Draw(this->m_Interface);
-    }
+    CWindowManager::Draw();
 
     this->m_Interface->Present();
 }

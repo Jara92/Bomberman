@@ -13,18 +13,15 @@ public:
  * Constructor.
  * @param interface Interface to be used.
  */
-    explicit CSettingsManager(CSDLInterface *interface)
-    : CWindowManager(interface), m_IsRunning(true)
-    {}
+    explicit CSettingsManager(CSDLInterface *interface);
 
-    ~CSettingsManager() = default;
+    virtual ~CSettingsManager() = default;
     CSettingsManager(const CSettingsManager &other) = delete;
     CSettingsManager &operator=(const CSettingsManager &other) = delete;
 
     virtual EApplicationStatus Run() override ;
 
 protected:
-    bool m_IsRunning;
 
     virtual void Update(int deltaTime) override ;
 

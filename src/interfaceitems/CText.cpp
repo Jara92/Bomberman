@@ -8,6 +8,8 @@
 
 void CText::SetText(CSDLInterface *interface, const std::string &text, SDL_Color color)
 {
+    this->m_Text = text;
+
     // Delete old texture
     if (this->m_Texture != NULL)
     { SDL_DestroyTexture(this->m_Texture); }
@@ -34,4 +36,9 @@ void CText::SetText(CSDLInterface *interface, const std::string &text, SDL_Color
         double q = this->m_Size.m_X / size.m_X;
         this->m_Size.m_Y = size.m_Y * q;
     }
+}
+
+void CText::SetColor(CSDLInterface *interface, SDL_Color color)
+{
+    this->SetText(interface, this->m_Text, color);
 }

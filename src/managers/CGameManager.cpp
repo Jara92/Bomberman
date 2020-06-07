@@ -24,12 +24,6 @@ CGameManager::CGameManager(CSDLInterface *interface)
 }
 
 /*====================================================================================================================*/
-CGameManager::~CGameManager()
-{
-
-}
-
-/*====================================================================================================================*/
 EApplicationStatus CGameManager::Run()
 {
     while (this->m_GameStatus != EGameStatus::GAME_STATUS_EXIT)
@@ -37,19 +31,6 @@ EApplicationStatus CGameManager::Run()
         if(CWindowManager::Run() == EApplicationStatus::APPLICATION_STATUS_EXIT)
         {
             return EApplicationStatus ::APPLICATION_STATUS_MENU;
-        }
-
-        // read keyboard state
-        SDL_PumpEvents();
-        const Uint8 *keystate = SDL_GetKeyboardState(NULL);
-
-        // Catch global input keys.
-        this->GlobalInput(keystate);
-
-        // send state to all players
-        for (std::vector<CPlayer *>::size_type i = 0; i < this->m_Board->m_Players.size(); i++)
-        {
-            this->m_Board->m_Players[i]->HandleInput(keystate);
         }
     }
 
@@ -182,6 +163,18 @@ void CGameManager::Update(int deltaTime)
 void CGameManager::UpdateEvents()
 {
     CWindowManager::UpdateEvents();
+
+    // Read keyboard state
+    const Uint8 *keystate = SDL_GetKeyboardState(NULL);
+
+    // Catch global input keys.
+    this->GlobalInput(keystate);
+
+    // send state to all players
+    for (std::vector<CPlayer *>::size_type i = 0; i < this->m_Board->m_Players.size(); i++)
+    {
+        this->m_Board->m_Players[i]->HandleInput(keystate);
+    }
 
     this->m_Board->UpdatePhysics();
 
@@ -344,11 +337,6 @@ void CGameManager::GlobalInput(const Uint8 *input)
 
         }
     }
-}
-
-void CGameManager::ProcessEvent(SDL_Event &e)
-{
-    CWindowManager::ProcessEvent(e);
 }
 
 

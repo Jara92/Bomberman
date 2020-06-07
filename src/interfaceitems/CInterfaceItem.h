@@ -25,7 +25,7 @@ public:
             : m_Location(location), m_Size(size)
     {}
 
-    ~CInterfaceItem() = default;
+    virtual ~CInterfaceItem() = default;
 
     CInterfaceItem(const CInterfaceItem &other) = default;
 

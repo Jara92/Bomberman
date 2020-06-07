@@ -22,7 +22,7 @@ public:
      * @param interface Interface to be used.
      */
     explicit CGameManager(CSDLInterface *interface);
-    ~CGameManager();
+    virtual ~CGameManager() = default;
     CGameManager (const CGameManager & other) = delete;
     CGameManager & operator = (const CGameManager & other) = delete;
 

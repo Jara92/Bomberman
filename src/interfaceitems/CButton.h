@@ -27,7 +27,7 @@ public:
               m_HoveredText(std::move(hoveredText)), m_IsHovering(false), m_ClickCallBack(std::move(clickCallBack))
     {}
 
-    ~CButton() = default;
+    virtual ~CButton() = default;
 
     /* I dont want allow copying this object. It is unnecessary.
     * This is pointer to some C structure which cant be copied.
@@ -64,11 +64,10 @@ protected:
     std::unique_ptr<CText> m_Text;
     /** Text to be rendered in hover mode. */
     std::unique_ptr<CText> m_HoveredText;
-    /** Function to be called on click event.*/
-    std::function<void(void)> m_ClickCallBack;
-
     /** Is player hovering this object? */
     bool m_IsHovering;
+    /** Function to be called on click event.*/
+    std::function<void(void)> m_ClickCallBack;
 
     virtual void MouseButtonEventHandler(SDL_MouseButtonEvent &e) override;
 

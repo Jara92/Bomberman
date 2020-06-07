@@ -825,6 +825,33 @@ src/interfaceitems/CInterfaceItem.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.s
 .PHONY : src/interfaceitems/CInterfaceItem.cpp.s
 
+src/interfaceitems/CSelectBox.o: src/interfaceitems/CSelectBox.cpp.o
+
+.PHONY : src/interfaceitems/CSelectBox.o
+
+# target to build an object file
+src/interfaceitems/CSelectBox.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o
+.PHONY : src/interfaceitems/CSelectBox.cpp.o
+
+src/interfaceitems/CSelectBox.i: src/interfaceitems/CSelectBox.cpp.i
+
+.PHONY : src/interfaceitems/CSelectBox.i
+
+# target to preprocess a source file
+src/interfaceitems/CSelectBox.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.i
+.PHONY : src/interfaceitems/CSelectBox.cpp.i
+
+src/interfaceitems/CSelectBox.s: src/interfaceitems/CSelectBox.cpp.s
+
+.PHONY : src/interfaceitems/CSelectBox.s
+
+# target to generate assembly for a file
+src/interfaceitems/CSelectBox.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.s
+.PHONY : src/interfaceitems/CSelectBox.cpp.s
+
 src/interfaceitems/CText.o: src/interfaceitems/CText.cpp.o
 
 .PHONY : src/interfaceitems/CText.o
@@ -851,6 +878,33 @@ src/interfaceitems/CText.s: src/interfaceitems/CText.cpp.s
 src/interfaceitems/CText.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.s
 .PHONY : src/interfaceitems/CText.cpp.s
+
+src/interfaceitems/EButtonStatus.o: src/interfaceitems/EButtonStatus.cpp.o
+
+.PHONY : src/interfaceitems/EButtonStatus.o
+
+# target to build an object file
+src/interfaceitems/EButtonStatus.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/EButtonStatus.cpp.o
+.PHONY : src/interfaceitems/EButtonStatus.cpp.o
+
+src/interfaceitems/EButtonStatus.i: src/interfaceitems/EButtonStatus.cpp.i
+
+.PHONY : src/interfaceitems/EButtonStatus.i
+
+# target to preprocess a source file
+src/interfaceitems/EButtonStatus.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/EButtonStatus.cpp.i
+.PHONY : src/interfaceitems/EButtonStatus.cpp.i
+
+src/interfaceitems/EButtonStatus.s: src/interfaceitems/EButtonStatus.cpp.s
+
+.PHONY : src/interfaceitems/EButtonStatus.s
+
+# target to generate assembly for a file
+src/interfaceitems/EButtonStatus.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/EButtonStatus.cpp.s
+.PHONY : src/interfaceitems/EButtonStatus.cpp.s
 
 src/main.o: src/main.cpp.o
 
@@ -1074,9 +1128,15 @@ help:
 	@echo "... src/interfaceitems/CInterfaceItem.o"
 	@echo "... src/interfaceitems/CInterfaceItem.i"
 	@echo "... src/interfaceitems/CInterfaceItem.s"
+	@echo "... src/interfaceitems/CSelectBox.o"
+	@echo "... src/interfaceitems/CSelectBox.i"
+	@echo "... src/interfaceitems/CSelectBox.s"
 	@echo "... src/interfaceitems/CText.o"
 	@echo "... src/interfaceitems/CText.i"
 	@echo "... src/interfaceitems/CText.s"
+	@echo "... src/interfaceitems/EButtonStatus.o"
+	@echo "... src/interfaceitems/EButtonStatus.i"
+	@echo "... src/interfaceitems/EButtonStatus.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

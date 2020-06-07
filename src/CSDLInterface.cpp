@@ -52,12 +52,12 @@ bool CSDLInterface::InitInterface()
 
     // Create an application window with the following settings:
     this->m_Window = SDL_CreateWindow(
-            this->m_WindowTitle,                  // window title
-            SDL_WINDOWPOS_CENTERED,           // initial x position
-            SDL_WINDOWPOS_CENTERED,           // initial y position
-            this->m_WindowWidth,                         // width, in pixels
-            this->m_WindowHeight,                               // height, in pixels
-            SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE                // flags
+            this->m_WindowTitle,                   // window title
+            SDL_WINDOWPOS_CENTERED,              // initial x position
+            SDL_WINDOWPOS_CENTERED,              // initial y position
+            this->m_WindowWidth,                   // width, in pixels
+            this->m_WindowHeight,                  // height, in pixels
+            SDL_WINDOW_OPENGL                 // flags
     );
 
     // Check that the window was successfully created

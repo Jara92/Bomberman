@@ -20,12 +20,12 @@ public:
      */
     CText(CSDLInterface *interface, CCoord location, const std::string &text, CCoord size = {0, 0},
           SDL_Color color = {255, 255, 255, 255}
-    ) : CInterfaceItem(location, size), m_Texture(NULL)
+    ) : CInterfaceItem(location, size), m_Texture(NULL), m_Text(text)
     {
         this->SetText(interface, text, color);
     }
 
-    ~CText()
+    virtual ~CText()
     { SDL_DestroyTexture(this->m_Texture); }
 
     /* I dont want allow copying this object. It is unnecessary.
@@ -43,6 +43,13 @@ public:
     void SetText(CSDLInterface *interface, const std::string &text, SDL_Color color = {255, 255, 255, 255});
 
     /**
+     * Change text color.
+     * @param interface Interface to be used.
+     * @param color Color to be set.
+     */
+    void SetColor(CSDLInterface * interface, SDL_Color color);
+
+    /**
      * Update item.
      * @param deltaTime Delta time.
      */
@@ -58,5 +65,6 @@ public:
 
 protected:
     SDL_Texture *m_Texture;
+    std::string m_Text;
 };
 

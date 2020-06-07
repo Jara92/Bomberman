@@ -11,13 +11,16 @@
 #include "../interfaceitems/CText.h"
 #include "../interfaceitems/CButton.h"
 
+/**
+ * Class which manages menu rendering and user events.
+ */
 class CMenuManager : public CWindowManager
 {
 public:
     /**
- * Constructor.
- * @param interface Interface to be used.
- */
+    * Constructor.
+    * @param interface Interface to be used.
+    */
     explicit CMenuManager(CSDLInterface *interface);
 
     ~CMenuManager();
@@ -27,10 +30,6 @@ public:
     virtual EApplicationStatus Run() override ;
 
 protected:
-    bool m_IsRunning;
-
-    std::vector<std::unique_ptr<CInterfaceItem>> m_InterfaceItems;
-
     virtual void Update(int deltaTime) override ;
 
     virtual void UpdateEvents() override ;

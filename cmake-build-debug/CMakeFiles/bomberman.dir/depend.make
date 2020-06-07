@@ -18,7 +18,7 @@ CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/CCoord.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/CGameClock.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/CLevelLoader.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/CSDLInterface.h
-CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/CScoreManager.h
+CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/CScoreSaver.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/CSettings.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/CTexturePack.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/CTimer.h
@@ -111,10 +111,10 @@ CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o: ../src/CSDLInterface.h
 CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o: ../src/CSettings.h
 CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o: ../src/Messages.h
 
-CMakeFiles/bomberman.dir/src/CScoreManager.cpp.o: ../src/CCoord.h
-CMakeFiles/bomberman.dir/src/CScoreManager.cpp.o: ../src/CScoreManager.cpp
-CMakeFiles/bomberman.dir/src/CScoreManager.cpp.o: ../src/CScoreManager.h
-CMakeFiles/bomberman.dir/src/CScoreManager.cpp.o: ../src/CSettings.h
+CMakeFiles/bomberman.dir/src/CScoreSaver.cpp.o: ../src/CCoord.h
+CMakeFiles/bomberman.dir/src/CScoreSaver.cpp.o: ../src/CScoreSaver.cpp
+CMakeFiles/bomberman.dir/src/CScoreSaver.cpp.o: ../src/CScoreSaver.h
+CMakeFiles/bomberman.dir/src/CScoreSaver.cpp.o: ../src/CSettings.h
 
 CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o: ../src/CAnimation.h
 CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o: ../src/CCoord.h
@@ -382,6 +382,16 @@ CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.o: ../src/Message
 CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.o: ../src/interfaceitems/CInterfaceItem.cpp
 CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.o: ../src/interfaceitems/CInterfaceItem.h
 
+CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/CCoord.h
+CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/CSDLInterface.h
+CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/CSettings.h
+CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/Messages.h
+CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/interfaceitems/CButton.h
+CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/interfaceitems/CInterfaceItem.h
+CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/interfaceitems/CSelectBox.cpp
+CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/interfaceitems/CSelectBox.h
+CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/interfaceitems/CText.h
+
 CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.o: ../src/CCoord.h
 CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.o: ../src/CSDLInterface.h
 CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.o: ../src/CSettings.h
@@ -389,6 +399,9 @@ CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.o: ../src/Messages.h
 CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.o: ../src/interfaceitems/CInterfaceItem.h
 CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.o: ../src/interfaceitems/CText.cpp
 CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.o: ../src/interfaceitems/CText.h
+
+CMakeFiles/bomberman.dir/src/interfaceitems/EButtonStatus.cpp.o: ../src/interfaceitems/EButtonStatus.cpp
+CMakeFiles/bomberman.dir/src/interfaceitems/EButtonStatus.cpp.o: ../src/interfaceitems/EButtonStatus.h
 
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/CAnimation.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/CApplication.h
@@ -398,7 +411,7 @@ CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/CCoord.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/CGameClock.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/CLevelLoader.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/CSDLInterface.h
-CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/CScoreManager.h
+CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/CScoreSaver.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/CSettings.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/CTexturePack.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/CTimer.h
@@ -436,7 +449,7 @@ CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/CCoord.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/CGameClock.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/CLevelLoader.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/CSDLInterface.h
-CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/CScoreManager.h
+CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/CScoreSaver.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/CSettings.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/CTexturePack.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/CTimer.h
@@ -457,6 +470,7 @@ CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/gameobjects/col
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/gameobjects/movables/CEnemy.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/gameobjects/movables/CMovable.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/gameobjects/movables/CPlayer.h
+CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/interfaceitems/CInterfaceItem.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/managers/CGameManager.cpp
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/managers/CGameManager.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/managers/CWindowManager.h
@@ -481,6 +495,7 @@ CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: ../src/CSDLInterfa
 CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: ../src/CSettings.h
 CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: ../src/EApplicationStatus.h
 CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: ../src/Messages.h
+CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: ../src/interfaceitems/CInterfaceItem.h
 CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: ../src/managers/CSettingsManager.cpp
 CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: ../src/managers/CSettingsManager.h
 CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: ../src/managers/CWindowManager.h
@@ -491,6 +506,7 @@ CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o: ../src/CSDLInterface
 CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o: ../src/CSettings.h
 CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o: ../src/EApplicationStatus.h
 CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o: ../src/Messages.h
+CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o: ../src/interfaceitems/CInterfaceItem.h
 CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o: ../src/managers/CWindowManager.cpp
 CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o: ../src/managers/CWindowManager.h
 
