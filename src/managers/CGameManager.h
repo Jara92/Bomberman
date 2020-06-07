@@ -12,7 +12,7 @@
 #include "../CLevelLoader.h"
 #include "../EGameStatus.h"
 #include "../CTimer.h"
-#include "../CScoreManager.h"
+#include "../CScoreSaver.h"
 
 class CGameManager : public CWindowManager
 {
@@ -27,17 +27,13 @@ public:
     CGameManager & operator = (const CGameManager & other) = delete;
 
     /**
-     * Prepare game.
-     */
-    virtual void Init() override ;
-    /**
      * Run the game.
      */
     virtual EApplicationStatus Run() override ;
 
 protected:
     std::shared_ptr<CBoard> m_Board;
-    CScoreManager m_ScoreManager;
+    CScoreSaver m_ScoreManager;
     /** The board must be drawn shifted because of top menu. */
     CCoord m_BoardOffset;
     std::unique_ptr<CLevelLoader> m_LevelLoader;

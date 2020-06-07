@@ -116,63 +116,39 @@ bool CSDLInterface::RenderTexture(SDL_Texture *texture, CCoord location, CCoord 
     SDL_Rect targetRect = {static_cast<int>(location.m_X), static_cast<int>(location.m_Y),
                            static_cast<int>(size.m_X), static_cast<int>(size.m_Y)};
 
-    // TODO Debug
-    this->SetRenderColor(0, 0, 255, 255);
-    // this->RenderRectangle(&targetRect);
-    this->SetRenderColor(255, 0, 0, 255);
-
     return SDL_RenderCopy(this->m_Renderer, texture, NULL, &targetRect);
 }
 
 /*====================================================================================================================*/
 bool CSDLInterface::RenderText(const std::string &text, CCoord location, CCoord size, SDL_Colour color)
 {
-    TTF_Font *font = TTF_OpenFont((this->m_Settings->GetAssetsPath() + this->m_Font).c_str(), 48);
-    if (font == NULL)
-    {
-        return false;
-    }
+    // Load texture and get its default size.
+    CCoord defaultSize;
+    SDL_Texture *texture = this->LoadTextureFromText(text, defaultSize, color);
 
-    SDL_Surface *surfaceMessage = TTF_RenderText_Blended(font, (text).c_str(), color);
-    if (surfaceMessage == NULL)
-    {
-        return false;
-    }
-
-    SDL_Texture *message = SDL_CreateTextureFromSurface(this->m_Renderer, surfaceMessage);
-    if (message == NULL)
-    {
-        return false;
-    }
-
+    // Create rect for render.
     SDL_Rect Message_rect; //create a rect
-    Message_rect.x = static_cast<int>(location.m_X);  //controls the rect's x coordinate
-    Message_rect.y = static_cast<int>(location.m_Y); // controls the rect's y coordinte
+    Message_rect.x = location.GetFlooredX();
+    Message_rect.y = location.GetFlooredY();
+
     if (size.m_X != 0)
-    {
-        Message_rect.w = static_cast<int>(size.m_X);; // controls the width of the rect
-    } else
-    {
-        Message_rect.w = surfaceMessage->w; // controls the width of the rect
-    }
+    { Message_rect.w = size.GetFlooredX(); }
+    else
+    { Message_rect.w = defaultSize.GetFlooredX(); }
 
     if (size.m_Y != 0)
-    {
-        Message_rect.h = static_cast<int>(size.m_Y);; // controls the height of the rect
-    } else
-    {
-        Message_rect.h = surfaceMessage->h; // controls the height of the rect
-    }
+    { Message_rect.h = size.GetFlooredY(); }
+    else
+    { Message_rect.h = defaultSize.GetFlooredY(); }
 
-    bool success = SDL_RenderCopy(this->m_Renderer, message, NULL, &Message_rect) >= 0;
+    bool success = SDL_RenderCopy(this->m_Renderer, texture, NULL, &Message_rect) >= 0;
 
-    // Free surface and texture
-    TTF_CloseFont(font);
-    SDL_FreeSurface(surfaceMessage);
-    SDL_DestroyTexture(message);
+    // Delete texture
+    SDL_DestroyTexture(texture);
 
     return success;
 }
+
 /*====================================================================================================================*/
 void CSDLInterface::SetMenuScreenSize()
 {
@@ -181,6 +157,7 @@ void CSDLInterface::SetMenuScreenSize()
 
     this->UpdateWindowSize();
 }
+
 /*====================================================================================================================*/
 void CSDLInterface::SetGameScreenSize()
 {
@@ -189,14 +166,16 @@ void CSDLInterface::SetGameScreenSize()
 
     this->UpdateWindowSize();
 }
+
 /*====================================================================================================================*/
 void CSDLInterface::UpdateWindowSize()
 {
     SDL_SetWindowSize(this->m_Window, this->m_WindowWidth, this->m_WindowHeight);
     SDL_SetWindowPosition(this->m_Window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 }
+
 /*====================================================================================================================*/
-SDL_Texture *CSDLInterface::LoadTextureFromText(const std::string &text, CCoord & size, SDL_Color color) const
+SDL_Texture *CSDLInterface::LoadTextureFromText(const std::string &text, CCoord &size, SDL_Color color) const
 {
     TTF_Font *font = TTF_OpenFont((this->m_Settings->GetAssetsPath() + this->m_Font).c_str(), 48);
     if (font == NULL)

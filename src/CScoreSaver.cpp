@@ -4,17 +4,17 @@
 */
 
 
-#include "CScoreManager.h"
+#include "CScoreSaver.h"
 
-const std::string CScoreManager::TOP_SCORE_FILE_NAME = "score";
+const std::string CScoreSaver::TOP_SCORE_FILE_NAME = "score";
 
-unsigned int CScoreManager::GetTopScore() const
+unsigned int CScoreSaver::GetTopScore() const
 {
     //todo
     return 0;
 }
 /*====================================================================================================================*/
-bool CScoreManager::TrySetTopScore(std::size_t newScore)
+bool CScoreSaver::TrySetTopScore(std::size_t newScore)
 {
     //todo
     return true;

@@ -30,19 +30,13 @@ CGameManager::~CGameManager()
 }
 
 /*====================================================================================================================*/
-void CGameManager::Init()
-{
-
-}
-
-/*====================================================================================================================*/
 EApplicationStatus CGameManager::Run()
 {
     while (this->m_GameStatus != EGameStatus::GAME_STATUS_EXIT)
     {
         if(CWindowManager::Run() == EApplicationStatus::APPLICATION_STATUS_EXIT)
         {
-            return EApplicationStatus ::APPLICATION_STATUS_EXIT;
+            return EApplicationStatus ::APPLICATION_STATUS_MENU;
         }
 
         // read keyboard state
@@ -59,8 +53,7 @@ EApplicationStatus CGameManager::Run()
         }
     }
 
-    //return EApplicationStatus ::APPLICATION_STATUS_MENU;
-    return EApplicationStatus ::APPLICATION_STATUS_EXIT;
+    return EApplicationStatus ::APPLICATION_STATUS_MENU;
 }
 
 /*====================================================================================================================*/
@@ -351,6 +344,11 @@ void CGameManager::GlobalInput(const Uint8 *input)
 
         }
     }
+}
+
+void CGameManager::ProcessEvent(SDL_Event &e)
+{
+    CWindowManager::ProcessEvent(e);
 }
 
 

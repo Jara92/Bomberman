@@ -9,18 +9,18 @@
 #include <fstream>
 #include "CSettings.h"
 
-class CScoreManager
+class CScoreSaver
 {
 public:
-    CScoreManager(/*CSettings *settings*/)
+    CScoreSaver(/*CSettings *settings*/)
            /* : m_Settings(settings)*/
     {}
 
-    CScoreManager(const CScoreManager &other) = default;
+    CScoreSaver(const CScoreSaver &other) = default;
 
-    CScoreManager &operator=(const CScoreManager &other) = default;
+    CScoreSaver &operator=(const CScoreSaver &other) = default;
 
-    ~CScoreManager() = default;
+    ~CScoreSaver() = default;
 
 
     unsigned int GetTopScore() const;

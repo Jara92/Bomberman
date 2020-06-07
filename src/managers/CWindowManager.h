@@ -9,7 +9,9 @@
 #include "../EApplicationStatus.h"
 #include "../CGameClock.h"
 
-
+/**
+ * Class which manages content rendering.
+ */
 class CWindowManager
 {
 public:
@@ -23,12 +25,6 @@ public:
     ~CWindowManager() = default;
     CWindowManager (const CWindowManager & other) = delete;
     CWindowManager & operator = (const CWindowManager & other) = delete;
-
-    /**
-     * Init window.
-     */
-    virtual void Init()
-    {}
 
     /**
      * Run window.

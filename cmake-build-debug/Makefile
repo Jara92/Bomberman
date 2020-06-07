@@ -312,32 +312,32 @@ src/CSDLInterface.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.s
 .PHONY : src/CSDLInterface.cpp.s
 
-src/CScoreManager.o: src/CScoreManager.cpp.o
+src/CScoreSaver.o: src/CScoreSaver.cpp.o
 
-.PHONY : src/CScoreManager.o
+.PHONY : src/CScoreSaver.o
 
 # target to build an object file
-src/CScoreManager.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CScoreManager.cpp.o
-.PHONY : src/CScoreManager.cpp.o
+src/CScoreSaver.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CScoreSaver.cpp.o
+.PHONY : src/CScoreSaver.cpp.o
 
-src/CScoreManager.i: src/CScoreManager.cpp.i
+src/CScoreSaver.i: src/CScoreSaver.cpp.i
 
-.PHONY : src/CScoreManager.i
+.PHONY : src/CScoreSaver.i
 
 # target to preprocess a source file
-src/CScoreManager.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CScoreManager.cpp.i
-.PHONY : src/CScoreManager.cpp.i
+src/CScoreSaver.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CScoreSaver.cpp.i
+.PHONY : src/CScoreSaver.cpp.i
 
-src/CScoreManager.s: src/CScoreManager.cpp.s
+src/CScoreSaver.s: src/CScoreSaver.cpp.s
 
-.PHONY : src/CScoreManager.s
+.PHONY : src/CScoreSaver.s
 
 # target to generate assembly for a file
-src/CScoreManager.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CScoreManager.cpp.s
-.PHONY : src/CScoreManager.cpp.s
+src/CScoreSaver.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CScoreSaver.cpp.s
+.PHONY : src/CScoreSaver.cpp.s
 
 src/CTexturePack.o: src/CTexturePack.cpp.o
 
@@ -1017,9 +1017,9 @@ help:
 	@echo "... src/CSDLInterface.o"
 	@echo "... src/CSDLInterface.i"
 	@echo "... src/CSDLInterface.s"
-	@echo "... src/CScoreManager.o"
-	@echo "... src/CScoreManager.i"
-	@echo "... src/CScoreManager.s"
+	@echo "... src/CScoreSaver.o"
+	@echo "... src/CScoreSaver.i"
+	@echo "... src/CScoreSaver.s"
 	@echo "... src/CTexturePack.o"
 	@echo "... src/CTexturePack.i"
 	@echo "... src/CTexturePack.s"

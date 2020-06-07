@@ -131,10 +131,10 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CSDLInterface.h">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CScoreManager.cpp">
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CScoreSaver.cpp">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CScoreManager.h">
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CScoreSaver.h">
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CTexturePack.cpp">
