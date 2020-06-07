@@ -50,6 +50,15 @@ public:
     virtual void SetLocation(CCoord location)
     { this->m_Location = location; }
 
+    virtual void MouseButtonEventHandler(SDL_MouseButtonEvent & e)
+    {}
+
+    virtual void MouseMoveEventHandler(SDL_MouseMotionEvent & e)
+    {}
+
+    virtual void MouseEventHandler(SDL_Event & e)
+    {}
+
     /**
      * Set item size.
      * @param size New size.

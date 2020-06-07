@@ -18,7 +18,7 @@ public:
      * @param interface Interface to be used.
      */
     explicit CWindowManager(CSDLInterface *interface)
-    : m_Interface(interface)
+    : m_Interface(interface), m_NextApplicationState(EApplicationStatus::APPLICATON_STATUS_NONE)
     {}
     ~CWindowManager() = default;
     CWindowManager (const CWindowManager & other) = delete;
@@ -37,9 +37,8 @@ public:
 
 protected:
     CSDLInterface * m_Interface;
+    EApplicationStatus m_NextApplicationState;
     CGameClock m_Clock;
-
-    bool IsClosed() const;
 
     /**
      * Update window state.
@@ -50,7 +49,14 @@ protected:
     /**
      * Check and handle events
      */
-    virtual void UpdateEvents() = 0;
+    virtual void UpdateEvents();
+
+    /**
+     * Proccess event by type.
+     * @param e Event.
+     * @return Next application state.
+     */
+    virtual void ProcessEvent(SDL_Event & e);
 
     /**
      * Draw window.

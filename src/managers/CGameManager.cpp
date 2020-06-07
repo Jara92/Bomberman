@@ -188,6 +188,8 @@ void CGameManager::Update(int deltaTime)
 /*====================================================================================================================*/
 void CGameManager::UpdateEvents()
 {
+    CWindowManager::UpdateEvents();
+
     this->m_Board->UpdatePhysics();
 
     // If game is running.

@@ -28,13 +28,14 @@ public:
 
 protected:
     bool m_IsRunning;
-    EApplicationStatus m_NextApplicationState;
 
     std::vector<std::unique_ptr<CInterfaceItem>> m_InterfaceItems;
 
     virtual void Update(int deltaTime) override ;
 
     virtual void UpdateEvents() override ;
+
+    virtual void ProcessEvent(SDL_Event & e) override ;
 
     virtual void Draw() const override ;
 };

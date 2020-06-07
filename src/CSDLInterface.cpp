@@ -173,7 +173,7 @@ bool CSDLInterface::RenderText(const std::string &text, CCoord location, CCoord 
 
     return success;
 }
-
+/*====================================================================================================================*/
 void CSDLInterface::SetMenuScreenSize()
 {
     this->m_WindowWidth = this->m_Settings->GetMenuScreenWidth();
@@ -181,7 +181,7 @@ void CSDLInterface::SetMenuScreenSize()
 
     this->UpdateWindowSize();
 }
-
+/*====================================================================================================================*/
 void CSDLInterface::SetGameScreenSize()
 {
     this->m_WindowWidth = this->m_Settings->GetGameScreenWidth();
@@ -189,13 +189,13 @@ void CSDLInterface::SetGameScreenSize()
 
     this->UpdateWindowSize();
 }
-
+/*====================================================================================================================*/
 void CSDLInterface::UpdateWindowSize()
 {
     SDL_SetWindowSize(this->m_Window, this->m_WindowWidth, this->m_WindowHeight);
     SDL_SetWindowPosition(this->m_Window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 }
-
+/*====================================================================================================================*/
 SDL_Texture *CSDLInterface::LoadTextureFromText(const std::string &text, CCoord & size, SDL_Color color) const
 {
     TTF_Font *font = TTF_OpenFont((this->m_Settings->GetAssetsPath() + this->m_Font).c_str(), 48);

@@ -41,45 +41,44 @@ public:
      * @param deltaTime Delta time.
      */
     virtual void Update(int deltaTime)
-    {
-        if(false && this->m_ClickCallBack)// todo click
-        {
-            this->m_ClickCallBack();
-        }
-    }
+    {}
 
     /**
      * Draw item.
      * @param interface Interface to be used.
      */
-    virtual void Draw(CSDLInterface *interface)
-    {
-        if (this->m_IsHovering)
-        { this->m_HoveredText->Draw(interface); }
-        else this->m_Text->Draw(interface);
-    }
+    virtual void Draw(CSDLInterface *interface);
 
-    virtual void SetLocation(CCoord location) override
-    {
-        CInterfaceItem::SetLocation(location);
+    virtual void SetLocation(CCoord location) override;
 
-        this->m_Text->SetLocation(location);
-        this->m_HoveredText->SetLocation(location);
-    }
+    virtual void SetSize(CCoord size) override;
 
-    virtual void SetSize(CCoord size) override
-    {
-        CInterfaceItem::SetSize(size);
-
-        this->m_Text->SetSize(size);
-        this->m_HoveredText->SetSize(size);
-    }
+    /**
+     * Process mouse events.
+     * @param e Mouse event to be processed.
+     */
+    virtual void MouseEventHandler(SDL_Event &e) override;
 
 protected:
+    /** Text to be rendered. */
     std::unique_ptr<CText> m_Text;
+    /** Text to be rendered in hover mode. */
     std::unique_ptr<CText> m_HoveredText;
+    /** Function to be called on click event.*/
     std::function<void(void)> m_ClickCallBack;
 
+    /** Is player hovering this object? */
     bool m_IsHovering;
+
+    virtual void MouseButtonEventHandler(SDL_MouseButtonEvent &e) override;
+
+    virtual void MouseMoveEventHandler(SDL_MouseMotionEvent &e) override;
+
+    /**
+     * Is this button colliding with mouse?
+     * @param mouseLocation Current mouse location.
+     * @return True - Colliding.
+     */
+    bool MouseCollision(CCoord mouseLocation) const ;
 };
 

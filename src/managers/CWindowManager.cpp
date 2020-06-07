@@ -6,30 +6,8 @@
 
 #include "CWindowManager.h"
 
-bool CWindowManager::IsClosed() const
-{
-    // Check events
-    SDL_Event e;
-    while (SDL_PollEvent(&e) != 0)
-    {
-        // Close window
-        if (e.type == SDL_QUIT)
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
 EApplicationStatus CWindowManager::Run()
 {
-    // Did user close this window?
-    if(this->IsClosed())
-    {
-        return EApplicationStatus ::APPLICATION_STATUS_EXIT;
-    }
-
     // Tick event to update game clock
     this->m_Clock.Tick();
 
@@ -45,6 +23,28 @@ EApplicationStatus CWindowManager::Run()
     // Wait for few miliseconds to draw cca 60 frames per second
     this->m_Interface->Wait(this->m_Clock.GetDelay());
 
-    return EApplicationStatus ::APPLICATON_STATUS_NONE;
+    return this->m_NextApplicationState;
+}
+
+void CWindowManager::UpdateEvents()
+{
+    // Proccess event.
+    SDL_Event e;
+    while (SDL_PollEvent(&e) != 0)
+    {
+        this->ProcessEvent(e);
+    }
+}
+
+void CWindowManager::ProcessEvent(SDL_Event &e)
+{
+    // Check events
+    switch (e.type)
+    {
+        case SDL_QUIT:
+            this->m_NextApplicationState  = EApplicationStatus::APPLICATION_STATUS_EXIT;
+        default:
+            return;
+    }
 }
 
