@@ -13,6 +13,10 @@ CSettingsManager::CSettingsManager(CSDLInterface *interface) : CWindowManager(in
     CCoord itemSize;
     unsigned int padding = 10;
 
+    SDL_Colour defaultFontColor{255, 255, 255, 255};
+    SDL_Colour selectedFontColor{255, 0, 0, 255};
+    SDL_Color hoverFontColor{255, 128, 0, 255};
+
     // Add select box title
     this->m_InterfaceItems.push_back(
             std::make_unique<CText>(interface, CCoord(0, 0), "Game screen resolution", CCoord(0, 64)));
@@ -26,8 +30,8 @@ CSettingsManager::CSettingsManager(CSDLInterface *interface) : CWindowManager(in
             std::make_unique<CSelectBox>(interface, selectBoxLocation,
                                          this->m_Interface->GetWindowSize() - selectBoxLocation, 48,
                                          std::vector<std::string>{{"1200x500"},
-                                                                  {"500x200"}}, SDL_Colour{255, 255, 255, 255},
-                                         SDL_Color{255, 128, 0, 255}, SDL_Colour{255, 0, 0, 255}));
+                                                                  {"500x200"}}, defaultFontColor,
+                                         hoverFontColor, selectedFontColor));
     // TODO add sound
 }
 
