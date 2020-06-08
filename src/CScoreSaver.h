@@ -32,7 +32,6 @@ public:
     bool TrySetTopScore(std::size_t newScore);
 
 protected:
-    static const std::string TOP_SCORE_FILE_NAME;
- //   CSettings *m_Settings;
+
 };
 

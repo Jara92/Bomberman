@@ -204,33 +204,6 @@ src/CBoard.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CBoard.cpp.s
 .PHONY : src/CBoard.cpp.s
 
-src/CGameClock.o: src/CGameClock.cpp.o
-
-.PHONY : src/CGameClock.o
-
-# target to build an object file
-src/CGameClock.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CGameClock.cpp.o
-.PHONY : src/CGameClock.cpp.o
-
-src/CGameClock.i: src/CGameClock.cpp.i
-
-.PHONY : src/CGameClock.i
-
-# target to preprocess a source file
-src/CGameClock.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CGameClock.cpp.i
-.PHONY : src/CGameClock.cpp.i
-
-src/CGameClock.s: src/CGameClock.cpp.s
-
-.PHONY : src/CGameClock.s
-
-# target to generate assembly for a file
-src/CGameClock.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CGameClock.cpp.s
-.PHONY : src/CGameClock.cpp.s
-
 src/CLevelLoader.o: src/CLevelLoader.cpp.o
 
 .PHONY : src/CLevelLoader.o
@@ -924,9 +897,6 @@ help:
 	@echo "... src/CBoard.o"
 	@echo "... src/CBoard.i"
 	@echo "... src/CBoard.s"
-	@echo "... src/CGameClock.o"
-	@echo "... src/CGameClock.i"
-	@echo "... src/CGameClock.s"
 	@echo "... src/CLevelLoader.o"
 	@echo "... src/CLevelLoader.i"
 	@echo "... src/CLevelLoader.s"

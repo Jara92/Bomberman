@@ -10,13 +10,9 @@
  */
 enum class EGameStatus
 {
-    /**
-     * The game is running. Players are able to move and die.
-     */
+    /** The game is running. Players are able to move and die. */
     GAMESTATUS_RUNNING = 0,
-    /**
-     * Game is paused and all update methods are stopped.
-     */
+    /** Game is paused and all update methods are stopped.*/
     GAMESTATUS_PAUSED = 1,
     /**
      * Current round is over because the player was killed.
@@ -29,13 +25,9 @@ enum class EGameStatus
      * Next round will be loaded.
      */
     GAMESTATUS_NEXT_ROUND = 3,
-    /**
-     * Player is completely dead.
-     */
+    /** Player is completely dead. */
     GAME_STATUS_GAME_OVER = 4,
-    /**
-     * Game is over and the player want to leave it.
-     */
+    /** Game is over and the player want to leave it. */
     GAME_STATUS_EXIT = 5
 };
 

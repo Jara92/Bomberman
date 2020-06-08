@@ -41,11 +41,9 @@ protected:
     std::string m_MapFileName;
     std::string m_LevelFileName;
     /* Saved map size */
-    static const size_t FILE_MAP_WIDTH = 24;
-    static const size_t FILE_MAP_HEIGHT = 13;
+    static const size_t FILE_MAP_WIDTH = 24, FILE_MAP_HEIGHT = 13;
     /* Real map size (Real map is smaller because the map is saved as binary file. I have to remember which bits are valid) */
-    static const size_t MAP_WIDTH = 23;
-    static const size_t MAP_HEIGHT = 13;
+    static const size_t MAP_WIDTH = 23, MAP_HEIGHT = 13;
 
     static const size_t MAX_PLAYERS = 2;
     /** How many properties collectible item should have? */
@@ -55,9 +53,8 @@ protected:
 
     CSDLInterface *m_Interface;
 
-    /* Texture packs used for dynamically added objects. */
-    std::vector<std::shared_ptr<CTexturePack>> m_EnemyTexturePacks;
-    std::vector<std::shared_ptr<CTexturePack>> m_CollectibleTexturePacks;
+    /** Texture packs used for dynamically added objects. */
+    std::vector<std::shared_ptr<CTexturePack>> m_EnemyTexturePacks, m_CollectibleTexturePacks;
 
     /**
      * Get random location in game board.

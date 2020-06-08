@@ -22,8 +22,8 @@ public:
      * @param assetsPath Assets directory path.
      * @param dataPath  Data directory path.
      */
-    CSettings(CCoord<unsigned int> gameScreenSize = CCoord<unsigned int>(1150,600),
-              CCoord<unsigned int> menuScreenSize = CCoord<unsigned int>(500,500),
+    CSettings(CCoord<unsigned int> gameScreenSize = CCoord<unsigned int>(1150, 600),
+              CCoord<unsigned int> menuScreenSize = CCoord<unsigned int>(500, 500),
               CCoord<unsigned int> offset = CCoord<unsigned int>(0, 0),
               unsigned int screenFPS = 60,
               bool sound = true, bool debugMode = false, std::string assetsPath = "./examples/assets/",
@@ -84,19 +84,9 @@ public:
     { return this->m_Offset; }
 
 protected:
-    /*  unsigned int m_GameScreenWidth;
-      unsigned int m_GameScreenHeight;*/
-    CCoord<unsigned int> m_GameScreenSize;
-
-    /*unsigned int m_MenuScreenWidth;
-    unsigned int m_MenuScreenHeight;*/
-    CCoord<unsigned int> m_MenuScreenSize;
-
-    bool m_Sound;
-    bool m_DebugMode;
-
-    std::string m_AssetsPath;
-    std::string m_DataPath;
+    CCoord<unsigned int> m_GameScreenSize, m_MenuScreenSize;
+    bool m_Sound, m_DebugMode;
+    std::string m_AssetsPath, m_DataPath;
     CCoord<unsigned int> m_Offset;
 };
 

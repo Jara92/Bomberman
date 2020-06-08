@@ -44,9 +44,7 @@ public:
     bool InitInterface();
 
     void ReloadSettings()
-    {
-
-    }
+    {    }
 
     /**
      * Set window size for Menu.
@@ -67,9 +65,7 @@ public:
     { return this->m_WindowSize; }
 
     std::shared_ptr<CSettings> GetSettings()
-    {
-        return this->m_Settings;
-    }
+    {return this->m_Settings;    }
 
     /**
      * Load an image into a render texture

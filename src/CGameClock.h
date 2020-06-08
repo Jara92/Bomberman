@@ -22,9 +22,7 @@ public:
      */
     CGameClock(int requiredFPS = 60)
             : m_TicksPerFrame(1000 / requiredFPS)
-    {
-        this->Reset();
-    }
+    { this->Reset(); }
 
     /**
      * Rerun clock status.
@@ -46,18 +44,14 @@ public:
         Uint32 currentTime = SDL_GetTicks();
 
         // Check ticks validity because tick value wraps if the program runs for more than ~49 days.
-        if(currentTime >= UINT32_MAX - 100)
-        {
-            throw std::runtime_error(MAXIMUM_RUNTIME);
-        }
+        if (currentTime >= UINT32_MAX - 100)
+        { throw std::runtime_error(MAXIMUM_RUNTIME); }
 
         this->m_DeltaTime = static_cast<int>(currentTime - this->m_LastTicks);
 
         // Calculate FPS
-        if(this->m_DeltaTime != 0)
-        {
-            this->m_FPS = 1000.f / this->m_DeltaTime;
-        }
+        if (this->m_DeltaTime != 0)
+        { this->m_FPS = 1000.f / this->m_DeltaTime; }
 
         // Update lastticks value
         this->m_LastTicks = currentTime;
@@ -76,9 +70,7 @@ public:
     int GetDelay() const
     {
         if (SDL_GetTicks() - this->m_LastTicks < this->m_TicksPerFrame)
-        {
-            return static_cast<int>(this->m_TicksPerFrame - (SDL_GetTicks() - this->m_LastTicks));
-        }
+        { return static_cast<int>(this->m_TicksPerFrame - (SDL_GetTicks() - this->m_LastTicks)); }
 
         return 0;
     }

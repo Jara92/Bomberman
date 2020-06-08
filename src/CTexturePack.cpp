@@ -23,9 +23,7 @@ CTexturePack::CTexturePack(CSDLInterface *interface,
 CTexturePack::~CTexturePack()
 {
     for (auto i = this->m_Animations.begin(); i != this->m_Animations.end(); i++)
-    {
-       delete (i->second);
-    }
+    {delete (i->second);    }
 }
 /*====================================================================================================================*/
 SDL_Texture *CTexturePack::GetTexture(ETextureType textureType, unsigned int * index) const
@@ -34,9 +32,7 @@ SDL_Texture *CTexturePack::GetTexture(ETextureType textureType, unsigned int * i
 
     // Return animation texture by index if animation exists
     if(animation != this->m_Animations.end())
-    {
-        return animation->second->GetTexture(index);
-    }
+    {return animation->second->GetTexture(index);    }
 
     // SDL_Texture * is C pointer
     return NULL;

@@ -73,10 +73,6 @@ CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/gameobjects/movables/CEnemy.h
 CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/gameobjects/movables/CMovable.h
 CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/gameobjects/movables/CPlayer.h
 
-CMakeFiles/bomberman.dir/src/CGameClock.cpp.o: ../src/CGameClock.cpp
-CMakeFiles/bomberman.dir/src/CGameClock.cpp.o: ../src/CGameClock.h
-CMakeFiles/bomberman.dir/src/CGameClock.cpp.o: ../src/Messages.h
-
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/CAnimation.h
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/CBoard.h
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/CControls.h

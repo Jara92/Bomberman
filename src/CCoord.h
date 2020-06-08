@@ -99,13 +99,11 @@ public:
      * @param other Other Coord.
      * @return Distance between two points.
      */
-    double CalcDistnance(const CCoord &other) const;
-
-   /* int GetFlooredX() const
-    { return static_cast<int>(this->m_X); }
-
-    int GetFlooredY() const
-    { return static_cast<int>(this->m_Y); }*/
+    double CalcDistnance(const CCoord &other) const
+    {
+        return sqrt(
+                ((this->m_X - other.m_X) * (this->m_X - other.m_X)) + ((this->m_Y - other.m_Y) * (this->m_Y - other.m_Y)));
+    }
 
     /**
      * Convert Coord to CCoord<double>
@@ -131,21 +129,16 @@ public:
                                     static_cast<unsigned int>(std::abs(std::floor(this->m_Y))));
     }
 
-    /** Coordinates */
-    T m_X;
-    T m_Y;
+    T m_X, m_Y;
 };
 
 template<class T>
 bool CCoord<T>::operator<(const CCoord &other) const
 {
     if (this->m_X < other.m_X)
-    {
-        return true;
-    } else if (this->m_X == other.m_X && this->m_Y < other.m_Y)
-    {
-        return true;
-    }
+    { return true; }
+    else if (this->m_X == other.m_X && this->m_Y < other.m_Y)
+    { return true; }
 
     return false;
 }
@@ -154,9 +147,7 @@ template<class T>
 bool CCoord<T>::operator==(const CCoord &other) const
 {
     if (this->m_X == other.m_X && this->m_Y == other.m_Y)
-    {
-        return true;
-    }
+    { return true; }
 
     return false;
 }
@@ -168,12 +159,5 @@ bool CCoord<T>::AlmostEqual(const CCoord &other) const
     CCoord otherCoord = CCoord(floor(other.m_X), floor(other.m_Y));
 
     return (thisCoord == otherCoord);
-}
-
-template<class T>
-double CCoord<T>::CalcDistnance(const CCoord &other) const
-{
-    return sqrt(
-            ((this->m_X - other.m_X) * (this->m_X - other.m_X)) + ((this->m_Y - other.m_Y) * (this->m_Y - other.m_Y)));
 }
 

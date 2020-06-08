@@ -18,11 +18,10 @@ CCoord<unsigned int> CLevelLoader::GetRandomBoardLocation(std::shared_ptr<CBoard
 {
     // Random number generator.
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine randomEngine(seed);
+    std::default_random_engine random(seed);
 
     // Return random location on the board.
-    return CCoord<unsigned int>((randomEngine() % (board->GetBoardSize().m_X)),
-                                (randomEngine() % (board->GetBoardSize().m_Y)));
+    return CCoord<unsigned int>((random() % (board->GetBoardSize().m_X)), (random() % (board->GetBoardSize().m_Y)));
 }
 
 /*====================================================================================================================*/
@@ -57,9 +56,7 @@ std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, const std::shar
 
     return std::make_shared<CBoard>(settings, map, players,
                                     CCoord<unsigned int>(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT),
-                                    groundObject,
-                                    bombTexturePack, fireTexturePack,
-                                    cellSize);
+                                    groundObject, bombTexturePack, fireTexturePack, cellSize);
 }
 
 /*====================================================================================================================*/
@@ -68,9 +65,7 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
     std::map<ETextureType, const std::vector<std::string>> textures
             {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/SolidBlock.png"}}}};
 
-    std::shared_ptr<CTexturePack> texturePack =
-            std::make_shared<CTexturePack>(this->m_Interface,
-                                           textures);
+    std::shared_ptr<CTexturePack> texturePack = std::make_shared<CTexturePack>(this->m_Interface, textures);
     // create reference wall to make copies
     CWall wall(texturePack);
 
@@ -79,9 +74,7 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
     map.resize(CLevelLoader::MAP_WIDTH);
 
     for (size_t i = 0; i < map.size(); i++)
-    {
-        map[i].resize(CLevelLoader::MAP_HEIGHT, nullptr);
-    }
+    { map[i].resize(CLevelLoader::MAP_HEIGHT, nullptr); }
 
     size_t row = 0, col = 0;
     std::ifstream fileReader(this->m_Interface->GetSettings()->GetDataPath() + this->m_MapFileName,
@@ -89,9 +82,7 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
 
     // Is file reader ok?
     if (!fileReader || !fileReader.is_open() || fileReader.eof() || fileReader.bad())
-    {
-        throw std::ios::failure(MESSAGE_MAP_NOT_FOUND);
-    }
+    { throw std::ios::failure(MESSAGE_MAP_NOT_FOUND); }
 
     unsigned char input = '\0';
     while ((fileReader >> std::noskipws >> input))
@@ -103,9 +94,7 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
             {
                 // i-bite=1 -> Build wall on current position
                 if (input >> (7 - i) & 1)
-                {
-                    map[static_cast<int>(col * 8 + i)][row] = new CWall(wall);
-                }
+                { map[static_cast<int>(col * 8 + i)][row] = new CWall(wall); }
             }
 
             // Increment col with every readed byte.
@@ -120,9 +109,7 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
 
                 // End if my map is full.
             else if (row >= FILE_MAP_HEIGHT)
-            {
-                break;
-            }
+            { break; }
         }
     }
 
@@ -136,10 +123,10 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
 {
     // count = 2; // todo remove
     CControls *controls[MAX_PLAYERS] = {
-            new CControls(SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A,
-                          SDL_SCANCODE_D, SDL_SCANCODE_SPACE, SDL_SCANCODE_C),
-            new CControls(SDL_SCANCODE_I, SDL_SCANCODE_K, SDL_SCANCODE_J,
-                          SDL_SCANCODE_L, SDL_SCANCODE_N, SDL_SCANCODE_M)
+            new CControls(SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A, SDL_SCANCODE_D,
+                          SDL_SCANCODE_SPACE, SDL_SCANCODE_C),
+            new CControls(SDL_SCANCODE_I, SDL_SCANCODE_K, SDL_SCANCODE_J, SDL_SCANCODE_L,
+                          SDL_SCANCODE_N, SDL_SCANCODE_M)
     };
 
     // Setup texturepack for the players. // TODO second player should have different texture color.
@@ -199,16 +186,13 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
     {
         players.push_back(
                 new CPlayer(std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i], false, CCoord<>(1, 2)),
-                            startingLocation[i], CCoord<>(0.5, 0.75),
-                            controls[i]));
+                            startingLocation[i], CCoord<>(0.5, 0.75), controls[i]));
         controls[i] = nullptr;
     }
 
     // delete unused objects
     for (size_t i = 0; i < CLevelLoader::MAX_PLAYERS; i++)
-    {
-        delete controls[i];
-    }
+    { delete controls[i]; }
 
     return players;
 }
@@ -226,9 +210,8 @@ void CLevelLoader::GenerateObstacles(std::shared_ptr<CBoard> &board, size_t leve
         // Generate random location until the location is free.
         CCoord<unsigned int> random;
         do
-        {
-            random = this->GetRandomBoardLocation(board);
-        } while (!board->PositionFree(random) || !board->PlayersAreaFree(random));
+        { random = this->GetRandomBoardLocation(board); }
+        while (!board->PositionFree(random) || !board->PlayersAreaFree(random));
 
         board->m_Map[static_cast<int>(random.m_X)][static_cast<int>(random.m_Y)] = new CWall(texturePack,
                                                                                              CCoord<>(1, 1),
@@ -245,9 +228,7 @@ std::shared_ptr<CGround> CLevelLoader::LoadGround() const
     std::map<ETextureType, const std::vector<std::string>> textures
             {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/BackgroundTile.png"}}}};
 
-    std::shared_ptr<CTexturePack> texturePack =
-            std::make_shared<CTexturePack>(this->m_Interface,
-                                           textures);
+    std::shared_ptr<CTexturePack> texturePack =std::make_shared<CTexturePack>(this->m_Interface,textures);
     // create reference wall to make copies
     return std::make_shared<CGround>(CGround(texturePack));
 }
@@ -260,8 +241,7 @@ std::shared_ptr<CTexturePack> CLevelLoader::LoadBombTexturePack() const
                                                                     {"Bomb/Bomb_f02.png"},
                                                                     {"Bomb/Bomb_f03.png"}}}};
 
-    return std::make_shared<CTexturePack>(this->m_Interface,
-                                          textures, true, CCoord<>(0.65, 0.65));
+    return std::make_shared<CTexturePack>(this->m_Interface,textures, true, CCoord<>(0.65, 0.65));
 }
 
 /*====================================================================================================================*/
@@ -274,8 +254,7 @@ std::shared_ptr<CTexturePack> CLevelLoader::LoadFireTexturePack() const
                                                                     {"Flame/Flame_f03.png"},
                                                                     {"Flame/Flame_f04.png"}}}};
 
-    return std::make_shared<CTexturePack>(this->m_Interface,
-                                          textures, true, CCoord<>(0.65, 0.65));
+    return std::make_shared<CTexturePack>(this->m_Interface,textures, true, CCoord<>(0.65, 0.65));
 }
 
 /*====================================================================================================================*/
@@ -326,14 +305,11 @@ std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadCollectiblesTexture
 void CLevelLoader::LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level, bool loadCollectibles)
 {
     std::ifstream fileReader(
-            (this->m_Interface->GetSettings()->GetDataPath() + this->m_LevelFileName) + std::to_string(level),
-            std::ios::in);
+            (this->m_Interface->GetSettings()->GetDataPath() + this->m_LevelFileName) + std::to_string(level),std::ios::in);
 
     // Is file reader ok?
     if (!fileReader || !fileReader.is_open() || fileReader.eof() || fileReader.bad())
-    {
-        throw std::ios::failure(MESSAGE_LEVEL_NOT_FOUND);
-    }
+    {throw std::ios::failure(MESSAGE_LEVEL_NOT_FOUND);    }
 
     // Read all lines and crate object for every line
     std::string line;
@@ -363,9 +339,7 @@ std::string
 CLevelLoader::ReadProperty(const std::vector<std::string> &input, std::vector<std::string>::size_type index) const
 {
     if (index >= input.size())
-    {
-        throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND);
-    }
+    {throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND);    }
 
     return input[index];
 }
@@ -379,9 +353,7 @@ void CLevelLoader::ReorganizeCollectibles(std::shared_ptr<CBoard> &board)
         // Generate random location until the CWall at this location is null or indestructible or already has collectable object.
         CCoord<unsigned int> random;
         do
-        {
-            random = this->GetRandomBoardLocation(board);
-        } while (!board->m_Map[random.m_X][random.m_Y] ||
+        {random = this->GetRandomBoardLocation(board);        } while (!board->m_Map[random.m_X][random.m_Y] ||
                  !board->m_Map[random.m_X][random.m_Y]->IsDestructible() ||
                  board->m_Map[random.m_X][random.m_Y]->HasCollectible());
 
@@ -511,12 +483,4 @@ bool CLevelLoader::ReadItem(std::shared_ptr<CBoard> &board, const std::vector<st
 
     return true;
 }
-
-
-
-
-
-
-
-
 

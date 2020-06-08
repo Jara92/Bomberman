@@ -34,9 +34,7 @@ public:
         bool done = this->Done();
 
         if (done && this->m_Callback)
-        {
-            this->m_Callback();
-        }
+        { this->m_Callback(); }
 
         return done;
     }
@@ -57,12 +55,9 @@ public:
         this->m_IsOn = true;
 
         if (initValue == 0)
-        {
-            initValue = this->m_InitTime;
-        } else
-        {
-            this->m_InitTime = initValue;
-        }
+        { initValue = this->m_InitTime; }
+        else
+        { this->m_InitTime = initValue; }
 
         this->m_Time = initValue;
     }
@@ -89,7 +84,7 @@ public:
      * Turn on timer.
      */
     void Continue()
-    {this->m_IsOn = true;}
+    { this->m_IsOn = true; }
 
     /**
      * Is this timer running?
@@ -109,8 +104,7 @@ public:
     { return this->m_Callback; }
 
 protected:
-    int m_Time;
-    int m_InitTime;
+    int m_Time, m_InitTime;
     bool m_IsOn;
 
     std::function<void(void)> m_Callback;
