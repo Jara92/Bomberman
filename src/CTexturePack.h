@@ -24,7 +24,7 @@ public:
      * @param textureSize Texture size
      */
     CTexturePack(CSDLInterface *interface, std::map<ETextureType, const std::vector<std::string> > &textures,
-                 bool isCentered = true, CCoord <>textureSize = CCoord<>(1, 1));
+                 bool isCentered = true, CCoord<> textureSize = CCoord<>(1, 1));
 
     /* I dont want to allow copying this objekt. It does not make sense to copy object which could not be changed.
      * It is better to use pointer to 1 common objekt to save memory. */
@@ -41,7 +41,7 @@ public:
      */
     SDL_Texture *GetTexture(ETextureType textureType, unsigned int *index) const;
 
-    CCoord <>GetTextureSize() const
+    CCoord<> GetTextureSize() const
     { return this->m_TextureSize; }
 
     /**
@@ -53,7 +53,7 @@ public:
 
 protected:
     std::map<ETextureType, CAnimation *> m_Animations;
-    CCoord <>m_TextureSize;
+    CCoord<> m_TextureSize;
     /** Is this texture centered in target cell? */
     bool m_IsCentered;
 };

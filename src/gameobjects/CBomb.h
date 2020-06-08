@@ -65,7 +65,6 @@ protected:
     CPlayer *m_Owner;
     /** Every bomb is passable for owner until the player left bombs cell. */
     bool m_IsPassableForOwner;
-    unsigned int m_ExplosionDelay;
-    unsigned int m_ExplosionCounter;
+    unsigned int m_ExplosionDelay, m_ExplosionCounter;
 };
 
