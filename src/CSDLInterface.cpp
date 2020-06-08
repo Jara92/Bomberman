@@ -9,7 +9,7 @@
 
 
 CSDLInterface::CSDLInterface(const char *title, std::shared_ptr<CSettings> settings, const std::string &defaultFont)
-        : m_WindowWidth(settings->GetMenuScreenWidth()), m_WindowHeight(settings->GetMenuScreenHeight()),
+        : m_WindowWidth(settings->GetMenuScreenSize().m_X), m_WindowHeight(settings->GetMenuScreenSize().m_Y),
           m_WindowTitle(title), m_Settings(std::move(settings)), m_Font(defaultFont), m_Window(nullptr),
           m_Renderer(nullptr)
 {}
@@ -52,7 +52,7 @@ bool CSDLInterface::InitInterface()
 
     // Create an application window with the following settings:
     this->m_Window = SDL_CreateWindow(
-            this->m_WindowTitle,                   // window title
+            this->m_WindowTitle.c_str(),                   // window title
             SDL_WINDOWPOS_CENTERED,              // initial x position
             SDL_WINDOWPOS_CENTERED,              // initial y position
             this->m_WindowWidth,                   // width, in pixels
@@ -81,14 +81,6 @@ bool CSDLInterface::InitInterface()
     }
 
     return true;
-}
-
-/*====================================================================================================================*/
-void CSDLInterface::UpdateSettings(std::shared_ptr<CSettings> settings)
-{
-    // todo remove
-    this->m_Settings = settings;
-    SDL_SetWindowSize(this->m_Window, settings->GetGameScreenWidth(), settings->GetGameScreenHeight());
 }
 
 /*====================================================================================================================*/
@@ -124,7 +116,7 @@ bool CSDLInterface::RenderText(const std::string &text, CCoord<> location, CCoor
 {
     // Load texture and get its default size.
     CCoord<unsigned int> defaultSize;
-    SDL_Texture *texture = this->LoadTextureFromText(text, defaultSize, color);
+    SDL_Texture *texture = this->LoadTextTexture(text, defaultSize, color);
 
     // Create rect for render.
     SDL_Rect Message_rect; //create a rect
@@ -153,11 +145,11 @@ bool CSDLInterface::RenderText(const std::string &text, CCoord<> location, CCoor
 void CSDLInterface::SetMenuScreenSize()
 {
     // Change window size if new size is different.
-    if (this->m_WindowWidth != this->m_Settings->GetMenuScreenWidth() ||
-        this->m_WindowHeight != this->m_Settings->GetMenuScreenHeight())
+    if (this->m_WindowWidth != this->m_Settings->GetMenuScreenSize().m_X ||
+        this->m_WindowHeight != this->m_Settings->GetMenuScreenSize().m_Y)
     {
-        this->m_WindowWidth = this->m_Settings->GetMenuScreenWidth();
-        this->m_WindowHeight = this->m_Settings->GetMenuScreenHeight();
+        this->m_WindowWidth = this->m_Settings->GetMenuScreenSize().m_X;
+        this->m_WindowHeight = this->m_Settings->GetMenuScreenSize().m_Y;
 
         this->UpdateWindowSize();
     }
@@ -167,11 +159,11 @@ void CSDLInterface::SetMenuScreenSize()
 void CSDLInterface::SetGameScreenSize()
 {
     // Change window size if new size is different.
-    if (this->m_WindowWidth != this->m_Settings->GetGameScreenWidth() ||
-        this->m_WindowHeight != this->m_Settings->GetGameScreenHeight())
+    if (this->m_WindowWidth != this->m_Settings->GetGameScreenSize().m_X ||
+        this->m_WindowHeight != this->m_Settings->GetGameScreenSize().m_Y)
     {
-        this->m_WindowWidth = this->m_Settings->GetGameScreenWidth();
-        this->m_WindowHeight = this->m_Settings->GetGameScreenHeight();
+        this->m_WindowWidth = this->m_Settings->GetGameScreenSize().m_X;
+        this->m_WindowHeight = this->m_Settings->GetGameScreenSize().m_Y;
 
         this->UpdateWindowSize();
     }
@@ -185,7 +177,7 @@ void CSDLInterface::UpdateWindowSize()
 }
 
 /*====================================================================================================================*/
-SDL_Texture *CSDLInterface::LoadTextureFromText(const std::string &text, CCoord<unsigned int> &size, SDL_Color color) const
+SDL_Texture *CSDLInterface::LoadTextTexture(const std::string &text, CCoord<unsigned int> &size, SDL_Color color) const
 {
     TTF_Font *font = TTF_OpenFont((this->m_Settings->GetAssetsPath() + this->m_Font).c_str(), 48);
     if (font == NULL)
@@ -206,9 +198,7 @@ SDL_Texture *CSDLInterface::LoadTextureFromText(const std::string &text, CCoord<
     }
 
     // Set size
-    // TODO předělat na konstruktor
-    size.m_X = surfaceMessage->w;
-    size.m_Y = surfaceMessage->h;
+    size = CCoord<unsigned int>(surfaceMessage->w, surfaceMessage->h);
 
     // Free surface and texture
     TTF_CloseFont(font);

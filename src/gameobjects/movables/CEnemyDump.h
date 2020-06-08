@@ -11,7 +11,7 @@ class CEnemyDump : public CEnemy
 public:
     /**
     * CEnemyDump contructor
-    * @param textures Texturepack to be rendered.
+    * @param texturePack Texturepack to be rendered.
     * @param location Starting location. (Must be passable)
     * @param score Score to be claimed.
     * @param size Object size.

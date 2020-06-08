@@ -13,7 +13,7 @@ class CWall : public CGameObject
 public:
     /**
     * Game object contructor
-    * @param textures Texturepack to be rendered.
+    * @param texturePack Texturepack to be rendered.
     * @param size Object size.
     * @param location Object location
     * @param isDestructible Is this wall destructible?
@@ -43,8 +43,12 @@ public:
     * Try to destroy the wall.
     * @param distance Distance from the bomb.
     */
-    virtual bool TryDestroy(int distance) override;
+    virtual bool TryDestroy(unsigned int distance);
 
+    /**
+     * Is this wall destructible?
+     * @return True - is destructible.
+     */
     bool IsDestructible()
     { return this->m_IsDestructible; }
 

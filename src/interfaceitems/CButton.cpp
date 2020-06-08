@@ -6,6 +6,19 @@
 
 #include "CButton.h"
 
+CButton::CButton(CSDLInterface *interface, const std::string &text, CCoord<> location, SDL_Colour textColor,
+                 SDL_Colour textHoverColor, CCoord<> size, std::function<void(void)> clickCallBack)
+        : CInterfaceItem(location, size),
+          m_IsHovering(false),m_ClickCallBack(std::move(clickCallBack))
+{
+    // Create textures.
+    this->m_Text = std::make_unique<CText>(interface, location, text, size, textColor);
+    this->m_TextHover = std::make_unique<CText>(interface, location, text, size, textHoverColor);
+
+    // Set size.
+    this->m_Size = this->m_Text->GetSize();
+}
+/*====================================================================================================================*/
 void CButton::Draw(CSDLInterface *interface)
 {
     if(this->m_IsHovering)
@@ -69,3 +82,5 @@ void CButton::MouseMoveEventHandler(SDL_MouseMotionEvent &e)
         this->m_IsHovering = false;
     }
 }
+
+

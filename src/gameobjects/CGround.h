@@ -11,7 +11,7 @@ class CGround : public CGameObject
 public:
     /**
     * Game object contructor
-    * @param textures Texturepack to be rendered.
+    * @param texturePack Texturepack to be rendered.
     * @param size Object size.
     * @param location Object location.
     */

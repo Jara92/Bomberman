@@ -14,25 +14,24 @@ class CSettings
 public:
     /**
      * Initializes a new instance of the CSettings.
-     * @param gameScreenWidth Game screen width in pixels
-     * @param gameScreenWidth Game Screen height in pixels
-     * @param menuScreenWidth Menu screen width in pixels
-     * @param menuScreenWidth Menu Screen height in pixels
-     * @param screenFPS Rendered frames per second
+     * @param gameScreenSize Game screen size in pixels.
+     * @param menuScreenSize Menu Screen size in pixels.
+     * @param screenFPS Rendered frames per second.
      * @param sound Enable sound?
      * @param debugMode Is debug mode on?
-     * @param assetsPath Assets directory path
-     * @param dataPath  Data directory path
+     * @param assetsPath Assets directory path.
+     * @param dataPath  Data directory path.
      */
-    CSettings(unsigned int gameScreenWidth = 1150, unsigned int gameScreenHeight = 600,
-              unsigned int menuScreenWidht = 500, unsigned int menuScreenHeight = 500, CCoord<unsigned int> offset = CCoord<unsigned int>(0, 0),
+    CSettings(CCoord<unsigned int> gameScreenSize = CCoord<unsigned int>(1150,600),
+              CCoord<unsigned int> menuScreenSize = CCoord<unsigned int>(500,500),
+              CCoord<unsigned int> offset = CCoord<unsigned int>(0, 0),
               unsigned int screenFPS = 60,
               bool sound = true, bool debugMode = false, std::string assetsPath = "./examples/assets/",
               std::string dataPath = "./examples/data/")
             : m_DebugMode(debugMode), m_AssetsPath(std::move(assetsPath)), m_DataPath(std::move(dataPath)),
               m_Offset(offset)
     {
-        this->ChangeSettings(gameScreenWidth, gameScreenHeight, menuScreenWidht, menuScreenHeight, sound);
+        this->ChangeSettings(gameScreenSize, menuScreenSize, sound);
     }
 
     CSettings(const CSettings &other) = default;
@@ -43,48 +42,31 @@ public:
 
     /**
      * Change settings.
-     * @param width Screen width in pixels
-     * @param height Screen height in pixels
+     * @param newGameScreenSize Game screen size in pixels
+     * @param newMenuScreenSize Menu screen size in pixels
      * @param sound Enable sound?
      */
-    void ChangeSettings(unsigned int gameScreenWidth, unsigned int gameScreenHeight, unsigned int menuScreenWidth,
-                        unsigned int menuScreenHeight, bool sound)
+    void ChangeSettings(CCoord<unsigned int> newGameScreenSize, CCoord<unsigned int> newMenuScreenSize, bool sound)
     {
-        this->m_GameScreenWidth = gameScreenWidth;
-        this->m_GameScreenHeight = gameScreenHeight;
-
-        this->m_MenuScreenWidth = menuScreenWidth;
-        this->m_MenuScreenHeight = menuScreenHeight;
+        this->m_GameScreenSize = newGameScreenSize;
+        this->m_MenuScreenSize = newMenuScreenSize;
 
         this->m_Sound = sound;
     }
 
-    void ChangeGameScreenResolution(unsigned int gameScreenWidth, unsigned int gameScreenHeight)
+    void ChangeGameScreenResolution(CCoord<unsigned int> newScreenSize)
     {
-        this->m_GameScreenWidth = gameScreenWidth;
-        this->m_GameScreenHeight = gameScreenHeight;
+        this->m_GameScreenSize = newScreenSize;
     }
 
     void EnableSound(bool sound)
-    {this->m_Sound = sound;}
+    { this->m_Sound = sound; }
 
     CCoord<unsigned int> GetGameScreenSize() const
-    {return CCoord<unsigned int>(this->m_GameScreenWidth, this->m_GameScreenHeight);}
+    { return this->m_GameScreenSize; }
 
     CCoord<unsigned int> GetMenuScreenSize() const
-    {return CCoord<unsigned int>(this->m_MenuScreenWidth, this->m_MenuScreenHeight);}
-
-    unsigned int GetGameScreenWidth() const
-    { return this->m_GameScreenWidth; }
-
-    unsigned int GetGameScreenHeight() const
-    { return this->m_GameScreenHeight; }
-
-    unsigned int GetMenuScreenWidth() const
-    { return this->m_MenuScreenWidth; }
-
-    unsigned int GetMenuScreenHeight() const
-    { return this->m_MenuScreenHeight; }
+    { return this->m_MenuScreenSize; }
 
     bool GetSound() const
     { return this->m_Sound; }
@@ -102,17 +84,19 @@ public:
     { return this->m_Offset; }
 
 protected:
-    unsigned int m_GameScreenWidth;
-    unsigned int m_GameScreenHeight;
+    /*  unsigned int m_GameScreenWidth;
+      unsigned int m_GameScreenHeight;*/
+    CCoord<unsigned int> m_GameScreenSize;
 
-    unsigned int m_MenuScreenWidth;
-    unsigned int m_MenuScreenHeight;
+    /*unsigned int m_MenuScreenWidth;
+    unsigned int m_MenuScreenHeight;*/
+    CCoord<unsigned int> m_MenuScreenSize;
 
     bool m_Sound;
     bool m_DebugMode;
 
     std::string m_AssetsPath;
     std::string m_DataPath;
-    CCoord <unsigned int>m_Offset;
+    CCoord<unsigned int> m_Offset;
 };
 

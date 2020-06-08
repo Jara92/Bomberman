@@ -204,33 +204,6 @@ src/CBoard.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CBoard.cpp.s
 .PHONY : src/CBoard.cpp.s
 
-src/CCoord.o: src/CCoord.cpp.o
-
-.PHONY : src/CCoord.o
-
-# target to build an object file
-src/CCoord.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CCoord.cpp.o
-.PHONY : src/CCoord.cpp.o
-
-src/CCoord.i: src/CCoord.cpp.i
-
-.PHONY : src/CCoord.i
-
-# target to preprocess a source file
-src/CCoord.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CCoord.cpp.i
-.PHONY : src/CCoord.cpp.i
-
-src/CCoord.s: src/CCoord.cpp.s
-
-.PHONY : src/CCoord.s
-
-# target to generate assembly for a file
-src/CCoord.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CCoord.cpp.s
-.PHONY : src/CCoord.cpp.s
-
 src/CGameClock.o: src/CGameClock.cpp.o
 
 .PHONY : src/CGameClock.o
@@ -825,33 +798,6 @@ src/interfaceitems/CInterfaceItem.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.s
 .PHONY : src/interfaceitems/CInterfaceItem.cpp.s
 
-src/interfaceitems/CSelectBox.o: src/interfaceitems/CSelectBox.cpp.o
-
-.PHONY : src/interfaceitems/CSelectBox.o
-
-# target to build an object file
-src/interfaceitems/CSelectBox.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o
-.PHONY : src/interfaceitems/CSelectBox.cpp.o
-
-src/interfaceitems/CSelectBox.i: src/interfaceitems/CSelectBox.cpp.i
-
-.PHONY : src/interfaceitems/CSelectBox.i
-
-# target to preprocess a source file
-src/interfaceitems/CSelectBox.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.i
-.PHONY : src/interfaceitems/CSelectBox.cpp.i
-
-src/interfaceitems/CSelectBox.s: src/interfaceitems/CSelectBox.cpp.s
-
-.PHONY : src/interfaceitems/CSelectBox.s
-
-# target to generate assembly for a file
-src/interfaceitems/CSelectBox.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.s
-.PHONY : src/interfaceitems/CSelectBox.cpp.s
-
 src/interfaceitems/CSelectBoxItem.o: src/interfaceitems/CSelectBoxItem.cpp.o
 
 .PHONY : src/interfaceitems/CSelectBoxItem.o
@@ -1059,9 +1005,6 @@ help:
 	@echo "... src/CBoard.o"
 	@echo "... src/CBoard.i"
 	@echo "... src/CBoard.s"
-	@echo "... src/CCoord.o"
-	@echo "... src/CCoord.i"
-	@echo "... src/CCoord.s"
 	@echo "... src/CGameClock.o"
 	@echo "... src/CGameClock.i"
 	@echo "... src/CGameClock.s"
@@ -1128,9 +1071,6 @@ help:
 	@echo "... src/interfaceitems/CInterfaceItem.o"
 	@echo "... src/interfaceitems/CInterfaceItem.i"
 	@echo "... src/interfaceitems/CInterfaceItem.s"
-	@echo "... src/interfaceitems/CSelectBox.o"
-	@echo "... src/interfaceitems/CSelectBox.i"
-	@echo "... src/interfaceitems/CSelectBox.s"
 	@echo "... src/interfaceitems/CSelectBoxItem.o"
 	@echo "... src/interfaceitems/CSelectBoxItem.i"
 	@echo "... src/interfaceitems/CSelectBoxItem.s"

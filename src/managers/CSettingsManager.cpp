@@ -65,18 +65,6 @@ EApplicationStatus CSettingsManager::Run()
 }
 
 /*====================================================================================================================*/
-void CSettingsManager::Update(int deltaTime)
-{
-    CWindowManager::Update(deltaTime);
-}
-
-/*====================================================================================================================*/
-void CSettingsManager::UpdateEvents()
-{
-    CWindowManager::UpdateEvents();
-}
-
-/*====================================================================================================================*/
 void CSettingsManager::Draw() const
 {
     this->m_Interface->SetRenderColor(0, 0, 0, 255);

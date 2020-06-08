@@ -6,32 +6,22 @@
 
 #include "CSelectBoxItem.h"
 
-void CSelectBoxItem::MouseButtonEventHandler(SDL_MouseButtonEvent &e)
-{
-    CInterfaceItem::MouseButtonEventHandler(e);
-}
-
-void CSelectBoxItem::MouseMoveEventHandler(SDL_MouseMotionEvent &e)
-{
-    CInterfaceItem::MouseMoveEventHandler(e);
-}
-
+/*====================================================================================================================*/
 void CSelectBoxItem::Draw(CSDLInterface *interface)
 {
-    if(this->m_IsActive)
+    if (this->m_IsActive)
     {
         this->m_ActiveText->Draw(interface);
-    }
-    else if(this->m_IsHovering)
+    } else if (this->m_IsHovering)
     {
         this->m_HoverText->Draw(interface);
-    }
-    else
+    } else
     {
         this->m_Text->Draw(interface);
     }
 }
 
+/*====================================================================================================================*/
 void CSelectBoxItem::SetLocation(CCoord<> location)
 {
     CInterfaceItem::SetLocation(location);
@@ -41,6 +31,7 @@ void CSelectBoxItem::SetLocation(CCoord<> location)
     this->m_ActiveText->SetLocation(location);
 }
 
+/*====================================================================================================================*/
 void CSelectBoxItem::SetSize(CCoord<> size)
 {
     CInterfaceItem::SetSize(size);

@@ -99,6 +99,7 @@ protected:
      * Load config data from file.
      * @param board Game board.
      * @param level Level to be loaded.
+     * @param loadCollectibles Load collectible objects from the file or use existing collectibles?
      * @throws std::ios::failure When level file not found.
      */
     void LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level,  bool loadCollectibles = true);
@@ -129,6 +130,7 @@ protected:
 
     /**
      * Create new CCollectible at random location and attach it to CWall.
+     * @param board Game board.
      * @param type Collectible type.
      * @param score Score to be achieved.
      * @param duration Collectible duration.

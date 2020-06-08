@@ -18,7 +18,7 @@ class CPlayer : public CMovable
 public:
     /**
     * Game object contructor
-    * @param textures Texturepack to be rendered.
+    * @param texturePack Texturepack to be rendered.
      * @param location Player starting location.
      * @param size Object size.
      * @param controls Controls object to be used.

@@ -16,7 +16,9 @@ public:
      * @param location Item location.
      * @param text Text to be rendered.
      * @param size Item size. Set {0,0} to autosize. Set {0, X} or {X, 0} to autosize one dimension.
-     * @param texturePath Path to texture.
+     * @param itemColor Default item color.
+     * @param itemHoverColor Color of the item when the mouse is hovering it.
+     * @param itemActivateColor Color of the item when the item is selected.
      */
     CSelectBoxItem(CSDLInterface *interface, CCoord<> location, const std::string &text, CCoord<> size,
                    SDL_Colour itemColor, SDL_Colour itemHoverColor, SDL_Colour itemActivateColor
@@ -31,11 +33,10 @@ public:
         this->m_Size = this->m_Text->GetSize();
     }
 
-    virtual ~CSelectBoxItem()
-    {  }
+    virtual ~CSelectBoxItem() = default;
 
-    /* I dont want allow copying this object. It is unnecessary.
-    * This is pointer to some C structure which cant be copied.
+    /* I dont want allow copying this object.
+    * Object contains pointers on C-structures and It is not easy to copy them.
     */
     CSelectBoxItem(const CSelectBoxItem &other) = delete;
 
@@ -63,9 +64,5 @@ protected:
 
     bool m_IsActive;
     bool m_IsHovering;
-
-    virtual void MouseButtonEventHandler(SDL_MouseButtonEvent &e) override;
-
-    virtual void MouseMoveEventHandler(SDL_MouseMotionEvent &e) override;
 };
 

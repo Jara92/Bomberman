@@ -8,8 +8,9 @@
 
 int CApplication::Run(int argc, char *argv[])
 {
-    std::shared_ptr<CSettings> settings = this->Init(argc, argv);
-    std::shared_ptr<CSDLInterface> interface = std::make_shared<CSDLInterface>("Bomberman", settings, "Fonts/Piedra-Regular.ttf");
+    std::shared_ptr <CSettings> settings = this->Init(argc, argv);
+    std::shared_ptr <CSDLInterface> interface = std::make_shared<CSDLInterface>("Bomberman", settings,
+                                                                                "Fonts/Piedra-Regular.ttf");
 
     try
     {
@@ -19,7 +20,8 @@ int CApplication::Run(int argc, char *argv[])
         while (applicationStatus != EApplicationStatus::APPLICATION_STATUS_EXIT)
         {
             // Get manager to be run.
-            std::shared_ptr<CWindowManager> manager = this->GetWindowManagerByState(interface.get(), applicationStatus);
+            std::shared_ptr <CWindowManager> manager = this->GetWindowManagerByState(interface.get(),
+                                                                                     applicationStatus);
 
             // Run and get next application state.
             applicationStatus = manager->Run();
@@ -51,7 +53,7 @@ int CApplication::Run(int argc, char *argv[])
 }
 
 /*====================================================================================================================*/
-std::shared_ptr<CSettings> CApplication::Init(int argc, char *argv[])
+std::shared_ptr <CSettings> CApplication::Init(int argc, char *argv[])
 {
     // Debug mode
     bool debug = false;
@@ -68,11 +70,12 @@ std::shared_ptr<CSettings> CApplication::Init(int argc, char *argv[])
     }
 
 
-    return std::make_shared<CSettings>(1150, 700, 512,
-                                       512, CCoord<unsigned int>(0, 1), 60, true, debug);
+    return std::make_shared<CSettings>(CCoord<unsigned int>(1150, 700), CCoord<unsigned int>(512,
+                                                                                             512),
+                                       CCoord<unsigned int>(0, 1), 60, true, debug);
 }
 
-std::shared_ptr<CWindowManager>
+std::shared_ptr <CWindowManager>
 CApplication::GetWindowManagerByState(CSDLInterface *interface, EApplicationStatus applicationStatus) const
 {
     switch (applicationStatus)

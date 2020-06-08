@@ -28,8 +28,8 @@ public:
     virtual ~CText()
     { SDL_DestroyTexture(this->m_Texture); }
 
-    /* I dont want allow copying this object. It is unnecessary.
-    * This is pointer to some C structure which cant be copied.
+    /* I dont want allow copying this object.
+    * Object contains pointers on C-structures and It is not easy to copy them.
     */
     CText(const CText &other) = delete;
 

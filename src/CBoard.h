@@ -54,6 +54,7 @@ public:
     /**
      * Draw all objects in the board.
      * @param interface Interface to be used.
+     * @param offset Board offset in window.
      */
     void Draw(CSDLInterface *interface, CCoord<> offset = CCoord<>(0, 0));
 
@@ -99,7 +100,7 @@ public:
 
     /**
      * Trigger explosion in one direction.
-     * @param location Explosion location.
+     * @param bomb Source bomb.
      * @param direction Direction vector.
      * @param explosionRadius Explosion radius.
      */

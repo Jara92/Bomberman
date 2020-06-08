@@ -12,7 +12,7 @@ class CEnemy : public CMovable
 public:
     /**
     * CEnemy contructor
-    * @param textures Texturepack to be rendered.
+    * @param texturePack Texturepack to be rendered.
     * @param location Starting location. (Must be passable)
      * @param size Object size.
      * @param score Score to be claimed.
@@ -28,13 +28,28 @@ public:
     CEnemy &operator=(const CEnemy &other) = default;
     virtual ~CEnemy() = default;
 
+    /**
+     * Update enemy state.
+     * @param board Game board.
+     * @param deltaTime Delta time.
+     */
     virtual void Update(CBoard * board, int deltaTime) override = 0;
 
+    /**
+     * Try to kill this enemy.
+     * @param distance Distance between the enemy and a killer.
+     * @return Score to be achieved.
+     */
     virtual int TryKill(unsigned int distance) = 0;
 
 protected:
     int m_Score;
 
+    /**
+     * Get avaible moving directions.
+     * @param board Game board.
+     * @return Avaible directions.
+     */
     std::set<EDirection> GetPossibleMoveLocations(CBoard * board) const;
 };
 

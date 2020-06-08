@@ -13,7 +13,7 @@ class CCollectible : public CGameObject
 public:
     /**
     * Collectible object contructor
-    * @param textures Texturepack to be rendered.
+    * @param texturePack Texturepack to be rendered.
     * @param location Object location.
     * @param size Object size.
     * @param scoreBonus Bonus to be claimed by collector.

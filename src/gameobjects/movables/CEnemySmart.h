@@ -13,10 +13,10 @@ class CEnemySmart : public CEnemy
 public:
     /**
     * CEnemySmart contructor
-    * @param textures Texturepack to be rendered.
+    * @param texturePack Texturepack to be rendered.
     * @param location Starting location. (Must be passable)
-     * @param size Object size.
-     * @param score Score to be claimed.
+    * @param size Object size.
+    * @param score Score to be claimed.
     * @param speed Enemy speed
     * @param wallPass Can this Enemy walk through destructible walls?
     * @param lives How many lives doest this monster have?

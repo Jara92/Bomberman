@@ -73,9 +73,6 @@ CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/gameobjects/movables/CEnemy.h
 CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/gameobjects/movables/CMovable.h
 CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/gameobjects/movables/CPlayer.h
 
-CMakeFiles/bomberman.dir/src/CCoord.cpp.o: ../src/CCoord.cpp
-CMakeFiles/bomberman.dir/src/CCoord.cpp.o: ../src/CCoord.h
-
 CMakeFiles/bomberman.dir/src/CGameClock.cpp.o: ../src/CGameClock.cpp
 CMakeFiles/bomberman.dir/src/CGameClock.cpp.o: ../src/CGameClock.h
 CMakeFiles/bomberman.dir/src/CGameClock.cpp.o: ../src/Messages.h
@@ -383,17 +380,6 @@ CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.o: ../src/CSettin
 CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.o: ../src/Messages.h
 CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.o: ../src/interfaceitems/CInterfaceItem.cpp
 CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.o: ../src/interfaceitems/CInterfaceItem.h
-
-CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/CCoord.h
-CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/CSDLInterface.h
-CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/CSettings.h
-CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/Messages.h
-CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/interfaceitems/CButton.h
-CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/interfaceitems/CInterfaceItem.h
-CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/interfaceitems/CSelectBox.cpp
-CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/interfaceitems/CSelectBox.h
-CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/interfaceitems/CSelectBoxItem.h
-CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.o: ../src/interfaceitems/CText.h
 
 CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBoxItem.cpp.o: ../src/CCoord.h
 CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBoxItem.cpp.o: ../src/CSDLInterface.h

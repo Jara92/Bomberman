@@ -96,8 +96,7 @@ public:
 
     /**
      * Calculates distance between this and the other point
-     * @param a
-     * @param b
+     * @param other Other Coord.
      * @return Distance between two points.
      */
     double CalcDistnance(const CCoord &other) const;

@@ -6,7 +6,7 @@
 
 #include "CWall.h"
 
-bool CWall::TryDestroy(int distance)
+bool CWall::TryDestroy(unsigned int distance)
 {
     if(this->m_IsDestructible)
     {

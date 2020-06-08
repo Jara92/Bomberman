@@ -45,7 +45,7 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level)
 std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, const std::shared_ptr<CSettings> &settings)
 {
     // calc cellsize
-    int cellSize = static_cast<int>((settings->GetGameScreenHeight()) /
+    int cellSize = static_cast<int>((settings->GetGameScreenSize().m_Y) /
                                     (CLevelLoader::MAP_HEIGHT + settings->GetOffset().m_Y));
 
     // Load important objects for new board.
@@ -303,14 +303,14 @@ std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadCollectiblesTexture
                     {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/Portal.png"}}}}};
 
     std::vector<CCoord<>> sizes{{0.7, 0.7},
-                              {0.7, 0.7},
-                              {0.7, 0.7},
-                              {1,   1},
-                              {1,   1},
-                              {1,   1},
-                              {1,   1},
-                              {1,   1},
-                              {1,   1}};
+                                {0.7, 0.7},
+                                {0.7, 0.7},
+                                {1,   1},
+                                {1,   1},
+                                {1,   1},
+                                {1,   1},
+                                {1,   1},
+                                {1,   1}};
 
     // Create texture packs shared pointers.
     std::vector<std::shared_ptr<CTexturePack>> texturePacks;
@@ -408,32 +408,28 @@ bool CLevelLoader::CreateCollectibleAtRandomLocation(std::shared_ptr<CBoard> &bo
     std::function<void(CPlayer *)> applyFunc;
     std::function<void(CPlayer *)> deactivateFunc;
 
+    CCoord<> boostSize = CCoord<>(0.7, 0.7);
+
     // Create new boost.
     switch (type)
     {
         case ECollectibleType::COLLECTIBLE_TYPE_SPEED:
             applyFunc = [](CPlayer *player)
             { player->SpeedUp(); };
-            board->m_Collectibles.insert(std::pair<CCoord<unsigned int>, CCollectible *>(random, (new CBoost(
-                    this->m_CollectibleTexturePacks[static_cast<int>(type)], applyFunc, CCoord<>(0.7, 0.7),
-                    random.ToDouble(),
-                    score))));
+            board->m_Collectibles.insert({random, (new CBoost(this->m_CollectibleTexturePacks[static_cast<int>(type)],
+                                                              applyFunc, boostSize, random.ToDouble(), score))});
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_EXPLOSION_RADIUS:
             applyFunc = [](CPlayer *player)
             { player->IncreseExplosionRadius(); };
-            board->m_Collectibles.insert(std::pair<CCoord<unsigned int>, CCollectible *>(random, (new CBoost(
-                    this->m_CollectibleTexturePacks[static_cast<int>(type)], applyFunc, CCoord<>(0.7, 0.7),
-                    random.ToDouble(),
-                    score))));
+            board->m_Collectibles.insert({random, (new CBoost(this->m_CollectibleTexturePacks[static_cast<int>(type)],
+                                                              applyFunc, boostSize, random.ToDouble(), score))});
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_MAX_BOMBS:
             applyFunc = [](CPlayer *player)
             { player->IncreseMaxBombs(); };
-            board->m_Collectibles.insert(std::pair<CCoord<unsigned int>, CCollectible *>(random, (new CBoost(
-                    this->m_CollectibleTexturePacks[static_cast<int>(type)], applyFunc, CCoord<>(0.7, 0.7),
-                    random.ToDouble(),
-                    score))));
+            board->m_Collectibles.insert({random, (new CBoost(this->m_CollectibleTexturePacks[static_cast<int>(type)],
+                                                              applyFunc, boostSize, random.ToDouble(), score))});
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_REMOTE_EXPLOSION:
             // TODO
@@ -451,9 +447,8 @@ bool CLevelLoader::CreateCollectibleAtRandomLocation(std::shared_ptr<CBoard> &bo
             // TODO
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_DOOR:
-            board->m_Collectibles.insert(std::pair<CCoord<unsigned int>, CCollectible *>(random, (new CDoor(
-                    this->m_CollectibleTexturePacks[static_cast<int>(type)], CCoord<>(0.8, 0.8), random.ToDouble(),
-                    score))));
+            board->m_Collectibles.insert({random, (new CDoor(this->m_CollectibleTexturePacks[static_cast<int>(type)],
+                                                             CCoord<>(0.8, 0.8), random.ToDouble(), score))});
             break;
         default:
             throw std::invalid_argument(UNKNOWN_COLLECTIBLE_TYPE);

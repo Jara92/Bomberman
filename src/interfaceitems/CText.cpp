@@ -16,7 +16,7 @@ void CText::SetText(CSDLInterface *interface, const std::string &text, SDL_Color
 
     // Get new texture
     CCoord<unsigned int> size;
-    this->m_Texture = interface->LoadTextureFromText(text, size, color);
+    this->m_Texture = interface->LoadTextTexture(text, size, color);
 
     // Set size according to current size
     // Autosize X and Y

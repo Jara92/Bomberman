@@ -21,6 +21,9 @@ public:
 
     virtual ~CSelectBox() = default;
 
+    /* I dont want allow copying this object.
+    * Object contains pointers on C-structures and It is not easy to copy them.
+    */
     CSelectBox(const CSelectBox &other) = delete;
 
     CSelectBox &operator=(const CSelectBox &other) = delete;

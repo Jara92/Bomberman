@@ -11,7 +11,7 @@
 #include "../CCoord.h"
 
 /**
- * Item to be interacted by the player.
+ * UI item.
  */
 class CInterfaceItem
 {
@@ -27,6 +27,7 @@ public:
 
     virtual ~CInterfaceItem() = default;
 
+    /* This abstract class does not contain any C pointers - We can easily copy it. */
     CInterfaceItem(const CInterfaceItem &other) = default;
 
     CInterfaceItem &operator=(const CInterfaceItem &other) = default;
@@ -50,6 +51,10 @@ public:
     virtual void SetLocation(CCoord<> location)
     { this->m_Location = location; }
 
+    /**
+     * Handle mouse events.
+     * @param e Event structure.
+     */
     virtual void MouseEventHandler(SDL_Event & e)
     {}
 
@@ -60,26 +65,42 @@ public:
    virtual  void SetSize(CCoord<> size)
     { this->m_Size = size; }
 
+    /**
+     * Get object top-left corner location.
+     * @return Location.
+     */
     CCoord<> GetLocation() const
     {return this->m_Location;}
 
+    /**
+     * Get object size.
+     * @return Object size.
+     */
     CCoord <>GetSize() const
     {return this->m_Size;}
 
     /**
-* Is this button colliding with mouse?
-* @param mouseLocation Current mouse location.
-* @return True - Colliding.
-*/
+    * Is this button colliding with mouse?
+    * @param mouseLocation Current mouse location.
+    * @return True - Colliding.
+    */
     bool MouseCollision(CCoord <unsigned int> mouseLocation) const;
 
 protected:
     CCoord <>m_Location;
     CCoord <>m_Size;
 
+    /**
+     * Handle mouse click
+     * @param e Event structure.
+     */
     virtual void MouseButtonEventHandler(SDL_MouseButtonEvent & e)
     {}
 
+    /**
+    * Handle mouse move.
+    * @param e Event structure.
+    */
     virtual void MouseMoveEventHandler(SDL_MouseMotionEvent & e)
     {}
 };

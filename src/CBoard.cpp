@@ -15,27 +15,37 @@ CBoard::~CBoard()
             delete this->m_Map[i][j];
         }
     }
+    this->m_Map.clear();
 
     for (size_t i = 0; i < this->m_Players.size(); i++)
     {
         delete this->m_Players[i];
     }
+    this->m_Players.clear();
+
+    for (size_t i = 0; i < this->m_Enemies.size(); i++)
+    {
+        delete this->m_Enemies[i];
+    }
+    this->m_Enemies.clear();
 
     for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
     {
         delete i->second;
     }
+    this->m_Bombs.clear();
 
     for (auto i = this->m_Fires.begin(); i != this->m_Fires.end(); i++)
     {
         delete i->second;
     }
+    this->m_Fires.clear();
 
     for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
     {
-        // Polymorphic call
         delete i->second;
     }
+    this->m_Collectibles.clear();
 }
 
 /*====================================================================================================================*/
@@ -67,7 +77,6 @@ bool CBoard::IsPassable(CCoord <unsigned int>coord, const CPlayer *player)
     }
 
     return true;
-    // todo other gameobjests
 }
 
 /*====================================================================================================================*/
@@ -124,7 +133,7 @@ void CBoard::CreateExplosion(CBomb *bomb)
             bombToRemove->second = nullptr;
             this->m_Bombs.erase(bombToRemove);
         }
-            // Error message when the bomb is not found - this should never happen
+        // Error message when the bomb is not found - this should never happen
         else
         {
             std::cerr << "Bomb " << location << " not found " << std::endl;
@@ -137,7 +146,7 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord<int> direction, unsigned in
 {
     for (unsigned int i = 0; i <= explosionRadius; i++)
     {
-        CCoord <int>locationToExplode = bomb->GetLocation().ToInt() + (i * direction);
+        CCoord <unsigned int>locationToExplode = (bomb->GetLocation() + (i * direction).ToDouble()).ToUnsignedInt();
 
         if (locationToExplode.m_X < 0 || locationToExplode.m_X >= CBoard::m_BoardSize.m_X ||
             locationToExplode.m_Y < 0 || locationToExplode.m_Y >= CBoard::m_BoardSize.m_Y)
@@ -196,7 +205,7 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord<int> direction, unsigned in
         // Create new fire.
         CFire *fire = new CFire(this->m_FireObjectTexturePack, this->m_FireObjectTexturePack->GetTextureSize(),
                                 locationToExplode.ToDouble());
-        this->m_Fires.insert(std::pair<CCoord<unsigned int>, CFire *>(locationToExplode.ToUnsignedInt(), fire));
+        this->m_Fires.insert({locationToExplode.ToUnsignedInt(), fire});
 
         if (wallDestroyed)
         {
@@ -244,20 +253,6 @@ void CBoard::DestroyCollectible(CCollectible *collectible)
 /*====================================================================================================================*/
 void CBoard::Draw(CSDLInterface *interface, CCoord<> offset)
 {
-    // TODO debug
-
-    // Draw debug lines
-    /*  interface->SetRenderColor(128, 0, 0, 255);
-      for (double i = 0; i < interface->GetWindowSize().m_Y; i++)
-      {
-          interface->RenderLine(CCoord(0, 25 * i), CCoord(interface->GetWindowSize().m_X, 25 * i));
-      }
-
-      for (double i = 0; i < interface->GetWindowSize().m_X - 1; i++)
-      {
-          interface->RenderLine(CCoord(25 * i, 0), CCoord(25 * i, interface->GetWindowSize().m_Y));
-      }*/
-
     // draw map
     for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
     {
@@ -339,14 +334,9 @@ void CBoard::Update(int deltaTime)
         for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
         {
             // Update if object is alive
-            if (this->m_Map[i][j] && this->m_Map[i][j]->IsAlive())
+            if (this->m_Map[i][j]/* && this->m_Map[i][j]->IsAlive()*/)
             {
                 this->m_Map[i][j]->Update(this, deltaTime);
-            }
-                // destroy if is dead (TODO this will be problem with dying animations)
-            else
-            {
-                delete this->m_Map[i][j];
             }
         }
     }

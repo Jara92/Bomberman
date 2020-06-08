@@ -10,9 +10,9 @@ class CSettingsManager : public CWindowManager
 {
 public:
     /**
- * Constructor.
- * @param interface Interface to be used.
- */
+    * Constructor.
+    * @param interface Interface to be used.
+    */
     explicit CSettingsManager(CSDLInterface *interface);
 
     virtual ~CSettingsManager() = default;
@@ -25,11 +25,6 @@ public:
     {}
 
 protected:
-
-    virtual void Update(int deltaTime) override ;
-
-    virtual void UpdateEvents() override ;
-
     virtual void Draw() const override ;
 
     virtual void ProcessEvent(SDL_Event & e) override ;
@@ -37,7 +32,7 @@ protected:
     void UpdateResolution(CCoord <unsigned int>newResolution)
     {
         // Change settings object and reload interface.
-        this->m_Interface->GetSettings()->ChangeGameScreenResolution(newResolution.m_X, newResolution.m_Y);
+        this->m_Interface->GetSettings()->ChangeGameScreenResolution(newResolution);
         this->m_Interface->ReloadSettings();
     }
 };

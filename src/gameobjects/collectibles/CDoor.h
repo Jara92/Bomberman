@@ -12,8 +12,8 @@ class CDoor : public CCollectible
 public:
     /**
     * Collectible object contructor
-    * @param textures Texturepack to be rendered.
-     * @param size Object size.
+    * @param texturePack Texture pack to be rendered.
+    * @param size Object size.
     * @param location Object location.
     * @param scoreBonus Bonus to be claimed by collector.
     */

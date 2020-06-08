@@ -18,7 +18,7 @@ class CGameObject
 public:
     /**
     * Game object contructor.
-    * @param textures Texturepack to be rendered.
+    * @param texturePack Texturepack to be rendered.
     * @param size Object size.
     * @param location Starting location.
     * @param isPassable Is this object passable for movable objects?
@@ -91,19 +91,10 @@ public:
     virtual void Draw(CSDLInterface *interface, int cellSize, CCoord <>location, CCoord <> offset = CCoord<>(0, 0)) const;
 
     /**
-     * Are these objects in colliding?
+     * Are these objects colliding?
      * @param other Other object
-     * @param tolerance Tolerance
-     * @return True - Objects are colliding.
      */
     bool IsColiding(const CGameObject *other) const;
-
-    /**
-    * Try to destroy the wall.
-    * @param distance Distance from the bomb.
-    */
-    virtual bool TryDestroy(int distance)
-    { return false; }
 
     void SetLocation(CCoord<> location)
     {this->m_Location = location;}

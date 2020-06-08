@@ -35,27 +35,6 @@ public:
 
     virtual ~CMovable() = default;
 
-    /**
-     * Draw gameobject
-     * @param interface
-     * @param cellSize
-     * @param offset
-     */
-    //virtual void Draw(CSDLInterface *interface, int cellSize, CCoord offset = CCoord(0, 0)) const;
-
-    /**
- * Draw gameobject at location.
- * @param interface SDL Interface
- * @param cellSize Cellsize
- * @param location Location
- * @param offset Offset
- */
-    /*virtual void
-    Draw(CSDLInterface *interface, int cellSize, CCoord location, CCoord offset = CCoord(0, 0)) const override
-    {
-        CGameObject::Draw(interface, cellSize, location, offset);
-    }*/
-
     virtual void Update(CBoard *board, int deltaTime)
     { CGameObject::Update(board, deltaTime); }
 

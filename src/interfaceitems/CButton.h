@@ -18,28 +18,24 @@ class CButton : public CInterfaceItem
 public:
     /**
     * Constructor.
+     * @param interface Interface to be used.
      * @param text Text to be rendered.
-     * @param hoveredText Text to be rendered when the button is being hovered.
+     * @param location Button location.
+     * @param textColor Default text color.
+     * @param textHoverColor Text color when the button is hovered by the mouse cursor.
+     * @param size Button size. Set {0, 0} to auto-size. Set {0, X} or {X, 0} to auto-size one dimension.
+     * @param clickCallBack Function to be call on button click event.
+     *
     */
-    CButton(CSDLInterface *interface, const std::string &text, CCoord <>location, SDL_Colour textColor,
-            SDL_Colour textHoverColor, CCoord <>size = {0, 0},
+    CButton(CSDLInterface *interface, const std::string &text, CCoord<> location, SDL_Colour textColor,
+            SDL_Colour textHoverColor, CCoord<> size = {0, 0},
             std::function<void(void)> clickCallBack = []()
-            {})
-            : CInterfaceItem(location, size),
-              m_IsHovering(false),m_ClickCallBack(std::move(clickCallBack))
-    {
-        // Create textures.
-        this->m_Text = std::make_unique<CText>(interface, location, text, size, textColor);
-        this->m_TextHover = std::make_unique<CText>(interface, location, text, size, textHoverColor);
-
-        // Set size.
-        this->m_Size = this->m_Text->GetSize();
-    }
+            {});
 
     virtual ~CButton() = default;
 
-    /* I dont want allow copying this object. It is unnecessary.
-    * This is pointer to some C structure which cant be copied.
+    /* I dont want allow copying this object.
+    * Object contains pointers on C-structures and It is not easy to copy them.
     */
     CButton(const CButton &other) = delete;
 
@@ -58,9 +54,9 @@ public:
      */
     virtual void Draw(CSDLInterface *interface);
 
-    virtual void SetLocation(CCoord <>location) override;
+    virtual void SetLocation(CCoord<> location) override;
 
-    virtual void SetSize(CCoord <>size) override;
+    virtual void SetSize(CCoord<> size) override;
 
     /**
      * Process mouse events.
@@ -68,11 +64,21 @@ public:
      */
     virtual void MouseEventHandler(SDL_Event &e) override;
 
-    void SetColor(CSDLInterface * interface, SDL_Colour color)
-    {this->m_Text->SetColor(interface, color);}
+    /**
+     * Set new text color.
+     * @param interface Interface to create new text.
+     * @param color Color to be set.
+     */
+    void SetColor(CSDLInterface *interface, SDL_Colour color)
+    { this->m_Text->SetColor(interface, color); }
 
-    void SetHoverColor(CSDLInterface * interface, SDL_Colour color)
-    {this->m_TextHover->SetColor(interface, color);}
+    /**
+     * Set new hover color
+     * @param interface Interface to create new text.
+     * @param color Color to be set.
+     */
+    void SetHoverColor(CSDLInterface *interface, SDL_Colour color)
+    { this->m_TextHover->SetColor(interface, color); }
 
 protected:
     /** Text to be rendered. */
