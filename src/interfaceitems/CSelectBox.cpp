@@ -9,7 +9,7 @@
 CSelectBox::CSelectBox(CSDLInterface *interface, CCoord location, CCoord size, unsigned int fontSize,
                        const std::vector<std::string> &options, SDL_Colour itemColor, SDL_Colour itemHoverColor,
                        SDL_Colour itemSelectedColor)
-        : CInterfaceItem(location, size)
+        : CInterfaceItem(location, size), m_ItemColor(itemColor), m_SelectedItemColor(itemSelectedColor)
 {
     double margin = 1.1;
     CCoord itemSize;

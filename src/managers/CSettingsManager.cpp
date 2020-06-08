@@ -33,6 +33,23 @@ CSettingsManager::CSettingsManager(CSDLInterface *interface) : CWindowManager(in
                                                                   {"500x200"}}, defaultFontColor,
                                          hoverFontColor, selectedFontColor));
     // TODO add sound
+    // Exit button
+    this->m_InterfaceItems.push_back(
+            std::make_unique<CButton>(interface, "Exit", CCoord(0, 0), defaultFontColor, hoverFontColor,
+                                      CCoord(0, 35), [=]()
+                                      { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_EXIT; }));
+    itemSize = this->m_InterfaceItems.back()->GetSize();
+    this->m_InterfaceItems.back()->SetLocation(
+            CCoord(padding, windowSize.m_Y - itemSize.m_Y - padding));
+
+    // Save button
+    this->m_InterfaceItems.push_back(
+            std::make_unique<CButton>(interface, "Save", CCoord(0, 0), defaultFontColor, hoverFontColor,
+                                      CCoord(0, 35), [=]()
+                                      { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_EXIT; }));
+    itemSize = this->m_InterfaceItems.back()->GetSize();
+    this->m_InterfaceItems.back()->SetLocation(
+            CCoord(windowSize.m_X - itemSize.m_X - padding, windowSize.m_Y - itemSize.m_Y - padding));
 }
 
 /*====================================================================================================================*/

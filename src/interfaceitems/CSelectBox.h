@@ -36,7 +36,8 @@ public:
 
 protected:
     std::vector<std::unique_ptr<CButton>> m_Items;
-
+    SDL_Colour m_ItemColor;
+    SDL_Colour m_SelectedItemColor;
 
 };
 
