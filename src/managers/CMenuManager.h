@@ -7,9 +7,6 @@
 #include <vector>
 #include <memory>
 #include "CWindowManager.h"
-#include "../interfaceitems/CImage.h"
-#include "../interfaceitems/CText.h"
-#include "../interfaceitems/CButton.h"
 
 /**
  * Class which manages menu rendering and user events.

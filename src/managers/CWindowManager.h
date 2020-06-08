@@ -9,6 +9,9 @@
 #include "../CSDLInterface.h"
 #include "../EApplicationStatus.h"
 #include "../CGameClock.h"
+#include "../interfaceitems/CImage.h"
+#include "../interfaceitems/CText.h"
+#include "../interfaceitems/CButton.h"
 #include "../interfaceitems/CInterfaceItem.h"
 #include "../interfaceitems/CSelectBox.h"
 

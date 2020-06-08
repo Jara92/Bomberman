@@ -17,6 +17,10 @@ CSettingsManager::CSettingsManager(CSDLInterface *interface) : CWindowManager(in
     SDL_Colour selectedFontColor{255, 0, 0, 255};
     SDL_Color hoverFontColor{255, 128, 0, 255};
 
+    // Background image
+    this->m_InterfaceItems.push_back(std::make_unique<CImage>(interface, CCoord<>(0, 0), windowSize.ToDouble(),
+                                                              "Menu/title_background_mirror.jpg"));
+
     // Add select box title
     this->m_InterfaceItems.push_back(
             std::make_unique<CText>(interface, CCoord<>(0, 0), "Game screen resolution", CCoord<>(0, 64)));
@@ -31,32 +35,20 @@ CSettingsManager::CSettingsManager(CSDLInterface *interface) : CWindowManager(in
     this->m_InterfaceItems.push_back(
             std::make_unique<CSelectBox<CCoord<unsigned int>>>(interface, selectBoxLocation,
                                                                (this->m_Interface->GetWindowSize().ToDouble() -
-                                                                selectBoxLocation), 48,
-                                                               resolutions,
+                                                                selectBoxLocation), 48, resolutions,
                                                                this->m_Interface->GetSettings()->GetGameScreenSize(),
                                                                defaultFontColor, hoverFontColor, selectedFontColor,
                                                                [=](CCoord<unsigned int> newRes)
                                                                { this->UpdateResolution(newRes); }));
 
-
-    // TODO add sound
     // Back button
     this->m_InterfaceItems.push_back(
-            std::make_unique<CButton>(interface, "Back", CCoord<>(0, 0), defaultFontColor, hoverFontColor,
+            std::make_unique<CButton>(interface, "Back", CCoord<>(0, 0), SDL_Colour{0,0,0,255}, hoverFontColor,
                                       CCoord<>(0, 35), [=]()
                                       { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_MENU; }));
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
             CCoord<>(padding, windowSize.m_Y - itemSize.m_Y - padding));
-
-    // Save button
-    /* this->m_InterfaceItems.push_back(
-             std::make_unique<CButton>(interface, "Save", CCoord(0, 0), defaultFontColor, hoverFontColor,
-                                       CCoord(0, 35), [=]()
-                                       {  Save settings in file.  }));
-     itemSize = this->m_InterfaceItems.back()->GetSize();
-     this->m_InterfaceItems.back()->SetLocation(
-             CCoord(windowSize.m_X - itemSize.m_X - padding, windowSize.m_Y - itemSize.m_Y - padding));*/
 }
 
 /*====================================================================================================================*/

@@ -81,7 +81,7 @@ void CBoard::PlaceBomb(CPlayer *player)
         CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, this->m_BombObjectTexturePack->GetTextureSize().ToDouble(),
                                 location.ToDouble(), player);
 
-        this->m_Bombs.insert(std::pair<CCoord<unsigned int>, CBomb *>(location.ToUnsignedInt(), bomb));
+        this->m_Bombs.insert({location.ToUnsignedInt(), bomb});
     }
 }
 

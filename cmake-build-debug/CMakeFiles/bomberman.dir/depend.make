@@ -482,6 +482,7 @@ CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/gameobjects/mov
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/gameobjects/movables/CMovable.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/gameobjects/movables/CPlayer.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/interfaceitems/CButton.h
+CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/interfaceitems/CImage.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/interfaceitems/CInterfaceItem.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/interfaceitems/CSelectBox.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/interfaceitems/CSelectBoxItem.h
@@ -513,6 +514,7 @@ CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: ../src/CSettings.h
 CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: ../src/EApplicationStatus.h
 CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: ../src/Messages.h
 CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: ../src/interfaceitems/CButton.h
+CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: ../src/interfaceitems/CImage.h
 CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: ../src/interfaceitems/CInterfaceItem.h
 CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: ../src/interfaceitems/CSelectBox.h
 CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: ../src/interfaceitems/CSelectBoxItem.h
@@ -528,6 +530,7 @@ CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o: ../src/CSettings.h
 CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o: ../src/EApplicationStatus.h
 CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o: ../src/Messages.h
 CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o: ../src/interfaceitems/CButton.h
+CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o: ../src/interfaceitems/CImage.h
 CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o: ../src/interfaceitems/CInterfaceItem.h
 CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o: ../src/interfaceitems/CSelectBox.h
 CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o: ../src/interfaceitems/CSelectBoxItem.h
