@@ -86,12 +86,5 @@ protected:
     virtual void MouseButtonEventHandler(SDL_MouseButtonEvent &e) override;
 
     virtual void MouseMoveEventHandler(SDL_MouseMotionEvent &e) override;
-
-    /**
-     * Is this button colliding with mouse?
-     * @param mouseLocation Current mouse location.
-     * @return True - Colliding.
-     */
-    bool MouseCollision(CCoord <unsigned int> mouseLocation) const;
 };
 

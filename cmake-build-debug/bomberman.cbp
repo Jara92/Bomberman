@@ -266,6 +266,12 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CSelectBox.h">
 			<Option target="bomberman"/>
 		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CSelectBoxItem.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CSelectBoxItem.h">
+			<Option target="bomberman"/>
+		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CText.cpp">
 			<Option target="bomberman"/>
 		</Unit>

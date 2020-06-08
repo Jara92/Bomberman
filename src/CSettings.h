@@ -68,6 +68,12 @@ public:
     void EnableSound(bool sound)
     {this->m_Sound = sound;}
 
+    CCoord<unsigned int> GetGameScreenSize() const
+    {return CCoord<unsigned int>(this->m_GameScreenWidth, this->m_GameScreenHeight);}
+
+    CCoord<unsigned int> GetMenuScreenSize() const
+    {return CCoord<unsigned int>(this->m_MenuScreenWidth, this->m_MenuScreenHeight);}
+
     unsigned int GetGameScreenWidth() const
     { return this->m_GameScreenWidth; }
 

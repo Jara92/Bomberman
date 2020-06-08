@@ -852,6 +852,33 @@ src/interfaceitems/CSelectBox.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBox.cpp.s
 .PHONY : src/interfaceitems/CSelectBox.cpp.s
 
+src/interfaceitems/CSelectBoxItem.o: src/interfaceitems/CSelectBoxItem.cpp.o
+
+.PHONY : src/interfaceitems/CSelectBoxItem.o
+
+# target to build an object file
+src/interfaceitems/CSelectBoxItem.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBoxItem.cpp.o
+.PHONY : src/interfaceitems/CSelectBoxItem.cpp.o
+
+src/interfaceitems/CSelectBoxItem.i: src/interfaceitems/CSelectBoxItem.cpp.i
+
+.PHONY : src/interfaceitems/CSelectBoxItem.i
+
+# target to preprocess a source file
+src/interfaceitems/CSelectBoxItem.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBoxItem.cpp.i
+.PHONY : src/interfaceitems/CSelectBoxItem.cpp.i
+
+src/interfaceitems/CSelectBoxItem.s: src/interfaceitems/CSelectBoxItem.cpp.s
+
+.PHONY : src/interfaceitems/CSelectBoxItem.s
+
+# target to generate assembly for a file
+src/interfaceitems/CSelectBoxItem.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBoxItem.cpp.s
+.PHONY : src/interfaceitems/CSelectBoxItem.cpp.s
+
 src/interfaceitems/CText.o: src/interfaceitems/CText.cpp.o
 
 .PHONY : src/interfaceitems/CText.o
@@ -1104,6 +1131,9 @@ help:
 	@echo "... src/interfaceitems/CSelectBox.o"
 	@echo "... src/interfaceitems/CSelectBox.i"
 	@echo "... src/interfaceitems/CSelectBox.s"
+	@echo "... src/interfaceitems/CSelectBoxItem.o"
+	@echo "... src/interfaceitems/CSelectBoxItem.i"
+	@echo "... src/interfaceitems/CSelectBoxItem.s"
 	@echo "... src/interfaceitems/CText.o"
 	@echo "... src/interfaceitems/CText.i"
 	@echo "... src/interfaceitems/CText.s"

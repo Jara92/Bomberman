@@ -66,6 +66,13 @@ public:
     CCoord <>GetSize() const
     {return this->m_Size;}
 
+    /**
+* Is this button colliding with mouse?
+* @param mouseLocation Current mouse location.
+* @return True - Colliding.
+*/
+    bool MouseCollision(CCoord <unsigned int> mouseLocation) const;
+
 protected:
     CCoord <>m_Location;
     CCoord <>m_Size;

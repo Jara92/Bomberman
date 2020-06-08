@@ -381,15 +381,15 @@ void CLevelLoader::ReorganizeCollectibles(std::shared_ptr<CBoard> &board)
         do
         {
             random = this->GetRandomBoardLocation(board);
-        } while (!board->m_Map[random.GetFlooredX()][random.GetFlooredY()] ||
-                 !board->m_Map[random.GetFlooredX()][random.GetFlooredY()]->IsDestructible() ||
-                 board->m_Map[random.GetFlooredX()][random.GetFlooredY()]->HasCollectible());
+        } while (!board->m_Map[random.m_X][random.m_Y] ||
+                 !board->m_Map[random.m_X][random.m_Y]->IsDestructible() ||
+                 board->m_Map[random.m_X][random.m_Y]->HasCollectible());
 
         // Insert collectible with new location to new map and attach it to the wall.
-        if (collectible->second && board->m_Map[random.GetFlooredX()][random.GetFlooredY()])
+        if (collectible->second && board->m_Map[random.m_X][random.m_Y])
         {
             collectible->second->SetLocation(random.ToDouble());
-            board->m_Map[random.GetFlooredX()][random.GetFlooredY()]->AttachCollectible(collectible->second);
+            board->m_Map[random.m_X][random.m_Y]->AttachCollectible(collectible->second);
             collectibles.insert(std::pair<CCoord<unsigned int>, CCollectible *>(random, collectible->second));
         }
     }

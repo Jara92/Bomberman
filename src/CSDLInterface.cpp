@@ -128,18 +128,18 @@ bool CSDLInterface::RenderText(const std::string &text, CCoord<> location, CCoor
 
     // Create rect for render.
     SDL_Rect Message_rect; //create a rect
-    Message_rect.x = location.GetFlooredX();
-    Message_rect.y = location.GetFlooredY();
+    Message_rect.x = location.ToInt().m_X;
+    Message_rect.y = location.ToInt().m_Y;
 
     if (size.m_X != 0)
-    { Message_rect.w = size.GetFlooredX(); }
+    { Message_rect.w = size.ToInt().m_X; }
     else
-    { Message_rect.w = defaultSize.GetFlooredX(); }
+    { Message_rect.w = defaultSize.ToInt().m_X; }
 
     if (size.m_Y != 0)
-    { Message_rect.h = size.GetFlooredY(); }
+    { Message_rect.h = size.ToInt().m_Y; }
     else
-    { Message_rect.h = defaultSize.GetFlooredY(); }
+    { Message_rect.h = defaultSize.ToInt().m_Y; }
 
     bool success = SDL_RenderCopy(this->m_Renderer, texture, NULL, &Message_rect) >= 0;
 

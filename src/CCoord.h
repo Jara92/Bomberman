@@ -102,18 +102,30 @@ public:
      */
     double CalcDistnance(const CCoord &other) const;
 
-    int GetFlooredX() const
+   /* int GetFlooredX() const
     { return static_cast<int>(this->m_X); }
 
     int GetFlooredY() const
-    { return static_cast<int>(this->m_Y); }
+    { return static_cast<int>(this->m_Y); }*/
 
+    /**
+     * Convert Coord to CCoord<double>
+     * @return Converted coord.
+     */
     CCoord<double> ToDouble() const
     { return CCoord<double>(static_cast<double>(this->m_X), static_cast<double>(this->m_Y)); }
 
+    /**
+    * Convert Coord to CCoord<int>
+    * @return Converted coord.
+    */
     CCoord<int> ToInt() const
     { return CCoord<int>(static_cast< int>(std::floor(this->m_X)), static_cast<int>(std::floor(this->m_Y))); }
 
+    /**
+    * Convert Coord to CCoord<unsigned int>
+    * @return Converted coord.
+    */
     CCoord<unsigned int> ToUnsignedInt() const
     {
         return CCoord<unsigned int>(static_cast< unsigned int>(std::abs(std::floor(this->m_X))),

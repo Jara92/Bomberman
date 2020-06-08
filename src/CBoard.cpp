@@ -293,8 +293,9 @@ void CBoard::Draw(CSDLInterface *interface, CCoord<> offset)
             /*==DEBUG==*/
         else if (this->m_Settings->GetDebugMode())
         {
-            SDL_Rect rect{static_cast<int>((i->second->GetLocation().GetFlooredX() + offset.m_X) * (m_CellSize)),
-                          static_cast<int>((i->second->GetLocation().GetFlooredY() + offset.m_Y) * (m_CellSize)),
+            CCoord <int> location = i->second->GetLocation().ToInt() + offset.ToInt();
+            SDL_Rect rect{static_cast<int>(location.m_X * (m_CellSize)),
+                          static_cast<int>(location.m_Y * (m_CellSize)),
                           static_cast<int>(m_CellSize), static_cast<int>(m_CellSize)};
             interface->RenderRectangle(&rect);
         }

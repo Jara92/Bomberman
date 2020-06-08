@@ -36,7 +36,8 @@ protected:
 
     void UpdateResolution(CCoord <unsigned int>newResolution)
     {
-        this->m_Interface->GetSettings()->ChangeGameScreenResolution(newResolution.GetFlooredX(), newResolution.GetFlooredY());
+        // Change settings object and reload interface.
+        this->m_Interface->GetSettings()->ChangeGameScreenResolution(newResolution.m_X, newResolution.m_Y);
         this->m_Interface->ReloadSettings();
     }
 };
