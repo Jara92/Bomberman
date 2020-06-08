@@ -8,10 +8,9 @@
 #include "CSDLInterface.h"
 
 
-CSDLInterface::CSDLInterface(const char *title, std::shared_ptr<CSettings> settings, const std::string &defaultFont)
-        : m_WindowWidth(settings->GetMenuScreenSize().m_X), m_WindowHeight(settings->GetMenuScreenSize().m_Y),
-          m_WindowTitle(title), m_Settings(std::move(settings)), m_Font(defaultFont), m_Window(nullptr),
-          m_Renderer(nullptr)
+CSDLInterface::CSDLInterface(const std::string & title, std::shared_ptr<CSettings> settings, const std::string &defaultFont)
+        : m_WindowSize(settings->GetMenuScreenSize()), m_WindowTitle(title), m_Settings(std::move(settings)),
+          m_Font(defaultFont), m_Window(nullptr),m_Renderer(nullptr)
 {}
 
 /*====================================================================================================================*/
@@ -55,8 +54,8 @@ bool CSDLInterface::InitInterface()
             this->m_WindowTitle.c_str(),                   // window title
             SDL_WINDOWPOS_CENTERED,              // initial x position
             SDL_WINDOWPOS_CENTERED,              // initial y position
-            this->m_WindowWidth,                   // width, in pixels
-            this->m_WindowHeight,                  // height, in pixels
+            this->m_WindowSize.m_X,                   // width, in pixels
+            this->m_WindowSize.m_Y,                  // height, in pixels
             SDL_WINDOW_OPENGL                 // flags
     );
 
@@ -145,11 +144,11 @@ bool CSDLInterface::RenderText(const std::string &text, CCoord<> location, CCoor
 void CSDLInterface::SetMenuScreenSize()
 {
     // Change window size if new size is different.
-    if (this->m_WindowWidth != this->m_Settings->GetMenuScreenSize().m_X ||
-        this->m_WindowHeight != this->m_Settings->GetMenuScreenSize().m_Y)
+    if (this->m_WindowSize.m_X != this->m_Settings->GetMenuScreenSize().m_X ||
+        this->m_WindowSize.m_Y != this->m_Settings->GetMenuScreenSize().m_Y)
     {
-        this->m_WindowWidth = this->m_Settings->GetMenuScreenSize().m_X;
-        this->m_WindowHeight = this->m_Settings->GetMenuScreenSize().m_Y;
+        this->m_WindowSize.m_X = this->m_Settings->GetMenuScreenSize().m_X;
+        this->m_WindowSize.m_Y = this->m_Settings->GetMenuScreenSize().m_Y;
 
         this->UpdateWindowSize();
     }
@@ -159,11 +158,11 @@ void CSDLInterface::SetMenuScreenSize()
 void CSDLInterface::SetGameScreenSize()
 {
     // Change window size if new size is different.
-    if (this->m_WindowWidth != this->m_Settings->GetGameScreenSize().m_X ||
-        this->m_WindowHeight != this->m_Settings->GetGameScreenSize().m_Y)
+    if (this->m_WindowSize.m_X != this->m_Settings->GetGameScreenSize().m_X ||
+        this->m_WindowSize.m_Y != this->m_Settings->GetGameScreenSize().m_Y)
     {
-        this->m_WindowWidth = this->m_Settings->GetGameScreenSize().m_X;
-        this->m_WindowHeight = this->m_Settings->GetGameScreenSize().m_Y;
+        this->m_WindowSize.m_X = this->m_Settings->GetGameScreenSize().m_X;
+        this->m_WindowSize.m_Y = this->m_Settings->GetGameScreenSize().m_Y;
 
         this->UpdateWindowSize();
     }
@@ -172,25 +171,28 @@ void CSDLInterface::SetGameScreenSize()
 /*====================================================================================================================*/
 void CSDLInterface::UpdateWindowSize()
 {
-    SDL_SetWindowSize(this->m_Window, this->m_WindowWidth, this->m_WindowHeight);
+    SDL_SetWindowSize(this->m_Window, this->m_WindowSize.m_X, this->m_WindowSize.m_Y);
     SDL_SetWindowPosition(this->m_Window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 }
 
 /*====================================================================================================================*/
 SDL_Texture *CSDLInterface::LoadTextTexture(const std::string &text, CCoord<unsigned int> &size, SDL_Color color) const
 {
+    // Load font.
     TTF_Font *font = TTF_OpenFont((this->m_Settings->GetAssetsPath() + this->m_Font).c_str(), 48);
     if (font == NULL)
     {
         return NULL;
     }
 
+    // Create text surface.
     SDL_Surface *surfaceMessage = TTF_RenderText_Blended(font, (text).c_str(), color);
     if (surfaceMessage == NULL)
     {
         return NULL;
     }
 
+    // Create texture.
     SDL_Texture *message = SDL_CreateTextureFromSurface(this->m_Renderer, surfaceMessage);
     if (message == NULL)
     {

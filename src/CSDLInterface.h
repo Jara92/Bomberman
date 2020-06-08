@@ -28,7 +28,7 @@ public:
      * @param settings Setting to be used.
      * @param defaultFont Default font path.
      */
-    CSDLInterface(const char *title, std::shared_ptr<CSettings> settings, const std::string &defaultFont);
+    CSDLInterface(const std::string & title, std::shared_ptr<CSettings> settings, const std::string &defaultFont);
 
     /* This class contains C pointers which cannot be copied. */
     CSDLInterface(const CSDLInterface &other) = delete;
@@ -64,7 +64,7 @@ public:
     void UpdateWindowSize();
 
     CCoord<unsigned int> GetWindowSize() const
-    { return {(m_WindowWidth), (m_WindowHeight)}; }
+    { return this->m_WindowSize; }
 
     std::shared_ptr<CSettings> GetSettings()
     {
@@ -161,8 +161,7 @@ public:
     { SDL_Delay(time); }
 
 protected:
-    unsigned int m_WindowWidth;
-    unsigned int m_WindowHeight;
+    CCoord<unsigned int > m_WindowSize;
     std::string m_WindowTitle;
 
     std::shared_ptr<CSettings> m_Settings;
