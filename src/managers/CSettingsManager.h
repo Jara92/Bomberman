@@ -21,6 +21,9 @@ public:
 
     virtual EApplicationStatus Run() override ;
 
+    virtual void Init() override
+    {}
+
 protected:
 
     virtual void Update(int deltaTime) override ;
@@ -30,5 +33,11 @@ protected:
     virtual void Draw() const override ;
 
     virtual void ProcessEvent(SDL_Event & e) override ;
+    
+    void UpdateResolution(CCoord newResolution)
+    {
+        this->m_Interface->GetSettings()->ChangeGameScreenResolution(newResolution.GetFlooredX(), newResolution.GetFlooredY());
+        this->m_Interface->ReloadSettings();
+    }
 };
 

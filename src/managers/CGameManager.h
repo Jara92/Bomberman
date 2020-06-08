@@ -31,6 +31,9 @@ public:
      */
     virtual EApplicationStatus Run() override ;
 
+    virtual void Init() override
+    {}
+
 protected:
     std::shared_ptr<CBoard> m_Board;
     CScoreSaver m_ScoreManager;

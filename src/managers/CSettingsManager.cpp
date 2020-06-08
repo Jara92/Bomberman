@@ -27,29 +27,30 @@ CSettingsManager::CSettingsManager(CSDLInterface *interface) : CWindowManager(in
     // Add select box
     CCoord selectBoxLocation = CCoord(0, 48);
     this->m_InterfaceItems.push_back(
-            std::make_unique<CSelectBox>(interface, selectBoxLocation,
-                                         this->m_Interface->GetWindowSize() - selectBoxLocation, 48,
-                                         std::vector<std::string>{{"1200x500"},
-                                                                  {"500x200"}}, defaultFontColor,
-                                         hoverFontColor, selectedFontColor));
+            std::make_unique<CSelectBox<CCoord>>(interface, selectBoxLocation,
+                                                 this->m_Interface->GetWindowSize() - selectBoxLocation, 48,
+                                                 std::map<std::string, CCoord>{{"1200x500", CCoord(1200, 500)},
+                                                                               {"500x200",  CCoord(500, 200)}},
+                                                 defaultFontColor, hoverFontColor, selectedFontColor, [=](CCoord newRes)
+                                                 { this->UpdateResolution(newRes); }));
     // TODO add sound
-    // Exit button
+    // Back button
     this->m_InterfaceItems.push_back(
-            std::make_unique<CButton>(interface, "Exit", CCoord(0, 0), defaultFontColor, hoverFontColor,
+            std::make_unique<CButton>(interface, "Back", CCoord(0, 0), defaultFontColor, hoverFontColor,
                                       CCoord(0, 35), [=]()
-                                      { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_EXIT; }));
+                                      { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_MENU; }));
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
             CCoord(padding, windowSize.m_Y - itemSize.m_Y - padding));
 
     // Save button
-    this->m_InterfaceItems.push_back(
-            std::make_unique<CButton>(interface, "Save", CCoord(0, 0), defaultFontColor, hoverFontColor,
-                                      CCoord(0, 35), [=]()
-                                      { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_EXIT; }));
-    itemSize = this->m_InterfaceItems.back()->GetSize();
-    this->m_InterfaceItems.back()->SetLocation(
-            CCoord(windowSize.m_X - itemSize.m_X - padding, windowSize.m_Y - itemSize.m_Y - padding));
+    /* this->m_InterfaceItems.push_back(
+             std::make_unique<CButton>(interface, "Save", CCoord(0, 0), defaultFontColor, hoverFontColor,
+                                       CCoord(0, 35), [=]()
+                                       {  Save settings in file.  }));
+     itemSize = this->m_InterfaceItems.back()->GetSize();
+     this->m_InterfaceItems.back()->SetLocation(
+             CCoord(windowSize.m_X - itemSize.m_X - padding, windowSize.m_Y - itemSize.m_Y - padding));*/
 }
 
 /*====================================================================================================================*/
@@ -68,7 +69,7 @@ EApplicationStatus CSettingsManager::Run()
 /*====================================================================================================================*/
 void CSettingsManager::Update(int deltaTime)
 {
-
+    CWindowManager::Update(deltaTime);
 }
 
 /*====================================================================================================================*/

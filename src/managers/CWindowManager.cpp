@@ -60,3 +60,12 @@ void CWindowManager::Draw() const
     }
 }
 
+/*====================================================================================================================*/
+void CWindowManager::Update(int deltaTime)
+{
+    for (auto item = this->m_InterfaceItems.begin(); item != this->m_InterfaceItems.end(); item++)
+    {
+        item->get()->Update(deltaTime);
+    }
+}
+

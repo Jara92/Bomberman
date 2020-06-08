@@ -39,6 +39,11 @@ public:
      */
     bool InitInterface();
 
+    void ReloadSettings()
+    {
+
+    }
+
     /**
      * Change settings.
      * @param settings New settings

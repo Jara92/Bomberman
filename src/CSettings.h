@@ -59,6 +59,15 @@ public:
         this->m_Sound = sound;
     }
 
+    void ChangeGameScreenResolution(unsigned int gameScreenWidth, unsigned int gameScreenHeight)
+    {
+        this->m_GameScreenWidth = gameScreenWidth;
+        this->m_GameScreenHeight = gameScreenHeight;
+    }
+
+    void EnableSound(bool sound)
+    {this->m_Sound = sound;}
+
     unsigned int GetGameScreenWidth() const
     { return this->m_GameScreenWidth; }
 

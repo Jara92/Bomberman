@@ -9,7 +9,7 @@
 
 void CBoost::Apply(CPlayer *player)
 {
-    if(this->m_IsAlive)
+    if (this->m_IsAlive)
     {
         if (this->m_Apply)
         {
@@ -34,6 +34,7 @@ void CBoost::Apply(CPlayer *player)
     }
 }
 
+/*====================================================================================================================*/
 void CBoost::Update(CBoard *board, int deltaTime)
 {
     if (this->m_TargetPlayer)
@@ -46,12 +47,13 @@ void CBoost::Update(CBoard *board, int deltaTime)
         }
     }
 
-    if(!this->m_IsAlive)
+    if (!this->m_IsAlive)
     {
         board->DestroyCollectible(this);
     }
 }
 
+/*====================================================================================================================*/
 void CBoost::Deactivate()
 {
     if (this->m_Deactivate)

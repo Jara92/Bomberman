@@ -34,6 +34,8 @@ public:
      */
     virtual EApplicationStatus Run();
 
+    virtual void Init() = 0;
+
 protected:
     CSDLInterface * m_Interface;
     /** Interface items in the view. */
@@ -46,7 +48,7 @@ protected:
      * Update window state.
      * @param deltaTime Delta time.
      */
-    virtual void Update(int deltaTime) = 0;
+    virtual void Update(int deltaTime);
 
     /**
      * Check and handle events

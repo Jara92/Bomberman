@@ -88,12 +88,6 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
 }
 
 /*====================================================================================================================*/
-CMenuManager::~CMenuManager()
-{
-}
-
-
-/*====================================================================================================================*/
 EApplicationStatus CMenuManager::Run()
 {
     // While window is not closed.
@@ -109,10 +103,7 @@ EApplicationStatus CMenuManager::Run()
 /*====================================================================================================================*/
 void CMenuManager::Update(int deltaTime)
 {
-    for (auto item = this->m_InterfaceItems.begin(); item != this->m_InterfaceItems.end(); item++)
-    {
-        item->get()->Update(deltaTime);
-    }
+    CWindowManager::Update(deltaTime);
 }
 
 /*====================================================================================================================*/

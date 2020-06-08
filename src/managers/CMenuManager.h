@@ -23,11 +23,14 @@ public:
     */
     explicit CMenuManager(CSDLInterface *interface);
 
-    ~CMenuManager();
+    virtual ~CMenuManager() = default;
     CMenuManager(const CMenuManager &other) = delete;
     CMenuManager &operator=(const CMenuManager &other) = delete;
 
     virtual EApplicationStatus Run() override ;
+
+    virtual void Init() override
+    {}
 
 protected:
     virtual void Update(int deltaTime) override ;

@@ -152,19 +152,29 @@ bool CSDLInterface::RenderText(const std::string &text, CCoord location, CCoord 
 /*====================================================================================================================*/
 void CSDLInterface::SetMenuScreenSize()
 {
-    this->m_WindowWidth = this->m_Settings->GetMenuScreenWidth();
-    this->m_WindowHeight = this->m_Settings->GetMenuScreenHeight();
+    // Change window size if new size is different.
+    if (this->m_WindowWidth != this->m_Settings->GetMenuScreenWidth() ||
+        this->m_WindowHeight != this->m_Settings->GetMenuScreenHeight())
+    {
+        this->m_WindowWidth = this->m_Settings->GetMenuScreenWidth();
+        this->m_WindowHeight = this->m_Settings->GetMenuScreenHeight();
 
-    this->UpdateWindowSize();
+        this->UpdateWindowSize();
+    }
 }
 
 /*====================================================================================================================*/
 void CSDLInterface::SetGameScreenSize()
 {
-    this->m_WindowWidth = this->m_Settings->GetGameScreenWidth();
-    this->m_WindowHeight = this->m_Settings->GetGameScreenHeight();
+    // Change window size if new size is different.
+    if (this->m_WindowWidth != this->m_Settings->GetGameScreenWidth() ||
+        this->m_WindowHeight != this->m_Settings->GetGameScreenHeight())
+    {
+        this->m_WindowWidth = this->m_Settings->GetGameScreenWidth();
+        this->m_WindowHeight = this->m_Settings->GetGameScreenHeight();
 
-    this->UpdateWindowSize();
+        this->UpdateWindowSize();
+    }
 }
 
 /*====================================================================================================================*/
