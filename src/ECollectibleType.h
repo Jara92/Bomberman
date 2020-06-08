@@ -29,4 +29,3 @@ enum class ECollectibleType
     /** Player will be moved in a next level. */
     COLLECTIBLE_TYPE_DOOR = 8
 };
-

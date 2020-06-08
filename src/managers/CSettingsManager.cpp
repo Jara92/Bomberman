@@ -43,12 +43,11 @@ CSettingsManager::CSettingsManager(CSDLInterface *interface) : CWindowManager(in
 
     // Back button
     this->m_InterfaceItems.push_back(
-            std::make_unique<CButton>(interface, "Back", CCoord<>(0, 0), SDL_Colour{0,0,0,255}, hoverFontColor,
+            std::make_unique<CButton>(interface, "Back", CCoord<>(0, 0), SDL_Colour{0, 0, 0, 255}, hoverFontColor,
                                       CCoord<>(0, 35), [=]()
                                       { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_MENU; }));
     itemSize = this->m_InterfaceItems.back()->GetSize();
-    this->m_InterfaceItems.back()->SetLocation(
-            CCoord<>(padding, windowSize.m_Y - itemSize.m_Y - padding));
+    this->m_InterfaceItems.back()->SetLocation(CCoord<>(padding, windowSize.m_Y - itemSize.m_Y - padding));
 }
 
 /*====================================================================================================================*/
@@ -84,9 +83,7 @@ void CSettingsManager::ProcessEvent(SDL_Event &e)
         case SDL_MOUSEBUTTONDOWN:
         case SDL_MOUSEMOTION:
             for (auto item = this->m_InterfaceItems.begin(); item != this->m_InterfaceItems.end(); item++)
-            {
-                item->get()->MouseEventHandler(e);
-            }
+            { item->get()->MouseEventHandler(e); }
             break;
         default:
             // Unknown events send to parent.

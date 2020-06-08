@@ -4,6 +4,7 @@
 */
 
 #pragma once
+
 #include <functional>
 #include "CWindowManager.h"
 #include "../CSDLInterface.h"
@@ -22,14 +23,15 @@ public:
      * @param interface Interface to be used.
      */
     explicit CGameManager(CSDLInterface *interface);
-    virtual ~CGameManager() = default;
-    CGameManager (const CGameManager & other) = delete;
-    CGameManager & operator = (const CGameManager & other) = delete;
 
-    /**
-     * Run the game.
-     */
-    virtual EApplicationStatus Run() override ;
+    virtual ~CGameManager() = default;
+
+    CGameManager(const CGameManager &other) = delete;
+
+    CGameManager &operator=(const CGameManager &other) = delete;
+
+    /** Run the game. */
+    virtual EApplicationStatus Run() override;
 
     virtual void Init() override
     {}
@@ -50,66 +52,60 @@ protected:
     /** Timer which updates game state updates a time delay. */
     CTimer m_GameStatusDelay;
 
-    /**
-     * The time a player has to complete the game.
-     */
+    /** The time a player has to complete the game.*/
     static constexpr int STARTING_TIME = 200500;
-    /**
-     * Waiting time between loading scenes.
-     */
+    /** Waiting time between loading scenes. */
     static constexpr int GAME_STATUS_DELAY = 2000;
 
     /**
      * Global input events.
      * @param input Keystate
      */
-    void GlobalInput(const Uint8 * input);
+    void GlobalInput(const Uint8 *input);
 
-    /**
-     * Prepare board for next round.
-     */
+    /** Prepare board for next round. */
     void NextRound();
 
-    /**
-     * Reload current level.
-     */
+    /** Reload current level. */
     void RoundOver();
 
-    /**
-     * Save top score and shut off the game.
-     */
+    /** Save top score and shut off the game. */
     void GameOver();
 
     /**
      * Fill game state with value of next game state and fill next game state with value of newStatus.
      * @param newStatus New game state.
      */
-    void SetStatus(EGameStatus newStatus);
+    void SetStatus(EGameStatus newStatus)
+    {
+        this->m_GameStatus = this->m_NextGameStatus;
+        this->m_NextGameStatus = newStatus;
+    }
 
-    /**
-     * Fill game state with value of next game state.
-     */
-    void UpdateStatus();
+    /** Fill game state with value of next game state. */
+    void UpdateStatus()
+    { this->m_GameStatus = this->m_NextGameStatus; }
+
     void KillAllPlayers();
 
-    /**
-     * Draw game by the game state.
-     */
-    virtual void Draw() const override ;
+    /** Draw game by the game state. */
+    virtual void Draw() const override;
+
     void DrawGame() const;
+
     void DrawRoundOver() const;
+
     void DrawNextRound() const;
+
     void DrawGameOver() const;
 
     /**
      * Update game.
      * @param deltaTime Delta time.
      */
-    virtual void Update(int deltaTime) override ;
+    virtual void Update(int deltaTime) override;
 
-    /**
-     * Check and handle important game events. Update game state.
-     */
-    virtual void UpdateEvents() override ;
+    /** Check and handle important game events. Update game state. */
+    virtual void UpdateEvents() override;
 };
 

@@ -32,9 +32,7 @@ void CWindowManager::UpdateEvents()
     // Proccess event.
     SDL_Event e;
     while (SDL_PollEvent(&e) != 0)
-    {
-        this->ProcessEvent(e);
-    }
+    { this->ProcessEvent(e); }
 }
 
 /*====================================================================================================================*/
@@ -55,17 +53,12 @@ void CWindowManager::Draw() const
 {
     // Draw every UI item.
     for (auto item = this->m_InterfaceItems.begin(); item != this->m_InterfaceItems.end(); item++)
-    {
-        item->get()->Draw(this->m_Interface);
-    }
+    { item->get()->Draw(this->m_Interface); }
 }
 
 /*====================================================================================================================*/
 void CWindowManager::Update(int deltaTime)
 {
     for (auto item = this->m_InterfaceItems.begin(); item != this->m_InterfaceItems.end(); item++)
-    {
-        item->get()->Update(deltaTime);
-    }
+    { item->get()->Update(deltaTime); }
 }
-

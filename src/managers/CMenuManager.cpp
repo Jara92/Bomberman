@@ -15,8 +15,8 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
 {
     // Set menu window size.
     this->m_Interface->SetMenuScreenSize();
-    CCoord <unsigned int>windowSize = this->m_Interface->GetWindowSize();
-    CCoord <>itemSize;
+    CCoord<unsigned int> windowSize = this->m_Interface->GetWindowSize();
+    CCoord<> itemSize;
     // Border offset.
     unsigned int offset = 10;
     unsigned int yLocation = offset;
@@ -44,7 +44,7 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
             CCoord<>((windowSize.m_X / 2) - (itemSize.m_X / 2),
-                   yLocation += static_cast<unsigned int>(yButtonMargin * 1.5)));
+                     yLocation += static_cast<unsigned int>(yButtonMargin * 1.5)));
 
     // Two players button
     this->m_InterfaceItems.push_back(
@@ -54,7 +54,7 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
 
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
-            CCoord<>((windowSize.m_X / 2) - (itemSize.m_X / 2), yLocation += yButtonMargin));
+            CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2), yLocation += yButtonMargin));
 
     // Settings button
     this->m_InterfaceItems.push_back(
@@ -64,7 +64,7 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
 
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
-            CCoord<>((windowSize.m_X / 2) - (itemSize.m_X / 2), yLocation += yButtonMargin));
+            CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2), yLocation += yButtonMargin));
 
     // Exit button
     this->m_InterfaceItems.push_back(
@@ -74,7 +74,7 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
 
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
-            CCoord<>((windowSize.m_X / 2) - (itemSize.m_X / 2), yLocation += yButtonMargin));
+            CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2), yLocation += yButtonMargin));
 
     // Footer
     this->m_InterfaceItems.push_back(
@@ -132,9 +132,7 @@ void CMenuManager::ProcessEvent(SDL_Event &e)
         case SDL_MOUSEBUTTONDOWN:
         case SDL_MOUSEMOTION:
             for (auto item = this->m_InterfaceItems.begin(); item != this->m_InterfaceItems.end(); item++)
-            {
-                item->get()->MouseEventHandler(e);
-            }
+            { item->get()->MouseEventHandler(e); }
             break;
         default:
             // Unknown events send to parent.

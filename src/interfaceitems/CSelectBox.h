@@ -42,17 +42,6 @@ public:
 
     virtual void MouseEventHandler(SDL_Event &e) override;
 
-    T GetSelectedItemValue() const
-    { return this->m_SelectedValue; }
-
-    void UpdateValue(T value)
-    {
-        this->m_SelectedValue = value;
-        if (this->m_CallBack)
-        { this->m_CallBack(value); }
-        std::cout << "Value: " << this->m_SelectedValue << std::endl;
-    }
-
 protected:
     std::map<T, std::unique_ptr<CSelectBoxItem>> m_Items;
     std::function<void(T)> m_CallBack;
@@ -94,7 +83,7 @@ CSelectBox<T>::CSelectBox(CSDLInterface *interface, CCoord<> location, CCoord<> 
         item->SetLocation(CCoord<>((this->m_Size.m_X / 2) - (itemSize.m_X / 2),
                                    locationY += static_cast<unsigned int>(itemSize.m_Y * margin)));
 
-        if(option->second == defaultOption)
+        if (option->second == defaultOption)
         {
             item->SetActive(true);
             defaultWasSet = true;
@@ -104,10 +93,8 @@ CSelectBox<T>::CSelectBox(CSDLInterface *interface, CCoord<> location, CCoord<> 
     }
 
     // Set first as selected if there is no selected item.
-    if(!defaultWasSet && this->m_Items.begin() != this->m_Items.end())
-    {
-        this->m_Items.begin()->second->SetActive(true);
-    }
+    if (!defaultWasSet && this->m_Items.begin() != this->m_Items.end())
+    { this->m_Items.begin()->second->SetActive(true); }
 }
 
 /*====================================================================================================================*/
@@ -115,9 +102,7 @@ template<class T>
 void CSelectBox<T>::Update(int deltaTime)
 {
     for (auto item = this->m_Items.begin(); item != this->m_Items.end(); item++)
-    {
-        item->second->Update(deltaTime);
-    }
+    { item->second->Update(deltaTime); }
 }
 
 /*====================================================================================================================*/
@@ -125,9 +110,7 @@ template<class T>
 void CSelectBox<T>::Draw(CSDLInterface *interface)
 {
     for (auto item = this->m_Items.begin(); item != this->m_Items.end(); item++)
-    {
-        item->second->Draw(interface);
-    }
+    { item->second->Draw(interface); }
 }
 
 /*====================================================================================================================*/
@@ -164,9 +147,7 @@ void CSelectBox<T>::MouseButtonEventHandler(SDL_MouseButtonEvent &e)
 
             T output = item->first;
             if (this->m_CallBack)
-            {
-                this->m_CallBack(output);
-            }
+            { this->m_CallBack(output); }
         }
     }
 }
@@ -180,12 +161,9 @@ void CSelectBox<T>::MouseMoveEventHandler(SDL_MouseMotionEvent &e)
     for (auto item = this->m_Items.begin(); item != this->m_Items.end(); item++)
     {
         if (item->second->MouseCollision(CCoord<unsigned int>(e.x, e.y)))
-        {
-            item->second->SetHover(true);
-        } else
-        {
-            item->second->SetHover(false);
-        }
+        { item->second->SetHover(true); }
+        else
+        { item->second->SetHover(false); }
     }
 }
 
@@ -194,8 +172,6 @@ template<class T>
 void CSelectBox<T>::DeactivateAll()
 {
     for (auto item = this->m_Items.begin(); item != this->m_Items.end(); item++)
-    {
-        item->second->SetActive(false);
-    }
+    { item->second->SetActive(false); }
 }
 

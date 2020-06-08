@@ -7,6 +7,7 @@
 
 #include "CCollectible.h"
 
+/** Portal to next level */
 class CDoor : public CCollectible
 {
 public:

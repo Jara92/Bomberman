@@ -36,7 +36,6 @@ public:
               m_FireObjectTexturePack(std::move(fireTexturePack))
     {}
 
-
     ~CBoard();
 
     CBoard(const CBoard &other) = default;
@@ -166,4 +165,3 @@ protected:
      */
     bool PlayerDirectionFree(CCoord<unsigned int> location, CPlayer *player, CCoord<int> direction);
 };
-

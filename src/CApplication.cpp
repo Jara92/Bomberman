@@ -8,10 +8,9 @@
 
 int CApplication::Run(int argc, char *argv[])
 {
-    std::shared_ptr <CSettings> settings = this->Init(argc, argv);
-    std::shared_ptr <CSDLInterface> interface = std::make_shared<CSDLInterface>("Bomberman", settings,
-                                                                                "Fonts/Piedra-Regular.ttf");
-
+    std::shared_ptr<CSettings> settings = this->Init(argc, argv);
+    std::shared_ptr<CSDLInterface> interface = std::make_shared<CSDLInterface>("Bomberman", settings,
+                                                                               "Fonts/Piedra-Regular.ttf");
     try
     {
         interface->InitInterface();
@@ -20,8 +19,8 @@ int CApplication::Run(int argc, char *argv[])
         while (applicationStatus != EApplicationStatus::APPLICATION_STATUS_EXIT)
         {
             // Get manager to be run.
-            std::shared_ptr <CWindowManager> manager = this->GetWindowManagerByState(interface.get(),
-                                                                                     applicationStatus);
+            std::shared_ptr<CWindowManager> manager = this->GetWindowManagerByState(interface.get(),
+                                                                                    applicationStatus);
 
             // Run and get next application state.
             applicationStatus = manager->Run();
@@ -60,18 +59,14 @@ std::shared_ptr <CSettings> CApplication::Init(int argc, char *argv[])
     try
     {
         if (argc >= 2 && strcmp(argv[1], "-debug") == 0)
-        {
-            debug = true;
-        }
+        { debug = true; }
     }
     catch (...)
-    {
-        std::cerr << INVALID_INPUT_PARAMETERS << std::endl;
-    }
+    { std::cerr << INVALID_INPUT_PARAMETERS << std::endl; }
 
 
-    return std::make_shared<CSettings>(CCoord<unsigned int>(1150, 700), CCoord<unsigned int>(512,
-                                                                                             512),
+    return std::make_shared<CSettings>(CCoord<unsigned int>(1150, 700),
+                                       CCoord<unsigned int>(512, 512),
                                        CCoord<unsigned int>(0, 1), 60, true, debug);
 }
 

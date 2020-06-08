@@ -8,9 +8,7 @@
 #include <memory>
 #include "CWindowManager.h"
 
-/**
- * Class which manages menu rendering and user events.
- */
+/** Class which manages menu rendering and user events. */
 class CMenuManager : public CWindowManager
 {
 public:

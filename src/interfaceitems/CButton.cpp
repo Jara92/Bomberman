@@ -9,7 +9,7 @@
 CButton::CButton(CSDLInterface *interface, const std::string &text, CCoord<> location, SDL_Colour textColor,
                  SDL_Colour textHoverColor, CCoord<> size, std::function<void(void)> clickCallBack)
         : CInterfaceItem(location, size),
-          m_IsHovering(false),m_ClickCallBack(std::move(clickCallBack))
+          m_IsHovering(false), m_ClickCallBack(std::move(clickCallBack))
 {
     // Create textures.
     this->m_Text = std::make_unique<CText>(interface, location, text, size, textColor);
@@ -18,17 +18,18 @@ CButton::CButton(CSDLInterface *interface, const std::string &text, CCoord<> loc
     // Set size.
     this->m_Size = this->m_Text->GetSize();
 }
+
 /*====================================================================================================================*/
 void CButton::Draw(CSDLInterface *interface)
 {
-    if(this->m_IsHovering)
-    {this->m_TextHover->Draw(interface);}
+    if (this->m_IsHovering)
+    { this->m_TextHover->Draw(interface); }
     else
-    {this->m_Text->Draw(interface);}
+    { this->m_Text->Draw(interface); }
 }
 
 /*====================================================================================================================*/
-void CButton::SetLocation(CCoord <>location)
+void CButton::SetLocation(CCoord<> location)
 {
     CInterfaceItem::SetLocation(location);
 
@@ -37,7 +38,7 @@ void CButton::SetLocation(CCoord <>location)
 }
 
 /*====================================================================================================================*/
-void CButton::SetSize(CCoord <>size)
+void CButton::SetSize(CCoord<> size)
 {
     CInterfaceItem::SetSize(size);
 
@@ -75,12 +76,9 @@ void CButton::MouseButtonEventHandler(SDL_MouseButtonEvent &e)
 void CButton::MouseMoveEventHandler(SDL_MouseMotionEvent &e)
 {
     if (this->MouseCollision(CCoord<unsigned int>(e.x, e.y)))
-    {
-        this->m_IsHovering = true;
-    } else
-    {
-        this->m_IsHovering = false;
-    }
+    { this->m_IsHovering = true; }
+    else
+    { this->m_IsHovering = false; }
 }
 
 

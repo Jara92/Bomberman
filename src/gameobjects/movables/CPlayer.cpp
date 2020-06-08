@@ -24,12 +24,10 @@ void CPlayer::Update(CBoard *board, int deltaTime)
 
     // Plating action
     if (this->m_IsPlanting)
-    {
-        this->TryPlaceBomb(board);
-    }
+    { this->TryPlaceBomb(board); }
 
     // Detonation action
-    if (this->m_IsDetonating &&  this->m_DetanatingAvaible && this->m_RemoteExplosion)
+    if (this->m_IsDetonating && this->m_DetanatingAvaible && this->m_RemoteExplosion)
     {
         this->m_DetanatingAvaible = false;
         board->DetonateBombs(this);
@@ -46,7 +44,7 @@ void CPlayer::Update(CBoard *board, int deltaTime)
 void CPlayer::VerticalMove(CBoard *board, int deltaTime)
 {
     // Save old location
-    CCoord <>oldLocation = this->m_Location;
+    CCoord<> oldLocation = this->m_Location;
 
     // Move
     this->m_Location.m_Y += (this->m_Speed * static_cast<int>(this->m_VerticalMovingDirection)) * deltaTime;
@@ -146,9 +144,7 @@ bool CPlayer::LocationIsFree(CBoard *board) const
         !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + val, this->m_Location.m_Y), this) ||
         !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X, this->m_Location.m_Y + val), this) ||
         !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + val, this->m_Location.m_Y + val), this))
-    {
-        return false;
-    }
+    { return false; }
 
     return true;
 }
@@ -157,7 +153,7 @@ bool CPlayer::LocationIsFree(CBoard *board) const
 void CPlayer::HandleInput(const Uint8 *keyState)
 {
     // Handle input when the player is alive
-    if(this->m_IsAlive)
+    if (this->m_IsAlive)
     {
         // TODO change animation system. Animation setup should not be in Input method.
         // movement
@@ -189,9 +185,7 @@ void CPlayer::HandleInput(const Uint8 *keyState)
         }
             // Planting is not avaible until the button is released
         else if (!keyState[this->m_Controls->m_PlaceBomb])
-        {
-            this->m_PlantingAvaible = true;
-        }
+        { this->m_PlantingAvaible = true; }
 
         // Detonating action
         if (keyState[this->m_Controls->m_Detonation] && this->m_DetanatingAvaible)
@@ -201,16 +195,14 @@ void CPlayer::HandleInput(const Uint8 *keyState)
         }
             // Detonating is not avaible until the button is released
         else if (!keyState[this->m_Controls->m_Detonation])
-        {
-            this->m_DetanatingAvaible = true;
-        }
+        { this->m_DetanatingAvaible = true; }
     }
 }
 
 /*====================================================================================================================*/
 void CPlayer::TryPlaceBomb(CBoard *board)
 {
-    if(this->m_ActiveBombs < this->m_MaxBombs)
+    if (this->m_ActiveBombs < this->m_MaxBombs)
     {
         board->PlaceBomb(this);
         //this->m_ActiveBombs++; // TODO uncomment this

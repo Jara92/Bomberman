@@ -32,9 +32,7 @@ public:
     CWindowManager (const CWindowManager & other) = delete;
     CWindowManager & operator = (const CWindowManager & other) = delete;
 
-    /**
-     * Run window.
-     */
+    /** Run window. */
     virtual EApplicationStatus Run();
 
     virtual void Init() = 0;
@@ -53,9 +51,7 @@ protected:
      */
     virtual void Update(int deltaTime);
 
-    /**
-     * Check and handle events
-     */
+    /** Check and handle events */
     virtual void UpdateEvents();
 
     /**
@@ -65,9 +61,7 @@ protected:
      */
     virtual void ProcessEvent(SDL_Event & e);
 
-    /**
-     * Draw window.
-     */
+    /** Draw window. */
     virtual void Draw() const;
 };
 

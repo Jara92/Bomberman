@@ -14,6 +14,7 @@
 #include "ETextureType.h"
 #include "CSDLInterface.h"
 
+/** Animated texture simulation. */
 class CAnimation
 {
 public:
@@ -22,8 +23,7 @@ public:
     ~CAnimation();
 
     /* I dont want allow copying this object. It is unnecessary.
-     * This object is saved in CTexture pack and gameobjects have shared_ptr to their texturepack object.
-    */
+     * This object is saved in CTexture pack and gameobjects have shared_ptr to their texturepack object.*/
     CAnimation(const CAnimation &other) = delete;
     CAnimation &operator=(const CAnimation &other) = delete;
 
@@ -32,4 +32,3 @@ public:
 protected:
     std::vector<SDL_Texture *> m_Textures;
 };
-

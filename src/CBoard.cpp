@@ -11,69 +11,52 @@ CBoard::~CBoard()
     for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
     {
         for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
-        {
-            delete this->m_Map[i][j];
-        }
+        { delete this->m_Map[i][j]; }
     }
     this->m_Map.clear();
 
     for (size_t i = 0; i < this->m_Players.size(); i++)
-    {
-        delete this->m_Players[i];
-    }
+    { delete this->m_Players[i]; }
     this->m_Players.clear();
 
     for (size_t i = 0; i < this->m_Enemies.size(); i++)
-    {
-        delete this->m_Enemies[i];
-    }
+    { delete this->m_Enemies[i]; }
     this->m_Enemies.clear();
 
     for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
-    {
-        delete i->second;
-    }
+    { delete i->second; }
     this->m_Bombs.clear();
 
     for (auto i = this->m_Fires.begin(); i != this->m_Fires.end(); i++)
-    {
-        delete i->second;
-    }
+    { delete i->second; }
     this->m_Fires.clear();
 
     for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
-    {
-        delete i->second;
-    }
+    { delete i->second; }
     this->m_Collectibles.clear();
 }
 
 /*====================================================================================================================*/
-bool CBoard::IsPassable(CCoord <unsigned int>coord, const CPlayer *player)
+bool CBoard::IsPassable(CCoord<unsigned int> coord, const CPlayer *player)
 {
     // Array index check.
     if (coord.m_X < 0 || coord.m_X >= CBoard::m_BoardSize.m_X ||
         coord.m_Y < 0 || coord.m_Y >= CBoard::m_BoardSize.m_Y)
-    {
-        throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND);
-    }
+    { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
 
     CGameObject *gameObject = this->m_Map[static_cast<int>(floor(coord.m_X))][static_cast<int>( floor(coord.m_Y))];
 
     if (gameObject && gameObject->IsAlive())
-    {
-        return false;
-    }
+    { return false; }
 
     // Search for bombs in location.
-    auto bomb = this->m_Bombs.find(CCoord<unsigned int>(static_cast<int>(floor(coord.m_X)), static_cast<int>(floor(coord.m_Y))));
+    auto bomb = this->m_Bombs.find(
+            CCoord<unsigned int>(static_cast<int>(floor(coord.m_X)), static_cast<int>(floor(coord.m_Y))));
     if (bomb != this->m_Bombs.end() && bomb->second && player->IsColiding(bomb->second))
     {
         // Player is not owner or the bomb is not passable for owner
         if (bomb->second->GetOwner() != player || !bomb->second->IsPassableForOwner())
-        {
-            return false;
-        }
+        { return false; }
     }
 
     return true;
@@ -82,13 +65,14 @@ bool CBoard::IsPassable(CCoord <unsigned int>coord, const CPlayer *player)
 /*====================================================================================================================*/
 void CBoard::PlaceBomb(CPlayer *player)
 {
-    CCoord <unsigned int>location = player->GetLocationCell();
+    CCoord<unsigned int> location = player->GetLocationCell();
 
     // If this location is free.
     if (this->m_Bombs.find(location) == this->m_Bombs.end() && this->m_Fires.find(location) == this->m_Fires.end())
     {
-        CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, this->m_BombObjectTexturePack->GetTextureSize().ToDouble(),
-                                location.ToDouble(), player);
+        CBomb *bomb = new CBomb(this->m_BombObjectTexturePack,
+                                this->m_BombObjectTexturePack->GetTextureSize().ToDouble(), location.ToDouble(),
+                                player);
 
         this->m_Bombs.insert({location.ToUnsignedInt(), bomb});
     }
@@ -100,9 +84,7 @@ void CBoard::DetonateBombs(const CPlayer *player)
     for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
     {
         if (i->second->GetOwner() == player)
-        {
-            i->second->Detonate(this);
-        }
+        { i->second->Detonate(this); }
     }
 }
 
@@ -120,9 +102,7 @@ void CBoard::CreateExplosion(CBomb *bomb)
             // Explosion in all directions.
             CCoord<int> directions[4] = {CCoord<int>(0, 1), CCoord<int>(0, -1), CCoord<int>(1, 0), CCoord<int>(-1, 0)};
             for (int i = 0; i < 4; i++)
-            {
-                this->CreateExplosionWave(bomb, directions[i], explosionRadius);
-            }
+            { this->CreateExplosionWave(bomb, directions[i], explosionRadius); }
         }
 
         CCoord<unsigned int> location = bomb->GetLocation().ToUnsignedInt();
@@ -133,11 +113,9 @@ void CBoard::CreateExplosion(CBomb *bomb)
             bombToRemove->second = nullptr;
             this->m_Bombs.erase(bombToRemove);
         }
-        // Error message when the bomb is not found - this should never happen
+            // Error message when the bomb is not found - this should never happen
         else
-        {
-            std::cerr << "Bomb " << location << " not found " << std::endl;
-        }
+        { std::cerr << "Bomb " << location << " not found " << std::endl; }
     }
 }
 
@@ -146,20 +124,16 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord<int> direction, unsigned in
 {
     for (unsigned int i = 0; i <= explosionRadius; i++)
     {
-        CCoord <unsigned int>locationToExplode = (bomb->GetLocation() + (i * direction).ToDouble()).ToUnsignedInt();
+        CCoord<unsigned int> locationToExplode = (bomb->GetLocation() + (i * direction).ToDouble()).ToUnsignedInt();
 
         if (locationToExplode.m_X < 0 || locationToExplode.m_X >= CBoard::m_BoardSize.m_X ||
             locationToExplode.m_Y < 0 || locationToExplode.m_Y >= CBoard::m_BoardSize.m_Y)
-        {
-            throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND);
-        }
+        { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
 
         // Target exists and its not destructible.
         CWall *target = this->m_Map[static_cast<int>(locationToExplode.m_X)][static_cast<int>(locationToExplode.m_Y)];
         if ((target && !target->IsDestructible()))
-        {
-            break; // Leave for loop - The wave was stopped by this indestructible wall.
-        }
+        { break; /* Leave for loop - The wave was stopped by this indestructible wall.*/        }
 
         bool wallDestroyed = false;
 
@@ -171,25 +145,19 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord<int> direction, unsigned in
                 this->m_Map[static_cast<int>(locationToExplode.m_X)][static_cast<int>(locationToExplode.m_Y)] = nullptr;
                 wallDestroyed = true;
             } else
-            {
-                break; // Leave for loop - The wave was stopped by this wall.
-            }
+            { break; /* Leave for loop - The wave was stopped by this wall.*/            }
         }
 
         // Find collectible in location to explode.
         auto foundCollectible = this->m_Collectibles.find(
                 locationToExplode.ToUnsignedInt());
         if (foundCollectible != this->m_Collectibles.end())
-        {
-            break; // leave for loop - We dont want burning collectibles
-        }
+        { break; /* leave for loop - We dont want burning collectibles*/        }
 
         // Find bomb in location to explode.
         auto foundBomb = this->m_Bombs.find(locationToExplode.ToUnsignedInt());
         if (foundBomb != this->m_Bombs.end() && foundBomb->second != bomb)
-        {
-            break; // leave for loop - We dont want burning bombs.
-        }
+        { break; /* leave for loop - We dont want burning bombs.*/        }
 
 
         // Destroy potencialy existing fire is this location.
@@ -208,9 +176,7 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord<int> direction, unsigned in
         this->m_Fires.insert({locationToExplode.ToUnsignedInt(), fire});
 
         if (wallDestroyed)
-        {
-            break;
-        }
+        { break; /* Explosion was stopped by destroyed wall. */ }
     }
 }
 
@@ -227,9 +193,7 @@ void CBoard::DestroyExplosion(CFire *fire)
     }
         // Error message when the fire is not found - this should never happen
     else
-    {
-        std::cerr << "Fire " << fireLocation << " not found " << std::endl;
-    }
+    { std::cerr << "Fire " << fireLocation << " not found " << std::endl; }
 }
 
 /*====================================================================================================================*/
@@ -245,9 +209,7 @@ void CBoard::DestroyCollectible(CCollectible *collectible)
     }
         // Error message when the collectible is not found - this should never happen
     else
-    {
-        std::cerr << "Collectible " << collectibleLocation << " not found " << std::endl;
-    }
+    { std::cerr << "Collectible " << collectibleLocation << " not found " << std::endl; }
 }
 
 /*====================================================================================================================*/
@@ -259,12 +221,9 @@ void CBoard::Draw(CSDLInterface *interface, CCoord<> offset)
         for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
         {
             if (this->m_Map[i][j])
-            {
-                this->m_Map[i][j]->Draw(interface, this->m_CellSize, CCoord<unsigned int>(i, j).ToDouble(), offset);
-            } else if (this->m_GroundObject)
-            {
-                this->m_GroundObject->Draw(interface, this->m_CellSize, CCoord<unsigned int>(i, j).ToDouble(), offset);
-            }
+            { this->m_Map[i][j]->Draw(interface, this->m_CellSize, CCoord<unsigned int>(i, j).ToDouble(), offset); }
+            else if (this->m_GroundObject)
+            { this->m_GroundObject->Draw(interface, this->m_CellSize, CCoord<unsigned int>(i, j).ToDouble(), offset); }
         }
     }
 
@@ -272,9 +231,7 @@ void CBoard::Draw(CSDLInterface *interface, CCoord<> offset)
     for (size_t i = 0; i < this->m_Enemies.size(); i++)
     {
         if (this->m_Enemies[i])
-        {
-            this->m_Enemies[i]->Draw(interface, this->m_CellSize, this->m_Enemies[i]->GetLocation(), offset);
-        }
+        { this->m_Enemies[i]->Draw(interface, this->m_CellSize, this->m_Enemies[i]->GetLocation(), offset); }
     }
 
     // Draw boosts is visible
@@ -282,13 +239,11 @@ void CBoard::Draw(CSDLInterface *interface, CCoord<> offset)
     {
         // std::cout << i->second->GetLocation() << std::endl;
         if (i->second && i->second->IsVisible())
-        {
-            i->second->Draw(interface, this->m_CellSize, i->first.ToDouble(), offset);
-        }
+        { i->second->Draw(interface, this->m_CellSize, i->first.ToDouble(), offset); }
             /*==DEBUG==*/
         else if (this->m_Settings->GetDebugMode())
         {
-            CCoord <int> location = i->second->GetLocation().ToInt() + offset.ToInt();
+            CCoord<int> location = i->second->GetLocation().ToInt() + offset.ToInt();
             SDL_Rect rect{static_cast<int>(location.m_X * (m_CellSize)),
                           static_cast<int>(location.m_Y * (m_CellSize)),
                           static_cast<int>(m_CellSize), static_cast<int>(m_CellSize)};
@@ -300,18 +255,14 @@ void CBoard::Draw(CSDLInterface *interface, CCoord<> offset)
     for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
     {
         if (i->second)
-        {
-            i->second->Draw(interface, this->m_CellSize, i->first.ToDouble(), offset);
-        }
+        { i->second->Draw(interface, this->m_CellSize, i->first.ToDouble(), offset); }
     }
 
     // draw fires
     for (auto i = this->m_Fires.begin(); i != this->m_Fires.end(); i++)
     {
         if (i->second)
-        {
-            i->second->Draw(interface, this->m_CellSize, i->first.ToDouble(), offset);
-        }
+        { i->second->Draw(interface, this->m_CellSize, i->first.ToDouble(), offset); }
     }
 
     // TODO změnit pořadí renderu tak, aby nejdříve byly renderovány objekty, které jsou vespod.
@@ -319,9 +270,7 @@ void CBoard::Draw(CSDLInterface *interface, CCoord<> offset)
     for (size_t i = 0; i < this->m_Players.size(); i++)
     {
         if (this->m_Players[i])
-        {
-            this->m_Players[i]->Draw(interface, this->m_CellSize, this->m_Players[i]->GetLocation(), offset);
-        }
+        { this->m_Players[i]->Draw(interface, this->m_CellSize, this->m_Players[i]->GetLocation(), offset); }
     }
 }
 
@@ -335,17 +284,13 @@ void CBoard::Update(int deltaTime)
         {
             // Update if object is alive
             if (this->m_Map[i][j]/* && this->m_Map[i][j]->IsAlive()*/)
-            {
-                this->m_Map[i][j]->Update(this, deltaTime);
-            }
+            { this->m_Map[i][j]->Update(this, deltaTime); }
         }
     }
 
     // Update players
     for (size_t i = 0; i < this->m_Players.size(); i++)
-    {
-        this->m_Players[i]->Update(this, deltaTime);
-    }
+    { this->m_Players[i]->Update(this, deltaTime); }
 
     // Update enemies
     for (size_t i = 0; i < this->m_Enemies.size(); i++)
@@ -360,9 +305,8 @@ void CBoard::Update(int deltaTime)
         // Save iterator to next object because current bomb could be removed in Update().
         auto item = i++;
         if (item->second)
-        {
-            item->second->Update(this, deltaTime);
-        } else
+        { item->second->Update(this, deltaTime); }
+        else
         {
             // Remove null item
             this->m_Collectibles.erase(item);
@@ -375,9 +319,8 @@ void CBoard::Update(int deltaTime)
         // Save iterator to next object because current bomb could be removed in Update().
         auto item = i++;
         if (item->second)
-        {
-            item->second->Update(this, deltaTime);
-        } else
+        { item->second->Update(this, deltaTime); }
+        else
         {
             // Remove null item
             this->m_Bombs.erase(item);
@@ -390,9 +333,8 @@ void CBoard::Update(int deltaTime)
         // Save iterator to next object because current fire could be removed in Update().
         auto item = i++;
         if (item->second)
-        {
-            item->second->Update(this, deltaTime);
-        } else
+        { item->second->Update(this, deltaTime); }
+        else
         {
             // Remove null item
             this->m_Fires.erase(item);
@@ -454,9 +396,7 @@ void CBoard::ClearBoard(bool clearBoosts)
 
     // Delete enemies
     for (size_t i = 0; i < this->m_Enemies.size(); i++)
-    {
-        delete this->m_Enemies[i];
-    }
+    { delete this->m_Enemies[i]; }
     this->m_Enemies.clear();
 
 
@@ -468,9 +408,7 @@ void CBoard::ClearBoard(bool clearBoosts)
             delete (i->second);
             i->second = nullptr;
         } else if (i->second)
-        {
-            i->second->MakeInvisible();
-        }
+        { i->second->MakeInvisible(); }
     }
     if (clearBoosts)
     { this->m_Collectibles.clear(); }
@@ -493,9 +431,7 @@ void CBoard::ClearBoard(bool clearBoosts)
 
     // Rerun players locations
     for (size_t i = 0; i < this->m_Players.size(); i++)
-    {
-        this->m_Players[i]->Reset();
-    }
+    { this->m_Players[i]->Reset(); }
 }
 
 /*====================================================================================================================*/
@@ -503,33 +439,25 @@ bool CBoard::PositionFree(CCoord<unsigned int> coord)
 {
     if (coord.m_X < 0 || coord.m_X >= CBoard::m_BoardSize.m_X ||
         coord.m_Y < 0 || coord.m_Y >= CBoard::m_BoardSize.m_Y)
-    {
-        throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND);
-    }
+    { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
 
     // Check walls
     if (this->m_Map[static_cast<int>(coord.m_X)][static_cast<int>(coord.m_Y)] != nullptr ||
         this->m_Bombs.find(coord) != this->m_Bombs.end() ||
         this->m_Fires.find(coord) != this->m_Fires.end() ||
         this->m_Collectibles.find(coord) != this->m_Collectibles.end())
-    {
-        return false;
-    }
+    { return false; }
 
     for (size_t i = 0; i < this->m_Players.size(); i++)
     {
         if (m_Players[i]->GetLocation().AlmostEqual(coord.ToDouble()))
-        {
-            return false;
-        }
+        { return false; }
     }
 
     for (size_t i = 0; i < this->m_Enemies.size(); i++)
     {
         if (m_Enemies[i]->GetLocation().AlmostEqual(coord.ToDouble()))
-        {
-            return false;
-        }
+        { return false; }
     }
 
     return true;
@@ -539,16 +467,14 @@ bool CBoard::PositionFree(CCoord<unsigned int> coord)
 bool CBoard::PlayersAreaFree(CCoord<unsigned int> coord)
 {
     // Create direction vectors.
-    CCoord <int>directions[4] = {CCoord<int>(0, 1), CCoord<int>(0, -1), CCoord<int>(1, 0), CCoord<int>(-1, 0)};
+    CCoord<int> directions[4] = {CCoord<int>(0, 1), CCoord<int>(0, -1), CCoord<int>(1, 0), CCoord<int>(-1, 0)};
 
     for (std::vector<CPlayer *>::size_type i = 0; i < this->m_Players.size(); i++)
     {
         for (unsigned int j = 0; j < 4; j++)
         {
             if (!this->PlayerDirectionFree(coord, this->m_Players[i], directions[j]))
-            {
-                return false;
-            }
+            { return false; }
         }
     }
 
@@ -563,9 +489,7 @@ bool CBoard::PlayerDirectionFree(CCoord<unsigned int> location, CPlayer *player,
         CCoord<> curLocation = (player->GetLocation() + (direction * i).ToDouble());
 
         if (curLocation == location.ToDouble())
-        {
-            return false;
-        }
+        { return false; }
     }
 
     return true;

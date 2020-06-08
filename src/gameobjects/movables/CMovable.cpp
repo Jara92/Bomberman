@@ -12,9 +12,7 @@ void CMovable::Animate(int deltaTime)
     // Animate object when moving
     if (this->m_VerticalMovingDirection != EDirection::DIRECTION_NONE ||
         this->m_HorizontalMovingDirection != EDirection::DIRECTION_NONE)
-    {
-        CGameObject::Animate(deltaTime);
-    }
+    {CGameObject::Animate(deltaTime);    }
 }
 
 /*====================================================================================================================*/

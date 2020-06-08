@@ -58,14 +58,10 @@ public:
     */
     void TryPlaceBomb(CBoard *board);
 
-    /**
-     * Kill the player.
-     */
+    /** Kill the player. */
     void Kill();
 
-    /**
-     * Reset the player and prepare for a next round.
-     */
+    /** Reset the player and prepare for a next round. */
     virtual void Reset();
 
     /**======================
@@ -185,10 +181,10 @@ protected:
     static constexpr double SPEED_UP = 1.1;
 
     /**
- * Movement along the axis Y
- * @param board Game board
- * @param deltaTime DeltaTime
- */
+    * Movement along the axis Y
+    * @param board Game board
+    * @param deltaTime DeltaTime
+    */
     void VerticalMove(CBoard *board, int deltaTime);
 
     /**

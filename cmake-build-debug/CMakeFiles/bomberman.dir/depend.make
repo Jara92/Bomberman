@@ -196,17 +196,6 @@ CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/gameobjects/m
 CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/gameobjects/movables/CMovable.h
 CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/gameobjects/movables/CPlayer.h
 
-CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.o: ../src/CAnimation.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.o: ../src/CCoord.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.o: ../src/CSDLInterface.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.o: ../src/CSettings.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.o: ../src/CTexturePack.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.o: ../src/ETextureType.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.o: ../src/Messages.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.o: ../src/gameobjects/CGameObject.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.o: ../src/gameobjects/CGround.cpp
-CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.o: ../src/gameobjects/CGround.h
-
 CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.o: ../src/CAnimation.h
 CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.o: ../src/CControls.h
 CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.o: ../src/CCoord.h
@@ -246,21 +235,6 @@ CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: ../src/gameo
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: ../src/gameobjects/movables/CEnemy.h
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: ../src/gameobjects/movables/CMovable.h
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: ../src/gameobjects/movables/CPlayer.h
-
-CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/CAnimation.h
-CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/CControls.h
-CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/CCoord.h
-CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/CSDLInterface.h
-CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/CSettings.h
-CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/CTexturePack.h
-CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/EDirection.h
-CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/ETextureType.h
-CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/Messages.h
-CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/gameobjects/CGameObject.h
-CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/gameobjects/collectibles/CCollectible.cpp
-CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
-CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/gameobjects/movables/CMovable.h
-CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/gameobjects/movables/CPlayer.h
 
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o: ../src/CAnimation.h
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o: ../src/CControls.h
@@ -365,14 +339,6 @@ CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o: ../src/interfaceitems
 CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o: ../src/interfaceitems/CButton.h
 CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o: ../src/interfaceitems/CInterfaceItem.h
 CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o: ../src/interfaceitems/CText.h
-
-CMakeFiles/bomberman.dir/src/interfaceitems/CImage.cpp.o: ../src/CCoord.h
-CMakeFiles/bomberman.dir/src/interfaceitems/CImage.cpp.o: ../src/CSDLInterface.h
-CMakeFiles/bomberman.dir/src/interfaceitems/CImage.cpp.o: ../src/CSettings.h
-CMakeFiles/bomberman.dir/src/interfaceitems/CImage.cpp.o: ../src/Messages.h
-CMakeFiles/bomberman.dir/src/interfaceitems/CImage.cpp.o: ../src/interfaceitems/CImage.cpp
-CMakeFiles/bomberman.dir/src/interfaceitems/CImage.cpp.o: ../src/interfaceitems/CImage.h
-CMakeFiles/bomberman.dir/src/interfaceitems/CImage.cpp.o: ../src/interfaceitems/CInterfaceItem.h
 
 CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.o: ../src/CCoord.h
 CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.o: ../src/CSDLInterface.h

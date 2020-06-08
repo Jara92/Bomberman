@@ -8,9 +8,10 @@
 #include "CSDLInterface.h"
 
 
-CSDLInterface::CSDLInterface(const std::string & title, std::shared_ptr<CSettings> settings, const std::string &defaultFont)
+CSDLInterface::CSDLInterface(const std::string &title, std::shared_ptr<CSettings> settings,
+                             const std::string &defaultFont)
         : m_WindowSize(settings->GetMenuScreenSize()), m_WindowTitle(title), m_Settings(std::move(settings)),
-          m_Font(defaultFont), m_Window(nullptr),m_Renderer(nullptr)
+          m_Font(defaultFont), m_Window(nullptr), m_Renderer(nullptr)
 {}
 
 /*====================================================================================================================*/
@@ -18,14 +19,10 @@ CSDLInterface::~CSDLInterface()
 {
     // SDL is C library and it uses NULL
     if (this->m_Renderer != NULL && this->m_Renderer != nullptr)
-    {
-        SDL_DestroyRenderer(this->m_Renderer);
-    }
+    { SDL_DestroyRenderer(this->m_Renderer); }
 
     if (this->m_Window != NULL && this->m_Window != nullptr)
-    {
-        SDL_DestroyWindow(this->m_Window);
-    }
+    { SDL_DestroyWindow(this->m_Window); }
 
     // Quit SDL
     IMG_Quit();
@@ -42,9 +39,7 @@ bool CSDLInterface::InitInterface()
     // Init SDL
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 || IMG_Init(imgFlags) != imgFlags ||
         TTF_Init() == -1)
-    {
-        throw std::runtime_error(SDL_GetError());
-    }
+    { throw std::runtime_error(SDL_GetError()); }
 
     // Smooth texture rendering
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
@@ -88,9 +83,7 @@ SDL_Texture *CSDLInterface::LoadTexture(const std::string file) const
     SDL_Texture *texture = IMG_LoadTexture(this->m_Renderer, (this->m_Settings->GetAssetsPath() + file).c_str());
 
     if (texture == nullptr || texture == NULL)
-    {
-        throw std::ios_base::failure(MESSAGE_TEXTURE_ERROR + (this->m_Settings->GetAssetsPath() + file));
-    }
+    { throw std::ios_base::failure(MESSAGE_TEXTURE_ERROR + (this->m_Settings->GetAssetsPath() + file)); }
 
     return texture;
 }
@@ -104,8 +97,7 @@ void CSDLInterface::ShowMessageBox(Uint32 flags, const std::string &title, const
 /*====================================================================================================================*/
 bool CSDLInterface::RenderTexture(SDL_Texture *texture, CCoord<> location, CCoord<> size)
 {
-    SDL_Rect targetRect = {static_cast<int>(location.m_X), static_cast<int>(location.m_Y),
-                           static_cast<int>(size.m_X), static_cast<int>(size.m_Y)};
+    SDL_Rect targetRect = {location.ToInt().m_X, location.ToInt().m_Y, size.ToInt().m_X, size.ToInt().m_Y};
 
     return SDL_RenderCopy(this->m_Renderer, texture, NULL, &targetRect);
 }
@@ -181,26 +173,22 @@ SDL_Texture *CSDLInterface::LoadTextTexture(const std::string &text, CCoord<unsi
     // Load font.
     TTF_Font *font = TTF_OpenFont((this->m_Settings->GetAssetsPath() + this->m_Font).c_str(), 48);
     if (font == NULL)
-    {
-        return NULL;
-    }
+    { return NULL; }
 
     // Create text surface.
     SDL_Surface *surfaceMessage = TTF_RenderText_Blended(font, (text).c_str(), color);
     if (surfaceMessage == NULL)
-    {
-        return NULL;
-    }
+    { return NULL; }
 
     // Create texture.
     SDL_Texture *message = SDL_CreateTextureFromSurface(this->m_Renderer, surfaceMessage);
     if (message == NULL)
-    {
-        return NULL;
-    }
+    { return NULL; }
 
     // Set size
-    size = CCoord<unsigned int>(surfaceMessage->w, surfaceMessage->h);
+   // size = CCoord<unsigned int>(surfaceMessage->w, surfaceMessage->h);
+   size.m_X = surfaceMessage->w;
+    size.m_Y = surfaceMessage->h;
 
     // Free surface and texture
     TTF_CloseFont(font);

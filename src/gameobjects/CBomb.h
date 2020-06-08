@@ -53,9 +53,7 @@ public:
     bool IsPassableForOwner() const
     { return this->m_IsPassableForOwner; }
 
-    /**
-     * Explodes the bomb if m_ExplosionDelay = 0.
-     */
+    /** Explodes the bomb if m_ExplosionDelay = 0. */
     void Detonate(CBoard *board);
 
     /**

@@ -13,9 +13,8 @@ void CFire::Update(CBoard *board, int deltaTime)
 
     // Update duration counter and destroy fire.
     this->m_DurationCounter += deltaTime;
-    if(this->m_DurationCounter > this->m_Duration)
-    {
-        // Destroy this fire
-        board->DestroyExplosion(this);
-    }
+
+    // Destroy this fire
+    if (this->m_DurationCounter > this->m_Duration)
+    { board->DestroyExplosion(this); }
 }

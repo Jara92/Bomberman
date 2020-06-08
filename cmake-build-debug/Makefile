@@ -447,33 +447,6 @@ src/gameobjects/CGameObject.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.s
 .PHONY : src/gameobjects/CGameObject.cpp.s
 
-src/gameobjects/CGround.o: src/gameobjects/CGround.cpp.o
-
-.PHONY : src/gameobjects/CGround.o
-
-# target to build an object file
-src/gameobjects/CGround.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.o
-.PHONY : src/gameobjects/CGround.cpp.o
-
-src/gameobjects/CGround.i: src/gameobjects/CGround.cpp.i
-
-.PHONY : src/gameobjects/CGround.i
-
-# target to preprocess a source file
-src/gameobjects/CGround.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.i
-.PHONY : src/gameobjects/CGround.cpp.i
-
-src/gameobjects/CGround.s: src/gameobjects/CGround.cpp.s
-
-.PHONY : src/gameobjects/CGround.s
-
-# target to generate assembly for a file
-src/gameobjects/CGround.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CGround.cpp.s
-.PHONY : src/gameobjects/CGround.cpp.s
-
 src/gameobjects/CWall.o: src/gameobjects/CWall.cpp.o
 
 .PHONY : src/gameobjects/CWall.o
@@ -527,33 +500,6 @@ src/gameobjects/collectibles/CBoost.s: src/gameobjects/collectibles/CBoost.cpp.s
 src/gameobjects/collectibles/CBoost.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.s
 .PHONY : src/gameobjects/collectibles/CBoost.cpp.s
-
-src/gameobjects/collectibles/CCollectible.o: src/gameobjects/collectibles/CCollectible.cpp.o
-
-.PHONY : src/gameobjects/collectibles/CCollectible.o
-
-# target to build an object file
-src/gameobjects/collectibles/CCollectible.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o
-.PHONY : src/gameobjects/collectibles/CCollectible.cpp.o
-
-src/gameobjects/collectibles/CCollectible.i: src/gameobjects/collectibles/CCollectible.cpp.i
-
-.PHONY : src/gameobjects/collectibles/CCollectible.i
-
-# target to preprocess a source file
-src/gameobjects/collectibles/CCollectible.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.i
-.PHONY : src/gameobjects/collectibles/CCollectible.cpp.i
-
-src/gameobjects/collectibles/CCollectible.s: src/gameobjects/collectibles/CCollectible.cpp.s
-
-.PHONY : src/gameobjects/collectibles/CCollectible.s
-
-# target to generate assembly for a file
-src/gameobjects/collectibles/CCollectible.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.s
-.PHONY : src/gameobjects/collectibles/CCollectible.cpp.s
 
 src/gameobjects/collectibles/CDoor.o: src/gameobjects/collectibles/CDoor.cpp.o
 
@@ -743,33 +689,6 @@ src/interfaceitems/CButton.s: src/interfaceitems/CButton.cpp.s
 src/interfaceitems/CButton.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.s
 .PHONY : src/interfaceitems/CButton.cpp.s
-
-src/interfaceitems/CImage.o: src/interfaceitems/CImage.cpp.o
-
-.PHONY : src/interfaceitems/CImage.o
-
-# target to build an object file
-src/interfaceitems/CImage.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CImage.cpp.o
-.PHONY : src/interfaceitems/CImage.cpp.o
-
-src/interfaceitems/CImage.i: src/interfaceitems/CImage.cpp.i
-
-.PHONY : src/interfaceitems/CImage.i
-
-# target to preprocess a source file
-src/interfaceitems/CImage.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CImage.cpp.i
-.PHONY : src/interfaceitems/CImage.cpp.i
-
-src/interfaceitems/CImage.s: src/interfaceitems/CImage.cpp.s
-
-.PHONY : src/interfaceitems/CImage.s
-
-# target to generate assembly for a file
-src/interfaceitems/CImage.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/interfaceitems/CImage.cpp.s
-.PHONY : src/interfaceitems/CImage.cpp.s
 
 src/interfaceitems/CInterfaceItem.o: src/interfaceitems/CInterfaceItem.cpp.o
 
@@ -1032,18 +951,12 @@ help:
 	@echo "... src/gameobjects/CGameObject.o"
 	@echo "... src/gameobjects/CGameObject.i"
 	@echo "... src/gameobjects/CGameObject.s"
-	@echo "... src/gameobjects/CGround.o"
-	@echo "... src/gameobjects/CGround.i"
-	@echo "... src/gameobjects/CGround.s"
 	@echo "... src/gameobjects/CWall.o"
 	@echo "... src/gameobjects/CWall.i"
 	@echo "... src/gameobjects/CWall.s"
 	@echo "... src/gameobjects/collectibles/CBoost.o"
 	@echo "... src/gameobjects/collectibles/CBoost.i"
 	@echo "... src/gameobjects/collectibles/CBoost.s"
-	@echo "... src/gameobjects/collectibles/CCollectible.o"
-	@echo "... src/gameobjects/collectibles/CCollectible.i"
-	@echo "... src/gameobjects/collectibles/CCollectible.s"
 	@echo "... src/gameobjects/collectibles/CDoor.o"
 	@echo "... src/gameobjects/collectibles/CDoor.i"
 	@echo "... src/gameobjects/collectibles/CDoor.s"
@@ -1065,9 +978,6 @@ help:
 	@echo "... src/interfaceitems/CButton.o"
 	@echo "... src/interfaceitems/CButton.i"
 	@echo "... src/interfaceitems/CButton.s"
-	@echo "... src/interfaceitems/CImage.o"
-	@echo "... src/interfaceitems/CImage.i"
-	@echo "... src/interfaceitems/CImage.s"
 	@echo "... src/interfaceitems/CInterfaceItem.o"
 	@echo "... src/interfaceitems/CInterfaceItem.i"
 	@echo "... src/interfaceitems/CInterfaceItem.s"

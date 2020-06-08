@@ -10,15 +10,11 @@
 void CSelectBoxItem::Draw(CSDLInterface *interface)
 {
     if (this->m_IsActive)
-    {
-        this->m_ActiveText->Draw(interface);
-    } else if (this->m_IsHovering)
-    {
-        this->m_HoverText->Draw(interface);
-    } else
-    {
-        this->m_Text->Draw(interface);
-    }
+    { this->m_ActiveText->Draw(interface); }
+    else if (this->m_IsHovering)
+    { this->m_HoverText->Draw(interface); }
+    else
+    { this->m_Text->Draw(interface); }
 }
 
 /*====================================================================================================================*/
