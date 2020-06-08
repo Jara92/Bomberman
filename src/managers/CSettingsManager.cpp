@@ -9,8 +9,8 @@
 CSettingsManager::CSettingsManager(CSDLInterface *interface) : CWindowManager(interface)
 {
     this->m_Interface->SetMenuScreenSize();
-    CCoord windowSize = interface->GetWindowSize();
-    CCoord itemSize;
+    CCoord<unsigned int> windowSize = interface->GetWindowSize();
+    CCoord<> itemSize;
     unsigned int padding = 10;
 
     SDL_Colour defaultFontColor{255, 255, 255, 255};
@@ -19,29 +19,34 @@ CSettingsManager::CSettingsManager(CSDLInterface *interface) : CWindowManager(in
 
     // Add select box title
     this->m_InterfaceItems.push_back(
-            std::make_unique<CText>(interface, CCoord(0, 0), "Game screen resolution", CCoord(0, 64)));
+            std::make_unique<CText>(interface, CCoord<>(0, 0), "Game screen resolution", CCoord<>(0, 64)));
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
-            CCoord((windowSize.m_X / 2) - (itemSize.m_X / 2), padding));
+            CCoord<>((windowSize.m_X / 2) - (itemSize.m_X / 2), padding));
 
     // Add select box
-    CCoord selectBoxLocation = CCoord(0, 48);
+    CCoord<> selectBoxLocation = CCoord<>(0, 48);
     this->m_InterfaceItems.push_back(
-            std::make_unique<CSelectBox<CCoord>>(interface, selectBoxLocation,
-                                                 this->m_Interface->GetWindowSize() - selectBoxLocation, 48,
-                                                 std::map<std::string, CCoord>{{"1200x500", CCoord(1200, 500)},
-                                                                               {"500x200",  CCoord(500, 200)}},
-                                                 defaultFontColor, hoverFontColor, selectedFontColor, [=](CCoord newRes)
-                                                 { this->UpdateResolution(newRes); }));
+            std::make_unique<CSelectBox<CCoord<unsigned int>>>(interface, selectBoxLocation,
+                                                               (this->m_Interface->GetWindowSize().ToDouble() -
+                                                                selectBoxLocation), 48,
+                                                               std::map<std::string, CCoord<unsigned int>>{{"1200x500", CCoord<unsigned int>(
+                                                                       1200, 500)},
+                                                                                                           {"500x200",  CCoord<unsigned int>(
+                                                                                                                   500,
+                                                                                                                   200)}},
+                                                               defaultFontColor, hoverFontColor, selectedFontColor,
+                                                               [=](CCoord<unsigned int> newRes)
+                                                               { this->UpdateResolution(newRes); }));
     // TODO add sound
     // Back button
     this->m_InterfaceItems.push_back(
-            std::make_unique<CButton>(interface, "Back", CCoord(0, 0), defaultFontColor, hoverFontColor,
-                                      CCoord(0, 35), [=]()
+            std::make_unique<CButton>(interface, "Back", CCoord<>(0, 0), defaultFontColor, hoverFontColor,
+                                      CCoord<>(0, 35), [=]()
                                       { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_MENU; }));
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
-            CCoord(padding, windowSize.m_Y - itemSize.m_Y - padding));
+            CCoord<>(padding, windowSize.m_Y - itemSize.m_Y - padding));
 
     // Save button
     /* this->m_InterfaceItems.push_back(

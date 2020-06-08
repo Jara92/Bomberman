@@ -18,7 +18,7 @@ public:
      * @param size Item size. Set {0,0} to autosize. Set {0, X} or {X, 0} to autosize one dimension.
      * @param texturePath Path to texture.
      */
-    CText(CSDLInterface *interface, CCoord location, const std::string &text, CCoord size = {0, 0},
+    CText(CSDLInterface *interface, CCoord <>location, const std::string &text, CCoord <>size = {0, 0},
           SDL_Color color = {255, 255, 255, 255}
     ) : CInterfaceItem(location, size), m_Texture(NULL), m_Text(text)
     {

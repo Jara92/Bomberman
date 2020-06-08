@@ -21,7 +21,7 @@ public:
     * @param wallPass Can this Enemy walk through destructible walls?
     * @param lives How many lives doest this monster have?
     */
-    explicit CEnemySmart(std::shared_ptr<CTexturePack> texturePack, CCoord location, CCoord size = CCoord(1,1), int score = 0, double speed = 0.005, bool wallPass = false, int lives = 1)
+    explicit CEnemySmart(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size = CCoord<>(1,1), int score = 0, double speed = 0.005, bool wallPass = false, int lives = 1)
     : CEnemy(std::move(texturePack), location, size, score, speed, wallPass, lives)
     {}
 
@@ -48,6 +48,6 @@ protected:
      * Enemy will run away from given location.
      * @param coord Location
      */
-    void RunAway(CCoord coord);
+    void RunAway(CCoord<> coord);
 };
 

@@ -25,7 +25,7 @@ public:
      * @param speed Object moving speed.
      * @param lives Object starting lives.
     */
-    explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord location, CCoord size = CCoord(1, 1),
+    explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord <>location, CCoord<> size = CCoord<>(1, 1),
                      CControls *controls = nullptr,
                      double speed = 0.0025, int lives = 3)
             : CMovable(std::move(texturePack), size, location, speed, false, lives), m_Score(0), m_ExplosionRadius(1),

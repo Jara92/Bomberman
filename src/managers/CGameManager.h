@@ -38,7 +38,7 @@ protected:
     std::shared_ptr<CBoard> m_Board;
     CScoreSaver m_ScoreManager;
     /** The board must be drawn shifted because of top menu. */
-    CCoord m_BoardOffset;
+    CCoord<> m_BoardOffset;
     std::unique_ptr<CLevelLoader> m_LevelLoader;
     /** Current game state. */
     EGameStatus m_GameStatus;

@@ -27,7 +27,7 @@
 class CBoard
 {
 public:
-    CBoard(std::shared_ptr<CSettings> settings, std::vector<std::vector<CWall *>> map, std::vector<CPlayer *> players, CCoord boardSize,
+    CBoard(std::shared_ptr<CSettings> settings, std::vector<std::vector<CWall *>> map, std::vector<CPlayer *> players, CCoord<unsigned int> boardSize,
            std::shared_ptr<CGround> ground, std::shared_ptr<CTexturePack> bombTexturePack,
            std::shared_ptr<CTexturePack> fireTexturePack, unsigned int cellSize)
             : m_Players(std::move(players)), m_Map(std::move(map)), m_Settings(std::move(settings)), m_BoardSize(boardSize),
@@ -55,7 +55,7 @@ public:
      * Draw all objects in the board.
      * @param interface Interface to be used.
      */
-    void Draw(CSDLInterface *interface, CCoord offset = CCoord(0, 0));
+    void Draw(CSDLInterface *interface, CCoord<> offset = CCoord<>(0, 0));
 
     /**
      * Is this coord passable for the player?
@@ -63,21 +63,21 @@ public:
      * @param player Player
      * @return True if is passable.
      */
-    bool IsPassable(CCoord coord, const CPlayer *player);
+    bool IsPassable(CCoord<unsigned int> coord, const CPlayer *player);
 
     /**
      * Is this position totaly free?
      * @param coord Position
      * @return True - Totaly free
      */
-    bool PositionFree(CCoord coord);
+    bool PositionFree(CCoord <unsigned int>coord);
 
     /**
      * Is area around players free?
      * @param coord Position
      * @return True - Location free
      */
-    bool PlayersAreaFree(CCoord coord);
+    bool PlayersAreaFree(CCoord<unsigned int> coord);
 
     /**
      * Place bomb in game board.
@@ -103,7 +103,7 @@ public:
      * @param direction Direction vector.
      * @param explosionRadius Explosion radius.
      */
-    void CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int explosionRadius);
+    void CreateExplosionWave(CBomb *bomb, CCoord<int> direction, unsigned int explosionRadius);
 
     /**
      * Delete fire from the map.
@@ -123,7 +123,7 @@ public:
      */
     void ClearBoard(bool clearBoosts = true);
 
-    CCoord GetBoardSize() const
+    CCoord<unsigned int> GetBoardSize() const
     { return this->m_BoardSize; }
 
     unsigned int GetCellSize() const
@@ -132,9 +132,9 @@ public:
     /** Saved objects */
     std::vector<CPlayer *> m_Players;
     std::vector<CEnemy *> m_Enemies;
-    std::map<CCoord, CCollectible *> m_Collectibles;
-    std::map<CCoord, CFire *> m_Fires;
-    std::map<CCoord, CBomb *> m_Bombs;
+    std::map<CCoord<unsigned int>, CCollectible *> m_Collectibles;
+    std::map<CCoord<unsigned int>, CFire *> m_Fires;
+    std::map<CCoord<unsigned int>, CBomb *> m_Bombs;
     std::vector<std::vector<CWall *>> m_Map;
 
     /** Game settings */
@@ -145,7 +145,7 @@ public:
 
 protected:
     /** Size of gameboard. */
-    CCoord m_BoardSize;
+    CCoord<unsigned int> m_BoardSize;
     /** Size of one cell in pixels. */
     unsigned int m_CellSize;
 
@@ -163,6 +163,6 @@ protected:
      * @param direction Direction vector.
      * @return True - Direction is free.
      */
-    bool PlayerDirectionFree(CCoord location, CPlayer *player, CCoord direction);
+    bool PlayerDirectionFree(CCoord<unsigned int> location, CPlayer *player, CCoord<int> direction);
 };
 

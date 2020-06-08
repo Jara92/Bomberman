@@ -65,8 +65,8 @@ public:
      */
     void UpdateWindowSize();
 
-    CCoord GetWindowSize() const
-    { return {static_cast<double>(m_WindowWidth), static_cast<double>(m_WindowHeight)}; }
+    CCoord<unsigned int> GetWindowSize() const
+    { return {(m_WindowWidth), (m_WindowHeight)}; }
 
     std::shared_ptr<CSettings> GetSettings()
     {
@@ -81,7 +81,7 @@ public:
      */
     SDL_Texture *LoadTexture(const std::string file) const;
 
-    SDL_Texture *LoadTextureFromText(const std::string & text, CCoord & size, SDL_Colour color = {255,255,255,255}) const;
+    SDL_Texture *LoadTextureFromText(const std::string & text, CCoord<unsigned int> & size, SDL_Colour color = {255,255,255,255}) const;
 
     /**
      * Clear the current rendering target with the drawing color
@@ -101,7 +101,7 @@ public:
      * @param location Render location
      * @param size Texture size
      */
-    bool RenderTexture(SDL_Texture *texture, CCoord location, CCoord size);
+    bool RenderTexture(SDL_Texture *texture, CCoord <> location, CCoord<> size);
 
     /**
      * Draw a rectangle on the current rendering target.
@@ -115,11 +115,11 @@ public:
      * @param a First point
      * @param b Second point
      */
-    void RenderLine(CCoord a, CCoord b)
+    void RenderLine(CCoord<> a, CCoord<> b)
     { SDL_RenderDrawLine(this->m_Renderer, a.m_X, a.m_Y, b.m_X, b.m_Y); }
 
 
-    bool RenderText(const std::string & text, CCoord location, CCoord size = CCoord(0,0), SDL_Colour color = {255,255,255,255} );
+    bool RenderText(const std::string & text, CCoord <>location, CCoord <>size = CCoord<>(0,0), SDL_Colour color = {255,255,255,255} );
 
     /**
     *  Set the color used for drawing operations (Rect, Line and Clear).

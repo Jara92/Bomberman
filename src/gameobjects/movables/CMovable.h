@@ -21,7 +21,7 @@ public:
      * @param wallPass Can this object walk through destructible walls?
      * @param lives Starting lives count
      */
-    explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord size = CCoord(1,1), CCoord location = CCoord(0,0), double speed = 0.005, bool wallPass = false,
+    explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1,1), CCoord <>location = CCoord<>(0,0), double speed = 0.005, bool wallPass = false,
                       int lives = 1)
             : CGameObject(std::move(texturePack), size, location, true), // every movable object is passable
               m_StartingLocation(location), m_Speed(speed), m_WallPass(wallPass),
@@ -66,8 +66,8 @@ public:
      * Get object location cell.
      * @return Coordinates of cell where the left-top corner of this object is located.
      */
-    CCoord GetLocationCell() const
-    { return CCoord(floor(this->m_Location.m_X + 0.5), floor(this->m_Location.m_Y + 0.5)); }
+    CCoord<unsigned int> GetLocationCell() const
+    { return CCoord<unsigned int>(floor(this->m_Location.m_X + 0.5), floor(this->m_Location.m_Y + 0.5)); }
 
     virtual void Reset();
 
@@ -76,7 +76,7 @@ public:
 
 
 protected:
-    CCoord m_StartingLocation;
+    CCoord <>m_StartingLocation;
     double m_Speed;
     bool m_WallPass;
 

@@ -7,7 +7,7 @@
 #include "CGameManager.h"
 
 CGameManager::CGameManager(CSDLInterface *interface)
-        : CWindowManager(interface), m_Board(nullptr), m_BoardOffset(CCoord(0, 2)),
+        : CWindowManager(interface), m_Board(nullptr), m_BoardOffset(CCoord<>(0, 2)),
           m_GameStatus(EGameStatus::GAMESTATUS_RUNNING), m_NextGameStatus(EGameStatus::GAMESTATUS_RUNNING),
           m_Level(1)
 {
@@ -71,22 +71,22 @@ void CGameManager::Draw() const
 /*====================================================================================================================*/
 void CGameManager::DrawGame() const
 {
-    this->m_Board->Draw(this->m_Interface, this->m_Interface->GetSettings()->GetOffset());
+    this->m_Board->Draw(this->m_Interface, this->m_Interface->GetSettings()->GetOffset().ToDouble());
 
     // Top menu background
     for (unsigned int i = 0; i < this->m_Board->GetBoardSize().m_X; i++)
     {
-        this->m_Board->GetGroundObject()->Draw(this->m_Interface, this->m_Board->GetCellSize(), CCoord(i, 0));
+        this->m_Board->GetGroundObject()->Draw(this->m_Interface, this->m_Board->GetCellSize(), CCoord<double>(i, 0));
     }
 
     // Menu
     this->m_Interface->RenderText("Score: " + std::to_string(this->m_Board->m_Players[0]->GetScore()),
-                                  CCoord(10, 10),
-                                  CCoord(0, this->m_Board->GetCellSize() - 20));
+                                  CCoord<>(10, 10),
+                                  CCoord<>(0, this->m_Board->GetCellSize() - 20));
 
     this->m_Interface->RenderText("Time: " + std::to_string(this->m_GameEndDelay.GetRemainingTime() / 1000),
-                                  CCoord(10 * this->m_Board->GetCellSize() + 10, 10),
-                                  CCoord(0, this->m_Board->GetCellSize() - 20));
+                                  CCoord<>(10 * this->m_Board->GetCellSize() + 10, 10),
+                                  CCoord<>(0, this->m_Board->GetCellSize() - 20));
 
     if (this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
     {
@@ -99,22 +99,22 @@ void CGameManager::DrawGame() const
 
         // Render text
         this->m_Interface->RenderText("Lives: " + std::to_string(std::max(0, this->m_Board->m_Players[0]->GetLives())),
-                                      CCoord(20 * this->m_Board->GetCellSize() + 10, 10),
-                                      CCoord(2 * this->m_Board->GetCellSize(), this->m_Board->GetCellSize() - 20),
+                                      CCoord<>(20 * this->m_Board->GetCellSize() + 10, 10),
+                                      CCoord<>(2 * this->m_Board->GetCellSize(), this->m_Board->GetCellSize() - 20),
                                       color);
     }
 
     // Fps counter
     this->m_Interface->RenderText("FPS: " + std::to_string(this->m_Clock.GetFPS()),
-                                  CCoord(10, this->m_Board->GetCellSize() + 10), CCoord(50, 25));
+                                  CCoord<>(10, this->m_Board->GetCellSize() + 10), CCoord<>(50, 25));
 }
 
 /*====================================================================================================================*/
 void CGameManager::DrawRoundOver() const
 {
-    CCoord textSize = CCoord(400, 100);
+    CCoord<> textSize = CCoord<>(400, 100);
     this->m_Interface->RenderText("Round over!",
-                                  CCoord((this->m_Interface->GetSettings()->GetGameScreenWidth() / 2) - textSize.m_X / 2,
+                                  CCoord<>((this->m_Interface->GetSettings()->GetGameScreenWidth() / 2) - textSize.m_X / 2,
                                          (this->m_Interface->GetSettings()->GetGameScreenHeight() / 2) - textSize.m_Y / 2),
                                   textSize);
 }
@@ -122,9 +122,9 @@ void CGameManager::DrawRoundOver() const
 /*====================================================================================================================*/
 void CGameManager::DrawNextRound() const
 {
-    CCoord textSize = CCoord(400, 100);
+    CCoord<> textSize = CCoord<>(400, 100);
     this->m_Interface->RenderText("Round " + std::to_string(this->m_Level) + "!",
-                                  CCoord((this->m_Interface->GetSettings()->GetGameScreenWidth() / 2) - textSize.m_X / 2,
+                                  CCoord<>((this->m_Interface->GetSettings()->GetGameScreenWidth() / 2) - textSize.m_X / 2,
                                          (this->m_Interface->GetSettings()->GetGameScreenHeight() / 2) - textSize.m_Y / 2),
                                   textSize);
 }
@@ -132,17 +132,17 @@ void CGameManager::DrawNextRound() const
 /*====================================================================================================================*/
 void CGameManager::DrawGameOver() const
 {
-    CCoord screenSize = CCoord(this->m_Interface->GetSettings()->GetGameScreenWidth(),
+    CCoord<unsigned  int> screenSize = CCoord<unsigned  int>(this->m_Interface->GetSettings()->GetGameScreenWidth(),
                                this->m_Interface->GetSettings()->GetGameScreenHeight());
-    CCoord textSize = CCoord(screenSize.m_X / 4, screenSize.m_X / 14);
+    CCoord<double> textSize = CCoord<double>(screenSize.m_X / 4, screenSize.m_X / 14);
     this->m_Interface->RenderText("Game over",
-                                  CCoord(screenSize.m_X / 2 - (textSize.m_X / 2),
+                                  CCoord<double>(screenSize.m_X / 2 - (textSize.m_X / 2),
                                          (screenSize.m_Y / 2) - (textSize.m_Y / 2)),
                                   textSize);
 
-    textSize = CCoord(screenSize.m_X / 3, screenSize.m_X / 30);
+    textSize = CCoord<double>(screenSize.m_X / 3, screenSize.m_X / 30);
     this->m_Interface->RenderText("Press [ENTER] to return to the menu",
-                                  CCoord(screenSize.m_X / 2 - (textSize.m_X / 2),
+                                  CCoord<double>(screenSize.m_X / 2 - (textSize.m_X / 2),
                                          (screenSize.m_Y / 2 + textSize.m_Y + 2 * this->m_Board->GetCellSize()) -
                                          textSize.m_Y / 2), textSize);
 }

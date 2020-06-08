@@ -20,8 +20,8 @@ public:
      * @param size Object size.
      * @param duration Duration of this fire in miliseconds.
      */
-    explicit CFire(std::shared_ptr<CTexturePack> texturePack, CCoord size = CCoord(1, 1),
-                   CCoord location = CCoord(0, 0), unsigned int duration = 750)
+    explicit CFire(std::shared_ptr<CTexturePack> texturePack, CCoord <>size = CCoord<>(1, 1),
+                   CCoord<> location = CCoord<>(0, 0), unsigned int duration = 750)
             : CGameObject(std::move(texturePack), size, location, false) // Fire is not passable
             , m_Duration(duration), m_DurationCounter(0)
     {}

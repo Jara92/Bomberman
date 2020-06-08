@@ -14,15 +14,15 @@ CLevelLoader::CLevelLoader(CSDLInterface *interface, std::string mapFileName, st
 }
 
 /*====================================================================================================================*/
-CCoord CLevelLoader::GetRandomBoardLocation(std::shared_ptr<CBoard> &board) const
+CCoord<unsigned int> CLevelLoader::GetRandomBoardLocation(std::shared_ptr<CBoard> &board) const
 {
     // Random number generator.
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine randomEngine(seed);
 
     // Return random location on the board.
-    return CCoord(static_cast<double>(randomEngine() % static_cast<int>(board->GetBoardSize().m_X)),
-                  static_cast<double>(randomEngine() % static_cast<int>(board->GetBoardSize().m_Y)));
+    return CCoord<unsigned int>((randomEngine() % (board->GetBoardSize().m_X)),
+                                (randomEngine() % (board->GetBoardSize().m_Y)));
 }
 
 /*====================================================================================================================*/
@@ -42,7 +42,7 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level)
 }
 
 /*====================================================================================================================*/
-std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, const std::shared_ptr<CSettings> & settings)
+std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, const std::shared_ptr<CSettings> &settings)
 {
     // calc cellsize
     int cellSize = static_cast<int>((settings->GetGameScreenHeight()) /
@@ -55,7 +55,8 @@ std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, const std::shar
     std::vector<CPlayer *> players = this->LoadPlayers(playersCount);
     std::shared_ptr<CGround> groundObject = this->LoadGround();
 
-    return std::make_shared<CBoard>(settings, map, players, CCoord(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT),
+    return std::make_shared<CBoard>(settings, map, players,
+                                    CCoord<unsigned int>(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT),
                                     groundObject,
                                     bombTexturePack, fireTexturePack,
                                     cellSize);
@@ -188,8 +189,8 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
                                                                                      {textures}};
 
     // Setup default locations
-    CCoord startingLocation[CLevelLoader::MAX_PLAYERS] = {{1,  1},
-                                                          {21, 11}};
+    CCoord<> startingLocation[CLevelLoader::MAX_PLAYERS] = {{1,  1},
+                                                            {21, 11}};
 
     std::vector<CPlayer *> players;
 
@@ -197,8 +198,8 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
     for (int i = 0; i < count; i++)
     {
         players.push_back(
-                new CPlayer(std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i], false, CCoord(1, 2)),
-                            startingLocation[i], CCoord(0.5, 0.75),
+                new CPlayer(std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i], false, CCoord<>(1, 2)),
+                            startingLocation[i], CCoord<>(0.5, 0.75),
                             controls[i]));
         controls[i] = nullptr;
     }
@@ -223,15 +224,17 @@ void CLevelLoader::GenerateObstacles(std::shared_ptr<CBoard> &board, size_t leve
     for (size_t i = 0; i < count; i++)
     {
         // Generate random location until the location is free.
-        CCoord random;
+        CCoord<unsigned int> random;
         do
         {
             random = this->GetRandomBoardLocation(board);
         } while (!board->PositionFree(random) || !board->PlayersAreaFree(random));
 
-        board->m_Map[static_cast<int>(random.m_X)][static_cast<int>(random.m_Y)] = new CWall(texturePack, CCoord(1, 1),
-                                                                                             CCoord(static_cast<int>(random.m_X),
-                                                                                                    static_cast<int>(random.m_Y)),
+        board->m_Map[static_cast<int>(random.m_X)][static_cast<int>(random.m_Y)] = new CWall(texturePack,
+                                                                                             CCoord<>(1, 1),
+                                                                                             CCoord<>(
+                                                                                                     static_cast<int>(random.m_X),
+                                                                                                     static_cast<int>(random.m_Y)),
                                                                                              true, nullptr);
     }
 }
@@ -258,7 +261,7 @@ std::shared_ptr<CTexturePack> CLevelLoader::LoadBombTexturePack() const
                                                                     {"Bomb/Bomb_f03.png"}}}};
 
     return std::make_shared<CTexturePack>(this->m_Interface,
-                                          textures, true, CCoord(0.65, 0.65));
+                                          textures, true, CCoord<>(0.65, 0.65));
 }
 
 /*====================================================================================================================*/
@@ -272,7 +275,7 @@ std::shared_ptr<CTexturePack> CLevelLoader::LoadFireTexturePack() const
                                                                     {"Flame/Flame_f04.png"}}}};
 
     return std::make_shared<CTexturePack>(this->m_Interface,
-                                          textures, true, CCoord(0.65, 0.65));
+                                          textures, true, CCoord<>(0.65, 0.65));
 }
 
 /*====================================================================================================================*/
@@ -299,7 +302,7 @@ std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadCollectiblesTexture
                     {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/SpeedPowerup.png"}}}},
                     {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/Portal.png"}}}}};
 
-    std::vector<CCoord> sizes{{0.7, 0.7},
+    std::vector<CCoord<>> sizes{{0.7, 0.7},
                               {0.7, 0.7},
                               {0.7, 0.7},
                               {1,   1},
@@ -370,11 +373,11 @@ CLevelLoader::ReadProperty(const std::vector<std::string> &input, std::vector<st
 /*====================================================================================================================*/
 void CLevelLoader::ReorganizeCollectibles(std::shared_ptr<CBoard> &board)
 {
-    std::map<CCoord, CCollectible *> collectibles;
+    std::map<CCoord<unsigned int>, CCollectible *> collectibles;
     for (auto collectible = board->m_Collectibles.begin(); collectible != board->m_Collectibles.end(); collectible++)
     {
         // Generate random location until the CWall at this location is null or indestructible or already has collectable object.
-        CCoord random;
+        CCoord<unsigned int> random;
         do
         {
             random = this->GetRandomBoardLocation(board);
@@ -385,9 +388,9 @@ void CLevelLoader::ReorganizeCollectibles(std::shared_ptr<CBoard> &board)
         // Insert collectible with new location to new map and attach it to the wall.
         if (collectible->second && board->m_Map[random.GetFlooredX()][random.GetFlooredY()])
         {
-            collectible->second->SetLocation(random);
+            collectible->second->SetLocation(random.ToDouble());
             board->m_Map[random.GetFlooredX()][random.GetFlooredY()]->AttachCollectible(collectible->second);
-            collectibles.insert(std::pair<CCoord, CCollectible *>(random, collectible->second));
+            collectibles.insert(std::pair<CCoord<unsigned int>, CCollectible *>(random, collectible->second));
         }
     }
 
@@ -399,7 +402,7 @@ bool CLevelLoader::CreateCollectibleAtRandomLocation(std::shared_ptr<CBoard> &bo
                                                      std::size_t score, std::size_t duration)
 {
     // Generate totaly random inicialization location.
-    CCoord random = this->GetRandomBoardLocation(board);
+    CCoord<unsigned int> random = this->GetRandomBoardLocation(board);
 
     // Lamda which are used to apply / deactivate collectable item.
     std::function<void(CPlayer *)> applyFunc;
@@ -411,22 +414,25 @@ bool CLevelLoader::CreateCollectibleAtRandomLocation(std::shared_ptr<CBoard> &bo
         case ECollectibleType::COLLECTIBLE_TYPE_SPEED:
             applyFunc = [](CPlayer *player)
             { player->SpeedUp(); };
-            board->m_Collectibles.insert(std::pair<CCoord, CCollectible *>(random, (new CBoost(
-                    this->m_CollectibleTexturePacks[static_cast<int>(type)], applyFunc, CCoord(0.7, 0.7), random,
+            board->m_Collectibles.insert(std::pair<CCoord<unsigned int>, CCollectible *>(random, (new CBoost(
+                    this->m_CollectibleTexturePacks[static_cast<int>(type)], applyFunc, CCoord<>(0.7, 0.7),
+                    random.ToDouble(),
                     score))));
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_EXPLOSION_RADIUS:
             applyFunc = [](CPlayer *player)
             { player->IncreseExplosionRadius(); };
-            board->m_Collectibles.insert(std::pair<CCoord, CCollectible *>(random, (new CBoost(
-                    this->m_CollectibleTexturePacks[static_cast<int>(type)], applyFunc, CCoord(0.7, 0.7), random,
+            board->m_Collectibles.insert(std::pair<CCoord<unsigned int>, CCollectible *>(random, (new CBoost(
+                    this->m_CollectibleTexturePacks[static_cast<int>(type)], applyFunc, CCoord<>(0.7, 0.7),
+                    random.ToDouble(),
                     score))));
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_MAX_BOMBS:
             applyFunc = [](CPlayer *player)
             { player->IncreseMaxBombs(); };
-            board->m_Collectibles.insert(std::pair<CCoord, CCollectible *>(random, (new CBoost(
-                    this->m_CollectibleTexturePacks[static_cast<int>(type)], applyFunc, CCoord(0.7, 0.7), random,
+            board->m_Collectibles.insert(std::pair<CCoord<unsigned int>, CCollectible *>(random, (new CBoost(
+                    this->m_CollectibleTexturePacks[static_cast<int>(type)], applyFunc, CCoord<>(0.7, 0.7),
+                    random.ToDouble(),
                     score))));
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_REMOTE_EXPLOSION:
@@ -445,8 +451,9 @@ bool CLevelLoader::CreateCollectibleAtRandomLocation(std::shared_ptr<CBoard> &bo
             // TODO
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_DOOR:
-            board->m_Collectibles.insert(std::pair<CCoord, CCollectible *>(random, (new CDoor(
-                    this->m_CollectibleTexturePacks[static_cast<int>(type)], CCoord(0.8, 0.8), random, score))));
+            board->m_Collectibles.insert(std::pair<CCoord<unsigned int>, CCollectible *>(random, (new CDoor(
+                    this->m_CollectibleTexturePacks[static_cast<int>(type)], CCoord<>(0.8, 0.8), random.ToDouble(),
+                    score))));
             break;
         default:
             throw std::invalid_argument(UNKNOWN_COLLECTIBLE_TYPE);
@@ -486,7 +493,7 @@ bool CLevelLoader::ReadItem(std::shared_ptr<CBoard> &board, const std::vector<st
         {
             // TODO
         }
-        // Invalid item format.
+            // Invalid item format.
         else
         {
             std::cerr << INVALID_ITEM << itemType << std::endl;

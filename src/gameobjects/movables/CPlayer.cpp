@@ -46,7 +46,7 @@ void CPlayer::Update(CBoard *board, int deltaTime)
 void CPlayer::VerticalMove(CBoard *board, int deltaTime)
 {
     // Save old location
-    CCoord oldLocation = this->m_Location;
+    CCoord <>oldLocation = this->m_Location;
 
     // Move
     this->m_Location.m_Y += (this->m_Speed * static_cast<int>(this->m_VerticalMovingDirection)) * deltaTime;
@@ -69,7 +69,7 @@ void CPlayer::VerticalMove(CBoard *board, int deltaTime)
 void CPlayer::HorizontalMove(CBoard *board, int deltaTime)
 {
     // Save old location
-    CCoord oldLocation = this->m_Location;
+    CCoord<> oldLocation = this->m_Location;
 
     // Move
     this->m_Location.m_X += (this->m_Speed * static_cast<int>(this->m_HorizontalMovingDirection)) * deltaTime;
@@ -95,7 +95,7 @@ void CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
     decPart = modf(this->m_Location.m_Y, &intpart);
 
     if ((decPart >= CPlayer::MIN_TURNING_VALUE) &&
-        board->IsPassable(CCoord(this->m_Location.m_X + direction, std::ceil(this->m_Location.m_Y)),
+        board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + direction, std::ceil(this->m_Location.m_Y)),
                           this))
     {
         this->m_Location.m_Y = std::min(this->m_Location.m_Y + this->m_Speed * deltaTime,
@@ -104,7 +104,7 @@ void CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
     }
         // TODO comment this
     else if ((decPart <= CPlayer::MAX_TURNING_VALUE) &&
-             board->IsPassable(CCoord(this->m_Location.m_X + direction, std::floor(this->m_Location.m_Y)),
+             board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + direction, std::floor(this->m_Location.m_Y)),
                                this))
     {
         this->m_Location.m_Y = std::max(this->m_Location.m_Y - this->m_Speed * deltaTime,
@@ -120,7 +120,7 @@ void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
     decPart = modf(this->m_Location.m_X, &intpart);
 
     if ((decPart >= CPlayer::MAX_TURNING_VALUE) &&
-        board->IsPassable(CCoord(std::ceil(this->m_Location.m_X), this->m_Location.m_Y + direction),
+        board->IsPassable(CCoord<unsigned int>(std::ceil(this->m_Location.m_X), this->m_Location.m_Y + direction),
                           this))
     {
         this->m_Location.m_X = std::min(this->m_Location.m_X + this->m_Speed * deltaTime,
@@ -129,7 +129,7 @@ void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
     }
         // TODO comment this
     else if ((decPart <= CPlayer::MIN_TURNING_VALUE) &&
-             board->IsPassable(CCoord(std::floor(this->m_Location.m_X), this->m_Location.m_Y + direction),
+             board->IsPassable(CCoord<unsigned int>(std::floor(this->m_Location.m_X), this->m_Location.m_Y + direction),
                                this))
     {
         this->m_Location.m_X = std::max(this->m_Location.m_X - this->m_Speed * deltaTime,
@@ -142,10 +142,10 @@ bool CPlayer::LocationIsFree(CBoard *board) const
 {
     double val = (1 - this->m_Speed);
 
-    if (!board->IsPassable(CCoord(this->m_Location.m_X, this->m_Location.m_Y), this) ||
-        !board->IsPassable(CCoord(this->m_Location.m_X + val, this->m_Location.m_Y), this) ||
-        !board->IsPassable(CCoord(this->m_Location.m_X, this->m_Location.m_Y + val), this) ||
-        !board->IsPassable(CCoord(this->m_Location.m_X + val, this->m_Location.m_Y + val), this))
+    if (!board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X, this->m_Location.m_Y), this) ||
+        !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + val, this->m_Location.m_Y), this) ||
+        !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X, this->m_Location.m_Y + val), this) ||
+        !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + val, this->m_Location.m_Y + val), this))
     {
         return false;
     }

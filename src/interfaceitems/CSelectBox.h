@@ -13,7 +13,7 @@ template<class T>
 class CSelectBox : public CInterfaceItem
 {
 public:
-    CSelectBox(CSDLInterface *interface, CCoord location, CCoord size, unsigned int fontSize,
+    CSelectBox(CSDLInterface *interface, CCoord <>location, CCoord <>size, unsigned int fontSize,
                const std::map<std::string, T> &options, SDL_Colour itemColor, SDL_Colour itemHoverColor,
                SDL_Colour itemSelectedColor, std::function<void(T)> callback = {});
 
@@ -57,14 +57,14 @@ protected:
 };
 
 template<class T>
-CSelectBox<T>::CSelectBox(CSDLInterface *interface, CCoord location, CCoord size, unsigned int fontSize,
+CSelectBox<T>::CSelectBox(CSDLInterface *interface, CCoord <>location, CCoord <>size, unsigned int fontSize,
                           const std::map<std::string, T> &options, SDL_Colour itemColor, SDL_Colour itemHoverColor,
                           SDL_Colour itemSelectedColor, std::function<void(T)> callback)
         : CInterfaceItem(location, size), m_CallBack(std::move(callback)), m_ItemColor(itemColor),
           m_SelectedItemColor(itemSelectedColor)
 {
     double margin = 1.1;
-    CCoord itemSize;
+    CCoord<> itemSize;
     unsigned int locationY = this->m_Location.m_Y;
 
     // Create button for every option.
@@ -72,12 +72,12 @@ CSelectBox<T>::CSelectBox(CSDLInterface *interface, CCoord location, CCoord size
     {
         std::unique_ptr<CButton> button = std::make_unique<CButton>(interface, option->first, location, itemColor,
                                                                     itemHoverColor,
-                                                                    CCoord(0, fontSize), [=]()
+                                                                    CCoord<>(0, fontSize), [=]()
                                                                     { this->UpdateValue(option->second); });
 
         itemSize = button->GetSize();
         button->SetLocation(
-                CCoord((this->m_Size.m_X / 2) - (itemSize.m_X / 2),
+                CCoord<>((this->m_Size.m_X / 2) - (itemSize.m_X / 2),
                        locationY += static_cast<unsigned int>(itemSize.m_Y * margin)));
 
         this->m_Items.push_back(std::move(button));

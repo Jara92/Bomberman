@@ -11,7 +11,7 @@
 /**
  * Represents point in 2D space
  */
-
+template<class T = double>
 class CCoord
 {
 public:
@@ -20,7 +20,7 @@ public:
      * @param x
      * @param y
      */
-    CCoord(double x = 0, double y = 0)
+    CCoord(T x = 0, T y = 0)
             : m_X(x), m_Y(y)
     {}
 
@@ -51,19 +51,19 @@ public:
         return *this;
     }
 
-    CCoord operator*(const double x) const
+    CCoord operator*(const T x) const
     { return CCoord(x * this->m_X, x * this->m_Y); }
 
-    friend CCoord operator*(const double x, const CCoord &coord)
+    friend CCoord operator*(const T x, const CCoord &coord)
     { return CCoord(x * coord.m_X, x * coord.m_Y); }
 
-    CCoord operator/(const double x) const
+    CCoord operator/(const T x) const
     {
         if (x == 0) throw std::invalid_argument("Dividing by zero is forbidden!");
         return CCoord(this->m_X / x, this->m_Y / x);
     }
 
-    CCoord operator /= (const double x)
+    CCoord operator/=(const T x)
     {
         CCoord y = (*this) / x;
 
@@ -88,8 +88,8 @@ public:
 
     bool operator==(const CCoord &other) const;
 
-    bool operator != (const CCoord & other) const
-    {return !(*this == other);}
+    bool operator!=(const CCoord &other) const
+    { return !(*this == other); }
 
     bool AlmostEqual(const CCoord &other) const;
 
@@ -103,13 +103,66 @@ public:
     double CalcDistnance(const CCoord &other) const;
 
     int GetFlooredX() const
-    {return static_cast<int>(this->m_X);}
+    { return static_cast<int>(this->m_X); }
 
     int GetFlooredY() const
-    {return static_cast<int>(this->m_Y);}
+    { return static_cast<int>(this->m_Y); }
+
+    CCoord<double> ToDouble() const
+    { return CCoord<double>(static_cast<double>(this->m_X), static_cast<double>(this->m_Y)); }
+
+    CCoord<int> ToInt() const
+    { return CCoord<int>(static_cast< int>(std::floor(this->m_X)), static_cast<int>(std::floor(this->m_Y))); }
+
+    CCoord<unsigned int> ToUnsignedInt() const
+    {
+        return CCoord<unsigned int>(static_cast< unsigned int>(std::abs(std::floor(this->m_X))),
+                                    static_cast<unsigned int>(std::abs(std::floor(this->m_Y))));
+    }
 
     /** Coordinates */
-    double m_X;
-    double m_Y;
+    T m_X;
+    T m_Y;
 };
+
+template<class T>
+bool CCoord<T>::operator<(const CCoord &other) const
+{
+    if (this->m_X < other.m_X)
+    {
+        return true;
+    } else if (this->m_X == other.m_X && this->m_Y < other.m_Y)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+template<class T>
+bool CCoord<T>::operator==(const CCoord &other) const
+{
+    if (this->m_X == other.m_X && this->m_Y == other.m_Y)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+template<class T>
+bool CCoord<T>::AlmostEqual(const CCoord &other) const
+{
+    CCoord thisCoord = CCoord(floor(this->m_X), floor(this->m_Y));
+    CCoord otherCoord = CCoord(floor(other.m_X), floor(other.m_Y));
+
+    return (thisCoord == otherCoord);
+}
+
+template<class T>
+double CCoord<T>::CalcDistnance(const CCoord &other) const
+{
+    return sqrt(
+            ((this->m_X - other.m_X) * (this->m_X - other.m_X)) + ((this->m_Y - other.m_Y) * (this->m_Y - other.m_Y)));
+}
 

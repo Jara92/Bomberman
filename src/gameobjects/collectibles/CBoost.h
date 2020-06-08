@@ -20,7 +20,7 @@ public:
     * @param applyFunction Function which will handle boost Apply.
     */
     explicit CBoost(std::shared_ptr<CTexturePack> texturePack, std::function<void(CPlayer *)> applyFunction,
-                    CCoord size = CCoord(1, 1), CCoord location = CCoord(0, 0), size_t scoreBonus = 0)
+                    CCoord<> size = CCoord<>(1, 1), CCoord<> location = CCoord<>(0, 0), size_t scoreBonus = 0)
             : CCollectible(std::move(texturePack), size, location, scoreBonus, 0),
               m_Apply(std::move(applyFunction))
     {}
@@ -36,8 +36,8 @@ public:
     * @param deactivateFunction Function which will handle boost Deactivate.
     */
     explicit CBoost(std::shared_ptr<CTexturePack> texturePack, std::function<void(CPlayer *)> applyFunction,
-                    int duration, std::function<void(const CPlayer *)> deactivateFunction, CCoord size = CCoord(1, 1), CCoord
-    location = CCoord(0, 0), std::size_t scoreBonus = 0)
+                    int duration, std::function<void(const CPlayer *)> deactivateFunction, CCoord<> size = CCoord<>(1, 1), CCoord<>
+    location = CCoord<>(0, 0), std::size_t scoreBonus = 0)
             : CCollectible(std::move(texturePack), size, location, scoreBonus, duration), m_Apply(std::move(applyFunction)),
     m_Deactivate(std::move(deactivateFunction))
     {}

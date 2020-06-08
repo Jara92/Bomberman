@@ -33,8 +33,8 @@ protected:
     virtual void Draw() const override ;
 
     virtual void ProcessEvent(SDL_Event & e) override ;
-    
-    void UpdateResolution(CCoord newResolution)
+
+    void UpdateResolution(CCoord <unsigned int>newResolution)
     {
         this->m_Interface->GetSettings()->ChangeGameScreenResolution(newResolution.GetFlooredX(), newResolution.GetFlooredY());
         this->m_Interface->ReloadSettings();

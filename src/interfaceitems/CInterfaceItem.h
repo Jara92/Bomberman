@@ -21,7 +21,7 @@ public:
      * @param location Item location. Use {0,0} to center location. Use {0, X} or {X, 0} to center one direction.
      * @param size Item size.
      */
-    explicit CInterfaceItem(CCoord location, CCoord size)
+    explicit CInterfaceItem(CCoord <> location, CCoord <>size)
             : m_Location(location), m_Size(size)
     {}
 
@@ -47,7 +47,7 @@ public:
      * Set item location.
      * @param location New location.
      */
-    virtual void SetLocation(CCoord location)
+    virtual void SetLocation(CCoord<> location)
     { this->m_Location = location; }
 
     virtual void MouseEventHandler(SDL_Event & e)
@@ -57,18 +57,18 @@ public:
      * Set item size.
      * @param size New size.
      */
-   virtual  void SetSize(CCoord size)
+   virtual  void SetSize(CCoord<> size)
     { this->m_Size = size; }
 
-    CCoord GetLocation() const
+    CCoord<> GetLocation() const
     {return this->m_Location;}
 
-    CCoord GetSize() const
+    CCoord <>GetSize() const
     {return this->m_Size;}
 
 protected:
-    CCoord m_Location;
-    CCoord m_Size;
+    CCoord <>m_Location;
+    CCoord <>m_Size;
 
     virtual void MouseButtonEventHandler(SDL_MouseButtonEvent & e)
     {}

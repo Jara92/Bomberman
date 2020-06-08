@@ -64,7 +64,7 @@ protected:
      * @param board Game board.
      * @return Random location.
      */
-    CCoord GetRandomBoardLocation(std::shared_ptr<CBoard> & board) const;
+    CCoord<unsigned int> GetRandomBoardLocation(std::shared_ptr<CBoard> & board) const;
 
     /**
      * Load map from the file.

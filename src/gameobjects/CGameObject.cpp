@@ -6,10 +6,10 @@
 #include "CGameObject.h"
 #include "../CBoard.h"
 
-void CGameObject::Draw(CSDLInterface *interface, int cellSize, CCoord location, CCoord offset) const
+void CGameObject::Draw(CSDLInterface *interface, int cellSize, CCoord<> location, CCoord<> offset) const
 {
     // Create texture offset to target cell.
-    CCoord textureOffset = CCoord((1 - this->m_TexturePack->GetTextureSize().m_X),
+    CCoord <>textureOffset = CCoord<>((1 - this->m_TexturePack->GetTextureSize().m_X),
                                   (1 - this->m_TexturePack->GetTextureSize().m_Y));
 
     // Center texture position if required.
@@ -20,7 +20,7 @@ void CGameObject::Draw(CSDLInterface *interface, int cellSize, CCoord location, 
 
     // Setup final location and draw texture in right position.
     location = location + textureOffset + offset;
-    interface->RenderTexture(this->GetTexture(), CCoord(location.m_X * cellSize, location.m_Y * cellSize),
+    interface->RenderTexture(this->GetTexture(), CCoord<>(location.m_X * cellSize, location.m_Y * cellSize),
                              cellSize * this->m_TexturePack->GetTextureSize());
 
 
@@ -51,8 +51,8 @@ SDL_Texture *CGameObject::GetTexture() const
 bool CGameObject::IsColiding(const CGameObject *other) const
 {
     double cellSize = 1;
-    CCoord a = this->GetLocation() + ((CCoord(1, 1) - this->m_Size) / 2);
-    CCoord b = other->GetLocation() + ((CCoord(1, 1) - other->m_Size) / 2);
+    CCoord<> a = this->GetLocation() + ((CCoord<>(1, 1) - this->m_Size) / 2);
+    CCoord<> b = other->GetLocation() + ((CCoord<>(1, 1) - other->m_Size) / 2);
 
     if (a.m_X < b.m_X + /*b.width*/std::min(other->GetSize().m_X, cellSize) &&
         a.m_X + /*a.width*/std::min(this->GetSize().m_X, cellSize) > b.m_X &&

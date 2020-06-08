@@ -15,8 +15,8 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
 {
     // Set menu window size.
     this->m_Interface->SetMenuScreenSize();
-    CCoord windowSize = this->m_Interface->GetWindowSize();
-    CCoord itemSize;
+    CCoord <unsigned int>windowSize = this->m_Interface->GetWindowSize();
+    CCoord <>itemSize;
     // Border offset.
     unsigned int offset = 10;
     unsigned int yLocation = offset;
@@ -27,64 +27,64 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
     SDL_Colour textHoverColor = {255, 128, 0, 255};
 
     // Background image
-    this->m_InterfaceItems.push_back(std::make_unique<CImage>(interface, CCoord(0, 0), windowSize,
+    this->m_InterfaceItems.push_back(std::make_unique<CImage>(interface, CCoord<>(0, 0), windowSize.ToDouble(),
                                                               "Menu/title_background.jpg"));
     // Title text
     this->m_InterfaceItems.push_back(
-            std::make_unique<CText>(interface, CCoord(0, 0), "Bomberman!", CCoord(0, 2 * basicFontSize)));
+            std::make_unique<CText>(interface, CCoord<>(0, 0), "Bomberman!", CCoord<>(0, 2 * basicFontSize)));
     itemSize = this->m_InterfaceItems.back()->GetSize();
-    this->m_InterfaceItems.back()->SetLocation(CCoord((windowSize.m_X / 2) - (itemSize.m_X / 2), yLocation));
+    this->m_InterfaceItems.back()->SetLocation(CCoord<>((windowSize.m_X / 2) - (itemSize.m_X / 2), yLocation));
 
     // One player button
     this->m_InterfaceItems.push_back(
-            std::make_unique<CButton>(interface, "One player", CCoord(0, 0), textColor, textHoverColor,
-                                      CCoord(0, basicFontSize), [=]()
+            std::make_unique<CButton>(interface, "One player", CCoord<>(0, 0), textColor, textHoverColor,
+                                      CCoord<>(0, basicFontSize), [=]()
                                       { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME; }));
 
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
-            CCoord((windowSize.m_X / 2) - (itemSize.m_X / 2),
+            CCoord<>((windowSize.m_X / 2) - (itemSize.m_X / 2),
                    yLocation += static_cast<unsigned int>(yButtonMargin * 1.5)));
 
     // Two players button
     this->m_InterfaceItems.push_back(
-            std::make_unique<CButton>(interface, "Two players", CCoord(0, 0), textColor, textHoverColor,
-                                      CCoord(0, basicFontSize), [=]()
+            std::make_unique<CButton>(interface, "Two players", CCoord<>(0, 0), textColor, textHoverColor,
+                                      CCoord<>(0, basicFontSize), [=]()
                                       { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME; }));
 
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
-            CCoord((windowSize.m_X / 2) - (itemSize.m_X / 2), yLocation += yButtonMargin));
+            CCoord<>((windowSize.m_X / 2) - (itemSize.m_X / 2), yLocation += yButtonMargin));
 
     // Settings button
     this->m_InterfaceItems.push_back(
-            std::make_unique<CButton>(interface, "Settings", CCoord(0, 0), textColor, textHoverColor,
-                                      CCoord(0, basicFontSize), [=]()
+            std::make_unique<CButton>(interface, "Settings", CCoord<>(0, 0), textColor, textHoverColor,
+                                      CCoord<>(0, basicFontSize), [=]()
                                       { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_SETTINGS; }));
 
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
-            CCoord((windowSize.m_X / 2) - (itemSize.m_X / 2), yLocation += yButtonMargin));
+            CCoord<>((windowSize.m_X / 2) - (itemSize.m_X / 2), yLocation += yButtonMargin));
 
     // Exit button
     this->m_InterfaceItems.push_back(
-            std::make_unique<CButton>(interface, "Exit", CCoord(0, 0), textColor, textHoverColor,
-                                      CCoord(0, basicFontSize), [=]()
+            std::make_unique<CButton>(interface, "Exit", CCoord<>(0, 0), textColor, textHoverColor,
+                                      CCoord<>(0, basicFontSize), [=]()
                                       { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_EXIT; }));
 
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
-            CCoord((windowSize.m_X / 2) - (itemSize.m_X / 2), yLocation += yButtonMargin));
+            CCoord<>((windowSize.m_X / 2) - (itemSize.m_X / 2), yLocation += yButtonMargin));
 
     // Footer
     this->m_InterfaceItems.push_back(
-            std::make_unique<CText>(interface, CCoord(0, 0), "Jaroslav Fikar 2020", CCoord(0, basicFontSize / 2.0),
+            std::make_unique<CText>(interface, CCoord<>(0, 0), "Jaroslav Fikar 2020", CCoord<>(0, basicFontSize / 2.0),
                                     SDL_Color{0, 0, 0, 255}));
 
     // Move footer in right-bottom corner
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
-            CCoord(windowSize.m_X - itemSize.m_X - offset, windowSize.m_Y - itemSize.m_Y - offset));
+            CCoord<>(windowSize.m_X - itemSize.m_X - offset, windowSize.m_Y - itemSize.m_Y - offset));
 }
 
 /*====================================================================================================================*/

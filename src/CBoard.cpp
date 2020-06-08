@@ -39,7 +39,7 @@ CBoard::~CBoard()
 }
 
 /*====================================================================================================================*/
-bool CBoard::IsPassable(CCoord coord, const CPlayer *player)
+bool CBoard::IsPassable(CCoord <unsigned int>coord, const CPlayer *player)
 {
     // Array index check.
     if (coord.m_X < 0 || coord.m_X >= CBoard::m_BoardSize.m_X ||
@@ -56,7 +56,7 @@ bool CBoard::IsPassable(CCoord coord, const CPlayer *player)
     }
 
     // Search for bombs in location.
-    auto bomb = this->m_Bombs.find(CCoord(static_cast<int>(floor(coord.m_X)), static_cast<int>(floor(coord.m_Y))));
+    auto bomb = this->m_Bombs.find(CCoord<unsigned int>(static_cast<int>(floor(coord.m_X)), static_cast<int>(floor(coord.m_Y))));
     if (bomb != this->m_Bombs.end() && bomb->second && player->IsColiding(bomb->second))
     {
         // Player is not owner or the bomb is not passable for owner
@@ -73,15 +73,15 @@ bool CBoard::IsPassable(CCoord coord, const CPlayer *player)
 /*====================================================================================================================*/
 void CBoard::PlaceBomb(CPlayer *player)
 {
-    CCoord location = player->GetLocationCell();
+    CCoord <unsigned int>location = player->GetLocationCell();
 
     // If this location is free.
     if (this->m_Bombs.find(location) == this->m_Bombs.end() && this->m_Fires.find(location) == this->m_Fires.end())
     {
-        CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, this->m_BombObjectTexturePack->GetTextureSize(),
-                                location, player);
+        CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, this->m_BombObjectTexturePack->GetTextureSize().ToDouble(),
+                                location.ToDouble(), player);
 
-        this->m_Bombs.insert(std::pair<CCoord, CBomb *>(location, bomb));
+        this->m_Bombs.insert(std::pair<CCoord<unsigned int>, CBomb *>(location.ToUnsignedInt(), bomb));
     }
 }
 
@@ -109,14 +109,14 @@ void CBoard::CreateExplosion(CBomb *bomb)
             unsigned int explosionRadius = owner->GetExplosionRadius();
 
             // Explosion in all directions.
-            CCoord directions[4] = {CCoord(0, 1), CCoord(0, -1), CCoord(1, 0), CCoord(-1, 0)};
+            CCoord<int> directions[4] = {CCoord<int>(0, 1), CCoord<int>(0, -1), CCoord<int>(1, 0), CCoord<int>(-1, 0)};
             for (int i = 0; i < 4; i++)
             {
                 this->CreateExplosionWave(bomb, directions[i], explosionRadius);
             }
         }
 
-        CCoord location = bomb->GetLocation();
+        CCoord<unsigned int> location = bomb->GetLocation().ToUnsignedInt();
         auto bombToRemove = this->m_Bombs.find(location);
         if (bombToRemove != this->m_Bombs.end())
         {
@@ -133,11 +133,11 @@ void CBoard::CreateExplosion(CBomb *bomb)
 }
 
 /*====================================================================================================================*/
-void CBoard::CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int explosionRadius)
+void CBoard::CreateExplosionWave(CBomb *bomb, CCoord<int> direction, unsigned int explosionRadius)
 {
     for (unsigned int i = 0; i <= explosionRadius; i++)
     {
-        CCoord locationToExplode = bomb->GetLocation() + (i * direction);
+        CCoord <int>locationToExplode = bomb->GetLocation().ToInt() + (i * direction);
 
         if (locationToExplode.m_X < 0 || locationToExplode.m_X >= CBoard::m_BoardSize.m_X ||
             locationToExplode.m_Y < 0 || locationToExplode.m_Y >= CBoard::m_BoardSize.m_Y)
@@ -169,14 +169,14 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int exp
 
         // Find collectible in location to explode.
         auto foundCollectible = this->m_Collectibles.find(
-                CCoord(locationToExplode.GetFlooredX(), locationToExplode.GetFlooredY()));
+                locationToExplode.ToUnsignedInt());
         if (foundCollectible != this->m_Collectibles.end())
         {
             break; // leave for loop - We dont want burning collectibles
         }
 
         // Find bomb in location to explode.
-        auto foundBomb = this->m_Bombs.find(CCoord(locationToExplode.GetFlooredX(), locationToExplode.GetFlooredY()));
+        auto foundBomb = this->m_Bombs.find(locationToExplode.ToUnsignedInt());
         if (foundBomb != this->m_Bombs.end() && foundBomb->second != bomb)
         {
             break; // leave for loop - We dont want burning bombs.
@@ -184,7 +184,7 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int exp
 
 
         // Destroy potencialy existing fire is this location.
-        auto foundFire = this->m_Fires.find(locationToExplode);
+        auto foundFire = this->m_Fires.find(locationToExplode.ToUnsignedInt());
         if (foundFire != this->m_Fires.end())
         {
             // Remove old fire.
@@ -195,8 +195,8 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int exp
 
         // Create new fire.
         CFire *fire = new CFire(this->m_FireObjectTexturePack, this->m_FireObjectTexturePack->GetTextureSize(),
-                                locationToExplode);
-        this->m_Fires.insert(std::pair<CCoord, CFire *>(locationToExplode, fire));
+                                locationToExplode.ToDouble());
+        this->m_Fires.insert(std::pair<CCoord<unsigned int>, CFire *>(locationToExplode.ToUnsignedInt(), fire));
 
         if (wallDestroyed)
         {
@@ -208,8 +208,8 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord direction, unsigned int exp
 /*====================================================================================================================*/
 void CBoard::DestroyExplosion(CFire *fire)
 {
-    CCoord fireLocation = fire->GetLocation();
-    auto fireToRemove = this->m_Fires.find(fireLocation);
+    CCoord<> fireLocation = fire->GetLocation();
+    auto fireToRemove = this->m_Fires.find(fireLocation.ToUnsignedInt());
     if (fireToRemove != this->m_Fires.end())
     {
         delete (fireToRemove->second);
@@ -226,8 +226,8 @@ void CBoard::DestroyExplosion(CFire *fire)
 /*====================================================================================================================*/
 void CBoard::DestroyCollectible(CCollectible *collectible)
 {
-    CCoord collectibleLocation = collectible->GetLocation();
-    auto collectibleToRemove = this->m_Collectibles.find(collectibleLocation);
+    CCoord<> collectibleLocation = collectible->GetLocation();
+    auto collectibleToRemove = this->m_Collectibles.find(collectibleLocation.ToUnsignedInt());
     if (collectibleToRemove != this->m_Collectibles.end())
     {
         delete (collectibleToRemove->second);
@@ -242,7 +242,7 @@ void CBoard::DestroyCollectible(CCollectible *collectible)
 }
 
 /*====================================================================================================================*/
-void CBoard::Draw(CSDLInterface *interface, CCoord offset)
+void CBoard::Draw(CSDLInterface *interface, CCoord<> offset)
 {
     // TODO debug
 
@@ -265,10 +265,10 @@ void CBoard::Draw(CSDLInterface *interface, CCoord offset)
         {
             if (this->m_Map[i][j])
             {
-                this->m_Map[i][j]->Draw(interface, this->m_CellSize, CCoord(i, j), offset);
+                this->m_Map[i][j]->Draw(interface, this->m_CellSize, CCoord<unsigned int>(i, j).ToDouble(), offset);
             } else if (this->m_GroundObject)
             {
-                this->m_GroundObject->Draw(interface, this->m_CellSize, CCoord(i, j), offset);
+                this->m_GroundObject->Draw(interface, this->m_CellSize, CCoord<unsigned int>(i, j).ToDouble(), offset);
             }
         }
     }
@@ -288,7 +288,7 @@ void CBoard::Draw(CSDLInterface *interface, CCoord offset)
         // std::cout << i->second->GetLocation() << std::endl;
         if (i->second && i->second->IsVisible())
         {
-            i->second->Draw(interface, this->m_CellSize, i->first, offset);
+            i->second->Draw(interface, this->m_CellSize, i->first.ToDouble(), offset);
         }
             /*==DEBUG==*/
         else if (this->m_Settings->GetDebugMode())
@@ -305,7 +305,7 @@ void CBoard::Draw(CSDLInterface *interface, CCoord offset)
     {
         if (i->second)
         {
-            i->second->Draw(interface, this->m_CellSize, i->first, offset);
+            i->second->Draw(interface, this->m_CellSize, i->first.ToDouble(), offset);
         }
     }
 
@@ -314,7 +314,7 @@ void CBoard::Draw(CSDLInterface *interface, CCoord offset)
     {
         if (i->second)
         {
-            i->second->Draw(interface, this->m_CellSize, i->first, offset);
+            i->second->Draw(interface, this->m_CellSize, i->first.ToDouble(), offset);
         }
     }
 
@@ -508,7 +508,7 @@ void CBoard::ClearBoard(bool clearBoosts)
 }
 
 /*====================================================================================================================*/
-bool CBoard::PositionFree(CCoord coord)
+bool CBoard::PositionFree(CCoord<unsigned int> coord)
 {
     if (coord.m_X < 0 || coord.m_X >= CBoard::m_BoardSize.m_X ||
         coord.m_Y < 0 || coord.m_Y >= CBoard::m_BoardSize.m_Y)
@@ -527,7 +527,7 @@ bool CBoard::PositionFree(CCoord coord)
 
     for (size_t i = 0; i < this->m_Players.size(); i++)
     {
-        if (m_Players[i]->GetLocation().AlmostEqual(coord))
+        if (m_Players[i]->GetLocation().AlmostEqual(coord.ToDouble()))
         {
             return false;
         }
@@ -535,7 +535,7 @@ bool CBoard::PositionFree(CCoord coord)
 
     for (size_t i = 0; i < this->m_Enemies.size(); i++)
     {
-        if (m_Enemies[i]->GetLocation().AlmostEqual(coord))
+        if (m_Enemies[i]->GetLocation().AlmostEqual(coord.ToDouble()))
         {
             return false;
         }
@@ -545,10 +545,10 @@ bool CBoard::PositionFree(CCoord coord)
 }
 
 /*====================================================================================================================*/
-bool CBoard::PlayersAreaFree(CCoord coord)
+bool CBoard::PlayersAreaFree(CCoord<unsigned int> coord)
 {
     // Create direction vectors.
-    CCoord directions[4] = {CCoord(0, 1), CCoord(0, -1), CCoord(1, 0), CCoord(-1, 0)};
+    CCoord <int>directions[4] = {CCoord<int>(0, 1), CCoord<int>(0, -1), CCoord<int>(1, 0), CCoord<int>(-1, 0)};
 
     for (std::vector<CPlayer *>::size_type i = 0; i < this->m_Players.size(); i++)
     {
@@ -565,13 +565,13 @@ bool CBoard::PlayersAreaFree(CCoord coord)
 }
 
 /*====================================================================================================================*/
-bool CBoard::PlayerDirectionFree(CCoord location, CPlayer *player, CCoord direction)
+bool CBoard::PlayerDirectionFree(CCoord<unsigned int> location, CPlayer *player, CCoord<int> direction)
 {
     for (unsigned int i = 0; i <= player->GetExplosionRadius(); i++)
     {
-        CCoord curLocation = (player->GetLocation() + (direction * i));
+        CCoord<> curLocation = (player->GetLocation() + (direction * i).ToDouble());
 
-        if (curLocation == location)
+        if (curLocation == location.ToDouble())
         {
             return false;
         }

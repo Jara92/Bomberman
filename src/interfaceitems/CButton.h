@@ -21,8 +21,8 @@ public:
      * @param text Text to be rendered.
      * @param hoveredText Text to be rendered when the button is being hovered.
     */
-    CButton(CSDLInterface *interface, const std::string &text, CCoord location, SDL_Colour textColor,
-            SDL_Colour textHoverColor, CCoord size = {0, 0},
+    CButton(CSDLInterface *interface, const std::string &text, CCoord <>location, SDL_Colour textColor,
+            SDL_Colour textHoverColor, CCoord <>size = {0, 0},
             std::function<void(void)> clickCallBack = []()
             {})
             : CInterfaceItem(location, size),
@@ -58,9 +58,9 @@ public:
      */
     virtual void Draw(CSDLInterface *interface);
 
-    virtual void SetLocation(CCoord location) override;
+    virtual void SetLocation(CCoord <>location) override;
 
-    virtual void SetSize(CCoord size) override;
+    virtual void SetSize(CCoord <>size) override;
 
     /**
      * Process mouse events.
@@ -92,6 +92,6 @@ protected:
      * @param mouseLocation Current mouse location.
      * @return True - Colliding.
      */
-    bool MouseCollision(CCoord mouseLocation) const;
+    bool MouseCollision(CCoord <unsigned int> mouseLocation) const;
 };
 

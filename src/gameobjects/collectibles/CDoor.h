@@ -17,8 +17,8 @@ public:
     * @param location Object location.
     * @param scoreBonus Bonus to be claimed by collector.
     */
-    explicit CDoor(std::shared_ptr<CTexturePack> texturePack, CCoord size = CCoord(1, 1),
-                   CCoord location = CCoord(0, 0), size_t scoreBonus = 0)
+    explicit CDoor(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1),
+                   CCoord<> location = CCoord<>(0, 0), size_t scoreBonus = 0)
             : CCollectible(std::move(texturePack), size, location, scoreBonus)
     {}
 

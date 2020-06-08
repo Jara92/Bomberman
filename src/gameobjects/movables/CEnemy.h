@@ -20,7 +20,7 @@ public:
     * @param wallPass Can this Enemy walk through destructible walls?
     * @param lives How many lives doest this monster have?
     */
-    explicit CEnemy(std::shared_ptr<CTexturePack> texturePack, CCoord location, CCoord size = CCoord(1,1), int score = 100, double speed = 0.005, bool wallPass = false, int lives = 1)
+    explicit CEnemy(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size = CCoord<>(1,1), int score = 100, double speed = 0.005, bool wallPass = false, int lives = 1)
     : CMovable(std::move(texturePack), size, location, speed, wallPass, lives), m_Score(score)
     {}
 

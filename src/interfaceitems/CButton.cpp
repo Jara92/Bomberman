@@ -15,7 +15,7 @@ void CButton::Draw(CSDLInterface *interface)
 }
 
 /*====================================================================================================================*/
-void CButton::SetLocation(CCoord location)
+void CButton::SetLocation(CCoord <>location)
 {
     CInterfaceItem::SetLocation(location);
 
@@ -24,7 +24,7 @@ void CButton::SetLocation(CCoord location)
 }
 
 /*====================================================================================================================*/
-void CButton::SetSize(CCoord size)
+void CButton::SetSize(CCoord <>size)
 {
     CInterfaceItem::SetSize(size);
 
@@ -51,7 +51,7 @@ void CButton::MouseEventHandler(SDL_Event &e)
 /*====================================================================================================================*/
 void CButton::MouseButtonEventHandler(SDL_MouseButtonEvent &e)
 {
-    if (this->MouseCollision(CCoord(e.x, e.y)))
+    if (this->MouseCollision(CCoord<unsigned int>(e.x, e.y)))
     {
         if (this->m_ClickCallBack)
         { this->m_ClickCallBack(); }
@@ -61,7 +61,7 @@ void CButton::MouseButtonEventHandler(SDL_MouseButtonEvent &e)
 /*====================================================================================================================*/
 void CButton::MouseMoveEventHandler(SDL_MouseMotionEvent &e)
 {
-    if (this->MouseCollision(CCoord(e.x, e.y)))
+    if (this->MouseCollision(CCoord<unsigned int>(e.x, e.y)))
     {
         this->m_IsHovering = true;
     } else
@@ -71,7 +71,7 @@ void CButton::MouseMoveEventHandler(SDL_MouseMotionEvent &e)
 }
 
 /*====================================================================================================================*/
-bool CButton::MouseCollision(CCoord mouseLocation) const
+bool CButton::MouseCollision(CCoord<unsigned int> mouseLocation) const
 {
     if (mouseLocation.m_X >= this->m_Location.m_X && mouseLocation.m_X <= this->m_Location.m_X + this->m_Size.m_X &&
         mouseLocation.m_Y >= this->m_Location.m_Y && mouseLocation.m_Y <= this->m_Location.m_Y + this->m_Size.m_Y)

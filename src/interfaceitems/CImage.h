@@ -16,7 +16,7 @@ public:
      * @param size Item size.
      * @param texturePath Path to texture.
      */
-    CImage(CSDLInterface * interface, CCoord location, CCoord size, std::string texturePath)
+    CImage(CSDLInterface * interface, CCoord <>location, CCoord<> size, std::string texturePath)
     : CInterfaceItem(location, size)
     {
         this->m_Texture = interface->LoadTexture( texturePath);

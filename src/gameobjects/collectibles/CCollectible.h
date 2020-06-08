@@ -19,7 +19,7 @@ public:
     * @param scoreBonus Bonus to be claimed by collector.
     * @param duration Collectible duration in seconds. Set 0 for unlimited duration.
     */
-    explicit CCollectible(std::shared_ptr<CTexturePack> texturePack, CCoord size = CCoord(1,1), CCoord location = CCoord(0,0),
+    explicit CCollectible(std::shared_ptr<CTexturePack> texturePack, CCoord <>size = CCoord<>(1,1), CCoord <>location = CCoord<>(0,0),
                           size_t scoreBonus = 0, int duration = 0)
             : CGameObject(std::move(texturePack), size, location, true), m_Duration(duration), m_IsVisible(false),
               m_ScoreBonus(scoreBonus),

@@ -15,13 +15,13 @@ void CText::SetText(CSDLInterface *interface, const std::string &text, SDL_Color
     { SDL_DestroyTexture(this->m_Texture); }
 
     // Get new texture
-    CCoord size;
+    CCoord<unsigned int> size;
     this->m_Texture = interface->LoadTextureFromText(text, size, color);
 
     // Set size according to current size
     // Autosize X and Y
     if (this->m_Size.m_X == 0 && this->m_Size.m_Y == 0)
-    { this->m_Size = size; }
+    { this->m_Size = size.ToDouble(); }
         // Autosize X
     else if (this->m_Size.m_X == 0)
     {

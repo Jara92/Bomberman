@@ -23,8 +23,8 @@ public:
     * @param location Starting location.
     * @param isPassable Is this object passable for movable objects?
     */
-    explicit CGameObject(std::shared_ptr<CTexturePack> texturePack, CCoord size = CCoord(1, 1),
-                         CCoord location = CCoord(0, 0), bool isPassable = false)
+    explicit CGameObject(std::shared_ptr<CTexturePack> texturePack, CCoord <> size = CCoord<>(1, 1),
+                         CCoord <>location = CCoord<>(0, 0), bool isPassable = false)
             : m_TexturePack(std::move(texturePack)), m_ActualTexture(ETextureType::TEXTURE_FRONT),
               m_IsPassable(isPassable), m_IsAlive(true), m_Size(size), m_Location(location), m_AnimationIndex(0),
               m_AnimationUpdateInterval(100),
@@ -51,10 +51,10 @@ public:
     bool IsPassable() const
     { return this->m_IsPassable; }
 
-    CCoord GetLocation() const
+    CCoord <>GetLocation() const
     { return this->m_Location; }
 
-    CCoord GetSize() const
+    CCoord <>GetSize() const
     { return this->m_Size; }
 
     /**
@@ -88,7 +88,7 @@ public:
      * @param location Target cell location
      * @param offset Texture global offset
      */
-    virtual void Draw(CSDLInterface *interface, int cellSize, CCoord location, CCoord offset = CCoord(0, 0)) const;
+    virtual void Draw(CSDLInterface *interface, int cellSize, CCoord <>location, CCoord <> offset = CCoord<>(0, 0)) const;
 
     /**
      * Are these objects in colliding?
@@ -105,7 +105,7 @@ public:
     virtual bool TryDestroy(int distance)
     { return false; }
 
-    void SetLocation(CCoord location)
+    void SetLocation(CCoord<> location)
     {this->m_Location = location;}
 
 protected:
@@ -116,8 +116,8 @@ protected:
     /** Is this object passable for other objects? */
     bool m_IsPassable;
     bool m_IsAlive;
-    CCoord m_Size;
-    CCoord m_Location;
+    CCoord <>m_Size;
+    CCoord <>m_Location;
 
     /* Mutable keyword is very useful here. Animation index is not important for CGameObject, because it
      * does not disrupt the internal structure of the object. It is just auxiliary variable.*/

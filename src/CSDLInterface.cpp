@@ -111,7 +111,7 @@ void CSDLInterface::ShowMessageBox(Uint32 flags, const std::string &title, const
 }
 
 /*====================================================================================================================*/
-bool CSDLInterface::RenderTexture(SDL_Texture *texture, CCoord location, CCoord size)
+bool CSDLInterface::RenderTexture(SDL_Texture *texture, CCoord<> location, CCoord<> size)
 {
     SDL_Rect targetRect = {static_cast<int>(location.m_X), static_cast<int>(location.m_Y),
                            static_cast<int>(size.m_X), static_cast<int>(size.m_Y)};
@@ -120,10 +120,10 @@ bool CSDLInterface::RenderTexture(SDL_Texture *texture, CCoord location, CCoord 
 }
 
 /*====================================================================================================================*/
-bool CSDLInterface::RenderText(const std::string &text, CCoord location, CCoord size, SDL_Colour color)
+bool CSDLInterface::RenderText(const std::string &text, CCoord<> location, CCoord<> size, SDL_Colour color)
 {
     // Load texture and get its default size.
-    CCoord defaultSize;
+    CCoord<unsigned int> defaultSize;
     SDL_Texture *texture = this->LoadTextureFromText(text, defaultSize, color);
 
     // Create rect for render.
@@ -185,7 +185,7 @@ void CSDLInterface::UpdateWindowSize()
 }
 
 /*====================================================================================================================*/
-SDL_Texture *CSDLInterface::LoadTextureFromText(const std::string &text, CCoord &size, SDL_Color color) const
+SDL_Texture *CSDLInterface::LoadTextureFromText(const std::string &text, CCoord<unsigned int> &size, SDL_Color color) const
 {
     TTF_Font *font = TTF_OpenFont((this->m_Settings->GetAssetsPath() + this->m_Font).c_str(), 48);
     if (font == NULL)

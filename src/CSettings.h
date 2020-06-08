@@ -25,7 +25,7 @@ public:
      * @param dataPath  Data directory path
      */
     CSettings(unsigned int gameScreenWidth = 1150, unsigned int gameScreenHeight = 600,
-              unsigned int menuScreenWidht = 500, unsigned int menuScreenHeight = 500, CCoord offset = CCoord(0, 0),
+              unsigned int menuScreenWidht = 500, unsigned int menuScreenHeight = 500, CCoord<unsigned int> offset = CCoord<unsigned int>(0, 0),
               unsigned int screenFPS = 60,
               bool sound = true, bool debugMode = false, std::string assetsPath = "./examples/assets/",
               std::string dataPath = "./examples/data/")
@@ -92,7 +92,7 @@ public:
     std::string GetDataPath() const
     { return this->m_DataPath; }
 
-    CCoord GetOffset() const
+    CCoord<unsigned int> GetOffset() const
     { return this->m_Offset; }
 
 protected:
@@ -107,6 +107,6 @@ protected:
 
     std::string m_AssetsPath;
     std::string m_DataPath;
-    CCoord m_Offset;
+    CCoord <unsigned int>m_Offset;
 };
 

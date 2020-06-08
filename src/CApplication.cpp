@@ -69,7 +69,7 @@ std::shared_ptr<CSettings> CApplication::Init(int argc, char *argv[])
 
 
     return std::make_shared<CSettings>(1.3 * 1150, 1.3 * 700, 512,
-                                       512, CCoord(0, 1), 60, true, debug);
+                                       512, CCoord<unsigned int>(0, 1), 60, true, debug);
 }
 
 std::shared_ptr<CWindowManager>
