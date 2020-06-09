@@ -178,7 +178,6 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
     // Setup default locations
     CCoord<> startingLocation[CLevelLoader::MAX_PLAYERS] = {{1,  1},
                                                             {21, 11}};
-
     std::vector<CPlayer *> players;
 
     // return only required players
@@ -312,11 +311,7 @@ void CLevelLoader::LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int le
 
     // Is file reader ok?
     if (!fileReader || !fileReader.is_open() || fileReader.eof() || fileReader.bad())
-    {
-        throw std::ios::failure(
-                MESSAGE_LEVEL_NOT_AVAIBLE + this->m_Interface->GetSettings()->GetDataPath() + this->m_LevelFileName +
-                std::to_string(level));
-    }
+    { throw std::ios::failure(MESSAGE_LEVEL_NOT_AVAIBLE); }
 
     // Read all lines and crate object for every line
     std::string line;
@@ -473,10 +468,7 @@ bool CLevelLoader::ReadItem(std::shared_ptr<CBoard> &board, const std::vector<st
 
             // Invalid collectible type id detection.
             if (collectibleTypeId >= this->m_CollectibleTexturePacks.size())
-            {
-                throw std::invalid_argument(MESSAGE_UNKNOWN_COLLECTIBLE_TYPE + std::to_string(collectibleTypeId) + " " +
-                                            std::to_string(this->m_CollectibleTexturePacks.size()));
-            }
+            { throw std::invalid_argument(MESSAGE_UNKNOWN_COLLECTIBLE_TYPE); }
 
             ECollectibleType collectibleType = static_cast<ECollectibleType >(collectibleTypeId);
 

@@ -8,7 +8,7 @@
 
 CGameManager::CGameManager(CSDLInterface *interface)
         : CWindowManager(interface), m_Board(nullptr), m_BoardOffset(CCoord<>(0, 2)),
-          m_GameStatus(EGameStatus::GAMESTATUS_RUNNING), m_NextGameStatus(EGameStatus::GAMESTATUS_RUNNING),
+          m_GameStatus(EGameStatus::GAME_STATUS_RUNNING), m_NextGameStatus(EGameStatus::GAME_STATUS_RUNNING),
           m_Level(1)
 {
     this->m_Interface->SetGameScreenSize();
@@ -16,7 +16,7 @@ CGameManager::CGameManager(CSDLInterface *interface)
     this->m_LevelLoader = std::make_unique<CLevelLoader>(interface);
 
     // Kill all players when the time runs out.
-    this->m_GameEndDelay.Run(this->STARTING_TIME, [=](void)
+    this->m_GameEndDelay.Run(CGameManager::STARTING_TIME, [=](void)
     { this->KillAllPlayers(); });
 
     // Get board and load first level
@@ -26,12 +26,13 @@ CGameManager::CGameManager(CSDLInterface *interface)
     // UI items
     unsigned int padding = 5;
     this->m_DefaultFontSize = this->m_Board->GetCellSize() - 2 * padding;
+    CCoord<unsigned int> windowSize = this->m_Interface->GetWindowSize();
 
     // Top menu background
     for (unsigned int i = 0; i < this->m_Board->GetBoardSize().m_X; i++)
     { this->m_Board->GetGroundObject()->Draw(this->m_Interface, this->m_Board->GetCellSize(), CCoord<double>(i, 0)); }
 
-    // Menu
+    // Menu messages
     this->m_TimeText = std::make_unique<CText>(this->m_Interface, CCoord<>(0.5 * this->m_Board->GetCellSize(), padding),
                                                "", CCoord<>(0, this->m_DefaultFontSize));
 
@@ -46,6 +47,34 @@ CGameManager::CGameManager(CSDLInterface *interface)
     this->m_FPSText = std::make_unique<CText>(this->m_Interface,
                                               CCoord<>(padding, this->m_Board->GetCellSize() + padding), "",
                                               CCoord<>(0, this->m_DefaultFontSize / 2));
+
+    // Scene messages
+    this->m_RoundOverText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "Round over!",
+                                                    CCoord<>(0, this->m_DefaultFontSize * 3));
+    CCoord<> itemSize = this->m_RoundOverText->GetSize();
+    this->m_RoundOverText->SetLocation(
+            CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0), (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0)));
+
+    this->m_NextRoundText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0),
+                                                    "Round " + std::to_string(this->m_Level) + "!",
+                                                    CCoord<>(0, this->m_DefaultFontSize * 3));
+    itemSize = this->m_NextRoundText->GetSize();
+    this->m_NextRoundText->SetLocation(
+            CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0), (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0)));
+
+    this->m_GameOverText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "Game over",
+                                                   CCoord<>(0, this->m_DefaultFontSize * 3));
+    itemSize = this->m_GameOverText->GetSize();
+    this->m_GameOverText->SetLocation(
+            CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0), (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0)));
+
+    this->m_GameOverSubtext = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0),
+                                                      "Press [ENTER] to return to the menu",
+                                                      CCoord<>(0, this->m_DefaultFontSize));
+    itemSize = this->m_GameOverSubtext->GetSize();
+    this->m_GameOverSubtext->SetLocation(
+            CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0),
+                     (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0) + this->m_DefaultFontSize * 2.5));
 }
 
 /*====================================================================================================================*/
@@ -69,13 +98,13 @@ void CGameManager::Draw() const
     // Render screen game game status
     switch (this->m_GameStatus)
     {
-        case EGameStatus::GAMESTATUS_RUNNING:
+        case EGameStatus::GAME_STATUS_RUNNING:
             this->DrawGame();
             break;
-        case EGameStatus::GAMESTATUS_ROUND_OVER:
+        case EGameStatus::GAME_STATUS_ROUND_OVER:
             this->DrawRoundOver();
             break;
-        case EGameStatus::GAMESTATUS_NEXT_ROUND:
+        case EGameStatus::GAME_STATUS_NEXT_ROUND:
             this->DrawNextRound();
             break;
         case EGameStatus::GAMESTATUS_PAUSED:
@@ -108,46 +137,9 @@ void CGameManager::DrawGame() const
 }
 
 /*====================================================================================================================*/
-void CGameManager::DrawRoundOver() const
-{
-    CCoord<> textSize = CCoord<>(400, 100);
-    this->m_Interface->RenderText("Round over!", CCoord<>(
-            (this->m_Interface->GetSettings()->GetGameScreenSize().m_X / 2) - textSize.m_X / 2,
-            (this->m_Interface->GetSettings()->GetGameScreenSize().m_Y / 2) - textSize.m_Y / 2), textSize);
-}
-
-/*====================================================================================================================*/
-void CGameManager::DrawNextRound() const
-{
-    CCoord<> textSize = CCoord<>(400, 100);
-    this->m_Interface->RenderText("Round " + std::to_string(this->m_Level) + "!", CCoord<>(
-            (this->m_Interface->GetSettings()->GetGameScreenSize().m_X / 2) - textSize.m_X / 2,
-            (this->m_Interface->GetSettings()->GetGameScreenSize().m_Y / 2) - textSize.m_Y / 2), textSize);
-}
-
-/*====================================================================================================================*/
-void CGameManager::DrawGameOver() const
-{
-    CCoord<unsigned int> screenSize = CCoord<unsigned int>(
-            this->m_Interface->GetSettings()->GetGameScreenSize().m_X,
-            this->m_Interface->GetSettings()->GetGameScreenSize().m_Y);
-    CCoord<double> textSize = CCoord<double>(screenSize.m_X / 4.0, screenSize.m_X / 14.0);
-    this->m_Interface->RenderText("Game over", CCoord<double>(screenSize.m_X / 2.0 - (textSize.m_X / 2.0),
-                                                              (screenSize.m_Y / 2.0) - (textSize.m_Y / 2)),
-                                  textSize);
-
-    textSize = CCoord<double>(screenSize.m_X / 3.0, screenSize.m_X / 30.0);
-    this->m_Interface->RenderText("Press [ENTER] to return to the menu",
-                                  CCoord<double>((screenSize.m_X / 2.0) - (textSize.m_X / 2.0),
-                                                 (screenSize.m_Y / 2.0 + textSize.m_Y +
-                                                  2 * this->m_Board->GetCellSize()) - textSize.m_Y / 2.0),
-                                  textSize);
-}
-
-/*====================================================================================================================*/
 void CGameManager::Update(int deltaTime)
 {
-    if (this->m_GameStatus == EGameStatus::GAMESTATUS_RUNNING)
+    if (this->m_GameStatus == EGameStatus::GAME_STATUS_RUNNING)
     {
         this->m_Board->Update(deltaTime);
         this->m_GameEndDelay.Tick(deltaTime);
@@ -198,7 +190,7 @@ void CGameManager::UpdateEvents()
     this->m_Board->UpdatePhysics();
 
     // If game is running.
-    if (this->m_GameStatus == EGameStatus::GAMESTATUS_RUNNING && this->m_GameStatus == this->m_NextGameStatus)
+    if (this->m_GameStatus == EGameStatus::GAME_STATUS_RUNNING && this->m_GameStatus == this->m_NextGameStatus)
     {
         // Check for dead players.
         for (auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
@@ -208,14 +200,14 @@ void CGameManager::UpdateEvents()
             {
                 // If player is not totally dead - Round over.
                 if ((*(player.base()))->GetLives() >= 0)
-                { this->m_NextGameStatus = EGameStatus::GAMESTATUS_ROUND_OVER; }
+                { this->m_NextGameStatus = EGameStatus::GAME_STATUS_ROUND_OVER; }
                     // Player is totally dead - Game over.
                 else
                 { this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER; }
 
                 this->m_GameEndDelay.Stop();
             } else if ((*(player.base()))->GetLevelUp())
-            { this->m_NextGameStatus = EGameStatus::GAMESTATUS_NEXT_ROUND; }
+            { this->m_NextGameStatus = EGameStatus::GAME_STATUS_NEXT_ROUND; }
         }
     }
 
@@ -223,17 +215,17 @@ void CGameManager::UpdateEvents()
     if (this->m_GameStatusDelay.Done() && this->m_GameStatus != this->m_NextGameStatus)
     {
         std::function<void(void)> callBack;
-        int delay = CGameManager::GAME_STATUS_DELAY;
+        int delay = CGameManager::GAME_STATUS_UPDATE_DELAY;
 
         // Create callback functions for special states.
         switch (this->m_NextGameStatus)
         {
-            case EGameStatus::GAMESTATUS_NEXT_ROUND:
+            case EGameStatus::GAME_STATUS_NEXT_ROUND:
                 callBack = [=]()
                 { this->NextRound(); };
                 delay = 150;
                 break;
-            case EGameStatus::GAMESTATUS_ROUND_OVER:
+            case EGameStatus::GAME_STATUS_ROUND_OVER:
                 callBack = [=]()
                 { this->RoundOver(); };
                 break;
@@ -242,9 +234,7 @@ void CGameManager::UpdateEvents()
                 { this->GameOver(); };
                 break;
             default:
-                callBack = [=]()
-                {};
-                break;
+                return;
         }
 
         // Set new callback.
@@ -265,7 +255,7 @@ void CGameManager::KillAllPlayers()
         { this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER; }
             // Player is not totally dead - round over.
         else if ((*(player.base())) && (*(player.base()))->GetLives() >= 0)
-        { this->m_NextGameStatus = EGameStatus::GAMESTATUS_ROUND_OVER; }
+        { this->m_NextGameStatus = EGameStatus::GAME_STATUS_ROUND_OVER; }
     }
 }
 
@@ -277,11 +267,11 @@ void CGameManager::RoundOver()
     this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
     this->m_GameEndDelay.Rerun();
 
-    this->SetStatus(EGameStatus::GAMESTATUS_RUNNING);
+    this->SetStatus(EGameStatus::GAME_STATUS_RUNNING);
 
     // Update game state when timer is done.
-    this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_DELAY, [=](void)
-    { this->UpdateStatus(); });
+    this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_UPDATE_DELAY, [=](void)
+    {this->UpdateStatus();    });
 }
 
 /*====================================================================================================================*/
@@ -295,22 +285,33 @@ void CGameManager::GameOver()
         std::cerr << "Runtime error: " << "Cannot save new score in the file." << std::endl;
     }
 
+    this->m_GameEndDelay.Stop();
+    this->m_GameStatusDelay.Stop();
+
     this->SetStatus(EGameStatus::GAME_STATUS_EXIT);
 }
 
 /*====================================================================================================================*/
 void CGameManager::NextRound()
 {
+    this->m_Level++;
+
+    // End game if this was last level.
+    if (this->m_Level >= CGameManager::GAME_LEVELS_COUNT)
+    {
+        this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER;
+        this->GameOver();
+        return;
+    }
     this->m_Board->ClearBoard();
 
-    // Level up, load new level from the file and refresh game end delay.
-    this->m_Level++;
+    // Load new level from the file and refresh game end delay.
     this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
     this->m_GameEndDelay.Rerun();
 
-    this->SetStatus(EGameStatus::GAMESTATUS_RUNNING);
+    this->SetStatus(EGameStatus::GAME_STATUS_RUNNING);
 
-    this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_DELAY, [=](void)
+    this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_UPDATE_DELAY, [=](void)
     { this->UpdateStatus(); });
 }
 

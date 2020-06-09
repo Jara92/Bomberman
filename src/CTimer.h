@@ -18,7 +18,7 @@ public:
      * Constructor.
      */
     CTimer()
-            : m_Time(0), m_InitTime(0), m_IsOn(false)
+            : m_Time(0), m_InitTime(0), m_IsOn(false), m_CallBackCalled(false)
     {}
 
     /**
@@ -33,9 +33,12 @@ public:
 
         bool done = this->Done();
 
-        if (done && this->m_Callback)
-        { this->m_Callback(); }
-
+        if (done && !m_CallBackCalled)
+        {
+            this->m_CallBackCalled = true;
+            if (this->m_Callback)
+            { this->m_Callback(); }
+        }
         return done;
     }
 
@@ -53,6 +56,7 @@ public:
     void Rerun(int initValue = 0)
     {
         this->m_IsOn = true;
+        this->m_CallBackCalled = false;
 
         if (initValue == 0)
         { initValue = this->m_InitTime; }
@@ -72,6 +76,7 @@ public:
         this->m_IsOn = true;
         this->m_Time = this->m_InitTime = value;
         this->m_Callback = std::move(callBack);
+        this->m_CallBackCalled = false;
     }
 
     /**
@@ -106,6 +111,7 @@ public:
 protected:
     int m_Time, m_InitTime;
     bool m_IsOn;
+    bool m_CallBackCalled;
 
     std::function<void(void)> m_Callback;
 };

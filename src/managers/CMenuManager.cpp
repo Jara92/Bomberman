@@ -1,8 +1,6 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
-
 
 #include "CMenuManager.h"
 
@@ -19,14 +17,10 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
     this->m_Interface->SetMenuScreenSize();
     CCoord<unsigned int> windowSize = this->m_Interface->GetWindowSize();
     CCoord<> itemSize;
-    // Border offset.
-    unsigned int offset = 10;
-    unsigned int yLocation = offset;
-    unsigned int fontSize = 64;
-    unsigned int yButtonMargin = 70;
 
-    SDL_Colour textColor = {255, 255, 255, 255};
-    SDL_Colour textHoverColor = {255, 128, 0, 255};
+    unsigned int offset = 10, yLocation = offset, fontSize = 64, yButtonMargin = 70;
+
+    SDL_Colour textColor = {255, 255, 255, 255}, textHoverColor = {255, 128, 0, 255};
 
     // Background image
     this->m_InterfaceItems.push_back(std::make_unique<CImage>(interface, CCoord<>(0, 0), windowSize.ToDouble(),
@@ -40,9 +34,10 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
     // Top score
     this->m_InterfaceItems.push_back(
             std::make_unique<CText>(interface, CCoord<>(0, 0),
-                                    "Highest score: " + std::to_string(CScoreSaver(this->m_Interface->GetSettings()).GetTopScore()),
+                                    "Highest score: " +
+                                    std::to_string(CScoreSaver(this->m_Interface->GetSettings()).GetTopScore()),
                                     CCoord<>(0, fontSize / 1.5),
-                                    SDL_Color{255,215,0, 255}));
+                                    SDL_Color{255, 215, 0, 255}));
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
             CCoord<>(windowSize.m_X / 2.0 - itemSize.m_X / 2, yLocation += static_cast<unsigned int>(1.8 * fontSize)));

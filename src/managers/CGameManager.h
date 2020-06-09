@@ -52,12 +52,15 @@ protected:
     CTimer m_GameStatusDelay;
 
     std::unique_ptr<CText> m_TimeText, m_ScoreText, m_LivesText, m_FPSText;
+    std::unique_ptr<CText> m_RoundOverText, m_NextRoundText, m_GameOverText, m_GameOverSubtext;
     unsigned int m_DefaultFontSize;
 
     /** The time a player has to complete the game.*/
     static constexpr int STARTING_TIME = 200500;
     /** Waiting time between loading scenes. */
-    static constexpr int GAME_STATUS_DELAY = 2000;
+    static constexpr int GAME_STATUS_UPDATE_DELAY = 2000;
+    /** Number of game levels. */
+    static constexpr int GAME_LEVELS_COUNT = 2;
 
     /**
      * Global input events.
@@ -95,11 +98,17 @@ protected:
 
     void DrawGame() const;
 
-    void DrawRoundOver() const;
+    void DrawRoundOver() const
+    { this->m_RoundOverText->Draw(this->m_Interface); }
 
-    void DrawNextRound() const;
+    void DrawNextRound() const
+    { this->m_NextRoundText->Draw(this->m_Interface); }
 
-    void DrawGameOver() const;
+    void DrawGameOver() const
+    {
+        this->m_GameOverText->Draw(this->m_Interface);
+        this->m_GameOverSubtext->Draw(this->m_Interface);
+    }
 
     /**
      * Update game.
