@@ -38,7 +38,6 @@ public:
 
 protected:
     std::shared_ptr<CBoard> m_Board;
-    CScoreSaver m_ScoreManager;
     /** The board must be drawn shifted because of top menu. */
     CCoord<> m_BoardOffset;
     std::unique_ptr<CLevelLoader> m_LevelLoader;
@@ -51,6 +50,9 @@ protected:
     CTimer m_GameEndDelay;
     /** Timer which updates game state updates a time delay. */
     CTimer m_GameStatusDelay;
+
+    std::unique_ptr<CText> m_TimeText, m_ScoreText, m_LivesText, m_FPSText;
+    unsigned int m_DefaultFontSize;
 
     /** The time a player has to complete the game.*/
     static constexpr int STARTING_TIME = 200500;

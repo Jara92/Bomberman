@@ -78,7 +78,7 @@ bool CSDLInterface::InitInterface()
 }
 
 /*====================================================================================================================*/
-SDL_Texture *CSDLInterface::LoadTexture(const std::string file) const
+SDL_Texture *CSDLInterface::LoadTexture(const std::string &file) const
 {
     SDL_Texture *texture = IMG_LoadTexture(this->m_Renderer, (this->m_Settings->GetAssetsPath() + file).c_str());
 

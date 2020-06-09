@@ -13,6 +13,8 @@
 CMenuManager::CMenuManager(CSDLInterface *interface)
         : CWindowManager(interface)
 {
+    this->m_ScoreSaver = std::make_unique<CScoreSaver>(interface->GetSettings());
+
     // Set menu window size.
     this->m_Interface->SetMenuScreenSize();
     CCoord<unsigned int> windowSize = this->m_Interface->GetWindowSize();
@@ -20,8 +22,8 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
     // Border offset.
     unsigned int offset = 10;
     unsigned int yLocation = offset;
-    unsigned int basicFontSize = 64;
-    unsigned int yButtonMargin = 80;
+    unsigned int fontSize = 64;
+    unsigned int yButtonMargin = 70;
 
     SDL_Colour textColor = {255, 255, 255, 255};
     SDL_Colour textHoverColor = {255, 128, 0, 255};
@@ -31,25 +33,35 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
                                                               "Menu/title_background.jpg"));
     // Title text
     this->m_InterfaceItems.push_back(
-            std::make_unique<CText>(interface, CCoord<>(0, 0), "Bomberman!", CCoord<>(0, 2 * basicFontSize)));
+            std::make_unique<CText>(interface, CCoord<>(0, 0), "Bomberman!", CCoord<>(0, 2 * fontSize)));
     itemSize = this->m_InterfaceItems.back()->GetSize();
-    this->m_InterfaceItems.back()->SetLocation(CCoord<>((windowSize.m_X / 2) - (itemSize.m_X / 2), yLocation));
+    this->m_InterfaceItems.back()->SetLocation(CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2), yLocation));
+
+    // Top score
+    this->m_InterfaceItems.push_back(
+            std::make_unique<CText>(interface, CCoord<>(0, 0),
+                                    "Highest score: " + std::to_string(CScoreSaver(this->m_Interface->GetSettings()).GetTopScore()),
+                                    CCoord<>(0, fontSize / 1.5),
+                                    SDL_Color{255,215,0, 255}));
+    itemSize = this->m_InterfaceItems.back()->GetSize();
+    this->m_InterfaceItems.back()->SetLocation(
+            CCoord<>(windowSize.m_X / 2.0 - itemSize.m_X / 2, yLocation += static_cast<unsigned int>(1.8 * fontSize)));
 
     // One player button
     this->m_InterfaceItems.push_back(
             std::make_unique<CButton>(interface, "One player", CCoord<>(0, 0), textColor, textHoverColor,
-                                      CCoord<>(0, basicFontSize), [=]()
+                                      CCoord<>(0, fontSize), [=]()
                                       { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME; }));
 
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(
-            CCoord<>((windowSize.m_X / 2) - (itemSize.m_X / 2),
-                     yLocation += static_cast<unsigned int>(yButtonMargin * 1.5)));
+            CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2),
+                     yLocation += static_cast<unsigned int>(yButtonMargin * 0.75)));
 
     // Two players button
     this->m_InterfaceItems.push_back(
             std::make_unique<CButton>(interface, "Two players", CCoord<>(0, 0), textColor, textHoverColor,
-                                      CCoord<>(0, basicFontSize), [=]()
+                                      CCoord<>(0, fontSize), [=]()
                                       { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME; }));
 
     itemSize = this->m_InterfaceItems.back()->GetSize();
@@ -59,7 +71,7 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
     // Settings button
     this->m_InterfaceItems.push_back(
             std::make_unique<CButton>(interface, "Settings", CCoord<>(0, 0), textColor, textHoverColor,
-                                      CCoord<>(0, basicFontSize), [=]()
+                                      CCoord<>(0, fontSize), [=]()
                                       { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_SETTINGS; }));
 
     itemSize = this->m_InterfaceItems.back()->GetSize();
@@ -69,7 +81,7 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
     // Exit button
     this->m_InterfaceItems.push_back(
             std::make_unique<CButton>(interface, "Exit", CCoord<>(0, 0), textColor, textHoverColor,
-                                      CCoord<>(0, basicFontSize), [=]()
+                                      CCoord<>(0, fontSize), [=]()
                                       { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_EXIT; }));
 
     itemSize = this->m_InterfaceItems.back()->GetSize();
@@ -78,7 +90,7 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
 
     // Footer
     this->m_InterfaceItems.push_back(
-            std::make_unique<CText>(interface, CCoord<>(0, 0), "Jaroslav Fikar 2020", CCoord<>(0, basicFontSize / 2.0),
+            std::make_unique<CText>(interface, CCoord<>(0, 0), "Jaroslav Fikar 2020", CCoord<>(0, fontSize / 2.0),
                                     SDL_Color{0, 0, 0, 255}));
 
     // Move footer in right-bottom corner

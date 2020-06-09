@@ -18,19 +18,18 @@ public:
      * @param size Item size. Set {0,0} to autosize. Set {0, X} or {X, 0} to autosize one dimension.
      * @param texturePath Path to texture.
      */
-    CText(CSDLInterface *interface, CCoord <>location, const std::string &text, CCoord <>size = {0, 0},
+    CText(CSDLInterface *interface, CCoord<> location, const std::string &text, CCoord<> size = {0, 0},
           SDL_Color color = {255, 255, 255, 255}
     ) : CInterfaceItem(location, size), m_Texture(NULL), m_Text(text)
     {
-        this->SetText(interface, text, color);
+        this->SetText(interface, text, size, color);
     }
 
     virtual ~CText()
     { SDL_DestroyTexture(this->m_Texture); }
 
     /* I dont want allow copying this object.
-    * Object contains pointers on C-structures and It is not easy to copy them.
-    */
+    * Object contains pointers on C-structures and It is not easy to copy them.*/
     CText(const CText &other) = delete;
 
     CText &operator=(const CText &other) = delete;
@@ -40,14 +39,16 @@ public:
      * @param interface Interface to be used.
      * @param text Text to be set.
      */
-    void SetText(CSDLInterface *interface, const std::string &text, SDL_Color color = {255, 255, 255, 255});
+    void SetText(CSDLInterface *interface, const std::string &text, CCoord<> size = {0, 0},
+                 SDL_Color color = {255, 255, 255, 255});
 
     /**
      * Change text color.
      * @param interface Interface to be used.
      * @param color Color to be set.
      */
-    void SetColor(CSDLInterface * interface, SDL_Color color);
+    void SetColor(CSDLInterface *interface, SDL_Color color)
+    { this->SetText(interface, this->m_Text, this->m_Size, color); }
 
     /**
      * Update item.

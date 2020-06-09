@@ -7,13 +7,15 @@
 
 #include <iostream>
 #include <fstream>
+#include <memory>
 #include "CSettings.h"
+#include "Messages.h"
 
 class CScoreSaver
 {
 public:
-    CScoreSaver(/*CSettings *settings*/)
-           /* : m_Settings(settings)*/
+    CScoreSaver(std::shared_ptr<CSettings> settings, const std::string &scoreFile = "score")
+            : m_Settings(std::move(settings)), m_ScoreFile(scoreFile)
     {}
 
     CScoreSaver(const CScoreSaver &other) = default;
@@ -22,8 +24,7 @@ public:
 
     ~CScoreSaver() = default;
 
-
-    unsigned int GetTopScore() const;
+    std::size_t GetTopScore() const;
 
     /**
      * Try save new top score in file if newscore is higher than old topscore.
@@ -32,6 +33,7 @@ public:
     bool TrySetTopScore(std::size_t newScore);
 
 protected:
-
+    std::shared_ptr<CSettings> m_Settings;
+    std::string m_ScoreFile;
 };
 

@@ -73,7 +73,7 @@ public:
      * @throws std::ios_base::failure If texture is not avaible.
      * @return Texture pointer.
      */
-    SDL_Texture *LoadTexture(const std::string file) const;
+    SDL_Texture *LoadTexture(const std::string & file) const;
 
     /**
      * Clear the current rendering target with the drawing color

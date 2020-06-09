@@ -7,6 +7,7 @@
 #include <vector>
 #include <memory>
 #include "CWindowManager.h"
+#include "../CScoreSaver.h"
 
 /** Class which manages menu rendering and user events. */
 class CMenuManager : public CWindowManager
@@ -28,6 +29,8 @@ public:
     {}
 
 protected:
+    std::unique_ptr<CScoreSaver> m_ScoreSaver;
+
     virtual void Update(int deltaTime) override ;
 
     virtual void UpdateEvents() override ;

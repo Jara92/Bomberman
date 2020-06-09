@@ -14,7 +14,8 @@ int CApplication::Run(int argc, char *argv[])
     try
     {
         interface->InitInterface();
-        EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_MENU;
+        EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME;
+        //EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_MENU;
 
         while (applicationStatus != EApplicationStatus::APPLICATION_STATUS_EXIT)
         {
@@ -63,6 +64,9 @@ std::shared_ptr <CSettings> CApplication::Init(int argc, char *argv[])
     }
     catch (...)
     { std::cerr << INVALID_INPUT_PARAMETERS << std::endl; }
+
+    // TODO REMOVE
+    debug = true;
 
 
     return std::make_shared<CSettings>(CCoord<unsigned int>(1150, 700),

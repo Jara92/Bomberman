@@ -48,11 +48,11 @@ Druhý hráč bude mít ovládání následující: Pohyb (IJKL), Položení bom
 
 Ovládání debug módu zatím není úplně specifikováno, protože debugovací funkce budou teprve doplněny.
 
-F1 - Zabij všechny příšery a bonusové body připiš hráči s nejméně body.
+F1 - Zabij všechny příšery a bonusové body připiš prvnímu hráči v poli.
 
 F2 - Znič všechny zdi.
 
-F3 - Přidej všem hráčům 10000 bodů.
+F3 - Přidej všem hráčům 1000 bodů.
 
 ...
 

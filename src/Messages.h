@@ -19,3 +19,5 @@ const char * const INVALID_ITEM = "Invalid item: ";
 const char * const ARGUMENT_OUT_OF_RANGE = "Argument out of range.";
 const char * const INVALID_INPUT_PARAMETERS = "Invalid input parameters.";
 const char * const INVALID_APPLICATION_STATE = "Invalid application state.";
+const char * const UNABLE_TO_OPEN_FILE = "Unable to open file.";
+const char * const CANNOT_WRITE_TO_FILE = "Cannot write to file.";
