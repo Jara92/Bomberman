@@ -138,12 +138,12 @@ void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
 /*====================================================================================================================*/
 bool CPlayer::LocationIsFree(CBoard *board) const
 {
-    double val = (1 - this->m_Speed);
+    double correction = (1 - this->m_Speed);
 
     if (!board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X, this->m_Location.m_Y), this) ||
-        !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + val, this->m_Location.m_Y), this) ||
-        !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X, this->m_Location.m_Y + val), this) ||
-        !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + val, this->m_Location.m_Y + val), this))
+        !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + correction, this->m_Location.m_Y), this) ||
+        !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X, this->m_Location.m_Y + correction), this) ||
+        !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + correction, this->m_Location.m_Y + correction), this))
     { return false; }
 
     return true;
@@ -155,7 +155,6 @@ void CPlayer::HandleInput(const Uint8 *keyState)
     // Handle input when the player is alive
     if (this->m_IsAlive && !this->m_LevelUp)
     {
-        // TODO change animation system. Animation setup should not be in Input method.
         // movement
         if (keyState[this->m_Controls->m_Up])
         {
@@ -205,7 +204,7 @@ void CPlayer::TryPlaceBomb(CBoard *board)
     if (this->m_ActiveBombs < this->m_MaxBombs)
     {
         board->PlaceBomb(this);
-        //this->m_ActiveBombs++; // TODO uncomment this
+        this->m_ActiveBombs++; // TODO uncomment this
     }
 }
 
@@ -215,7 +214,6 @@ void CPlayer::Kill()
     if (this->m_IsAlive)
     {
         this->m_Lives--;
-
         this->m_IsAlive = false;
     }
 }

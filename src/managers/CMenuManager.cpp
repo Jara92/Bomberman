@@ -11,8 +11,6 @@
 CMenuManager::CMenuManager(CSDLInterface *interface)
         : CWindowManager(interface)
 {
-    this->m_ScoreSaver = std::make_unique<CScoreSaver>(interface->GetSettings());
-
     // Set menu window size.
     this->m_Interface->SetMenuScreenSize();
     CCoord<unsigned int> windowSize = this->m_Interface->GetWindowSize();
@@ -105,18 +103,6 @@ EApplicationStatus CMenuManager::Run()
     }
 
     return EApplicationStatus::APPLICATION_STATUS_EXIT;
-}
-
-/*====================================================================================================================*/
-void CMenuManager::Update(int deltaTime)
-{
-    CWindowManager::Update(deltaTime);
-}
-
-/*====================================================================================================================*/
-void CMenuManager::UpdateEvents()
-{
-    CWindowManager::UpdateEvents();
 }
 
 /*====================================================================================================================*/

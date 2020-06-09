@@ -29,12 +29,6 @@ public:
     {}
 
 protected:
-    std::unique_ptr<CScoreSaver> m_ScoreSaver;
-
-    virtual void Update(int deltaTime) override ;
-
-    virtual void UpdateEvents() override ;
-
     virtual void ProcessEvent(SDL_Event & e) override ;
 
     virtual void Draw() const override ;
