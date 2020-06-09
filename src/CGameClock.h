@@ -45,7 +45,7 @@ public:
 
         // Check ticks validity because tick value wraps if the program runs for more than ~49 days.
         if (currentTime >= UINT32_MAX - 100)
-        { throw std::runtime_error(MAXIMUM_RUNTIME); }
+        { throw std::runtime_error(MESSAGE_MAXIMUM_RUNTIME); }
 
         this->m_DeltaTime = static_cast<int>(currentTime - this->m_LastTicks);
 

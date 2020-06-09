@@ -28,7 +28,7 @@ public:
 
     CCollectible(const CCollectible &other) = default;
 
-    CCollectible &operator=(const CCollectible &other) = delete;
+    CCollectible &operator=(const CCollectible &other) = default;
 
     virtual ~CCollectible() = default;
 

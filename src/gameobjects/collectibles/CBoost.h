@@ -44,7 +44,7 @@ public:
 
     CBoost(const CBoost &other) = default;
 
-    CBoost &operator=(const CBoost &other) = delete;
+    CBoost &operator=(const CBoost &other) = default;
 
     virtual ~CBoost() = default;
 

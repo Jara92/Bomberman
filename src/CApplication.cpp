@@ -37,14 +37,14 @@ int CApplication::Run(int argc, char *argv[])
     catch (std::exception &ex)
     {
         std::cerr << ex.what() << std::endl;
-        interface->ShowMessageBox(SDL_MESSAGEBOX_ERROR, UNKNOWN_ERROR, ex.what());
+        interface->ShowMessageBox(SDL_MESSAGEBOX_ERROR, MESSAGE_UNKNOWN_ERROR, ex.what());
 
         return 1;
     }
     catch (...)
     {
-        std::cerr << UNKNOWN_ERROR << std::endl;
-        interface->ShowMessageBox(SDL_MESSAGEBOX_ERROR, UNKNOWN_ERROR, UNKNOWN_ERROR);
+        std::cerr << MESSAGE_UNKNOWN_ERROR << std::endl;
+        interface->ShowMessageBox(SDL_MESSAGEBOX_ERROR, MESSAGE_UNKNOWN_ERROR, MESSAGE_UNKNOWN_ERROR);
 
         return 1;
     }
@@ -63,13 +63,13 @@ std::shared_ptr <CSettings> CApplication::Init(int argc, char *argv[])
         { debug = true; }
     }
     catch (...)
-    { std::cerr << INVALID_INPUT_PARAMETERS << std::endl; }
+    { std::cerr << MESSAGE_INVALID_INPUT_PARAMETERS << std::endl; }
 
     // TODO REMOVE
     debug = true;
 
 
-    return std::make_shared<CSettings>(CCoord<unsigned int>(1150, 700),
+    return std::make_shared<CSettings>(CCoord<unsigned int>(1495, 910),
                                        CCoord<unsigned int>(512, 512),
                                        CCoord<unsigned int>(0, 1), 60, true, debug);
 }
@@ -91,5 +91,5 @@ CApplication::GetWindowManagerByState(CSDLInterface *interface, EApplicationStat
             break;
     }
 
-    throw std::invalid_argument(INVALID_APPLICATION_STATE);
+    throw std::invalid_argument(MESSAGE_INVALID_APPLICATION_STATE);
 }

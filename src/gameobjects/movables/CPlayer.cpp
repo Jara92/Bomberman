@@ -153,7 +153,7 @@ bool CPlayer::LocationIsFree(CBoard *board) const
 void CPlayer::HandleInput(const Uint8 *keyState)
 {
     // Handle input when the player is alive
-    if (this->m_IsAlive)
+    if (this->m_IsAlive && !this->m_LevelUp)
     {
         // TODO change animation system. Animation setup should not be in Input method.
         // movement
@@ -225,6 +225,8 @@ void CPlayer::Reset()
 {
     CMovable::Reset();
     this->m_ActiveBombs = 0;
+    this->m_IsAlive = true;
+    this->m_LevelUp = false;
 }
 
 

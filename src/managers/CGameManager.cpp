@@ -214,14 +214,16 @@ void CGameManager::UpdateEvents()
                 { this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER; }
 
                 this->m_GameEndDelay.Stop();
-            }
+            } else if ((*(player.base()))->GetLevelUp())
+            { this->m_NextGameStatus = EGameStatus::GAMESTATUS_NEXT_ROUND; }
         }
     }
 
     // Set new callback when timer is done
-    if (this->m_GameStatusDelay.Done())
+    if (this->m_GameStatusDelay.Done() && this->m_GameStatus != this->m_NextGameStatus)
     {
         std::function<void(void)> callBack;
+        int delay = CGameManager::GAME_STATUS_DELAY;
 
         // Create callback functions for special states.
         switch (this->m_NextGameStatus)
@@ -229,6 +231,7 @@ void CGameManager::UpdateEvents()
             case EGameStatus::GAMESTATUS_NEXT_ROUND:
                 callBack = [=]()
                 { this->NextRound(); };
+                delay = 150;
                 break;
             case EGameStatus::GAMESTATUS_ROUND_OVER:
                 callBack = [=]()
@@ -245,7 +248,7 @@ void CGameManager::UpdateEvents()
         }
 
         // Set new callback.
-        this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_DELAY, callBack);
+        this->m_GameStatusDelay.Run(delay, callBack);
     }
 }
 
@@ -323,9 +326,7 @@ void CGameManager::GlobalInput(const Uint8 *input)
 
     // Pause game.
     if (input[SDL_SCANCODE_ESCAPE])
-    {
-
-    }
+    {}
 
     // Debug options
     if (this->m_Interface->GetSettings()->GetDebugMode())

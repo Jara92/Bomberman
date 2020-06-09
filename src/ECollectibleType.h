@@ -26,5 +26,7 @@ enum class ECollectibleType
     /** Player achieves score bonus. */
     COLLECTIBLE_TYPE_SCORE_BONUS = 7,
     /** Player will be moved in a next level. */
-    COLLECTIBLE_TYPE_DOOR = 8
+    COLLECTIBLE_TYPE_DOOR = 8,
+    /** Player will achieve  */
+    COLLECTIBLE_TYPE_LIVE_BONUS = 9
 };

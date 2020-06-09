@@ -14,12 +14,12 @@ std::size_t CScoreSaver::GetTopScore() const
 
         // Is file reader ok?
         if (!fileReader || !fileReader.is_open() || fileReader.eof() || fileReader.bad())
-        { throw std::ios::failure(UNABLE_TO_OPEN_FILE); }
+        { throw std::ios::failure(MESSAGE_UNABLE_TO_OPEN_FILE); }
 
         std::size_t topScore = 0;
 
         if (!(fileReader >> topScore))
-        { throw std::ios::failure(INVALID_ARGUMENT); }
+        { throw std::ios::failure(MESSAGE_INVALID_ARGUMENT); }
 
         fileReader.close();
 
@@ -45,10 +45,10 @@ bool CScoreSaver::TrySetTopScore(std::size_t newScore)
 
             // Is file reader ok?
             if (!fileWriter || !fileWriter.is_open() || fileWriter.eof() || fileWriter.bad())
-            { throw std::ios::failure(UNABLE_TO_OPEN_FILE); }
+            { throw std::ios::failure(MESSAGE_UNABLE_TO_OPEN_FILE); }
 
             if (!(fileWriter << newScore))
-            { throw std::ios::failure(CANNOT_WRITE_TO_FILE); }
+            { throw std::ios::failure(MESSAGE_CANNOT_WRITE_TO_FILE); }
         }
 
         return true;

@@ -79,6 +79,9 @@ public:
     void IncreseExplosionRadius()
     { this->m_ExplosionRadius++; }
 
+    void IncreseLiveCount()
+    {this->m_Lives++;}
+
     void DecreseExplosionRadius()
     {
         // Minimum value is 1
