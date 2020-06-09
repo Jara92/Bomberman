@@ -62,9 +62,13 @@ bool CBoard::IsPassable(CCoord<unsigned int> coord, const CPlayer *player)
 }
 
 /*====================================================================================================================*/
-void CBoard::PlaceBomb(CPlayer *player)
+bool CBoard::PlaceBomb(CPlayer *player)
 {
     CCoord<unsigned int> location = player->GetLocationCell();
+
+    // We do not want to plant bombs on a wall.
+    if (this->m_Map[location.m_X][location.m_Y] != nullptr)
+    { return false; }
 
     int delay = 2000;
     if (player->GetRemoteExplosion())
@@ -77,6 +81,7 @@ void CBoard::PlaceBomb(CPlayer *player)
 
         this->m_Bombs.insert({location.ToUnsignedInt(), bomb});
     }
+    return true;
 }
 
 /*====================================================================================================================*/

@@ -163,8 +163,12 @@ void CGameManager::Update(int deltaTime)
                                        CCoord<>(0, this->m_DefaultFontSize), color);
         }
 
-        this->m_FPSText->SetText(this->m_Interface, "FPS: " + std::to_string(this->m_Clock.GetFPS()),
-                                 CCoord<>(0, this->m_DefaultFontSize / 2));
+        // Update FPS once per 500 ms
+        if(this->m_Clock.GetElapsedTicks() % 500 == 0)
+        {
+            this->m_FPSText->SetText(this->m_Interface, "FPS: " + std::to_string(this->m_Clock.GetFPS()),
+                                     CCoord<>(0, this->m_DefaultFontSize / 2));
+        }
     }
 
     this->m_GameStatusDelay.Tick(deltaTime);

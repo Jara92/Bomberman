@@ -82,8 +82,9 @@ public:
     /**
      * Place bomb in game board.
      * @param player Bomb owner.
+     * @return True - Success.
      */
-    void PlaceBomb(CPlayer *player);
+    bool PlaceBomb(CPlayer *player);
 
     /**
      * Detonate bombs owned by player

@@ -46,9 +46,6 @@ void CPlayer::VerticalMove(CBoard *board, int deltaTime)
         // This handles problems with turning. When the player is close to turn I will try to center his position to allow him turn this direction.
         if (m_HorizontalMovingDirection == EDirection::DIRECTION_NONE)
         { this->HorizontalCenter(board, deltaTime, static_cast<int>(this->m_VerticalMovingDirection)); }
-            // Set old location
-        else
-        { this->m_Location = oldLocation; }
     }
 }
 
@@ -66,9 +63,6 @@ void CPlayer::HorizontalMove(CBoard *board, int deltaTime)
         // This handles problems with turning. When the player is close to turn I will try to center his position to allow him turn this direction.
         if (m_VerticalMovingDirection == EDirection::DIRECTION_NONE)
         { this->VerticalCenter(board, deltaTime, static_cast<int>(this->m_HorizontalMovingDirection)); }
-            // Set old location
-        else
-        { this->m_Location = oldLocation; }
     }
 }
 
@@ -191,8 +185,8 @@ void CPlayer::TryPlaceBomb(CBoard *board)
 {
     if (this->m_ActiveBombs < this->m_MaxBombs)
     {
-        board->PlaceBomb(this);
-        this->m_ActiveBombs++; // TODO uncomment this
+        if (board->PlaceBomb(this))
+        { this->m_ActiveBombs++; } // TODO uncomment this
     }
 }
 

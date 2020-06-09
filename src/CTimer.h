@@ -33,6 +33,7 @@ public:
 
         bool done = this->Done();
 
+        // We want to call callback just once.
         if (done && !m_CallBackCalled)
         {
             this->m_CallBackCalled = true;

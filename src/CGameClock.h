@@ -75,6 +75,14 @@ public:
         return 0;
     }
 
+    Uint32 GetElapsedTicks() const
+    {
+        if (this->m_LastTicks >= UINT32_MAX - 100)
+        { throw std::runtime_error(MESSAGE_MAXIMUM_RUNTIME); }
+
+        return this->m_LastTicks;
+    }
+
 protected:
     unsigned int m_TicksPerFrame;
     Uint32 m_LastTicks;
