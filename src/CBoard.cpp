@@ -344,7 +344,7 @@ void CBoard::Update(int deltaTime)
 }
 
 /*====================================================================================================================*/
-void CBoard::UpdatePhysics()
+void CBoard::UpdatePhysicEvents()
 {
     for (auto player = this->m_Players.begin(); player != this->m_Players.end(); player++)
     {

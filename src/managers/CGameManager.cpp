@@ -165,7 +165,6 @@ void CGameManager::Update(int deltaTime)
 
         this->m_FPSText->SetText(this->m_Interface, "FPS: " + std::to_string(this->m_Clock.GetFPS()),
                                  CCoord<>(0, this->m_DefaultFontSize / 2));
-
     }
 
     this->m_GameStatusDelay.Tick(deltaTime);
@@ -186,7 +185,7 @@ void CGameManager::UpdateEvents()
     for (std::vector<CPlayer *>::size_type i = 0; i < this->m_Board->m_Players.size(); i++)
     { this->m_Board->m_Players[i]->HandleInput(keystate); }
 
-    this->m_Board->UpdatePhysics();
+    this->m_Board->UpdatePhysicEvents();
 
     // If game is running.
     if (this->m_GameStatus == EGameStatus::GAME_STATUS_RUNNING && this->m_GameStatus == this->m_NextGameStatus)
