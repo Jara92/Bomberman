@@ -4,9 +4,7 @@
 
 #pragma once
 
-/**
- * Boost types which can be collected by the player.
- */
+/** Boost types which can be collected by the player. */
 enum class ECollectibleType
 {
     /** Adds speed to the player. */

@@ -7,16 +7,10 @@
 #include "CPlayer.h"
 #include "../../CBoard.h"
 
-CPlayer::~CPlayer()
-{
-    delete this->m_Controls;
-}
-
 /*====================================================================================================================*/
 void CPlayer::Update(CBoard *board, int deltaTime)
 {
     CMovable::Update(board, deltaTime);
-    //this->Animate(deltaTime);
 
     // Movement in vertical and horizontal axis
     this->HorizontalMove(board, deltaTime);
@@ -27,61 +21,54 @@ void CPlayer::Update(CBoard *board, int deltaTime)
     { this->TryPlaceBomb(board); }
 
     // Detonation action
-    if (this->m_IsDetonating && this->m_DetanatingAvaible && this->m_RemoteExplosion)
+    if (this->m_IsDetonating && this->m_DetonatingAvaible && this->m_RemoteExplosion)
     {
-        this->m_DetanatingAvaible = false;
+        this->m_DetonatingAvaible = false;
         board->DetonateBombs(this);
     }
 
     // Clean input
-    this->m_IsDetonating = false;
-    this->m_IsPlanting = false;
-    this->m_VerticalMovingDirection = EDirection::DIRECTION_NONE;
-    this->m_HorizontalMovingDirection = EDirection::DIRECTION_NONE;
+    this->m_IsDetonating = this->m_IsPlanting = false;
+    this->m_VerticalMovingDirection = this->m_HorizontalMovingDirection = EDirection::DIRECTION_NONE;
 }
 
 /*====================================================================================================================*/
 void CPlayer::VerticalMove(CBoard *board, int deltaTime)
 {
-    // Save old location
     CCoord<> oldLocation = this->m_Location;
-
-    // Move
     this->m_Location.m_Y += (this->m_Speed * static_cast<int>(this->m_VerticalMovingDirection)) * deltaTime;
-    //std::cout << "Step size " << (this->m_Speed * static_cast<int>(this->m_VerticalMovingDirection)) * deltaTime << std::endl;
 
     // Check collisions
     if (!this->LocationIsFree(board))
     {
-        // Set old location
-        this->m_Location = oldLocation;
-
+        this->m_Location = oldLocation;//return;
         // Try center horizontal position if horizontal direction is none
         // This handles problems with turning. When the player is close to turn I will try to center his position to allow him turn this direction.
         if (m_HorizontalMovingDirection == EDirection::DIRECTION_NONE)
         { this->HorizontalCenter(board, deltaTime, static_cast<int>(this->m_VerticalMovingDirection)); }
+            // Set old location
+        else
+        { this->m_Location = oldLocation; }
     }
 }
 
 /*====================================================================================================================*/
 void CPlayer::HorizontalMove(CBoard *board, int deltaTime)
 {
-    // Save old location
     CCoord<> oldLocation = this->m_Location;
-
-    // Move
     this->m_Location.m_X += (this->m_Speed * static_cast<int>(this->m_HorizontalMovingDirection)) * deltaTime;
 
     // Check collisions
     if (!this->LocationIsFree(board))
     {
-        // Set old location
-        this->m_Location = oldLocation;
-
+        this->m_Location = oldLocation;//return;
         // Try center horizontal position if horizontal direction is none
         // This handles problems with turning. When the player is close to turn I will try to center his position to allow him turn this direction.
         if (m_VerticalMovingDirection == EDirection::DIRECTION_NONE)
         { this->VerticalCenter(board, deltaTime, static_cast<int>(this->m_HorizontalMovingDirection)); }
+            // Set old location
+        else
+        { this->m_Location = oldLocation; }
     }
 }
 
@@ -89,7 +76,7 @@ void CPlayer::HorizontalMove(CBoard *board, int deltaTime)
 void CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
 {
     // Get decimal part of m_Location.m_Y
-    double decPart, intpart;
+  /*  double decPart, intpart;
     decPart = modf(this->m_Location.m_Y, &intpart);
 
     if ((decPart >= CPlayer::MIN_TURNING_VALUE) &&
@@ -107,14 +94,14 @@ void CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
     {
         this->m_Location.m_Y = std::max(this->m_Location.m_Y - this->m_Speed * deltaTime,
                                         std::floor(this->m_Location.m_Y));
-    }
+    }*/
 }
 
 /*====================================================================================================================*/
 void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
 {
     // Get decimal part of m_Location.m_X
-    double decPart, intpart;
+   /* double decPart, intpart;
     decPart = modf(this->m_Location.m_X, &intpart);
 
     if ((decPart >= CPlayer::MAX_TURNING_VALUE) &&
@@ -132,7 +119,7 @@ void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
     {
         this->m_Location.m_X = std::max(this->m_Location.m_X - this->m_Speed * deltaTime,
                                         std::floor(this->m_Location.m_X));
-    }
+    }*/
 }
 
 /*====================================================================================================================*/
@@ -143,7 +130,8 @@ bool CPlayer::LocationIsFree(CBoard *board) const
     if (!board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X, this->m_Location.m_Y), this) ||
         !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + correction, this->m_Location.m_Y), this) ||
         !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X, this->m_Location.m_Y + correction), this) ||
-        !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + correction, this->m_Location.m_Y + correction), this))
+        !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + correction, this->m_Location.m_Y + correction),
+                           this))
     { return false; }
 
     return true;
@@ -187,14 +175,14 @@ void CPlayer::HandleInput(const Uint8 *keyState)
         { this->m_PlantingAvaible = true; }
 
         // Detonating action
-        if (keyState[this->m_Controls->m_Detonation] && this->m_DetanatingAvaible)
+        if (keyState[this->m_Controls->m_Detonation] && this->m_DetonatingAvaible)
         {
-            this->m_DetanatingAvaible = false;
+            this->m_DetonatingAvaible = false;
             this->m_IsDetonating = true;
         }
             // Detonating is not avaible until the button is released
         else if (!keyState[this->m_Controls->m_Detonation])
-        { this->m_DetanatingAvaible = true; }
+        { this->m_DetonatingAvaible = true; }
     }
 }
 

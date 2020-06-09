@@ -44,9 +44,9 @@ bool CBoard::IsPassable(CCoord<unsigned int> coord, const CPlayer *player)
         coord.m_Y < 0 || coord.m_Y >= CBoard::m_BoardSize.m_Y)
     { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
 
-    CGameObject *gameObject = this->m_Map[static_cast<int>(floor(coord.m_X))][static_cast<int>( floor(coord.m_Y))];
+    CGameObject *gameObject = this->m_Map[coord.m_X][coord.m_Y];
 
-    if (gameObject && gameObject->IsAlive())
+    if (gameObject && gameObject->IsAlive() && player->IsColiding(gameObject))
     { return false; }
 
     // Search for bombs in location.

@@ -70,7 +70,7 @@ public:
      * @param coord Position
      * @return True - Totaly free
      */
-    bool PositionFree(CCoord <unsigned int>coord);
+    bool PositionFree(CCoord<unsigned int> coord);
 
     /**
      * Is area around players free?

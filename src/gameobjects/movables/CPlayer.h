@@ -25,19 +25,21 @@ public:
      * @param speed Object moving speed.
      * @param lives Object starting lives.
     */
-    explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord <>location, CCoord<> size = CCoord<>(1, 1),
+    explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size = CCoord<>(1, 1),
                      CControls *controls = nullptr,
                      double speed = 0.0025, int lives = 3)
             : CMovable(std::move(texturePack), size, location, speed, false, lives), m_Score(0), m_ExplosionRadius(1),
               m_MaxBombs(1), m_ActiveBombs(0), m_RemoteExplosion(false), m_BombPass(false), m_FireImmunity(false),
-              m_PlantingAvaible(false), m_IsPlanting(false), m_DetanatingAvaible(false), m_IsDetonating(false),
+              m_PlantingAvaible(false), m_IsPlanting(false), m_DetonatingAvaible(false), m_IsDetonating(false),
               m_LevelUp(false), m_Controls(controls)
     {/*this->m_Lives = 0;*/}
 
     CPlayer(const CPlayer &other) = default;
+
     CPlayer &operator=(const CPlayer &other) = default;
 
-    virtual ~CPlayer();
+    virtual ~CPlayer()
+    { delete this->m_Controls; }
 
     /**
      * Updates object state using deltatime.
@@ -80,7 +82,7 @@ public:
     { this->m_ExplosionRadius++; }
 
     void IncreseLiveCount()
-    {this->m_Lives++;}
+    { this->m_Lives++; }
 
     void DecreseExplosionRadius()
     {
@@ -173,7 +175,7 @@ protected:
      =====================*/
     bool m_PlantingAvaible;
     bool m_IsPlanting;
-    bool m_DetanatingAvaible;
+    bool m_DetonatingAvaible;
     bool m_IsDetonating;
     bool m_LevelUp;
 

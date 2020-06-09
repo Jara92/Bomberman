@@ -67,7 +67,7 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
 
     std::shared_ptr<CTexturePack> texturePack = std::make_shared<CTexturePack>(this->m_Interface, textures);
     // create reference wall to make copies
-    CWall wall(texturePack);
+    CWall wall(texturePack, CCoord<>(1,1));
 
     // init 2D array
     std::vector<std::vector<CWall *>> map;
@@ -85,6 +85,9 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
     { throw std::ios::failure(MESSAGE_MAP_NOT_FOUND); }
 
     unsigned char input = '\0';
+
+    // FIXME problem kdyz je dlouha mapa
+    // FIXME NĚKDY SE NEZOBRAZI VSECHNY COLLECTIBLES
     while ((fileReader >> std::noskipws >> input))
     {
         if (!fileReader.eof())
@@ -94,7 +97,11 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
             {
                 // i-bite=1 -> Build wall on current position
                 if (input >> (7 - i) & 1)
-                { map[static_cast<int>(col * 8 + i)][row] = new CWall(wall); }
+                {
+                    CWall * newWall = new CWall(wall);
+                    newWall->SetLocation(CCoord<>((col * 8 + i), row));
+                    map[static_cast<int>(col * 8 + i)][row] = newWall;
+                }
             }
 
             // Increment col with every readed byte.
@@ -212,12 +219,7 @@ void CLevelLoader::GenerateObstacles(std::shared_ptr<CBoard> &board, size_t leve
         { random = this->GetRandomBoardLocation(board); }
         while (!board->PositionFree(random) || !board->PlayersAreaFree(random));
 
-        board->m_Map[static_cast<int>(random.m_X)][static_cast<int>(random.m_Y)] = new CWall(texturePack,
-                                                                                             CCoord<>(1, 1),
-                                                                                             CCoord<>(
-                                                                                                     static_cast<int>(random.m_X),
-                                                                                                     static_cast<int>(random.m_Y)),
-                                                                                             true, nullptr);
+        board->m_Map[random.m_X][random.m_Y] = new CWall(texturePack, CCoord<>(1, 1), random.ToDouble(), true, nullptr);
     }
 }
 
