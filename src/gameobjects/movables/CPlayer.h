@@ -150,8 +150,11 @@ public:
     bool GetBombPass() const
     { return this->m_BombPass; }
 
-    bool GetFireImmunity() const
+    bool GetFireImunity() const
     { return this->m_FireImmunity; }
+
+    bool GetRemoteExplosion() const
+    {return this->m_RemoteExplosion;}
 
     unsigned int GetExplosionRadius() const
     { return this->m_ExplosionRadius; }

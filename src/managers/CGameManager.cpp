@@ -150,9 +150,8 @@ void CGameManager::Update(int deltaTime)
 
         if (this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
         {
-
             SDL_Color color = {255, 255, 255, 255};
-            if (this->m_Board->m_Players[0]->GetLives() < 0)
+            if (this->m_Board->m_Players[0]->GetLives() <= 0)
             { color = {128, 0, 0, 255}; }
 
             this->m_ScoreText->SetText(this->m_Interface,
@@ -196,17 +195,17 @@ void CGameManager::UpdateEvents()
         for (auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
         {
             // IF player is dead.
-            if ((*(player.base())) && !(*(player.base()))->IsAlive())
+            if ((*(player)) && !(*(player))->IsAlive())
             {
                 // If player is not totally dead - Round over.
-                if ((*(player.base()))->GetLives() >= 0)
+                if ((*(player))->GetLives() > 0)
                 { this->m_NextGameStatus = EGameStatus::GAME_STATUS_ROUND_OVER; }
                     // Player is totally dead - Game over.
                 else
                 { this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER; }
 
                 this->m_GameEndDelay.Stop();
-            } else if ((*(player.base()))->GetLevelUp())
+            } else if ((*(player))->GetLevelUp())
             { this->m_NextGameStatus = EGameStatus::GAME_STATUS_NEXT_ROUND; }
         }
     }
@@ -248,13 +247,13 @@ void CGameManager::KillAllPlayers()
     // Kill all players.
     for (auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
     {
-        (*(player.base()))->Kill();
+        (*(player))->Kill();
 
         // Player is totally dead - game over.
-        if ((*(player.base())) && (*(player.base()))->GetLives() < 0)
+        if ((*(player)) && (*(player))->GetLives() <= 0)
         { this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER; }
             // Player is not totally dead - round over.
-        else if ((*(player.base())) && (*(player.base()))->GetLives() >= 0)
+        else if ((*(player)) && (*(player))->GetLives() > 0)
         { this->m_NextGameStatus = EGameStatus::GAME_STATUS_ROUND_OVER; }
     }
 }

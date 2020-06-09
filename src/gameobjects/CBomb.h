@@ -21,15 +21,24 @@ public:
      * @param size Object size.
      * @param location Object location.
      * @param owner Object owner.
-     * @param explosionDelay Time to explode. Set 0 to activate remote explosion (the bomb will explode only when player trigger explosion)
+     * @param explosionDelay Time to explode.
+     * @param remoteTrigger Must this bomb be triggered to explode by the player?
      */
-    CBomb(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1), CCoord<> location = CCoord<>(0,0), CPlayer *owner = nullptr,
-          unsigned int explosionDelay = 2000)
+    CBomb(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1), CCoord<> location = CCoord<>(0, 0),
+          CPlayer *owner = nullptr,
+          int explosionDelay = 2000, bool remoteTrigger = false)
             : CGameObject(std::move(texturePack), size,
                           location, false), m_Owner(owner), m_IsPassableForOwner(
             true), // Bomb is not passable, but... For owner is passable until the player exits the area of this bomb.
-              m_ExplosionDelay(explosionDelay), m_ExplosionCounter(0)
-    { }
+              m_RemoteTrigger(remoteTrigger), m_IsTriggered(false), m_ExplosionDelay(explosionDelay)
+    {
+        // Set auto explosion timer.
+        if (!this->m_RemoteTrigger)
+        {
+            this->m_ExplosionTimer.Run(explosionDelay, [=](void)
+            { this->m_IsTriggered = true; });
+        }
+    }
 
     CBomb(const CBomb &other) = default;
 
@@ -61,10 +70,12 @@ public:
      * @param board
      */
     void Explode(CBoard *board);
+
 protected:
     CPlayer *m_Owner;
     /** Every bomb is passable for owner until the player left bombs cell. */
-    bool m_IsPassableForOwner;
-    unsigned int m_ExplosionDelay, m_ExplosionCounter;
+    bool m_IsPassableForOwner, m_RemoteTrigger, m_IsTriggered;
+    int m_ExplosionDelay;
+    CTimer m_ExplosionTimer;
 };
 

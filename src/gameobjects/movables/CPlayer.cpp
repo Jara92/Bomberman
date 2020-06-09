@@ -21,7 +21,7 @@ void CPlayer::Update(CBoard *board, int deltaTime)
     { this->TryPlaceBomb(board); }
 
     // Detonation action
-    if (this->m_IsDetonating && this->m_DetonatingAvaible && this->m_RemoteExplosion)
+    if (this->m_IsDetonating)
     {
         this->m_DetonatingAvaible = false;
         board->DetonateBombs(this);
@@ -76,7 +76,7 @@ void CPlayer::HorizontalMove(CBoard *board, int deltaTime)
 void CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
 {
     // Get decimal part of m_Location.m_Y
-  /*  double decPart, intpart;
+    double decPart, intpart;
     decPart = modf(this->m_Location.m_Y, &intpart);
 
     if ((decPart >= CPlayer::MIN_TURNING_VALUE) &&
@@ -94,14 +94,14 @@ void CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
     {
         this->m_Location.m_Y = std::max(this->m_Location.m_Y - this->m_Speed * deltaTime,
                                         std::floor(this->m_Location.m_Y));
-    }*/
+    }
 }
 
 /*====================================================================================================================*/
 void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
 {
     // Get decimal part of m_Location.m_X
-   /* double decPart, intpart;
+    double decPart, intpart;
     decPart = modf(this->m_Location.m_X, &intpart);
 
     if ((decPart >= CPlayer::MAX_TURNING_VALUE) &&
@@ -119,7 +119,7 @@ void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
     {
         this->m_Location.m_X = std::max(this->m_Location.m_X - this->m_Speed * deltaTime,
                                         std::floor(this->m_Location.m_X));
-    }*/
+    }
 }
 
 /*====================================================================================================================*/

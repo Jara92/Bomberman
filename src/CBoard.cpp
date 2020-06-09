@@ -44,15 +44,14 @@ bool CBoard::IsPassable(CCoord<unsigned int> coord, const CPlayer *player)
         coord.m_Y < 0 || coord.m_Y >= CBoard::m_BoardSize.m_Y)
     { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
 
-    CGameObject *gameObject = this->m_Map[coord.m_X][coord.m_Y];
+    CWall *wall = this->m_Map[coord.m_X][coord.m_Y];
 
-    if (gameObject && gameObject->IsAlive() && player->IsColiding(gameObject))
+    if (wall && wall->IsAlive() && (!wall->IsDestructible() || !player->GetWallPass()))
     { return false; }
 
     // Search for bombs in location.
-    auto bomb = this->m_Bombs.find(
-            CCoord<unsigned int>(static_cast<int>(floor(coord.m_X)), static_cast<int>(floor(coord.m_Y))));
-    if (bomb != this->m_Bombs.end() && bomb->second && player->IsColiding(bomb->second))
+    auto bomb = this->m_Bombs.find(coord);
+    if (bomb != this->m_Bombs.end() && bomb->second && !player->GetBombPass() && player->IsColiding(bomb->second))
     {
         // Player is not owner or the bomb is not passable for owner
         if (bomb->second->GetOwner() != player || !bomb->second->IsPassableForOwner())
@@ -67,12 +66,14 @@ void CBoard::PlaceBomb(CPlayer *player)
 {
     CCoord<unsigned int> location = player->GetLocationCell();
 
+    int delay = 2000;
+    if (player->GetRemoteExplosion())
+    { delay = 100; }
     // If this location is free.
     if (this->m_Bombs.find(location) == this->m_Bombs.end() && this->m_Fires.find(location) == this->m_Fires.end())
     {
-        CBomb *bomb = new CBomb(this->m_BombObjectTexturePack,
-                                this->m_BombObjectTexturePack->GetTextureSize().ToDouble(), location.ToDouble(),
-                                player);
+        CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, this->m_BombObjectTexturePack->GetTextureSize(),
+                                location.ToDouble(), player, delay, player->GetRemoteExplosion());
 
         this->m_Bombs.insert({location.ToUnsignedInt(), bomb});
     }
@@ -131,7 +132,7 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord<int> direction, unsigned in
         { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
 
         // Target exists and its not destructible.
-        CWall *target = this->m_Map[static_cast<int>(locationToExplode.m_X)][static_cast<int>(locationToExplode.m_Y)];
+        CWall *target = this->m_Map[locationToExplode.m_X][locationToExplode.m_Y];
         if ((target && !target->IsDestructible()))
         { break; /* Leave for loop - The wave was stopped by this indestructible wall.*/        }
 
@@ -142,7 +143,7 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord<int> direction, unsigned in
             if (target->TryDestroy(i))
             {
                 delete target;
-                this->m_Map[static_cast<int>(locationToExplode.m_X)][static_cast<int>(locationToExplode.m_Y)] = nullptr;
+                this->m_Map[locationToExplode.m_X][locationToExplode.m_Y] = nullptr;
                 wallDestroyed = true;
             } else
             { break; /* Leave for loop - The wave was stopped by this wall.*/            }
@@ -347,30 +348,28 @@ void CBoard::UpdatePhysics()
 {
     for (auto player = this->m_Players.begin(); player != this->m_Players.end(); player++)
     {
-        if (player.base() && (*(player.base()))->IsAlive())
+        if ((*(player)) && (*(player))->IsAlive())
         {
             // Fire collision
             for (auto fire = this->m_Fires.begin(); fire != this->m_Fires.end(); fire++)
             {
-                // Kill player if player is valid pointer and colliding fire.
-                if (fire->second && (*(player.base()))->IsColiding(fire->second))
+                // Kill player if player is colliding fire and do he does not have fire imunity.
+                if (fire->second && !(*(player))->GetFireImunity() && (*(player))->IsColiding(fire->second))
                 {
-                    std::cout << std::chrono::duration_cast<std::chrono::seconds>(
-                            std::chrono::system_clock::now().time_since_epoch()).count() << " Player is killed."
-                              << std::endl;
-                    (*(player.base()))->Kill();
-
+                    (*(player))->Kill();
                     return; // player is dead and he cant pickup collectible items.
                 }
             }
 
             // Collectible collision
-            for (auto collect = this->m_Collectibles.begin(); collect != this->m_Collectibles.end(); collect++)
+            for (auto collectible = this->m_Collectibles.begin();
+                 collectible != this->m_Collectibles.end(); collectible++)
             {
-                if (collect->second && (*(player.base()))->IsColiding(collect->second))
+                if (collectible->second && collectible->second->IsVisible() &&
+                    (*(player))->IsColiding(collectible->second))
                 {
                     // Polymorphic call
-                    collect->second->Apply((*(player.base()))); // Apply item
+                    collectible->second->Apply((*(player))); // Apply item
                 }
             }
         }
@@ -442,7 +441,7 @@ bool CBoard::PositionFree(CCoord<unsigned int> coord)
     { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
 
     // Check walls
-    if (this->m_Map[static_cast<int>(coord.m_X)][static_cast<int>(coord.m_Y)] != nullptr ||
+    if (this->m_Map[coord.m_X][coord.m_Y] != nullptr ||
         this->m_Bombs.find(coord) != this->m_Bombs.end() ||
         this->m_Fires.find(coord) != this->m_Fires.end() ||
         this->m_Collectibles.find(coord) != this->m_Collectibles.end())
