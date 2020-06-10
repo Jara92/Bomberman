@@ -55,8 +55,7 @@ CGameManager::CGameManager(CSDLInterface *interface)
     this->m_RoundOverText->SetLocation(
             CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0), (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0)));
 
-    this->m_NextRoundText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0),
-                                                    "Round " + std::to_string(this->m_Level) + "!",
+    this->m_NextRoundText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "Round X!",
                                                     CCoord<>(0, this->m_DefaultFontSize * 3));
     itemSize = this->m_NextRoundText->GetSize();
     this->m_NextRoundText->SetLocation(
@@ -162,13 +161,8 @@ void CGameManager::Update(int deltaTime)
                                        "Lives: " + std::to_string(std::max(0, this->m_Board->m_Players[0]->GetLives())),
                                        CCoord<>(0, this->m_DefaultFontSize), color);
         }
-
-        // Update FPS once per 500 ms
-        if(this->m_Clock.GetElapsedTicks() % 500 == 0)
-        {
-            this->m_FPSText->SetText(this->m_Interface, "FPS: " + std::to_string(this->m_Clock.GetFPS()),
-                                     CCoord<>(0, this->m_DefaultFontSize / 2));
-        }
+        this->m_FPSText->SetText(this->m_Interface, "FPS: " + std::to_string(this->m_Clock.GetFPS()),
+                                 CCoord<>(0, this->m_DefaultFontSize / 2));
     }
 
     this->m_GameStatusDelay.Tick(deltaTime);
@@ -273,7 +267,7 @@ void CGameManager::RoundOver()
 
     // Update game state when timer is done.
     this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_UPDATE_DELAY, [=](void)
-    {this->UpdateStatus();    });
+    { this->UpdateStatus(); });
 }
 
 /*====================================================================================================================*/
@@ -297,15 +291,17 @@ void CGameManager::GameOver()
 void CGameManager::NextRound()
 {
     this->m_Level++;
+    this->m_NextRoundText->SetText(this->m_Interface, "Round " + std::to_string(this->m_Level) + "!",
+                                   CCoord<>(0, this->m_DefaultFontSize * 3));
 
     // End game if this was last level.
-    if (this->m_Level >= CGameManager::GAME_LEVELS_COUNT)
+    if (this->m_Level > CGameManager::GAME_LEVELS_COUNT)
     {
         this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER;
         this->GameOver();
         return;
     }
-    this->m_Board->ClearBoard();
+    this->m_Board->ClearBoard(true);
 
     // Load new level from the file and refresh game end delay.
     this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);

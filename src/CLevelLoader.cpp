@@ -131,7 +131,7 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
     // count = 2; // todo remove
     CControls *controls[MAX_PLAYERS] = {
             new CControls(SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A, SDL_SCANCODE_D,
-                          SDL_SCANCODE_SPACE, SDL_SCANCODE_C),
+                          SDL_SCANCODE_J, SDL_SCANCODE_K),
             new CControls(SDL_SCANCODE_I, SDL_SCANCODE_K, SDL_SCANCODE_J, SDL_SCANCODE_L,
                           SDL_SCANCODE_N, SDL_SCANCODE_M)
     };

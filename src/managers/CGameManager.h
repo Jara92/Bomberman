@@ -59,8 +59,8 @@ protected:
     static constexpr int STARTING_TIME = 200500;
     /** Waiting time between loading scenes. */
     static constexpr int GAME_STATUS_UPDATE_DELAY = 2000;
-    /** Number of game levels. */
-    static constexpr int GAME_LEVELS_COUNT = 2;
+    /** Number of game levels. (Last level id is equal to GAME_LEVELS_COUNT )*/
+    static constexpr int GAME_LEVELS_COUNT = 10;
 
     /**
      * Global input events.
