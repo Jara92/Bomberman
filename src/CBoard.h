@@ -9,6 +9,7 @@
 #include <map>
 #include <vector>
 #include <chrono>
+#include <random>
 #include "Messages.h"
 #include "CCoord.h"
 #include "gameobjects/CGameObject.h"
@@ -27,10 +28,12 @@
 class CBoard
 {
 public:
-    CBoard(std::shared_ptr<CSettings> settings, std::vector<std::vector<CWall *>> map, std::vector<CPlayer *> players, CCoord<unsigned int> boardSize,
+    CBoard(std::shared_ptr<CSettings> settings, std::vector<std::vector<CWall *>> map, std::vector<CPlayer *> players,
+           CCoord<unsigned int> boardSize,
            std::shared_ptr<CGround> ground, std::shared_ptr<CTexturePack> bombTexturePack,
            std::shared_ptr<CTexturePack> fireTexturePack, unsigned int cellSize)
-            : m_Players(std::move(players)), m_Map(std::move(map)), m_Settings(std::move(settings)), m_BoardSize(boardSize),
+            : m_Players(std::move(players)), m_Map(std::move(map)), m_Settings(std::move(settings)),
+              m_BoardSize(boardSize),
               m_CellSize(cellSize), m_GroundObject(std::move(ground)),
               m_BombObjectTexturePack(std::move(bombTexturePack)),
               m_FireObjectTexturePack(std::move(fireTexturePack))
@@ -38,9 +41,9 @@ public:
 
     ~CBoard();
 
-    CBoard(const CBoard &other) = default;
+    CBoard(const CBoard &other) = delete;
 
-    CBoard &operator=(const CBoard &other) = default; // todo check this
+    CBoard &operator=(const CBoard &other) = delete; // todo check this
 
     /**
      * Update all objects in the board.
@@ -124,6 +127,20 @@ public:
      */
     void ClearBoard(bool clearBoosts = true);
 
+    /**
+    * Get random location in the board.
+    * @return Random location.
+    */
+    CCoord<unsigned int> GetRandomBoardLocation() const
+    {
+        // Random number generator.
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        std::default_random_engine random(seed);
+
+        // Return random location on the board.
+        return CCoord<unsigned int>((random() % (this->m_BoardSize.m_X)), (random() % (this->m_BoardSize.m_Y)));
+    }
+
     CCoord<unsigned int> GetBoardSize() const
     { return this->m_BoardSize; }
 
@@ -153,9 +170,8 @@ protected:
     /** Ground object template */
     std::shared_ptr<CGround> m_GroundObject;
 
-    /** Texturepack templates. */
-    std::shared_ptr<CTexturePack> m_BombObjectTexturePack;
-    std::shared_ptr<CTexturePack> m_FireObjectTexturePack;
+    /** Texture packs to be used as template. */
+    std::shared_ptr<CTexturePack> m_BombObjectTexturePack, m_FireObjectTexturePack;
 
     /**
      * Is this direction free to place?

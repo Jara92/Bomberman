@@ -9,8 +9,6 @@
 #include <fstream>
 #include <vector>
 #include <memory>
-#include <random>
-#include <chrono>
 #include <sstream>
 #include <iterator>
 #include "SDL2/SDL.h"
@@ -55,13 +53,6 @@ protected:
 
     /** Texture packs used for dynamically added objects. */
     std::vector<std::shared_ptr<CTexturePack>> m_EnemyTexturePacks, m_CollectibleTexturePacks;
-
-    /**
-     * Get random location in game board.
-     * @param board Game board.
-     * @return Random location.
-     */
-    CCoord<unsigned int> GetRandomBoardLocation(std::shared_ptr<CBoard> & board) const;
 
     /**
      * Load map from the file.

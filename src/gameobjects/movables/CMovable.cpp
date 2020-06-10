@@ -19,9 +19,8 @@ void CMovable::Animate(int deltaTime)
 void CMovable::Reset()
 {
     this->m_Location = this->m_StartingLocation;
-    this->m_AnimationIndex = 0;
-    this->m_AnimationTimer = 0;
-
+    this->m_AnimationIndex = this->m_AnimationTimer = 0;
+    this->m_ActualTexture = ETextureType ::TEXTURE_FRONT;
     this->m_IsAlive = true;
 }
 

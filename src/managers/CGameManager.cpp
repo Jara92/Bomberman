@@ -354,15 +354,3 @@ void CGameManager::GlobalInput(const Uint8 *input)
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

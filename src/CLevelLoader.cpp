@@ -14,17 +14,6 @@ CLevelLoader::CLevelLoader(CSDLInterface *interface, std::string mapFileName, st
 }
 
 /*====================================================================================================================*/
-CCoord<unsigned int> CLevelLoader::GetRandomBoardLocation(std::shared_ptr<CBoard> &board) const
-{
-    // Random number generator.
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine random(seed);
-
-    // Return random location on the board.
-    return CCoord<unsigned int>((random() % (board->GetBoardSize().m_X)), (random() % (board->GetBoardSize().m_Y)));
-}
-
-/*====================================================================================================================*/
 bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level)
 {
     // Generate random obstacles.
@@ -216,7 +205,7 @@ void CLevelLoader::GenerateObstacles(std::shared_ptr<CBoard> &board, size_t leve
         // Generate random location until the location is free.
         CCoord<unsigned int> random;
         do
-        { random = this->GetRandomBoardLocation(board); }
+        { random = board->GetRandomBoardLocation(); }
         while (!board->PositionFree(random) || !board->PlayersAreaFree(random));
 
         board->m_Map[random.m_X][random.m_Y] = new CWall(texturePack, CCoord<>(1, 1), random.ToDouble(), true, nullptr);
@@ -355,7 +344,7 @@ void CLevelLoader::ReorganizeCollectibles(std::shared_ptr<CBoard> &board)
         // Generate random location until the CWall at this location is null or indestructible or already has collectable object.
         CCoord<unsigned int> random;
         do
-        { random = this->GetRandomBoardLocation(board); }
+        { random = board->GetRandomBoardLocation(); }
         while (!board->m_Map[random.m_X][random.m_Y] ||
                !board->m_Map[random.m_X][random.m_Y]->IsDestructible() ||
                board->m_Map[random.m_X][random.m_Y]->HasCollectible());
@@ -379,7 +368,7 @@ bool CLevelLoader::CreateCollectibleAtRandomLocation(std::shared_ptr<CBoard> &bo
     // Generate random lacation - Must be unique.
     CCoord<unsigned int> random;
     do
-    { random = this->GetRandomBoardLocation(board); }
+    { random = board->GetRandomBoardLocation(); }
     while (board->m_Collectibles.find(random) != board->m_Collectibles.end());
 
     // Lamda which are used to apply / deactivate collectable item.
