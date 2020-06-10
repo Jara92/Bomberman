@@ -17,7 +17,8 @@
 #include "gameobjects/CFire.h"
 #include "gameobjects/CBomb.h"
 #include "gameobjects/collectibles/CCollectible.h"
-#include "gameobjects/movables/CEnemy.h"
+#include "gameobjects/movables/CEnemyDump.h"
+#include "gameobjects/movables/CEnemySmart.h"
 #include "gameobjects/movables/CPlayer.h"
 
 /** Game board contains gameobjects which are rendered in window. */
@@ -118,9 +119,9 @@ public:
 
     /**
      * Remove all dynamically added objects. (Bombs, Enemies, Boosts, DestructibleWalls)
-     * @param clearBoosts Remove boosts from the board?
+     * @param clearLevelObjects Remove boosts from the board?
      */
-    void ClearBoard(bool clearBoosts = true);
+    void ClearBoard(bool clearLevelObjects = true);
 
     /**
     * Get random location in the board.

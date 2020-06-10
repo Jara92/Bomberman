@@ -258,15 +258,14 @@ void CGameManager::KillAllPlayers()
 /*====================================================================================================================*/
 void CGameManager::RoundOver()
 {
-    this->m_GameEndDelay.Rerun();
     this->SetStatus(EGameStatus::GAME_STATUS_RUNNING);
 
     // Update game state and prepare level when timer is done.
     this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_UPDATE_DELAY, [=](void)
     {
-        this->m_Board->ClearBoard(false);
-        this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
+        this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level, false);
         this->UpdateStatus();
+        this->m_GameEndDelay.Rerun();
     });
 }
 
@@ -302,15 +301,14 @@ void CGameManager::NextRound()
         return;
     }
 
-    this->m_GameEndDelay.Rerun();
     this->SetStatus(EGameStatus::GAME_STATUS_RUNNING);
 
     // Update game state and prepare next level when timer is done.
     this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_UPDATE_DELAY, [=](void)
     {
-        this->m_Board->ClearBoard(true);
-        this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
+        this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level, true);
         this->UpdateStatus();
+        this->m_GameEndDelay.Rerun();
     });
 }
 

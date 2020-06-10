@@ -235,13 +235,6 @@ void CBoard::Draw(CSDLInterface *interface, CCoord<> offset)
         }
     }
 
-    // Draw enemies
-    for (size_t i = 0; i < this->m_Enemies.size(); i++)
-    {
-        if (this->m_Enemies[i])
-        { this->m_Enemies[i]->Draw(interface, this->m_CellSize, this->m_Enemies[i]->GetLocation(), offset); }
-    }
-
     // Draw boosts is visible
     for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
     {
@@ -271,6 +264,13 @@ void CBoard::Draw(CSDLInterface *interface, CCoord<> offset)
     {
         if (i->second)
         { i->second->Draw(interface, this->m_CellSize, i->first.ToDouble(), offset); }
+    }
+
+    // Draw enemies
+    for (size_t i = 0; i < this->m_Enemies.size(); i++)
+    {
+        if (this->m_Enemies[i])
+        { this->m_Enemies[i]->Draw(interface, this->m_CellSize, this->m_Enemies[i]->GetLocation(), offset); }
     }
 
     // TODO změnit pořadí renderu tak, aby nejdříve byly renderovány objekty, které jsou vespod.
@@ -384,7 +384,7 @@ void CBoard::UpdatePhysicEvents()
 }
 
 /*====================================================================================================================*/
-void CBoard::ClearBoard(bool clearBoosts)
+void CBoard::ClearBoard(bool clearLevelObjects)
 {
     // Delete walls
     for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
@@ -400,24 +400,22 @@ void CBoard::ClearBoard(bool clearBoosts)
         }
     }
 
-    // Delete enemies
-    for (size_t i = 0; i < this->m_Enemies.size(); i++)
-    { delete this->m_Enemies[i]; }
-    this->m_Enemies.clear();
-
-
-    for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
+    // Delete level objects - New level is going to ge loaded.
+    if (clearLevelObjects)
     {
-        // Delete boost
-        if (clearBoosts)
-        {
-            delete (i->second);
-            i->second = nullptr;
-        } else if (i->second)
+        for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
+        { delete (i->second); }
+        this->m_Collectibles.clear();
+
+        for (auto i = this->m_Enemies.begin(); i != this->m_Enemies.end(); i++)
+        { delete (*i); }
+        this->m_Enemies.clear();
+    }
+    else
+    {
+        for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
         { i->second->MakeInvisible(); }
     }
-    if (clearBoosts)
-    { this->m_Collectibles.clear(); }
 
     // Delete bombs
     for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)

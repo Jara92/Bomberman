@@ -19,6 +19,7 @@
 #include "gameobjects/collectibles/CDoor.h"
 #include "Messages.h"
 #include "ECollectibleType.h"
+#include "EEnemyType.h"
 
 class CLevelLoader
 {
@@ -33,7 +34,14 @@ public:
 
     std::shared_ptr<CBoard> GetBoard(int playersCount, const std::shared_ptr<CSettings> & settings);
 
-    bool LoadLevel(std::shared_ptr<CBoard> &board, size_t level);
+    /**
+     * Load new level.
+     * @param board Game board.
+     * @param level Level to be loaded.
+     * @param loadDynamicObjects Load level items from the level file?
+     * @return True - success.
+     */
+    bool LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool loadDynamicObjects = true);
 
 protected:
     std::string m_MapFileName;
@@ -47,7 +55,7 @@ protected:
     /** How many properties collectible item should have? */
     static const size_t COLLECTIBLE_ITEM_PROPERTIES_COUNT = 4;
     /** How many properties enemy item should have? */
-    static const size_t ENEMY_ITEM_PROPERTIES_COUNT = 7;
+    static const size_t ENEMY_ITEM_PROPERTIES_COUNT = 6;
 
     CSDLInterface *m_Interface;
 
@@ -87,16 +95,16 @@ protected:
      * Load config data from file.
      * @param board Game board.
      * @param level Level to be loaded.
-     * @param loadCollectibles Load collectible objects from the file or use existing collectibles?
+     * @param loadLevelObjects Load collectible objects from the file or use existing collectibles?
      * @throws std::ios::failure When level file not found.
      */
-    void LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level,  bool loadCollectibles = true);
+    void LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level);
 
     /**
      * Move every collectible to random location and attach it to assign it to the wall in the same position.
      * @param board Game board.
      */
-    void ReorganizeCollectibles(std::shared_ptr<CBoard> & board);
+    void ReorganizeLevelObjects(std::shared_ptr<CBoard> & board);
 
     /**
      * Read one property from the input array.
@@ -123,9 +131,10 @@ protected:
      * @param score Score to be achieved.
      * @param duration Collectible duration.
      * @throws std::invalid_argument Unknown collectible type.
-     * @return True - success.
      */
-    bool CreateCollectibleAtRandomLocation(std::shared_ptr<CBoard> &board, ECollectibleType type, std::size_t score, std::size_t duration);
+    void CreateCollectibleAtRandomLocation(std::shared_ptr<CBoard> &board, ECollectibleType type, std::size_t score, std::size_t duration);
+
+    void CreateEnemyAtRandomLocation(std::shared_ptr<CBoard> &board, EEnemyType type, std::size_t lives, std::size_t score, double speed, bool wallPass);
 
     /**
     * Get bomb texture pack.

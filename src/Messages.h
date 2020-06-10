@@ -15,6 +15,7 @@ const char * const MESSAGE_INDEX_OUT_OF_BOUND = "Index out of bound";
 const char * const MESSAGE_MAXIMUM_RUNTIME = "Maximum runtime exceeded.";
 const char * const MESSAGE_INVALID_ARGUMENT = "Invalid argument.";
 const char * const MESSAGE_UNKNOWN_COLLECTIBLE_TYPE = "Unknown collectible type.";
+const char * const MESSAGE_UNKNOWN_ENEMY_TYPE = "Unknown enemy type.";
 const char * const MESSAGE_INVALID_ITEM = "Invalid item: ";
 const char * const MESSAGE_ARGUMENT_OUT_OF_RANGE = "Argument out of range.";
 const char * const MESSAGE_INVALID_INPUT_PARAMETERS = "Invalid input parameters.";
