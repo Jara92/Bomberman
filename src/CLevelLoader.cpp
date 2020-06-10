@@ -51,14 +51,12 @@ std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, const std::shar
 /*====================================================================================================================*/
 std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
 {
+    // Create indestructible wall texturepack
     std::map<ETextureType, const std::vector<std::string>> textures
             {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/SolidBlock.png"}}}};
-
     std::shared_ptr<CTexturePack> texturePack = std::make_shared<CTexturePack>(this->m_Interface, textures);
-    // create reference wall to make copies
-    CWall wall(texturePack, CCoord<>(1, 1));
 
-    // init 2D array
+    // Init 2D array
     std::vector<std::vector<CWall *>> map;
     map.resize(CLevelLoader::MAP_WIDTH);
 
@@ -80,15 +78,13 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
         for (unsigned int i = 0; i < 8; i++)
         {
             // if i-bite=1 -> Build wall on this position
-            if (input >> (7 - i) & 1)
+            if (static_cast<unsigned int>((input >> (7u - i))) & 1u)
             {
                 CCoord<unsigned int> wallLocation{(col * 8 + i), row};
                 // We just need to fill array MAP_WIDTH x MAP_HEIGHT - we are not interested in the remaining data
                 if (wallLocation.m_X >= MAP_WIDTH || wallLocation.m_Y >= MAP_HEIGHT)
                 { break; }
-                CWall *newWall = new CWall(wall);
-                newWall->SetLocation(CCoord<>(wallLocation.ToDouble()));
-                map[wallLocation.m_X][wallLocation.m_Y] = newWall;
+                map[wallLocation.m_X][wallLocation.m_Y] = new CWall(texturePack, wallLocation.ToDouble());
             }
         }
 
