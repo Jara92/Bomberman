@@ -361,9 +361,9 @@ void CBoard::UpdatePhysicEvents()
             for (auto fire = this->m_Fires.begin(); fire != this->m_Fires.end(); fire++)
             {
                 // Kill player if player is colliding fire and do he does not have fire imunity.
-                if (fire->second && !(*(player))->GetFireImunity() && (*(player))->IsColiding(fire->second))
+                if (fire->second && !(*player)->GetFireImunity() && (*player)->IsColiding(fire->second))
                 {
-                    (*(player))->Kill();
+                    (*player)->Kill();
                     return; // player is dead and he cant pickup collectible items.
                 }
             }
@@ -373,10 +373,20 @@ void CBoard::UpdatePhysicEvents()
                  collectible != this->m_Collectibles.end(); collectible++)
             {
                 if (collectible->second && collectible->second->IsVisible() &&
-                    (*(player))->IsColiding(collectible->second))
+                    (*player)->IsColiding(collectible->second))
                 {
                     // Polymorphic call
-                    collectible->second->Apply((*(player))); // Apply item
+                    collectible->second->Apply((*player)); // Apply item
+                }
+            }
+
+            // Enemy collision
+            for (auto enemy = this->m_Enemies.begin(); enemy != this->m_Enemies.end(); enemy++)
+            {
+                if (*enemy && (*enemy)->IsAlive() &&
+                    (*player)->IsColiding((*enemy)))
+                {
+                    (*player)->Kill();
                 }
             }
         }
