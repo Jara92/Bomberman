@@ -357,18 +357,7 @@ void CBoard::UpdatePhysicEvents()
     {
         if ((*(player)) && (*(player))->IsAlive())
         {
-            // Fire collision
-            for (auto fire = this->m_Fires.begin(); fire != this->m_Fires.end(); fire++)
-            {
-                // Kill player if player is colliding fire and do he does not have fire imunity.
-                if (fire->second && !(*player)->GetFireImunity() && (*player)->IsColiding(fire->second))
-                {
-                    (*player)->Kill();
-                    return; // player is dead and he cant pickup collectible items.
-                }
-            }
-
-            // Collectible collision
+            // Collectible collision - Apply collectible on the player.
             for (auto collectible = this->m_Collectibles.begin();
                  collectible != this->m_Collectibles.end(); collectible++)
             {
@@ -380,14 +369,20 @@ void CBoard::UpdatePhysicEvents()
                 }
             }
 
-            // Enemy collision
+            // Fire collision - Kill the player.
+            for (auto fire = this->m_Fires.begin(); fire != this->m_Fires.end(); fire++)
+            {
+                // Kill player if player is colliding fire and do he does not have fire imunity.
+                if (fire->second && !(*player)->GetFireImunity() && (*player)->IsColiding(fire->second))
+                { (*player)->Kill(); }
+            }
+
+            // Enemy collision - Kill the player.
             for (auto enemy = this->m_Enemies.begin(); enemy != this->m_Enemies.end(); enemy++)
             {
                 if (*enemy && (*enemy)->IsAlive() &&
                     (*player)->IsColiding((*enemy)))
-                {
-                    (*player)->Kill();
-                }
+                { (*player)->Kill(); }
             }
         }
     }
@@ -420,8 +415,7 @@ void CBoard::ClearBoard(bool clearLevelObjects)
         for (auto i = this->m_Enemies.begin(); i != this->m_Enemies.end(); i++)
         { delete (*i); }
         this->m_Enemies.clear();
-    }
-    else
+    } else
     {
         for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
         { i->second->MakeInvisible(); }

@@ -1,8 +1,6 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
-
 
 #include "CLevelLoader.h"
 
@@ -62,8 +60,7 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
     { map[i].resize(CLevelLoader::MAP_HEIGHT, nullptr); }
 
     unsigned int row = 0, col = 0;
-    std::ifstream fileReader(this->m_Interface->GetSettings()->GetDataPath() + this->m_MapFileName,
-                             std::ios::binary | std::ios::in);
+    std::ifstream fileReader(this->m_Interface->GetSettings()->GetDataPath() + this->m_MapFileName, std::ios::binary | std::ios::in);
 
     // Is file reader ok?
     if (!fileReader || !fileReader.is_open() || fileReader.eof() || fileReader.bad())
@@ -607,5 +604,3 @@ bool CLevelLoader::ReadItem(std::shared_ptr<CBoard> &board, const std::vector<st
 
     return true;
 }
-
-
