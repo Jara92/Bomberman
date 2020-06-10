@@ -41,10 +41,10 @@ bool CScoreSaver::TrySetTopScore(std::size_t newScore)
     {
         if (newScore > this->GetTopScore())
         {
-            std::ofstream fileWriter(this->m_Settings->GetDataPath() + this->m_ScoreFile, std::ios::in);
+            std::ofstream fileWriter(this->m_Settings->GetDataPath() + this->m_ScoreFile, std::ios::out);
 
-            // Is file reader ok?
-            if (!fileWriter || !fileWriter.is_open() || fileWriter.eof() || fileWriter.bad())
+            // Is file writer ok?
+            if (!fileWriter || !fileWriter.is_open() || fileWriter.bad())
             { throw std::ios::failure(MESSAGE_UNABLE_TO_OPEN_FILE); }
 
             if (!(fileWriter << newScore))

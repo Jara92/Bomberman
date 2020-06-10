@@ -28,7 +28,7 @@ public:
      * @param settings Setting to be used.
      * @param defaultFont Default font path.
      */
-    CSDLInterface(const std::string & title, std::shared_ptr<CSettings> settings, const std::string &defaultFont);
+    CSDLInterface(const std::string &title, std::shared_ptr<CSettings> settings, const std::string &defaultFont);
 
     /* This class contains C pointers which cannot be copied. */
     CSDLInterface(const CSDLInterface &other) = delete;
@@ -42,9 +42,6 @@ public:
      * @return True - Success
      */
     bool InitInterface();
-
-    void ReloadSettings()
-    {    }
 
     /**
      * Set window size for Menu.
@@ -65,7 +62,7 @@ public:
     { return this->m_WindowSize; }
 
     std::shared_ptr<CSettings> GetSettings()
-    {return this->m_Settings;    }
+    { return this->m_Settings; }
 
     /**
      * Load an image into a render texture
@@ -73,7 +70,7 @@ public:
      * @throws std::ios_base::failure If texture is not avaible.
      * @return Texture pointer.
      */
-    SDL_Texture *LoadTexture(const std::string & file) const;
+    SDL_Texture *LoadTexture(const std::string &file) const;
 
     /**
      * Clear the current rendering target with the drawing color
@@ -122,16 +119,6 @@ public:
                                                                                                           255}) const;
 
     /**
-     * Render the given text at high quality with the given color.
-     * @param text Text to be rendered.
-     * @param location Text location.
-     * @param size Text size. Set {0,0} to autosize. Set {0, X} or {X, 0} to autosize one dimension.
-     * @param color Text color.
-    */
-    bool RenderText(const std::string &text, CCoord<> location, CCoord<> size = CCoord<>(0, 0),
-                    SDL_Colour color = {255, 255, 255, 255});
-
-    /**
     *  Set the color used for drawing operations (Rect, Line and Clear).
     *  @param r The red value used to draw on the rendering target.
     *  @param g The green value used to draw on the rendering target.
@@ -157,7 +144,7 @@ public:
     { SDL_Delay(time); }
 
 protected:
-    CCoord<unsigned int > m_WindowSize;
+    CCoord<unsigned int> m_WindowSize;
     std::string m_WindowTitle;
 
     std::shared_ptr<CSettings> m_Settings;

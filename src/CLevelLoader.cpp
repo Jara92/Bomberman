@@ -67,7 +67,7 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
 
     std::shared_ptr<CTexturePack> texturePack = std::make_shared<CTexturePack>(this->m_Interface, textures);
     // create reference wall to make copies
-    CWall wall(texturePack, CCoord<>(1,1));
+    CWall wall(texturePack, CCoord<>(1, 1));
 
     // init 2D array
     std::vector<std::vector<CWall *>> map;
@@ -98,7 +98,7 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
                 // i-bite=1 -> Build wall on current position
                 if (input >> (7 - i) & 1)
                 {
-                    CWall * newWall = new CWall(wall);
+                    CWall *newWall = new CWall(wall);
                     newWall->SetLocation(CCoord<>((col * 8 + i), row));
                     map[static_cast<int>(col * 8 + i)][row] = newWall;
                 }
@@ -297,9 +297,7 @@ std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadCollectiblesTexture
     // Create texture packs shared pointers.
     std::vector<std::shared_ptr<CTexturePack>> texturePacks;
     for (size_t i = 0; i < textures.size(); i++)
-    {
-        texturePacks.push_back(std::make_shared<CTexturePack>(this->m_Interface, textures[i], true, sizes[i]));
-    }
+    { texturePacks.push_back(std::make_shared<CTexturePack>(this->m_Interface, textures[i], true, sizes[i])); }
 
     return texturePacks;
 }
@@ -378,8 +376,11 @@ void CLevelLoader::ReorganizeCollectibles(std::shared_ptr<CBoard> &board)
 bool CLevelLoader::CreateCollectibleAtRandomLocation(std::shared_ptr<CBoard> &board, ECollectibleType type,
                                                      std::size_t score, std::size_t duration)
 {
-    // Generate totaly random inicialization location.
-    CCoord<unsigned int> random = this->GetRandomBoardLocation(board);
+    // Generate random lacation - Must be unique.
+    CCoord<unsigned int> random;
+    do
+    { random = this->GetRandomBoardLocation(board); }
+    while (board->m_Collectibles.find(random) != board->m_Collectibles.end());
 
     // Lamda which are used to apply / deactivate collectable item.
     std::function<void(CPlayer *)> applyFunc;

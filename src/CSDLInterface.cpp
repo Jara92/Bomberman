@@ -103,36 +103,6 @@ bool CSDLInterface::RenderTexture(SDL_Texture *texture, CCoord<> location, CCoor
 }
 
 /*====================================================================================================================*/
-bool CSDLInterface::RenderText(const std::string &text, CCoord<> location, CCoord<> size, SDL_Colour color)
-{
-    // Load texture and get its default size.
-    CCoord<unsigned int> defaultSize;
-    SDL_Texture *texture = this->LoadTextTexture(text, defaultSize, color);
-
-    // Create rect for render.
-    SDL_Rect Message_rect; //create a rect
-    Message_rect.x = location.ToInt().m_X;
-    Message_rect.y = location.ToInt().m_Y;
-
-    if (size.m_X != 0)
-    { Message_rect.w = size.ToInt().m_X; }
-    else
-    { Message_rect.w = defaultSize.ToInt().m_X; }
-
-    if (size.m_Y != 0)
-    { Message_rect.h = size.ToInt().m_Y; }
-    else
-    { Message_rect.h = defaultSize.ToInt().m_Y; }
-
-    bool success = SDL_RenderCopy(this->m_Renderer, texture, NULL, &Message_rect) >= 0;
-
-    // Delete texture
-    SDL_DestroyTexture(texture);
-
-    return success;
-}
-
-/*====================================================================================================================*/
 void CSDLInterface::SetMenuScreenSize()
 {
     // Change window size if new size is different.
@@ -186,9 +156,7 @@ SDL_Texture *CSDLInterface::LoadTextTexture(const std::string &text, CCoord<unsi
     { return NULL; }
 
     // Set size
-   // size = CCoord<unsigned int>(surfaceMessage->w, surfaceMessage->h);
-   size.m_X = surfaceMessage->w;
-    size.m_Y = surfaceMessage->h;
+    size = CCoord<unsigned int>(surfaceMessage->w, surfaceMessage->h);
 
     // Free surface and texture
     TTF_CloseFont(font);

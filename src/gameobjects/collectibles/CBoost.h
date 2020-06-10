@@ -7,6 +7,7 @@
 
 #include <functional>
 #include "CCollectible.h"
+#include "../../CTimer.h"
 
 class CBoost : public CCollectible
 {

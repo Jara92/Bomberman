@@ -258,16 +258,16 @@ void CGameManager::KillAllPlayers()
 /*====================================================================================================================*/
 void CGameManager::RoundOver()
 {
-    // Clear board, load level and refresh game end delay.
-    this->m_Board->ClearBoard(false);
-    this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
     this->m_GameEndDelay.Rerun();
-
     this->SetStatus(EGameStatus::GAME_STATUS_RUNNING);
 
-    // Update game state when timer is done.
+    // Update game state and prepare level when timer is done.
     this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_UPDATE_DELAY, [=](void)
-    { this->UpdateStatus(); });
+    {
+        this->m_Board->ClearBoard(false);
+        this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
+        this->UpdateStatus();
+    });
 }
 
 /*====================================================================================================================*/
@@ -301,16 +301,17 @@ void CGameManager::NextRound()
         this->GameOver();
         return;
     }
-    this->m_Board->ClearBoard(true);
 
-    // Load new level from the file and refresh game end delay.
-    this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
     this->m_GameEndDelay.Rerun();
-
     this->SetStatus(EGameStatus::GAME_STATUS_RUNNING);
 
+    // Update game state and prepare next level when timer is done.
     this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_UPDATE_DELAY, [=](void)
-    { this->UpdateStatus(); });
+    {
+        this->m_Board->ClearBoard(true);
+        this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level);
+        this->UpdateStatus();
+    });
 }
 
 /*====================================================================================================================*/

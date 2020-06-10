@@ -80,8 +80,10 @@ bool CBoard::PlaceBomb(CPlayer *player)
                                 location.ToDouble(), player, delay, player->GetRemoteExplosion());
 
         this->m_Bombs.insert({location.ToUnsignedInt(), bomb});
+        return true;
     }
-    return true;
+
+    return false;
 }
 
 /*====================================================================================================================*/

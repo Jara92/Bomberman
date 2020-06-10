@@ -33,7 +33,6 @@ protected:
     {
         // Change settings object and reload interface.
         this->m_Interface->GetSettings()->ChangeGameScreenResolution(newResolution);
-        this->m_Interface->ReloadSettings();
     }
 };
 
