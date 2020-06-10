@@ -11,32 +11,26 @@
 #include <chrono>
 #include <random>
 #include "Messages.h"
-#include "CCoord.h"
-#include "gameobjects/CGameObject.h"
+#include "EGameStatus.h"
 #include "gameobjects/CGround.h"
 #include "gameobjects/CWall.h"
-#include "gameobjects/collectibles/CCollectible.h"
 #include "gameobjects/CFire.h"
-#include "gameobjects/movables/CEnemy.h"
 #include "gameobjects/CBomb.h"
+#include "gameobjects/collectibles/CCollectible.h"
+#include "gameobjects/movables/CEnemy.h"
 #include "gameobjects/movables/CPlayer.h"
-#include "EGameStatus.h"
 
-/**
- * Game board contains gameobjects which are rendered in window.
- */
+/** Game board contains gameobjects which are rendered in window. */
 class CBoard
 {
 public:
     CBoard(std::shared_ptr<CSettings> settings, std::vector<std::vector<CWall *>> map, std::vector<CPlayer *> players,
-           CCoord<unsigned int> boardSize,
-           std::shared_ptr<CGround> ground, std::shared_ptr<CTexturePack> bombTexturePack,
+           CCoord<unsigned int> boardSize, std::shared_ptr<CGround> ground,
+           std::shared_ptr<CTexturePack> bombTexturePack,
            std::shared_ptr<CTexturePack> fireTexturePack, unsigned int cellSize)
             : m_Players(std::move(players)), m_Map(std::move(map)), m_Settings(std::move(settings)),
-              m_BoardSize(boardSize),
-              m_CellSize(cellSize), m_GroundObject(std::move(ground)),
-              m_BombObjectTexturePack(std::move(bombTexturePack)),
-              m_FireObjectTexturePack(std::move(fireTexturePack))
+              m_BoardSize(boardSize), m_CellSize(cellSize), m_GroundObject(std::move(ground)),
+              m_BombObjectTexturePack(std::move(bombTexturePack)), m_FireObjectTexturePack(std::move(fireTexturePack))
     {}
 
     ~CBoard();
@@ -50,6 +44,7 @@ public:
      * @param deltaTime Deltatime
      */
     void Update(int deltaTime);
+
 
     void UpdatePhysicEvents();
 
@@ -162,7 +157,7 @@ public:
     { return this->m_GroundObject; }
 
 protected:
-    /** Size of gameboard. */
+    /** Size of game board. */
     CCoord<unsigned int> m_BoardSize;
     /** Size of one cell in pixels. */
     unsigned int m_CellSize;

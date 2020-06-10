@@ -31,3 +31,8 @@ int CEnemyDump::TryKill(unsigned int distance)
 
     return 0;
 }
+
+void CEnemyDump::WalkAround()
+{
+
+}

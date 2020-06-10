@@ -8,5 +8,5 @@
 
 std::set<EDirection> CEnemy::GetPossibleMoveLocations(CBoard *board) const
 {
-    return std::set<EDirection>();
+    std::set<EDirection> direcitons;
 }

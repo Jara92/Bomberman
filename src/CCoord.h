@@ -1,6 +1,5 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
 
 #pragma once
@@ -8,18 +7,11 @@
 #include <math.h>
 #include <iostream>
 
-/**
- * Represents point in 2D space
- */
+/** Represents point in 2D space */
 template<class T = double>
 class CCoord
 {
 public:
-    /**
-     * CCoord constructor
-     * @param x
-     * @param y
-     */
     CCoord(T x = 0, T y = 0)
             : m_X(x), m_Y(y)
     {}
@@ -30,7 +22,6 @@ public:
 
     ~CCoord() = default;
 
-    /** Operators +, -, * and / */
     CCoord operator+(const CCoord &other) const
     { return CCoord(this->m_X + other.m_X, this->m_Y + other.m_Y); }
 
@@ -79,30 +70,33 @@ public:
         return ostream;
     }
 
-    /**
-     * Compares two points.
-     * @param other
-     * @return True if the first vector is closer to zero vector than the second one.
-     */
-    bool operator<(const CCoord &other) const;
+    bool operator<(const CCoord &other) const
+    {
+        if (this->m_X < other.m_X)
+        { return true; }
+        else if (this->m_X == other.m_X && this->m_Y < other.m_Y)
+        { return true; }
 
-    bool operator==(const CCoord &other) const;
+        return false;
+    }
+
+    bool operator==(const CCoord &other) const
+    {
+        if (this->m_X == other.m_X && this->m_Y == other.m_Y)
+        { return true; }
+
+        return false;
+    }
 
     bool operator!=(const CCoord &other) const
     { return !(*this == other); }
 
-    bool AlmostEqual(const CCoord &other) const;
-
-
-    /**
-     * Calculates distance between this and the other point
-     * @param other Other Coord.
-     * @return Distance between two points.
-     */
-    double CalcDistnance(const CCoord &other) const
+    bool AlmostEqual(const CCoord &other) const
     {
-        return sqrt(
-                ((this->m_X - other.m_X) * (this->m_X - other.m_X)) + ((this->m_Y - other.m_Y) * (this->m_Y - other.m_Y)));
+        CCoord thisCoord = CCoord(floor(this->m_X), floor(this->m_Y));
+        CCoord otherCoord = CCoord(floor(other.m_X), floor(other.m_Y));
+
+        return (thisCoord == otherCoord);
     }
 
     /**
@@ -132,32 +126,5 @@ public:
     T m_X, m_Y;
 };
 
-template<class T>
-bool CCoord<T>::operator<(const CCoord &other) const
-{
-    if (this->m_X < other.m_X)
-    { return true; }
-    else if (this->m_X == other.m_X && this->m_Y < other.m_Y)
-    { return true; }
 
-    return false;
-}
-
-template<class T>
-bool CCoord<T>::operator==(const CCoord &other) const
-{
-    if (this->m_X == other.m_X && this->m_Y == other.m_Y)
-    { return true; }
-
-    return false;
-}
-
-template<class T>
-bool CCoord<T>::AlmostEqual(const CCoord &other) const
-{
-    CCoord thisCoord = CCoord(floor(this->m_X), floor(this->m_Y));
-    CCoord otherCoord = CCoord(floor(other.m_X), floor(other.m_Y));
-
-    return (thisCoord == otherCoord);
-}
 

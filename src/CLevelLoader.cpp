@@ -62,10 +62,10 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
     std::vector<std::vector<CWall *>> map;
     map.resize(CLevelLoader::MAP_WIDTH);
 
-    for (size_t i = 0; i < map.size(); i++)
+    for (unsigned int i = 0; i < map.size(); i++)
     { map[i].resize(CLevelLoader::MAP_HEIGHT, nullptr); }
 
-    size_t row = 0, col = 0;
+    unsigned int row = 0, col = 0;
     std::ifstream fileReader(this->m_Interface->GetSettings()->GetDataPath() + this->m_MapFileName,
                              std::ios::binary | std::ios::in);
 
@@ -74,43 +74,36 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
     { throw std::ios::failure(MESSAGE_MAP_NOT_FOUND); }
 
     unsigned char input = '\0';
-
-    // FIXME problem kdyz je dlouha mapa
-    // FIXME NĚKDY SE NEZOBRAZI VSECHNY COLLECTIBLES
-    while ((fileReader >> std::noskipws >> input))
+    while ((fileReader >> std::noskipws >> input) && !fileReader.eof())
     {
-        if (!fileReader.eof())
+        // Read by bite
+        for (unsigned int i = 0; i < 8; i++)
         {
-            // Read by bite
-            for (size_t i = 0; i < 8; i++)
+            // if i-bite=1 -> Build wall on this position
+            if (input >> (7 - i) & 1)
             {
-                // i-bite=1 -> Build wall on current position
-                if (input >> (7 - i) & 1)
-                {
-                    CWall *newWall = new CWall(wall);
-                    newWall->SetLocation(CCoord<>((col * 8 + i), row));
-                    map[static_cast<int>(col * 8 + i)][row] = newWall;
-                }
+                CCoord<unsigned int> wallLocation{(col * 8 + i), row};
+                // We just need to fill array MAP_WIDTH x MAP_HEIGHT - we are not interested in the remaining data
+                if (wallLocation.m_X >= MAP_WIDTH || wallLocation.m_Y >= MAP_HEIGHT)
+                { break; }
+                CWall *newWall = new CWall(wall);
+                newWall->SetLocation(CCoord<>(wallLocation.ToDouble()));
+                map[wallLocation.m_X][wallLocation.m_Y] = newWall;
             }
+        }
 
-            // Increment col with every readed byte.
-            col++;
+        // Increment col with every readed byte.
+        col++;
 
-            // Jump to next row
-            if (col >= FILE_MAP_WIDTH / 8)
-            {
-                col = 0;
-                row++;
-            }
-
-                // End if my map is full.
-            else if (row >= FILE_MAP_HEIGHT)
-            { break; }
+        // Jump to next row
+        if (col >= FILE_MAP_WIDTH / 8)
+        {
+            col = 0;
+            row++;
         }
     }
 
     fileReader.close();
-
     return map;
 }
 
