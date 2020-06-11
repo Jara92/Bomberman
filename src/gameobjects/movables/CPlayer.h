@@ -28,8 +28,8 @@ public:
     explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size = CCoord<>(1, 1),
                      CControls *controls = nullptr,
                      double speed = 0.0025, int lives = 3)
-            : CMovable(std::move(texturePack), size, location, speed, false, lives), m_Score(0), m_ExplosionRadius(1),
-              m_MaxBombs(1), m_ActiveBombs(0), m_RemoteExplosion(false), m_BombPass(false), m_FireImmunity(false),
+            : CMovable(std::move(texturePack), size, location, speed, false, false, lives ), m_Score(0), m_ExplosionRadius(1),
+              m_MaxBombs(1), m_ActiveBombs(0), m_RemoteExplosion(false), m_FireImmunity(false),
               m_PlantingAvaible(false), m_IsPlanting(false), m_DetonatingAvaible(false), m_IsDetonating(false),
               m_LevelUp(false), m_Controls(controls)
     {/*this->m_Lives = 0;*/}
@@ -107,18 +107,6 @@ public:
     void DeactivateRemoteExplosion()
     { this->m_RemoteExplosion = false; }
 
-    void ActivateBombPass()
-    { this->m_BombPass = true; }
-
-    void DeactivateBombPass()
-    { this->m_BombPass = false; }
-
-    void ActivateWallPass()
-    { this->m_WallPass = true; }
-
-    void DeactivateWallPass()
-    { this->m_BombPass = false; }
-
     void ActivateFireImmunity()
     { this->m_FireImmunity = true; }
 
@@ -144,12 +132,6 @@ public:
     bool GetLevelUp() const
     { return this->m_LevelUp; }
 
-    bool GetWallPass() const
-    { return this->m_WallPass; }
-
-    bool GetBombPass() const
-    { return this->m_BombPass; }
-
     bool GetFireImunity() const
     { return this->m_FireImmunity; }
 
@@ -170,7 +152,6 @@ protected:
     unsigned int m_MaxBombs;
     unsigned int m_ActiveBombs;
     bool m_RemoteExplosion;
-    bool m_BombPass;
     bool m_FireImmunity;
 
     /*====================
@@ -218,9 +199,6 @@ protected:
     */
     void HorizontalCenter(CBoard *board, int deltaTime, int direction);
 
-    /**
-     * Is current location free?
-     */
-    bool LocationIsFree(CBoard *board) const;
+    virtual void ChooseAnimation() override {}
 };
 

@@ -1,8 +1,6 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
-
 
 #include "CBoard.h"
 
@@ -37,24 +35,24 @@ CBoard::~CBoard()
 }
 
 /*====================================================================================================================*/
-bool CBoard::IsPassable(CCoord<unsigned int> coord, const CPlayer *player)
+bool CBoard::IsPassable(CCoord<unsigned int> coord, const CMovable *movable)
 {
+    // TODO zde je polymorfismus.
     // Array index check.
-    if (coord.m_X < 0 || coord.m_X >= CBoard::m_BoardSize.m_X ||
-        coord.m_Y < 0 || coord.m_Y >= CBoard::m_BoardSize.m_Y)
+    if (coord.m_X < 0 || coord.m_X >= CBoard::m_BoardSize.m_X || coord.m_Y < 0 || coord.m_Y >= CBoard::m_BoardSize.m_Y)
     { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
 
     CWall *wall = this->m_Map[coord.m_X][coord.m_Y];
 
-    if (wall && wall->IsAlive() && (!wall->IsDestructible() || !player->GetWallPass()))
+    if (wall && wall->IsAlive() && (!wall->IsDestructible() || !movable->GetWallPass()))
     { return false; }
 
     // Search for bombs in location.
     auto bomb = this->m_Bombs.find(coord);
-    if (bomb != this->m_Bombs.end() && bomb->second && !player->GetBombPass() && player->IsColiding(bomb->second))
+    if (bomb != this->m_Bombs.end() && bomb->second && !movable->GetBombPass() && movable->IsColiding(bomb->second))
     {
         // Player is not owner or the bomb is not passable for owner
-        if (bomb->second->GetOwner() != player || !bomb->second->IsPassableForOwner())
+        if (bomb->second->GetOwner() != movable || !bomb->second->IsPassableForOwner())
         { return false; }
     }
 
@@ -329,10 +327,7 @@ void CBoard::Update(int deltaTime)
         if (item->second)
         { item->second->Update(this, deltaTime); }
         else
-        {
-            // Remove null item
-            this->m_Bombs.erase(item);
-        }
+        { this->m_Bombs.erase(item); /* Remove null item*/ }
     }
 
     // Update fires
@@ -343,10 +338,7 @@ void CBoard::Update(int deltaTime)
         if (item->second)
         { item->second->Update(this, deltaTime); }
         else
-        {
-            // Remove null item
-            this->m_Fires.erase(item);
-        }
+        { this->m_Fires.erase(item); /* Remove null item */ }
     }
 }
 
@@ -492,7 +484,7 @@ bool CBoard::PlayersAreaFree(CCoord<unsigned int> coord)
 /*====================================================================================================================*/
 bool CBoard::PlayerDirectionFree(CCoord<unsigned int> location, CPlayer *player, CCoord<int> direction)
 {
-    for (unsigned int i = 0; i <= player->GetExplosionRadius(); i++)
+    for (unsigned int i = 0; i <= CBoard::PLAYER_SAVE_ZONE; i++)
     {
         CCoord<> curLocation = (player->GetLocation() + (direction * i).ToDouble());
 

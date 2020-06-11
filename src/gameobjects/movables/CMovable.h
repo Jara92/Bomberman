@@ -21,10 +21,11 @@ public:
      * @param wallPass Can this object walk through destructible walls?
      * @param lives Starting lives count
      */
-    explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1,1), CCoord <>location = CCoord<>(0,0), double speed = 0.005, bool wallPass = false,
-                      int lives = 1)
+    explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1),
+                      CCoord<> location = CCoord<>(0, 0), double speed = 0.005, bool wallPass = false,
+                      bool bombPass = false, int lives = 1)
             : CGameObject(std::move(texturePack), size, location, true), // every movable object is passable
-              m_StartingLocation(location), m_Speed(speed), m_WallPass(wallPass),
+              m_StartingLocation(location), m_Speed(speed), m_WallPass(wallPass), m_BombPass(bombPass),
               m_VerticalMovingDirection(EDirection::DIRECTION_NONE),
               m_HorizontalMovingDirection(EDirection::DIRECTION_NONE), m_Lives(lives)
     {}
@@ -43,26 +44,46 @@ public:
 
     /**
      * Get object location cell.
-     * @return Coordinates of cell where the left-top corner of this object is located.
+     * @return Coordinates of cell where the center of this object is located.
      */
     CCoord<unsigned int> GetLocationCell() const
     { return CCoord<unsigned int>(floor(this->m_Location.m_X + 0.5), floor(this->m_Location.m_Y + 0.5)); }
+
+    bool GetWallPass() const
+    { return this->m_WallPass; }
+
+    bool GetBombPass() const
+    { return this->m_BombPass; }
+
+    void ActivateBombPass()
+    { this->m_BombPass = true; }
+
+    void DeactivateBombPass()
+    { this->m_BombPass = false; }
+
+    void ActivateWallPass()
+    { this->m_WallPass = true; }
+
+    void DeactivateWallPass()
+    { this->m_BombPass = false; }
 
     virtual void Reset();
 
     int GetLives() const
     { return this->m_Lives; }
 
-
 protected:
-    CCoord <>m_StartingLocation;
+    CCoord<> m_StartingLocation;
     double m_Speed;
-    bool m_WallPass;
+    bool m_WallPass, m_BombPass;
 
-    EDirection m_VerticalMovingDirection;
-    EDirection m_HorizontalMovingDirection;
+    EDirection m_VerticalMovingDirection, m_HorizontalMovingDirection;
     int m_Lives;
 
+    /** Is current location free? */
+    bool CellIsFree(CBoard *board, CCoord<> location) const;
 
+    /** Update animation type.  */
+    virtual void ChooseAnimation() = 0;
 };
 

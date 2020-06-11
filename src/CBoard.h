@@ -58,11 +58,11 @@ public:
 
     /**
      * Is this coord passable for the player?
-     * @param coord Location
-     * @param player Player
+     * @param coord Location.
+     * @param movable Movable object.
      * @return True if is passable.
      */
-    bool IsPassable(CCoord<unsigned int> coord, const CPlayer *player);
+    bool IsPassable(CCoord<unsigned int> coord, const CMovable *movable);
 
     /**
      * Is this position totaly free?
@@ -162,6 +162,7 @@ protected:
     CCoord<unsigned int> m_BoardSize;
     /** Size of one cell in pixels. */
     unsigned int m_CellSize;
+    static constexpr unsigned int PLAYER_SAVE_ZONE = 3;
 
     /** Ground object template */
     std::shared_ptr<CGround> m_GroundObject;

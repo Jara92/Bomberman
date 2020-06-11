@@ -3,7 +3,8 @@
 */
 
 #pragma once
-#include <set>
+
+#include <vector>
 #include "CMovable.h"
 
 class CEnemy : public CMovable
@@ -19,12 +20,16 @@ public:
     * @param wallPass Can this Enemy walk through destructible walls?
     * @param lives How many lives doest this monster have?
     */
-    explicit CEnemy(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size = CCoord<>(1,1), int score = 100, double speed = 0.005, bool wallPass = false, int lives = 1)
-    : CMovable(std::move(texturePack), size, location, speed, wallPass, lives), m_Score(score)
+    explicit CEnemy(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size = CCoord<>(1, 1),
+                    int score = 100, double speed = 0.005, bool wallPass = false, int lives = 1)
+            : CMovable(std::move(texturePack), size, location, speed, wallPass, false, lives), m_Score(score),
+              m_Direction({0, 0})
     {}
 
     CEnemy(const CEnemy &other) = default;
+
     CEnemy &operator=(const CEnemy &other) = default;
+
     virtual ~CEnemy() = default;
 
     /**
@@ -32,7 +37,7 @@ public:
      * @param board Game board.
      * @param deltaTime Delta time.
      */
-    virtual void Update(CBoard * board, int deltaTime) override = 0;
+    virtual void Update(CBoard *board, int deltaTime) override = 0;
 
     /**
      * Try to kill this enemy.
@@ -43,12 +48,15 @@ public:
 
 protected:
     int m_Score;
+    CCoord<> m_Direction;
 
     /**
      * Get avaible moving directions.
      * @param board Game board.
      * @return Avaible directions.
      */
-    std::set<EDirection> GetPossibleMoveLocations(CBoard * board) const;
+    std::vector<std::pair<ETextureType, CCoord<double>>> GetPossibleMoveDirections(CBoard *board) const;
+
+    virtual void ChooseAnimation() override ;
 };
 

@@ -9,6 +9,7 @@
 void CEnemyDump::Update(CBoard *board, int deltaTime)
 {
     // TODO Dump AI staff...
+//    this->m_Location += (this->GetPossibleMoveDirections(board)[0] * deltaTime);
     // zde budou volány metody hloupého nepřítele
 }
 

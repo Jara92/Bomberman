@@ -28,7 +28,10 @@ public:
      * @param settings Setting to be used.
      * @param defaultFont Default font path.
      */
-    CSDLInterface(const std::string &title, std::shared_ptr<CSettings> settings, const std::string &defaultFont);
+    CSDLInterface(const std::string &title, std::shared_ptr<CSettings> settings, const std::string &defaultFont)
+            : m_WindowSize(settings->GetMenuScreenSize()), m_WindowTitle(title), m_Settings(std::move(settings)),
+              m_Font(defaultFont), m_Window(nullptr), m_Renderer(nullptr)
+    {}
 
     /* This class contains C pointers which cannot be copied. */
     CSDLInterface(const CSDLInterface &other) = delete;
@@ -43,20 +46,18 @@ public:
      */
     bool InitInterface();
 
-    /**
-     * Set window size for Menu.
-     */
+    /** Set window size for Menu. */
     void SetMenuScreenSize();
 
-    /**
-     * Set window size for Game.
-     */
+    /** Set window size for Game. */
     void SetGameScreenSize();
 
-    /**
-     * Update window size according to m_WindowWidth and m_WindowHeight and center it.
-     */
-    void UpdateWindowSize();
+    /** Update window size according to m_WindowWidth and m_WindowHeight and center it. */
+    void UpdateWindowSize()
+    {
+        SDL_SetWindowSize(this->m_Window, this->m_WindowSize.m_X, this->m_WindowSize.m_Y);
+        SDL_SetWindowPosition(this->m_Window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+    }
 
     CCoord<unsigned int> GetWindowSize() const
     { return this->m_WindowSize; }
@@ -72,15 +73,11 @@ public:
      */
     SDL_Texture *LoadTexture(const std::string &file) const;
 
-    /**
-     * Clear the current rendering target with the drawing color
-     */
+    /** Clear the current rendering target with the drawing color */
     void Clear()
     { SDL_RenderClear(this->m_Renderer); }
 
-    /**
-     * Update the screen with rendering performed.
-     */
+    /** Update the screen with rendering performed. */
     void Present()
     { SDL_RenderPresent(this->m_Renderer); }
 
@@ -90,7 +87,11 @@ public:
      * @param location Render location
      * @param size Texture size
      */
-    bool RenderTexture(SDL_Texture *texture, CCoord<> location, CCoord<> size);
+    bool RenderTexture(SDL_Texture *texture, CCoord<> location, CCoord<> size)
+    {
+        SDL_Rect targetRect = {location.ToInt().m_X, location.ToInt().m_Y, size.ToInt().m_X, size.ToInt().m_Y};
+        return SDL_RenderCopy(this->m_Renderer, texture, NULL, &targetRect);
+    }
 
     /**
      * Draw a rectangle on the current rendering target.
@@ -134,7 +135,8 @@ public:
     *  @param title    UTF-8 title text
     *  @param message  UTF-8 message text
     */
-    void ShowMessageBox(Uint32 flags, const std::string &title, const std::string &message);
+    void ShowMessageBox(Uint32 flags, const std::string &title, const std::string &message)
+    { SDL_ShowSimpleMessageBox(flags, title.c_str(), message.c_str(), this->m_Window); }
 
     /**
      * Wait a specified number of milliseconds before returning.

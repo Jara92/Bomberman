@@ -17,9 +17,9 @@
 #include "CSDLInterface.h"
 #include "gameobjects/collectibles/CBoost.h"
 #include "gameobjects/collectibles/CDoor.h"
-#include "Messages.h"
 #include "ECollectibleType.h"
 #include "EEnemyType.h"
+#include "Messages.h"
 
 class CLevelLoader
 {
@@ -47,15 +47,15 @@ protected:
     std::string m_MapFileName;
     std::string m_LevelFileName;
     /* Saved map size */
-    static const size_t FILE_MAP_WIDTH = 24, FILE_MAP_HEIGHT = 13;
+    static const unsigned int FILE_MAP_WIDTH = 24, FILE_MAP_HEIGHT = 13;
     /* Real map size (Real map is smaller because the map is saved as binary file. I have to remember which bits are valid) */
-    static const size_t MAP_WIDTH = 23, MAP_HEIGHT = 13;
+    static const unsigned int MAP_WIDTH = 23, MAP_HEIGHT = 13;
 
-    static const size_t MAX_PLAYERS = 2;
+    static const unsigned int MAX_PLAYERS = 2;
     /** How many properties collectible item should have? */
-    static const size_t COLLECTIBLE_ITEM_PROPERTIES_COUNT = 4;
+    static const unsigned int COLLECTIBLE_ITEM_PROPERTIES_COUNT = 4;
     /** How many properties enemy item should have? */
-    static const size_t ENEMY_ITEM_PROPERTIES_COUNT = 6;
+    static const unsigned int ENEMY_ITEM_PROPERTIES_COUNT = 6;
 
     CSDLInterface *m_Interface;
 
@@ -72,7 +72,7 @@ protected:
     /**
      * Get players from game.
      * @param count Players count.
-     * @return
+     * @return Players for game.
      */
     std::vector<CPlayer *> LoadPlayers(int count);
 
@@ -134,6 +134,15 @@ protected:
      */
     void CreateCollectibleAtRandomLocation(std::shared_ptr<CBoard> &board, ECollectibleType type, std::size_t score, std::size_t duration);
 
+    /**
+     * Create new CEnemy at random location.
+     * @param board Game board.
+     * @param type Enemy type.
+     * @param lives Number of enemy lives
+     * @param score Score to be achieved.
+     * @param speed Enemy moving speed.
+     * @param wallPass Can the enemy walk through the walls?
+     */
     void CreateEnemyAtRandomLocation(std::shared_ptr<CBoard> &board, EEnemyType type, std::size_t lives, std::size_t score, double speed, bool wallPass);
 
     /**
@@ -160,4 +169,3 @@ protected:
      */
     std::vector<std::shared_ptr<CTexturePack>> LoadCollectiblesTexturePacks() const;
 };
-

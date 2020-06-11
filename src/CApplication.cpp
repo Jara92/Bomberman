@@ -13,39 +13,32 @@ int CApplication::Run(int argc, char *argv[])
                                                                                "Fonts/Piedra-Regular.ttf");
     try
     {
-        interface->InitInterface();
-        EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME;
-        //EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_MENU;
-
-        while (applicationStatus != EApplicationStatus::APPLICATION_STATUS_EXIT)
+        if (interface->InitInterface())
         {
-            // Get manager to be run.
-            std::shared_ptr<CWindowManager> manager = this->GetWindowManagerByState(interface.get(),
-                                                                                    applicationStatus);
+            EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME;
+            //EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_MENU;
 
-            // Run and get next application state.
-            applicationStatus = manager->Run();
+            // Run manager while application is running and get next application state.
+            while (applicationStatus != EApplicationStatus::APPLICATION_STATUS_EXIT)
+            { applicationStatus = this->GetWindowManagerByState(interface.get(), applicationStatus)->Run(); }
         }
     }
     catch (std::ios::failure &ex)
     {
         std::cerr << ex.what() << std::endl;
         interface->ShowMessageBox(SDL_MESSAGEBOX_ERROR, MESSAGE_FILESYSTEM_ERROR, ex.what());
-
         return 1;
     }
     catch (std::exception &ex)
     {
         std::cerr << ex.what() << std::endl;
         interface->ShowMessageBox(SDL_MESSAGEBOX_ERROR, MESSAGE_UNKNOWN_ERROR, ex.what());
-
         return 1;
     }
     catch (...)
     {
         std::cerr << MESSAGE_UNKNOWN_ERROR << std::endl;
         interface->ShowMessageBox(SDL_MESSAGEBOX_ERROR, MESSAGE_UNKNOWN_ERROR, MESSAGE_UNKNOWN_ERROR);
-
         return 1;
     }
 
@@ -53,7 +46,7 @@ int CApplication::Run(int argc, char *argv[])
 }
 
 /*====================================================================================================================*/
-std::shared_ptr <CSettings> CApplication::Init(int argc, char *argv[])
+std::shared_ptr<CSettings> CApplication::Init(int argc, char *argv[])
 {
     // Debug mode
     bool debug = false;
@@ -68,13 +61,12 @@ std::shared_ptr <CSettings> CApplication::Init(int argc, char *argv[])
     // TODO REMOVE
     debug = true;
 
-
     return std::make_shared<CSettings>(CCoord<unsigned int>(1495, 910),
                                        CCoord<unsigned int>(512, 512),
                                        CCoord<unsigned int>(0, 1), 60, true, debug);
 }
 
-std::shared_ptr <CWindowManager>
+std::shared_ptr<CWindowManager>
 CApplication::GetWindowManagerByState(CSDLInterface *interface, EApplicationStatus applicationStatus) const
 {
     switch (applicationStatus)
@@ -88,8 +80,6 @@ CApplication::GetWindowManagerByState(CSDLInterface *interface, EApplicationStat
         case EApplicationStatus::APPLICATION_STATUS_MULTI_GAME:
             return std::make_shared<CGameManager>(interface);
         default:
-            break;
+            throw std::invalid_argument(MESSAGE_INVALID_APPLICATION_STATE);
     }
-
-    throw std::invalid_argument(MESSAGE_INVALID_APPLICATION_STATE);
 }

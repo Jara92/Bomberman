@@ -39,7 +39,7 @@ void CPlayer::VerticalMove(CBoard *board, int deltaTime)
     this->m_Location.m_Y += (this->m_Speed * static_cast<int>(this->m_VerticalMovingDirection)) * deltaTime;
 
     // Check collisions
-    if (!this->LocationIsFree(board))
+    if (!this->CellIsFree(board, this->m_Location))
     {
         this->m_Location = oldLocation;//return;
         // Try center horizontal position if horizontal direction is none
@@ -56,7 +56,7 @@ void CPlayer::HorizontalMove(CBoard *board, int deltaTime)
     this->m_Location.m_X += (this->m_Speed * static_cast<int>(this->m_HorizontalMovingDirection)) * deltaTime;
 
     // Check collisions
-    if (!this->LocationIsFree(board))
+    if (!this->CellIsFree(board, this->m_Location))
     {
         this->m_Location = oldLocation;//return;
         // Try center horizontal position if horizontal direction is none
@@ -114,21 +114,6 @@ void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
         this->m_Location.m_X = std::max(this->m_Location.m_X - this->m_Speed * deltaTime,
                                         std::floor(this->m_Location.m_X));
     }
-}
-
-/*====================================================================================================================*/
-bool CPlayer::LocationIsFree(CBoard *board) const
-{
-    double correction = (1 - this->m_Speed);
-
-    if (!board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X, this->m_Location.m_Y), this) ||
-        !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + correction, this->m_Location.m_Y), this) ||
-        !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X, this->m_Location.m_Y + correction), this) ||
-        !board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + correction, this->m_Location.m_Y + correction),
-                           this))
-    { return false; }
-
-    return true;
 }
 
 /*====================================================================================================================*/
@@ -205,19 +190,6 @@ void CPlayer::Reset()
 {
     CMovable::Reset();
     this->m_ActiveBombs = 0;
-    this->m_IsAlive = true;
     this->m_LevelUp = false;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 

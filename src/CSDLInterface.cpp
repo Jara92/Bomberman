@@ -7,14 +7,6 @@
 
 #include "CSDLInterface.h"
 
-
-CSDLInterface::CSDLInterface(const std::string &title, std::shared_ptr<CSettings> settings,
-                             const std::string &defaultFont)
-        : m_WindowSize(settings->GetMenuScreenSize()), m_WindowTitle(title), m_Settings(std::move(settings)),
-          m_Font(defaultFont), m_Window(nullptr), m_Renderer(nullptr)
-{}
-
-/*====================================================================================================================*/
 CSDLInterface::~CSDLInterface()
 {
     // SDL is C library and it uses NULL
@@ -37,8 +29,7 @@ bool CSDLInterface::InitInterface()
     int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
 
     // Init SDL
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 || IMG_Init(imgFlags) != imgFlags ||
-        TTF_Init() == -1)
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0 || IMG_Init(imgFlags) != imgFlags || TTF_Init() == -1)
     { throw std::runtime_error(SDL_GetError()); }
 
     // Smooth texture rendering
@@ -56,11 +47,7 @@ bool CSDLInterface::InitInterface()
 
     // Check that the window was successfully created
     if (this->m_Window == NULL)
-    {
-        // In the case that the window could not be made...
-        std::cerr << MESSAGE_SDL_WINDOW_ERROR << "\n" << SDL_GetError() << std::endl;
-        return false;
-    }
+    { throw std::runtime_error(std::string(MESSAGE_SDL_WINDOW_ERROR) + "\n" + SDL_GetError()); }
 
     // Init renderer
     this->m_Renderer = SDL_CreateRenderer(this->m_Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE |
@@ -68,11 +55,7 @@ bool CSDLInterface::InitInterface()
 
     // Check that the renderer was successfully created
     if (this->m_Window == NULL)
-    {
-        // In the case that the window could not be made...
-        std::cerr << MESSAGE_SDL_RENDERER_ERROR << "\n" << SDL_GetError() << std::endl;
-        return false;
-    }
+    { throw std::runtime_error(std::string(MESSAGE_SDL_RENDERER_ERROR) + "\n" + SDL_GetError()); }
 
     return true;
 }
@@ -86,20 +69,6 @@ SDL_Texture *CSDLInterface::LoadTexture(const std::string &file) const
     { throw std::ios_base::failure(MESSAGE_TEXTURE_ERROR + (this->m_Settings->GetAssetsPath() + file)); }
 
     return texture;
-}
-
-/*====================================================================================================================*/
-void CSDLInterface::ShowMessageBox(Uint32 flags, const std::string &title, const std::string &message)
-{
-    SDL_ShowSimpleMessageBox(flags, title.c_str(), message.c_str(), this->m_Window);
-}
-
-/*====================================================================================================================*/
-bool CSDLInterface::RenderTexture(SDL_Texture *texture, CCoord<> location, CCoord<> size)
-{
-    SDL_Rect targetRect = {location.ToInt().m_X, location.ToInt().m_Y, size.ToInt().m_X, size.ToInt().m_Y};
-
-    return SDL_RenderCopy(this->m_Renderer, texture, NULL, &targetRect);
 }
 
 /*====================================================================================================================*/
@@ -128,13 +97,6 @@ void CSDLInterface::SetGameScreenSize()
 
         this->UpdateWindowSize();
     }
-}
-
-/*====================================================================================================================*/
-void CSDLInterface::UpdateWindowSize()
-{
-    SDL_SetWindowSize(this->m_Window, this->m_WindowSize.m_X, this->m_WindowSize.m_Y);
-    SDL_SetWindowPosition(this->m_Window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 }
 
 /*====================================================================================================================*/
