@@ -16,7 +16,6 @@ void CEnemyDump::Update(CBoard *board, int deltaTime)
 /*====================================================================================================================*/
 int CEnemyDump::TryKill(unsigned int distance)
 {
-    (void)(distance);
     this->m_Lives--;
 
     // Check lives of the monster

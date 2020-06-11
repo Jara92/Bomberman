@@ -82,8 +82,5 @@ protected:
 
     /** Is current location free? */
     bool CellIsFree(CBoard *board, CCoord<> location) const;
-
-    /** Update animation type.  */
-    virtual void ChooseAnimation() = 0;
 };
 

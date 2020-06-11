@@ -55,8 +55,7 @@ protected:
      * @param board Game board.
      * @return Avaible directions.
      */
-    std::vector<std::pair<ETextureType, CCoord<double>>> GetPossibleMoveDirections(CBoard *board) const;
+    std::vector<std::pair<ETextureType, CCoord<double>>> GetPossibleMoveDirections(CBoard *board) ;
 
-    virtual void ChooseAnimation() override ;
 };
 

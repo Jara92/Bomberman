@@ -8,6 +8,7 @@
 
 void CEnemySmart::Update(CBoard *board, int deltaTime)
 {
+    //CEnemy::Update(board, deltaTime);
     // Todo Smart enemy AI staff
     // Zde budou volány metody chytrého nepřítele
     CCoord<> newLocation = this->m_Location + (m_Direction * deltaTime * this->m_Speed);

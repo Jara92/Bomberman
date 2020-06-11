@@ -199,6 +199,5 @@ protected:
     */
     void HorizontalCenter(CBoard *board, int deltaTime, int direction);
 
-    virtual void ChooseAnimation() override {}
 };
 

@@ -74,7 +74,7 @@ bool CBoard::PlaceBomb(CPlayer *player)
     // If this location is free.
     if (this->m_Bombs.find(location) == this->m_Bombs.end() && this->m_Fires.find(location) == this->m_Fires.end())
     {
-        CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, this->m_BombObjectTexturePack->GetTextureSize(),
+        CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, this->m_BombObjectTexturePack->GetTextureSize() + CCoord<>(0.1,0.1),
                                 location.ToDouble(), player, delay, player->GetRemoteExplosion());
 
         this->m_Bombs.insert({location.ToUnsignedInt(), bomb});
