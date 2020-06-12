@@ -64,6 +64,8 @@ public:
      */
     bool IsPassable(CCoord<unsigned int> coord, const CMovable *movable);
 
+    bool IsEmpty(const CMovable * movable);
+
     /**
      * Is this position totaly free?
      * @param coord Position

@@ -40,7 +40,7 @@ void CPlayer::VerticalMove(CBoard *board, int deltaTime)
     this->m_Location.m_Y += (this->m_Speed * this->m_Movement.m_Y) * deltaTime;
 
     // Check collisions
-    if (!this->CellIsFree(board, this->m_Location))
+    if (!this->CellIsFree(board, deltaTime, this->m_Location))
     {
         this->m_Location = oldLocation;
         // Try center horizontal position if horizontal direction is none
@@ -57,7 +57,7 @@ void CPlayer::HorizontalMove(CBoard *board, int deltaTime)
     this->m_Location.m_X += (this->m_Speed * this->m_Movement.m_X) * deltaTime;
 
     // Check collisions
-    if (!this->CellIsFree(board, this->m_Location))
+    if (!this->CellIsFree(board, deltaTime, this->m_Location))
     {
         this->m_Location = oldLocation;
         // Try center horizontal position if horizontal direction is none
@@ -196,11 +196,13 @@ void CPlayer::UpdateTextureType(CCoord<> oldLocation)
     if (dif.m_X != 0 && dif.m_Y != 0)
     {
         // Set smaller move step to zero.
-        if (std::abs(dif.m_X) >= std::abs(dif.m_Y))
+        if (std::abs(dif.m_X) > std::abs(dif.m_Y))
         { dif.m_Y = 0; }
         else
         { dif.m_X = 0; }
     }
+    if (dif == CCoord<>(0, 0))
+    { dif = -1 * this->m_Movement; }
 
     // Set right texture by movement vector.
     if (dif.m_X < 0)

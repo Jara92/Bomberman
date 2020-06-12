@@ -214,7 +214,7 @@ std::shared_ptr<CTexturePack> CLevelLoader::LoadBombTexturePack() const
                                                                     {"Bomb/Bomb_f02.png"},
                                                                     {"Bomb/Bomb_f03.png"}}}};
 
-    return std::make_shared<CTexturePack>(this->m_Interface, textures, true, CCoord<>(0.80, 0.80));
+    return std::make_shared<CTexturePack>(this->m_Interface, textures, true, CCoord<>(0.9, 0.9));
 }
 
 /*====================================================================================================================*/

@@ -9,40 +9,31 @@
 
 void CEnemyDump::Update(CBoard *board, int deltaTime)
 {
-   // CEnemy::Update(board, deltaTime);
+    CEnemy::Update(board, deltaTime);
 
-    auto directions = this->GetPossibleMoveDirections(board);
+    auto directions = this->GetPossibleMoveDirections(board, deltaTime);
 
     CCoord<> oldLocation = this->m_Location;
 
-    this->m_Location += (this->m_Direction * deltaTime * this->m_Speed);
+    this->m_Location += (this->m_Movement * deltaTime * this->m_Speed);
 
-    if(this->m_Direction == CCoord<>(0,0) || !this->CellIsFree(board, this->m_Location))
+    if(this->m_Movement == CCoord<>(0,0) || !this->CellIsFree(board, deltaTime, this->m_Location))
     {
         this->m_Location = oldLocation;
         if(directions.empty())
         {
-            this->m_Direction = CCoord<>(0,0);
+            this->m_Movement = CCoord<>(0,0);
             this->m_ActualTexture = ETextureType ::TEXTURE_FRONT;
         }
         else
         {
-            if(directions.size() > 2)
-            {
-                this->m_Direction = directions[2].second;
-                this->m_ActualTexture = directions[2].first;
-            }
-            else
-            {
-                this->m_Direction = directions[0].second;
-                this->m_ActualTexture = directions[0].first;
-            }
-            this->m_Location += (this->m_Direction * deltaTime * this->m_Speed);
+            std::size_t random = rand() % directions.size();
+            this->m_Movement = directions[random].second;
+            this->m_ActualTexture = directions[random].first;
+
+            this->m_Location += (this->m_Movement * deltaTime * this->m_Speed);
         }
     }
-
-
-
 }
 
 /*====================================================================================================================*/

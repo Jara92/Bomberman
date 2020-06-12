@@ -8,17 +8,17 @@
 #include "../../CBoard.h"
 
 /*====================================================================================================================*/
-bool CMovable::CellIsFree(CBoard *board, CCoord<> location) const
+bool CMovable::CellIsFree(CBoard *board, int deltaTime, CCoord<> location) const
 {
-    // All player corners must be passable - but we need to correct cell size to check right cells.
-    double correction = (1 - this->m_Speed);
+    // All player corners must be passable - Look deltaTime * oneStep forward.
+    double correction = (1 - deltaTime * this->m_Speed);
 
-   /* if (!board->IsPassable(CCoord<unsigned int>(location.m_X, location.m_Y), this) ||
+    if (!board->IsPassable(CCoord<unsigned int>(location.m_X, location.m_Y), this) ||
         !board->IsPassable(CCoord<unsigned int>(location.m_X + correction, location.m_Y), this) ||
         !board->IsPassable(CCoord<unsigned int>(location.m_X, location.m_Y + correction), this) ||
         !board->IsPassable(CCoord<unsigned int>(location.m_X + correction, location.m_Y + correction),
                            this))
-    { return false; }*/
+    { return false; }
 
     return true;
 }

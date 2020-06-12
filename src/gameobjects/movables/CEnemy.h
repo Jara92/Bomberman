@@ -22,8 +22,7 @@ public:
     */
     explicit CEnemy(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size = CCoord<>(1, 1),
                     int score = 100, double speed = 0.005, bool wallPass = false, int lives = 1)
-            : CMovable(std::move(texturePack), size, location, speed, wallPass, false, lives), m_Score(score),
-              m_Direction({0, 0})
+            : CMovable(std::move(texturePack), size, location, speed, wallPass, false, lives), m_Score(score)
     {}
 
     CEnemy(const CEnemy &other) = default;
@@ -37,7 +36,7 @@ public:
      * @param board Game board.
      * @param deltaTime Delta time.
      */
-    virtual void Update(CBoard *board, int deltaTime) override = 0;
+    virtual void Update(CBoard *board, int deltaTime) override;
 
     /**
      * Try to kill this enemy.
@@ -48,16 +47,15 @@ public:
 
 protected:
     int m_Score;
-    CCoord<> m_Direction;
 
     /**
      * Get avaible moving directions.
      * @param board Game board.
      * @return Avaible directions.
      */
-    std::vector<std::pair<ETextureType, CCoord<double>>> GetPossibleMoveDirections(CBoard *board) ;
+    std::vector<std::pair<ETextureType, CCoord<double>>> GetPossibleMoveDirections(CBoard *board, int deltaTime) ;
 
-    virtual bool CellIsFree(CBoard * board, CCoord<>location) const override;
+   /* virtual bool CellIsFree(CBoard * board, CCoord<>location) const override;*/
 
     bool FreeCell(CBoard * board, CCoord<> newLocation);
 

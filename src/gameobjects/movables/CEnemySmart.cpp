@@ -8,6 +8,8 @@
 
 void CEnemySmart::Update(CBoard *board, int deltaTime)
 {
+    CEnemy::Update(board, deltaTime);
+
 
 }
 

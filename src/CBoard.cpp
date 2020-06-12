@@ -494,6 +494,30 @@ bool CBoard::PlayerDirectionFree(CCoord<unsigned int> location, CPlayer *player,
     return true;
 }
 
+bool CBoard::IsEmpty(const CMovable *movable)
+{
+    CCoord<unsigned int> coord = movable->GetLocationCell();
+    // Array index check.
+    if (coord.m_X < 0 || coord.m_X >= CBoard::m_BoardSize.m_X || coord.m_Y < 0 || coord.m_Y >= CBoard::m_BoardSize.m_Y)
+    { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
+
+    CWall *wall = this->m_Map[coord.m_X][coord.m_Y];
+
+    if (wall && wall->IsAlive() && (!wall->IsDestructible() || !movable->GetWallPass()))
+    { return false; }
+
+    // Search for bombs in location.
+    auto bomb = this->m_Bombs.find(coord);
+    if (bomb != this->m_Bombs.end() && bomb->second && !movable->GetBombPass() && movable->IsColiding(bomb->second))
+    {
+        // Player is not owner or the bomb is not passable for owner
+        if (bomb->second->GetOwner() != movable || !bomb->second->IsPassableForOwner())
+        { return false; }
+    }
+
+    return true;
+}
+
 
 
 

@@ -45,6 +45,13 @@ public:
     { return this->m_IsAlive; }
 
     /**
+    * Get object location cell.
+    * @return Coordinates of cell where the center of this object is located.
+    */
+    CCoord<unsigned int> GetLocationCell() const
+    { return CCoord<unsigned int>(floor(this->m_Location.m_X + 0.5), floor(this->m_Location.m_Y + 0.5)); }
+
+    /**
      * Is this object passable?
     * @return True is the object is passable.
     */
