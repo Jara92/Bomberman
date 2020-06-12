@@ -191,27 +191,28 @@ void CPlayer::Reset()
 void CPlayer::UpdateTextureType(CCoord<> oldLocation)
 {
     // Calculate movement vector.
-    CCoord<> dif = oldLocation - this->m_Location;
+    CCoord<> diff = oldLocation - this->m_Location;
     // Move in both dimensions.
-    if (dif.m_X != 0 && dif.m_Y != 0)
+    if (diff != CCoord<>(0,0))
     {
         // Set smaller move step to zero.
-        if (std::abs(dif.m_X) > std::abs(dif.m_Y))
-        { dif.m_Y = 0; }
+        if (std::abs(diff.m_X) > std::abs(diff.m_Y))
+        { diff.m_Y = 0; }
         else
-        { dif.m_X = 0; }
+        { diff.m_X = 0; }
     }
-    if (dif == CCoord<>(0, 0))
-    { dif = -1 * this->m_Movement; }
+    // Player is not moving. Use input movement direction to setup animation.
+    else
+    { diff = -1 * this->m_Movement; }
 
     // Set right texture by movement vector.
-    if (dif.m_X < 0)
+    if (diff.m_X < 0)
     { this->m_ActualTexture = ETextureType::TEXTURE_RIGHT; }
-    else if (dif.m_X > 0)
+    else if (diff.m_X > 0)
     { this->m_ActualTexture = ETextureType::TEXTURE_LEFT; }
-    else if (dif.m_Y < 0)
+    else if (diff.m_Y < 0)
     { this->m_ActualTexture = ETextureType::TEXTURE_FRONT; }
-    else if (dif.m_Y > 0)
+    else if (diff.m_Y > 0)
     { this->m_ActualTexture = ETextureType::TEXTURE_BACK; }
 }
 

@@ -32,6 +32,6 @@ public:
     int TryKill(unsigned int distance) override;
 
 protected:
-    void WalkAround();
+    void WalkAround(CBoard & board, int deltaTime);
 };
 
