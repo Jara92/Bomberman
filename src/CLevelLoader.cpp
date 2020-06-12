@@ -214,7 +214,7 @@ std::shared_ptr<CTexturePack> CLevelLoader::LoadBombTexturePack() const
                                                                     {"Bomb/Bomb_f02.png"},
                                                                     {"Bomb/Bomb_f03.png"}}}};
 
-    return std::make_shared<CTexturePack>(this->m_Interface, textures, true, CCoord<>(0.65, 0.65));
+    return std::make_shared<CTexturePack>(this->m_Interface, textures, true, CCoord<>(0.80, 0.80));
 }
 
 /*====================================================================================================================*/
@@ -227,7 +227,7 @@ std::shared_ptr<CTexturePack> CLevelLoader::LoadFireTexturePack() const
                                                                     {"Flame/Flame_f03.png"},
                                                                     {"Flame/Flame_f04.png"}}}};
 
-    return std::make_shared<CTexturePack>(this->m_Interface, textures, true, CCoord<>(0.65, 0.65));
+    return std::make_shared<CTexturePack>(this->m_Interface, textures, true, CCoord<>(0.8, 0.8));
 }
 
 /*====================================================================================================================*/
@@ -285,8 +285,8 @@ std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadEnemyTexturePacks()
                                                                             {"Creep/Pink/Right/Right_f04.png"},
                                                                             {"Creep/Pink/Right/Right_f05.png"}}}}};
     std::vector<CCoord<>> sizes{
-            {0.8, 0.8},
-            {0.8, 0.8}
+            {1, 1},
+            {1, 1}
     };
 
     // Create texture packs shared pointers.
@@ -525,7 +525,7 @@ void CLevelLoader::CreateEnemyAtRandomLocation(std::shared_ptr<CBoard> &board, E
                                                std::size_t score, double speed, bool wallPass)
 {
     unsigned int typeInt = static_cast<unsigned int>(type);
-    CCoord<> enemySize = CCoord<>(0.8, 0.8);
+    CCoord<> enemySize = CCoord<>(0.9, 0.9);
 
     switch (type)
     {

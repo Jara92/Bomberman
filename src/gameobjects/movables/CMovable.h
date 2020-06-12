@@ -1,13 +1,10 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
 
 #pragma once
 
-
 #include "../CGameObject.h"
-#include "../../EDirection.h"
 
 class CMovable : public CGameObject
 {

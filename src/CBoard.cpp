@@ -37,10 +37,9 @@ CBoard::~CBoard()
 /*====================================================================================================================*/
 bool CBoard::IsPassable(CCoord<unsigned int> coord, const CMovable *movable)
 {
-    // TODO zde je polymorfism
     // Array index check.
     if (coord.m_X < 0 || coord.m_X >= CBoard::m_BoardSize.m_X || coord.m_Y < 0 || coord.m_Y >= CBoard::m_BoardSize.m_Y)
-    { std::cout << coord << std::endl; throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
+    { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
 
     CWall *wall = this->m_Map[coord.m_X][coord.m_Y];
 
@@ -74,7 +73,7 @@ bool CBoard::PlaceBomb(CPlayer *player)
     // If this location is free.
     if (this->m_Bombs.find(location) == this->m_Bombs.end() && this->m_Fires.find(location) == this->m_Fires.end())
     {
-        CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, this->m_BombObjectTexturePack->GetTextureSize() + CCoord<>(0.1,0.1),
+        CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, this->m_BombObjectTexturePack->GetTextureSize(),
                                 location.ToDouble(), player, delay, player->GetRemoteExplosion());
 
         this->m_Bombs.insert({location.ToUnsignedInt(), bomb});

@@ -199,7 +199,7 @@ protected:
     */
     void HorizontalCenter(CBoard *board, int deltaTime, int direction);
 
-    void SetTextureType(CCoord<> oldLocation);
+    void UpdateTextureType(CCoord<> oldLocation);
 
 };
 

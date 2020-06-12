@@ -8,6 +8,10 @@
 std::vector<std::pair<ETextureType, CCoord<double>>> CEnemy::GetPossibleMoveDirections(CBoard *board)
 {
     CCoord<> oldLocation = this->m_Location;
+
+    CCoord<> center = CCoord<>(this->m_Location.m_X + 0.5, this->m_Location.m_Y + 0.5);
+
+
     std::vector<std::pair<ETextureType, CCoord<double>>> outputDirections;
     // Create directional vectors and texture types.
     double correction = (1 - this->m_Speed);
@@ -20,15 +24,26 @@ std::vector<std::pair<ETextureType, CCoord<double>>> CEnemy::GetPossibleMoveDire
                                                                  {ETextureType::TEXTURE_LEFT,  CCoord<double>(
                                                                          -correction, 0)}};
     // Test every directional vector.
+    std::cout << "Avaibles:=================" << std::endl;
     for (unsigned int i = 0; i < directions.size(); i++)
     {
-        this->m_Location = this->m_Location + (directions[i].second / 2);
-        auto a = this->m_Location + (directions[i].second);
-        if (this->CellIsFree(board, a))
-        { outputDirections.push_back(directions[i]); }
+       // this->m_Location = this->m_Location;//; + (directions[i].second);
+     //   CCoord<> cell = center + directions[i].second;
+       // this->m_Location = cell - CCoord<>(0.5,0.5);
+
+        if(this->CellIsFree(board, this->m_Location))
+        {
+            outputDirections.push_back(directions[i]);
+            std::cout << "avaible: " << directions[i].second << std::endl;
+        }
+
+       /* if (this->CellIsFree(board, cell))
+        { }*/
+
+        this->m_Location = oldLocation;
     }
 
-    this->m_Location = oldLocation;
+
 
     return outputDirections;
 }

@@ -12,27 +12,23 @@ void CPlayer::Update(CBoard *board, int deltaTime)
 {
     CMovable::Update(board, deltaTime);
 
+    // Save old location to calculate actual movement vector.
     CCoord<> oldLocation = this->m_Location;
 
-    // Movement in vertical and horizontal axis
+    // Movement in vertical and horizontal axis and update texture by movement.
     this->HorizontalMove(board, deltaTime);
     this->VerticalMove(board, deltaTime);
-    std::cout << this->m_Movement << std::endl;
+    this->UpdateTextureType(oldLocation);
 
-    // Plating action
+    // Plating action.
     if (this->m_IsPlanting)
     { this->TryPlaceBomb(board); }
 
-    // Detonation action
+    // Detonation action.
     if (this->m_IsDetonating)
-    {
-        this->m_DetonatingAvaible = false;
-        board->DetonateBombs(this);
-    }
+    { board->DetonateBombs(this); }
 
-    this->SetTextureType(oldLocation);
-
-    // Clean input
+    // Clean input.
     this->m_IsDetonating = this->m_IsPlanting = false;
     this->m_Movement = CCoord<>(0, 0);
 }
@@ -46,7 +42,7 @@ void CPlayer::VerticalMove(CBoard *board, int deltaTime)
     // Check collisions
     if (!this->CellIsFree(board, this->m_Location))
     {
-        this->m_Location = oldLocation;//return;
+        this->m_Location = oldLocation;
         // Try center horizontal position if horizontal direction is none
         // This handles problems with turning. When the player is close to turn I will try to center his position to allow him turn this direction.
         if (m_Movement.m_X == 0)
@@ -63,7 +59,7 @@ void CPlayer::HorizontalMove(CBoard *board, int deltaTime)
     // Check collisions
     if (!this->CellIsFree(board, this->m_Location))
     {
-        this->m_Location = oldLocation;//return;
+        this->m_Location = oldLocation;
         // Try center horizontal position if horizontal direction is none
         // This handles problems with turning. When the player is close to turn I will try to center his position to allow him turn this direction.
         if (m_Movement.m_Y == 0)
@@ -78,6 +74,7 @@ void CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
     double decPart, intpart;
     decPart = modf(this->m_Location.m_Y, &intpart);
 
+    // Turn smoothly when player is very close to empty cell
     if ((decPart >= CPlayer::MIN_TURNING_VALUE) &&
         board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + direction, std::ceil(this->m_Location.m_Y)),
                           this))
@@ -85,15 +82,15 @@ void CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
         this->m_Location.m_Y = std::min(this->m_Location.m_Y + this->m_Speed * deltaTime,
                                         std::ceil(this->m_Location.m_Y));
 
-    }
-        // TODO comment this
-    else if ((decPart <= CPlayer::MAX_TURNING_VALUE) &&
-             board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + direction, std::floor(this->m_Location.m_Y)),
-                               this))
+    } else if ((decPart <= CPlayer::MAX_TURNING_VALUE) &&
+               board->IsPassable(
+                       CCoord<unsigned int>(this->m_Location.m_X + direction, std::floor(this->m_Location.m_Y)),
+                       this))
     {
         this->m_Location.m_Y = std::max(this->m_Location.m_Y - this->m_Speed * deltaTime,
                                         std::floor(this->m_Location.m_Y));
     }
+
 }
 
 /*====================================================================================================================*/
@@ -103,6 +100,7 @@ void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
     double decPart, intpart;
     decPart = modf(this->m_Location.m_X, &intpart);
 
+    // Turn smoothly when player is very close to empty cell
     if ((decPart >= CPlayer::MAX_TURNING_VALUE) &&
         board->IsPassable(CCoord<unsigned int>(std::ceil(this->m_Location.m_X), this->m_Location.m_Y + direction),
                           this))
@@ -110,15 +108,15 @@ void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
         this->m_Location.m_X = std::min(this->m_Location.m_X + this->m_Speed * deltaTime,
                                         std::ceil(this->m_Location.m_X));
 
-    }
-        // TODO comment this
-    else if ((decPart <= CPlayer::MIN_TURNING_VALUE) &&
-             board->IsPassable(CCoord<unsigned int>(std::floor(this->m_Location.m_X), this->m_Location.m_Y + direction),
-                               this))
+    } else if ((decPart <= CPlayer::MIN_TURNING_VALUE) &&
+               board->IsPassable(
+                       CCoord<unsigned int>(std::floor(this->m_Location.m_X), this->m_Location.m_Y + direction),
+                       this))
     {
         this->m_Location.m_X = std::max(this->m_Location.m_X - this->m_Speed * deltaTime,
                                         std::floor(this->m_Location.m_X));
     }
+
 }
 
 /*====================================================================================================================*/
@@ -154,6 +152,7 @@ void CPlayer::HandleInput(const Uint8 *keyState)
             this->m_DetonatingAvaible = false;
             this->m_IsDetonating = true;
         }
+
             // Detonating is not avaible until the button is released
         else if (!keyState[this->m_Controls->m_Detonation])
         { this->m_DetonatingAvaible = true; }
@@ -188,17 +187,22 @@ void CPlayer::Reset()
     this->m_LevelUp = false;
 }
 
-void CPlayer::SetTextureType(CCoord<> oldLocation)
+/*====================================================================================================================*/
+void CPlayer::UpdateTextureType(CCoord<> oldLocation)
 {
+    // Calculate movement vector.
     CCoord<> dif = oldLocation - this->m_Location;
+    // Move in both dimensions.
     if (dif.m_X != 0 && dif.m_Y != 0)
     {
+        // Set smaller move step to zero.
         if (std::abs(dif.m_X) >= std::abs(dif.m_Y))
         { dif.m_Y = 0; }
         else
         { dif.m_X = 0; }
     }
 
+    // Set right texture by movement vector.
     if (dif.m_X < 0)
     { this->m_ActualTexture = ETextureType::TEXTURE_RIGHT; }
     else if (dif.m_X > 0)
