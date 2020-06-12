@@ -26,8 +26,7 @@ public:
                       bool bombPass = false, int lives = 1)
             : CGameObject(std::move(texturePack), size, location, true), // every movable object is passable
               m_StartingLocation(location), m_Speed(speed), m_WallPass(wallPass), m_BombPass(bombPass),
-              m_VerticalMovingDirection(EDirection::DIRECTION_NONE),
-              m_HorizontalMovingDirection(EDirection::DIRECTION_NONE), m_Lives(lives)
+              m_Movement(CCoord<>(0, 0)), m_Lives(lives)
     {}
 
     CMovable(const CMovable &other) = default;
@@ -77,10 +76,10 @@ protected:
     double m_Speed;
     bool m_WallPass, m_BombPass;
 
-    EDirection m_VerticalMovingDirection, m_HorizontalMovingDirection;
+    CCoord<> m_Movement;
     int m_Lives;
 
     /** Is current location free? */
-    bool CellIsFree(CBoard *board, CCoord<> location) const;
+    virtual bool CellIsFree(CBoard *board, CCoord<> location) const;
 };
 

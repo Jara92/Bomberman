@@ -32,3 +32,22 @@ std::vector<std::pair<ETextureType, CCoord<double>>> CEnemy::GetPossibleMoveDire
 
     return outputDirections;
 }
+
+bool CEnemy::CellIsFree(CBoard *board, CCoord<> location) const
+{
+    return CMovable::CellIsFree(board, location);
+}
+
+bool CEnemy::FreeCell(CBoard *board, CCoord<> newLocation)
+{
+    CCoord<> diff = this->m_Location - newLocation;
+
+
+
+
+}
+
+CCoord<> CEnemy::FindWayOut(CBoard *board)
+{
+    return CCoord<>(0, -1);
+}

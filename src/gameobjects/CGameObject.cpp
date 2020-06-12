@@ -22,16 +22,16 @@ void CGameObject::Draw(CSDLInterface *interface, int cellSize, CCoord<> location
                              cellSize * this->m_TexturePack->GetTextureSize());
 
     // FIXME debug
-    /*  CCoord center = ((CCoord(1, 1) - this->m_Size) / 2);
+      CCoord<> center = ((CCoord<>(1, 1) - this->m_Size) / 2);
 
 
     interface->SetRenderColor(0, 255, 0, 255);
-    SDL_Rect rect{static_cast<int>((this->m_Location.m_X + center.m_X) * cellSize),
-                  static_cast<int>((this->m_Location.m_Y + center.m_Y) * cellSize),
+    SDL_Rect rect{static_cast<int>((this->m_Location.m_X + center.m_X + offset.m_X) * cellSize),
+                  static_cast<int>((this->m_Location.m_Y + center.m_Y + offset.m_Y) * cellSize),
                   static_cast<int>(cellSize * this->GetSize().m_X ), static_cast<int>(cellSize * this->GetSize().m_Y)};
     interface->RenderRectangle(&rect);
     interface->SetRenderColor(255, 0, 0, 255);
-    */
+
 }
 
 /*====================================================================================================================*/

@@ -57,5 +57,10 @@ protected:
      */
     std::vector<std::pair<ETextureType, CCoord<double>>> GetPossibleMoveDirections(CBoard *board) ;
 
+    virtual bool CellIsFree(CBoard * board, CCoord<>location) const override;
+
+    bool FreeCell(CBoard * board, CCoord<> newLocation);
+
+    CCoord<> FindWayOut(CBoard * board);
 };
 

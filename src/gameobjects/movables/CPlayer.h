@@ -29,7 +29,7 @@ public:
                      CControls *controls = nullptr,
                      double speed = 0.0025, int lives = 3)
             : CMovable(std::move(texturePack), size, location, speed, false, false, lives ), m_Score(0), m_ExplosionRadius(1),
-              m_MaxBombs(1), m_ActiveBombs(0), m_RemoteExplosion(false), m_FireImmunity(false),
+              m_MaxBombs(15), m_ActiveBombs(0), m_RemoteExplosion(true), m_FireImmunity(true),
               m_PlantingAvaible(false), m_IsPlanting(false), m_DetonatingAvaible(false), m_IsDetonating(false),
               m_LevelUp(false), m_Controls(controls)
     {/*this->m_Lives = 0;*/}
@@ -198,6 +198,8 @@ protected:
     * @param direction Direction
     */
     void HorizontalCenter(CBoard *board, int deltaTime, int direction);
+
+    void SetTextureType(CCoord<> oldLocation);
 
 };
 

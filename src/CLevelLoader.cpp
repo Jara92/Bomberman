@@ -80,7 +80,7 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
                 // We just need to fill array MAP_WIDTH x MAP_HEIGHT - we are not interested in the remaining data
                 if (wallLocation.m_X >= MAP_WIDTH || wallLocation.m_Y >= MAP_HEIGHT)
                 { break; }
-                map[wallLocation.m_X][wallLocation.m_Y] = new CWall(texturePack, wallLocation.ToDouble());
+                map[wallLocation.m_X][wallLocation.m_Y] = new CWall(texturePack, CCoord<>(1,1), wallLocation.ToDouble());
             }
         }
 
@@ -164,7 +164,7 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
     {
         players.push_back(
                 new CPlayer(std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i], false, CCoord<>(1, 2)),
-                            startingLocation[i], CCoord<>(0.5, 0.75), controls[i]));
+                            startingLocation[i], CCoord<>(0.6, 0.75), controls[i]));
         controls[i] = nullptr;
     }
 
@@ -525,7 +525,7 @@ void CLevelLoader::CreateEnemyAtRandomLocation(std::shared_ptr<CBoard> &board, E
                                                std::size_t score, double speed, bool wallPass)
 {
     unsigned int typeInt = static_cast<unsigned int>(type);
-    CCoord<> enemySize = CCoord<>(0.5, 0.5);
+    CCoord<> enemySize = CCoord<>(0.8, 0.8);
 
     switch (type)
     {

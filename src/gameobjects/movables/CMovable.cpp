@@ -27,8 +27,7 @@ bool CMovable::CellIsFree(CBoard *board, CCoord<> location) const
 void CMovable::Animate(int deltaTime)
 {
     // Animate object when moving
-    if (this->m_VerticalMovingDirection != EDirection::DIRECTION_NONE ||
-        this->m_HorizontalMovingDirection != EDirection::DIRECTION_NONE)
+    if (this->m_Movement != CCoord<>(0, 0))
     { CGameObject::Animate(deltaTime); }
 }
 

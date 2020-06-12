@@ -12,9 +12,12 @@ void CPlayer::Update(CBoard *board, int deltaTime)
 {
     CMovable::Update(board, deltaTime);
 
+    CCoord<> oldLocation = this->m_Location;
+
     // Movement in vertical and horizontal axis
     this->HorizontalMove(board, deltaTime);
     this->VerticalMove(board, deltaTime);
+    std::cout << this->m_Movement << std::endl;
 
     // Plating action
     if (this->m_IsPlanting)
@@ -27,16 +30,18 @@ void CPlayer::Update(CBoard *board, int deltaTime)
         board->DetonateBombs(this);
     }
 
+    this->SetTextureType(oldLocation);
+
     // Clean input
     this->m_IsDetonating = this->m_IsPlanting = false;
-    this->m_VerticalMovingDirection = this->m_HorizontalMovingDirection = EDirection::DIRECTION_NONE;
+    this->m_Movement = CCoord<>(0, 0);
 }
 
 /*====================================================================================================================*/
 void CPlayer::VerticalMove(CBoard *board, int deltaTime)
 {
     CCoord<> oldLocation = this->m_Location;
-    this->m_Location.m_Y += (this->m_Speed * static_cast<int>(this->m_VerticalMovingDirection)) * deltaTime;
+    this->m_Location.m_Y += (this->m_Speed * this->m_Movement.m_Y) * deltaTime;
 
     // Check collisions
     if (!this->CellIsFree(board, this->m_Location))
@@ -44,8 +49,8 @@ void CPlayer::VerticalMove(CBoard *board, int deltaTime)
         this->m_Location = oldLocation;//return;
         // Try center horizontal position if horizontal direction is none
         // This handles problems with turning. When the player is close to turn I will try to center his position to allow him turn this direction.
-        if (m_HorizontalMovingDirection == EDirection::DIRECTION_NONE)
-        { this->HorizontalCenter(board, deltaTime, static_cast<int>(this->m_VerticalMovingDirection)); }
+        if (m_Movement.m_X == 0)
+        { this->HorizontalCenter(board, deltaTime, static_cast<int>(this->m_Movement.m_Y)); }
     }
 }
 
@@ -53,7 +58,7 @@ void CPlayer::VerticalMove(CBoard *board, int deltaTime)
 void CPlayer::HorizontalMove(CBoard *board, int deltaTime)
 {
     CCoord<> oldLocation = this->m_Location;
-    this->m_Location.m_X += (this->m_Speed * static_cast<int>(this->m_HorizontalMovingDirection)) * deltaTime;
+    this->m_Location.m_X += (this->m_Speed * this->m_Movement.m_X) * deltaTime;
 
     // Check collisions
     if (!this->CellIsFree(board, this->m_Location))
@@ -61,8 +66,8 @@ void CPlayer::HorizontalMove(CBoard *board, int deltaTime)
         this->m_Location = oldLocation;//return;
         // Try center horizontal position if horizontal direction is none
         // This handles problems with turning. When the player is close to turn I will try to center his position to allow him turn this direction.
-        if (m_VerticalMovingDirection == EDirection::DIRECTION_NONE)
-        { this->VerticalCenter(board, deltaTime, static_cast<int>(this->m_HorizontalMovingDirection)); }
+        if (m_Movement.m_Y == 0)
+        { this->VerticalCenter(board, deltaTime, static_cast<int>(this->m_Movement.m_X)); }
     }
 }
 
@@ -124,24 +129,14 @@ void CPlayer::HandleInput(const Uint8 *keyState)
     {
         // movement
         if (keyState[this->m_Controls->m_Up])
-        {
-            this->m_VerticalMovingDirection = EDirection::DIRECTION_UP;
-            this->m_ActualTexture = ETextureType::TEXTURE_BACK;
-        } else if (keyState[this->m_Controls->m_Down])
-        {
-            this->m_VerticalMovingDirection = EDirection::DIRECTION_DOWN;
-            this->m_ActualTexture = ETextureType::TEXTURE_FRONT;
-        }
+        { this->m_Movement.m_Y = -1; }
+        else if (keyState[this->m_Controls->m_Down])
+        { this->m_Movement.m_Y = 1; }
 
         if (keyState[this->m_Controls->m_Left])
-        {
-            this->m_HorizontalMovingDirection = EDirection::DIRECTION_LEFT;
-            this->m_ActualTexture = ETextureType::TEXTURE_LEFT;
-        } else if (keyState[this->m_Controls->m_Right])
-        {
-            this->m_HorizontalMovingDirection = EDirection::DIRECTION_RIGHT;
-            this->m_ActualTexture = ETextureType::TEXTURE_RIGHT;
-        }
+        { this->m_Movement.m_X = -1; }
+        else if (keyState[this->m_Controls->m_Right])
+        { this->m_Movement.m_X = 1; }
 
         // Planting action
         if (keyState[this->m_Controls->m_PlaceBomb] && this->m_PlantingAvaible)
@@ -180,8 +175,8 @@ void CPlayer::Kill()
 {
     if (this->m_IsAlive)
     {
-        this->m_Lives--;
-        this->m_IsAlive = false;
+        //this->m_Lives--;
+        // this->m_IsAlive = false;
     }
 }
 
@@ -191,5 +186,26 @@ void CPlayer::Reset()
     CMovable::Reset();
     this->m_ActiveBombs = 0;
     this->m_LevelUp = false;
+}
+
+void CPlayer::SetTextureType(CCoord<> oldLocation)
+{
+    CCoord<> dif = oldLocation - this->m_Location;
+    if (dif.m_X != 0 && dif.m_Y != 0)
+    {
+        if (std::abs(dif.m_X) >= std::abs(dif.m_Y))
+        { dif.m_Y = 0; }
+        else
+        { dif.m_X = 0; }
+    }
+
+    if (dif.m_X < 0)
+    { this->m_ActualTexture = ETextureType::TEXTURE_RIGHT; }
+    else if (dif.m_X > 0)
+    { this->m_ActualTexture = ETextureType::TEXTURE_LEFT; }
+    else if (dif.m_Y < 0)
+    { this->m_ActualTexture = ETextureType::TEXTURE_FRONT; }
+    else if (dif.m_Y > 0)
+    { this->m_ActualTexture = ETextureType::TEXTURE_BACK; }
 }
 

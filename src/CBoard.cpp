@@ -37,10 +37,10 @@ CBoard::~CBoard()
 /*====================================================================================================================*/
 bool CBoard::IsPassable(CCoord<unsigned int> coord, const CMovable *movable)
 {
-    // TODO zde je polymorfismus.
+    // TODO zde je polymorfism
     // Array index check.
     if (coord.m_X < 0 || coord.m_X >= CBoard::m_BoardSize.m_X || coord.m_Y < 0 || coord.m_Y >= CBoard::m_BoardSize.m_Y)
-    { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
+    { std::cout << coord << std::endl; throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
 
     CWall *wall = this->m_Map[coord.m_X][coord.m_Y];
 
