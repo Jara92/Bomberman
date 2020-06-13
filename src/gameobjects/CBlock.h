@@ -24,7 +24,7 @@ public:
     */
     CBlock(std::shared_ptr<CTexturePack> texturePack, bool isPassable = false, CCoord<> size = {1,1})
     : m_TexturePack(std::move(texturePack)), m_Size(size), m_IsAlive(true),  m_IsPassable(isPassable), m_AnimationIndex(0),
-    m_AnimationTimer(0), m_AnimationUpdateInterval(100)
+    m_AnimationUpdateInterval(100), m_AnimationTimer(0)
     {}
 
     CBlock(const CBlock &other) = default;

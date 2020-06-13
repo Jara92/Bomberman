@@ -144,9 +144,7 @@ public:
 
     /** Saved objects */
     std::vector<CPlayer *> m_Players;
-    std::vector<CEnemy *> m_Enemies;
     std::map<CCoord<unsigned int>, CCollectible *> m_Collectibles;
-    std::map<CCoord<unsigned int>, CBomb *> m_Bombs;
     std::vector<std::vector<CBlock *>> m_Map;
     std::vector<CGameObject *> m_GameObjects;
 

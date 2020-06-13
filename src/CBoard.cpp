@@ -17,14 +17,6 @@ CBoard::~CBoard()
     { delete this->m_Players[i]; }
     this->m_Players.clear();
 
-    for (size_t i = 0; i < this->m_Enemies.size(); i++)
-    { delete this->m_Enemies[i]; }
-    this->m_Enemies.clear();
-
-    for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
-    { delete i->second; }
-    this->m_Bombs.clear();
-
     for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
     { delete i->second; }
     this->m_Collectibles.clear();
@@ -67,8 +59,7 @@ bool CBoard::PlaceBomb(CPlayer *player)
     if (player->GetRemoteExplosion())
     { delay = 100; }
 
-    CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, this->m_BombObjectTexturePack->GetTextureSize(), player,
-                            delay, player->GetRemoteExplosion());
+    CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, CCoord<>(1, 1), player, delay, player->GetRemoteExplosion());
     this->m_Map[location.m_X][location.m_Y] = bomb;
 
     return true;
@@ -77,11 +68,11 @@ bool CBoard::PlaceBomb(CPlayer *player)
 /*====================================================================================================================*/
 void CBoard::DetonateBombs(const CPlayer *player)
 {
-  /*  for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
-    {
-        if (i->second->GetOwner() == player)
-        { i->second->Detonate(*this); }
-    }*/
+    /*  for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
+      {
+          if (i->second->GetOwner() == player)
+          { i->second->Detonate(*this); }
+      }*/
 }
 
 /*====================================================================================================================*/
@@ -105,6 +96,9 @@ void CBoard::CreateExplosion(CBomb *bomb, CCoord<unsigned int> bombLocation)
             for (int i = 0; i < 4; i++)
             { this->CreateExplosionWave(bombLocation, directions[i], explosionRadius); }
         }
+
+        // Remove from the list of requests.
+        this->m_BombsToExplode.erase(bomb);
     }
 }
 
@@ -209,20 +203,6 @@ void CBoard::Draw(CSDLInterface &interface, CCoord<> offset)
         }
     }
 
-    // draw bombs
-    for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
-    {
-        if (i->second)
-        { i->second->Draw(interface, this->m_CellSize, i->first.ToDouble(), offset); }
-    }
-
-    // Draw enemies
-    for (size_t i = 0; i < this->m_Enemies.size(); i++)
-    {
-        if (this->m_Enemies[i])
-        { this->m_Enemies[i]->Draw(interface, this->m_CellSize, this->m_Enemies[i]->GetLocation(), offset); }
-    }
-
     // TODO změnit pořadí renderu tak, aby nejdříve byly renderovány objekty, které jsou vespod.
     // draw players
     for (size_t i = 0; i < this->m_Players.size(); i++)
@@ -250,8 +230,8 @@ void CBoard::Update(int deltaTime)
                 else if (this->m_Map[i][j]->IsAlive())
                 { this->m_Map[i][j]->Update(*this, deltaTime); }
             }
-                // Delete dead objects.
-            if(this->m_Map[i][j] && !this->m_Map[i][j]->IsAlive())
+            // Delete dead objects.
+            if (this->m_Map[i][j] && !this->m_Map[i][j]->IsAlive())
             {
                 delete this->m_Map[i][j];
                 this->m_Map[i][j] = nullptr;
@@ -270,13 +250,6 @@ void CBoard::Update(int deltaTime)
     for (size_t i = 0; i < this->m_Players.size(); i++)
     { this->m_Players[i]->Update(*this, deltaTime); }
 
-    // Update enemies
-    for (size_t i = 0; i < this->m_Enemies.size(); i++)
-    {
-        // Polymorphic call
-        this->m_Enemies[i]->Update(*this, deltaTime);
-    }
-
     // Update collectibles
     for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end();/* i++*/)
     {
@@ -289,17 +262,6 @@ void CBoard::Update(int deltaTime)
             // Remove null item
             this->m_Collectibles.erase(item);
         }
-    }
-
-    // Update bombs
-    for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end();/* i++*/)
-    {
-        // Save iterator to next object because current bomb could be removed in Update().
-        auto item = i++;
-        if (item->second)
-        { item->second->Update(*this, deltaTime); }
-        else
-        { this->m_Bombs.erase(item); /* Remove null item*/ }
     }
 }
 
@@ -317,7 +279,7 @@ void CBoard::UpdatePhysicEvents()
                   {(*player)->CollisionWith(*(*object));}*/
             }
 
-            return;
+     return;
 
             // Collectible collision - Apply collectible on the player.
             for (auto collectible = this->m_Collectibles.begin();
@@ -340,12 +302,12 @@ void CBoard::UpdatePhysicEvents()
              }*/
 
             // Enemy collision - Kill the player.
-            for (auto enemy = this->m_Enemies.begin(); enemy != this->m_Enemies.end(); enemy++)
+            /*for (auto enemy = this->m_Enemies.begin(); enemy != this->m_Enemies.end(); enemy++)
             {
                 if (*enemy && (*enemy)->IsAlive() &&
                     (*player)->IsColliding((*enemy)))
                 { (*player)->Kill(); }
-            }
+            }*/
         }
     }
 
@@ -380,14 +342,6 @@ void CBoard::ClearBoard(bool clearLevelObjects)
     if (clearLevelObjects)
     { this->m_GameObjects.clear(); }
 
-    // Delete bombs
-    for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
-    {
-        delete (i->second);
-        i->second = nullptr;
-    }
-    this->m_Bombs.clear();
-
     // Rerun players locations
     for (size_t i = 0; i < this->m_Players.size(); i++)
     { this->m_Players[i]->Reset(*this); }
@@ -402,19 +356,12 @@ bool CBoard::PositionFree(CCoord<unsigned int> coord)
 
     // Check walls
     if (this->m_Map[coord.m_X][coord.m_Y] != nullptr ||
-        this->m_Bombs.find(coord) != this->m_Bombs.end() ||
         this->m_Collectibles.find(coord) != this->m_Collectibles.end())
     { return false; }
 
     for (size_t i = 0; i < this->m_Players.size(); i++)
     {
         if (m_Players[i]->GetLocation().AlmostEqual(coord.ToDouble()))
-        { return false; }
-    }
-
-    for (size_t i = 0; i < this->m_Enemies.size(); i++)
-    {
-        if (m_Enemies[i]->GetLocation().AlmostEqual(coord.ToDouble()))
         { return false; }
     }
 
