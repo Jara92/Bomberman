@@ -6,7 +6,7 @@
 
 #include "CEnemySmart.h"
 
-void CEnemySmart::Update(CBoard *board, int deltaTime)
+void CEnemySmart::Update(CBoard &board, int deltaTime)
 {
     CEnemy::Update(board, deltaTime);
 

@@ -27,8 +27,7 @@ public:
                          CCoord <>location = CCoord<>(0, 0), bool isPassable = false)
             : m_TexturePack(std::move(texturePack)), m_ActualTexture(ETextureType::TEXTURE_FRONT),
               m_IsPassable(isPassable), m_IsAlive(true), m_Size(size), m_Location(location), m_AnimationIndex(0),
-              m_AnimationUpdateInterval(100),
-              m_AnimationTimer(0)
+              m_AnimationUpdateInterval(100), m_AnimationTimer(0)
     {}
 
     CGameObject(const CGameObject &other) = default;
@@ -69,24 +68,8 @@ public:
     * @param board Game board
     * @param deltaTime DeltaTime
     */
-    virtual void Update(CBoard *board, int deltaTime)
+    virtual void Update(CBoard &board, int deltaTime)
     { this->Animate(deltaTime); }
-
-    /**
-     * Update animation state
-     * @param deltaTime DeltaTime
-     */
-    virtual void Animate(int deltaTime)
-    {
-        this->m_AnimationTimer += deltaTime;
-
-        if (this->m_AnimationTimer >= this->m_AnimationUpdateInterval)
-        {
-            this->m_AnimationIndex++;
-
-            this->m_AnimationTimer = 0;
-        }
-    }
 
     /**
      * Draw the gameobject
@@ -122,6 +105,20 @@ protected:
     mutable unsigned int m_AnimationIndex;
     unsigned int m_AnimationUpdateInterval;
     unsigned int m_AnimationTimer;
+
+    /**
+    * Update animation state
+    * @param deltaTime DeltaTime
+    */
+    virtual void Animate(int deltaTime)
+    {
+        this->m_AnimationTimer += deltaTime;
+        if (this->m_AnimationTimer >= this->m_AnimationUpdateInterval)
+        {
+            this->m_AnimationIndex++;
+            this->m_AnimationTimer = 0;
+        }
+    }
 
     /**
     * Returns the texture to be rendered.

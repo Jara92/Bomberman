@@ -7,11 +7,11 @@
 #include "CEnemyDump.h"
 #include "../../CBoard.h"
 
-void CEnemyDump::Update(CBoard *board, int deltaTime)
+void CEnemyDump::Update(CBoard &board, int deltaTime)
 {
     CEnemy::Update(board, deltaTime);
 
-    this->WalkAround(*board, deltaTime);
+    this->WalkAround(board, deltaTime);
 }
 
 /*====================================================================================================================*/
@@ -40,11 +40,11 @@ void CEnemyDump::WalkAround(CBoard & board, int deltaTime)
     this->m_Location += (this->m_Movement * deltaTime * this->m_Speed);
 
     // If enemy stands still or new location is not free.
-    if(this->m_Movement == CCoord<>(0,0) || !this->CellIsFree(&board, deltaTime, this->m_Location))
+    if(this->m_Movement == CCoord<>(0,0) || !this->CellIsFree(board, deltaTime, this->m_Location))
     {
         // Recover location and get avaible directions to go.
         this->m_Location = oldLocation;
-        auto directions = this->GetPossibleMoveDirections(&board, deltaTime);
+        auto directions = this->GetPossibleMoveDirections(board, deltaTime);
 
         // Stand still if there is no direction to go.
         if(directions.empty())

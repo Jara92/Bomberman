@@ -32,7 +32,7 @@ public:
 
     virtual ~CCollectible() = default;
 
-    virtual void Update(CBoard *board, int deltaTime) override = 0;
+    virtual void Update(CBoard &board, int deltaTime) override = 0;
 
     /**
      * Apply collectible on the player.

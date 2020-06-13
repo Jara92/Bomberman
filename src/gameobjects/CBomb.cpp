@@ -8,7 +8,7 @@
 #include "../CBoard.h"
 
 
-void CBomb::Update(CBoard *board, int deltaTime)
+void CBomb::Update(CBoard &board, int deltaTime)
 {
     CGameObject::Update(board, deltaTime);
 
@@ -30,7 +30,7 @@ void CBomb::Update(CBoard *board, int deltaTime)
 }
 
 /*====================================================================================================================*/
-void CBomb::Detonate(CBoard *board)
+void CBomb::Detonate(CBoard &board)
 {
     if (this->m_RemoteTrigger)
     {
@@ -41,7 +41,7 @@ void CBomb::Detonate(CBoard *board)
 }
 
 /*====================================================================================================================*/
-void CBomb::Explode(CBoard *board)
+void CBomb::Explode(CBoard &board)
 {
     if (this->m_IsAlive)
     {
@@ -51,6 +51,6 @@ void CBomb::Explode(CBoard *board)
         }
 
         // Destroy create explosion and destroy the bomb
-        board->CreateExplosion(this);
+        board.CreateExplosion(this);
     }
 }

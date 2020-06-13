@@ -80,7 +80,8 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
                 // We just need to fill array MAP_WIDTH x MAP_HEIGHT - we are not interested in the remaining data
                 if (wallLocation.m_X >= MAP_WIDTH || wallLocation.m_Y >= MAP_HEIGHT)
                 { break; }
-                map[wallLocation.m_X][wallLocation.m_Y] = new CWall(texturePack, CCoord<>(1,1), wallLocation.ToDouble());
+                map[wallLocation.m_X][wallLocation.m_Y] = new CWall(texturePack, CCoord<>(1, 1),
+                                                                    wallLocation.ToDouble());
             }
         }
 
@@ -101,11 +102,9 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
 std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
 {
     // count = 2; // todo remove
-    CControls *controls[MAX_PLAYERS] = {
-            new CControls(SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A, SDL_SCANCODE_D,
-                          SDL_SCANCODE_J, SDL_SCANCODE_K),
-            new CControls(SDL_SCANCODE_I, SDL_SCANCODE_K, SDL_SCANCODE_J, SDL_SCANCODE_L,
-                          SDL_SCANCODE_N, SDL_SCANCODE_M)
+    CControls controls[MAX_PLAYERS] = {
+            {SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A, SDL_SCANCODE_D, SDL_SCANCODE_J, SDL_SCANCODE_K},
+            {SDL_SCANCODE_I, SDL_SCANCODE_K, SDL_SCANCODE_J, SDL_SCANCODE_L, SDL_SCANCODE_N, SDL_SCANCODE_M}
     };
 
     // Setup texturepack for the players. // TODO second player should have different texture color.
@@ -165,12 +164,7 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
         players.push_back(
                 new CPlayer(std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i], false, CCoord<>(1, 2)),
                             startingLocation[i], CCoord<>(0.6, 0.75), controls[i]));
-        controls[i] = nullptr;
     }
-
-    // delete unused objects
-    for (size_t i = 0; i < CLevelLoader::MAX_PLAYERS; i++)
-    { delete controls[i]; }
 
     return players;
 }

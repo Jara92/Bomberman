@@ -25,7 +25,7 @@ public:
 
     virtual ~CGround() = default;
 
-    virtual void Update(CBoard * board, int deltaTime) override
+    virtual void Update(CBoard & board, int deltaTime) override
     {}
 };
 

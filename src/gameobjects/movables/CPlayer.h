@@ -10,9 +10,7 @@
 #include "CMovable.h"
 #include "../../CControls.h"
 
-/**
- * Player which can be controlled. Every player has his own controls and can move in game map.
- */
+/** Player which can be controlled. Every player has his own controls and can move in game map. */
 class CPlayer : public CMovable
 {
 public:
@@ -25,40 +23,32 @@ public:
      * @param speed Object moving speed.
      * @param lives Object starting lives.
     */
-    explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size = CCoord<>(1, 1),
-                     CControls *controls = nullptr,
+    explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size, CControls controls,
                      double speed = 0.0025, int lives = 3)
-            : CMovable(std::move(texturePack), size, location, speed, false, false, lives ), m_Score(0), m_ExplosionRadius(1),
-              m_MaxBombs(15), m_ActiveBombs(0), m_RemoteExplosion(true), m_FireImmunity(true),
+            : CMovable(std::move(texturePack), size, location, speed, false, false, lives), m_Score(0),
+              m_ExplosionRadius(1), m_MaxBombs(15), m_ActiveBombs(0), m_RemoteExplosion(true), m_FireImmunity(true),
               m_PlantingAvaible(false), m_IsPlanting(false), m_DetonatingAvaible(false), m_IsDetonating(false),
               m_LevelUp(false), m_Controls(controls)
-    {/*this->m_Lives = 0;*/}
+    {}
 
     CPlayer(const CPlayer &other) = default;
 
     CPlayer &operator=(const CPlayer &other) = default;
 
-    virtual ~CPlayer()
-    { delete this->m_Controls; }
+    virtual ~CPlayer() = default;
 
     /**
      * Updates object state using deltatime.
     * @param board Game board
     * @param deltaTime DeltaTime
     */
-    virtual void Update(CBoard *board, int deltaTime) override;
+    virtual void Update(CBoard &board, int deltaTime) override;
 
     /**
      * Handle keyboard input.
      * @param keyState Keyboard layout
      */
     void HandleInput(const Uint8 *keyState);
-
-    /**
-    * Place bomb on the ground if it is possible.
-    * @param board Game board
-    */
-    void TryPlaceBomb(CBoard *board);
 
     /** Kill the player. */
     void Kill();
@@ -136,7 +126,7 @@ public:
     { return this->m_FireImmunity; }
 
     bool GetRemoteExplosion() const
-    {return this->m_RemoteExplosion;}
+    { return this->m_RemoteExplosion; }
 
     unsigned int GetExplosionRadius() const
     { return this->m_ExplosionRadius; }
@@ -162,26 +152,30 @@ protected:
     bool m_DetonatingAvaible;
     bool m_IsDetonating;
     bool m_LevelUp;
+    CControls m_Controls;
 
-    CControls *m_Controls; // TODO předělat (problém s kopírovacím konstruktorem)
-
-    static constexpr double MIN_TURNING_VALUE = 0.5;
-    static constexpr double MAX_TURNING_VALUE = 0.5;
+    static constexpr double MIN_TURNING_VALUE = 0.5, MAX_TURNING_VALUE = 0.5;
     static constexpr double SPEED_UP = 1.1;
+
+    /**
+    * Place bomb on the ground if it is possible.
+    * @param board Game board
+    */
+    void TryPlaceBomb(CBoard &board);
 
     /**
     * Movement along the axis Y
     * @param board Game board
     * @param deltaTime DeltaTime
     */
-    void VerticalMove(CBoard *board, int deltaTime);
+    void VerticalMove(CBoard &board, int deltaTime);
 
     /**
      * Movement along the axis X
      * @param board Game board
      * @param deltaTime DeltaTime
      */
-    void HorizontalMove(CBoard *board, int deltaTime);
+    void HorizontalMove(CBoard &board, int deltaTime);
 
     /**
      * Center vertical players position.
@@ -189,7 +183,7 @@ protected:
      * @param deltaTime DeltaTime
      * @param direction Direction
      */
-    void VerticalCenter(CBoard *board, int deltaTime, int direction);
+    void VerticalCenter(CBoard &board, int deltaTime, int direction);
 
     /**
     * Center horiz players position.
@@ -197,8 +191,12 @@ protected:
     * @param deltaTime DeltaTime
     * @param direction Direction
     */
-    void HorizontalCenter(CBoard *board, int deltaTime, int direction);
+    void HorizontalCenter(CBoard &board, int deltaTime, int direction);
 
+    /**
+     * Update the displayed texture according to the real movement of the player.
+     * @param oldLocation Original position before starting the movement.
+     */
     void UpdateTextureType(CCoord<> oldLocation);
 
 };

@@ -8,7 +8,7 @@
 #include "../../CBoard.h"
 
 /*====================================================================================================================*/
-void CPlayer::Update(CBoard *board, int deltaTime)
+void CPlayer::Update(CBoard &board, int deltaTime)
 {
     CMovable::Update(board, deltaTime);
 
@@ -26,7 +26,7 @@ void CPlayer::Update(CBoard *board, int deltaTime)
 
     // Detonation action.
     if (this->m_IsDetonating)
-    { board->DetonateBombs(this); }
+    { board.DetonateBombs(this); }
 
     // Clean input.
     this->m_IsDetonating = this->m_IsPlanting = false;
@@ -34,7 +34,7 @@ void CPlayer::Update(CBoard *board, int deltaTime)
 }
 
 /*====================================================================================================================*/
-void CPlayer::VerticalMove(CBoard *board, int deltaTime)
+void CPlayer::VerticalMove(CBoard &board, int deltaTime)
 {
     CCoord<> oldLocation = this->m_Location;
     this->m_Location.m_Y += (this->m_Speed * this->m_Movement.m_Y) * deltaTime;
@@ -51,7 +51,7 @@ void CPlayer::VerticalMove(CBoard *board, int deltaTime)
 }
 
 /*====================================================================================================================*/
-void CPlayer::HorizontalMove(CBoard *board, int deltaTime)
+void CPlayer::HorizontalMove(CBoard &board, int deltaTime)
 {
     CCoord<> oldLocation = this->m_Location;
     this->m_Location.m_X += (this->m_Speed * this->m_Movement.m_X) * deltaTime;
@@ -68,7 +68,7 @@ void CPlayer::HorizontalMove(CBoard *board, int deltaTime)
 }
 
 /*====================================================================================================================*/
-void CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
+void CPlayer::VerticalCenter(CBoard &board, int deltaTime, int direction)
 {
     // Get decimal part of m_Location.m_Y
     double decPart, intpart;
@@ -76,14 +76,14 @@ void CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
 
     // Turn smoothly when player is very close to empty cell
     if ((decPart >= CPlayer::MIN_TURNING_VALUE) &&
-        board->IsPassable(CCoord<unsigned int>(this->m_Location.m_X + direction, std::ceil(this->m_Location.m_Y)),
+        board.IsPassable(CCoord<unsigned int>(this->m_Location.m_X + direction, std::ceil(this->m_Location.m_Y)),
                           this))
     {
         this->m_Location.m_Y = std::min(this->m_Location.m_Y + this->m_Speed * deltaTime,
                                         std::ceil(this->m_Location.m_Y));
 
     } else if ((decPart <= CPlayer::MAX_TURNING_VALUE) &&
-               board->IsPassable(
+               board.IsPassable(
                        CCoord<unsigned int>(this->m_Location.m_X + direction, std::floor(this->m_Location.m_Y)),
                        this))
     {
@@ -94,7 +94,7 @@ void CPlayer::VerticalCenter(CBoard *board, int deltaTime, int direction)
 }
 
 /*====================================================================================================================*/
-void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
+void CPlayer::HorizontalCenter(CBoard &board, int deltaTime, int direction)
 {
     // Get decimal part of m_Location.m_X
     double decPart, intpart;
@@ -102,14 +102,14 @@ void CPlayer::HorizontalCenter(CBoard *board, int deltaTime, int direction)
 
     // Turn smoothly when player is very close to empty cell
     if ((decPart >= CPlayer::MAX_TURNING_VALUE) &&
-        board->IsPassable(CCoord<unsigned int>(std::ceil(this->m_Location.m_X), this->m_Location.m_Y + direction),
+        board.IsPassable(CCoord<unsigned int>(std::ceil(this->m_Location.m_X), this->m_Location.m_Y + direction),
                           this))
     {
         this->m_Location.m_X = std::min(this->m_Location.m_X + this->m_Speed * deltaTime,
                                         std::ceil(this->m_Location.m_X));
 
     } else if ((decPart <= CPlayer::MIN_TURNING_VALUE) &&
-               board->IsPassable(
+               board.IsPassable(
                        CCoord<unsigned int>(std::floor(this->m_Location.m_X), this->m_Location.m_Y + direction),
                        this))
     {
@@ -126,45 +126,45 @@ void CPlayer::HandleInput(const Uint8 *keyState)
     if (this->m_IsAlive && !this->m_LevelUp)
     {
         // movement
-        if (keyState[this->m_Controls->m_Up])
+        if (keyState[this->m_Controls.m_Up])
         { this->m_Movement.m_Y = -1; }
-        else if (keyState[this->m_Controls->m_Down])
+        else if (keyState[this->m_Controls.m_Down])
         { this->m_Movement.m_Y = 1; }
 
-        if (keyState[this->m_Controls->m_Left])
+        if (keyState[this->m_Controls.m_Left])
         { this->m_Movement.m_X = -1; }
-        else if (keyState[this->m_Controls->m_Right])
+        else if (keyState[this->m_Controls.m_Right])
         { this->m_Movement.m_X = 1; }
 
         // Planting action
-        if (keyState[this->m_Controls->m_PlaceBomb] && this->m_PlantingAvaible)
+        if (keyState[this->m_Controls.m_PlaceBomb] && this->m_PlantingAvaible)
         {
             this->m_IsPlanting = true;
             this->m_PlantingAvaible = false;
         }
             // Planting is not avaible until the button is released
-        else if (!keyState[this->m_Controls->m_PlaceBomb])
+        else if (!keyState[this->m_Controls.m_PlaceBomb])
         { this->m_PlantingAvaible = true; }
 
         // Detonating action
-        if (keyState[this->m_Controls->m_Detonation] && this->m_DetonatingAvaible)
+        if (keyState[this->m_Controls.m_Detonation] && this->m_DetonatingAvaible)
         {
             this->m_DetonatingAvaible = false;
             this->m_IsDetonating = true;
         }
 
             // Detonating is not avaible until the button is released
-        else if (!keyState[this->m_Controls->m_Detonation])
+        else if (!keyState[this->m_Controls.m_Detonation])
         { this->m_DetonatingAvaible = true; }
     }
 }
 
 /*====================================================================================================================*/
-void CPlayer::TryPlaceBomb(CBoard *board)
+void CPlayer::TryPlaceBomb(CBoard &board)
 {
     if (this->m_ActiveBombs < this->m_MaxBombs)
     {
-        if (board->PlaceBomb(this))
+        if (board.PlaceBomb(this))
         { this->m_ActiveBombs++; } // TODO uncomment this
     }
 }

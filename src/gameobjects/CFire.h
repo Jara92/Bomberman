@@ -32,7 +32,7 @@ public:
 
     virtual ~CFire() = default;
 
-    virtual void Update(CBoard *board, int deltaTime) override;
+    virtual void Update(CBoard &board, int deltaTime) override;
 
 protected:
     unsigned int m_Duration;

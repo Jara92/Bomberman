@@ -32,11 +32,8 @@ public:
 
     virtual ~CMovable() = default;
 
-    virtual void Update(CBoard *board, int deltaTime)
+    virtual void Update(CBoard &board, int deltaTime)
     { CGameObject::Update(board, deltaTime); }
-
-
-    virtual void Animate(int deltaTime) override;
 
     bool GetWallPass() const
     { return this->m_WallPass; }
@@ -69,7 +66,9 @@ protected:
     CCoord<> m_Movement;
     int m_Lives;
 
+    virtual void Animate(int deltaTime) override;
+
     /** Is current location free? */
-    virtual bool CellIsFree(CBoard *board, int deltaTime, CCoord<> location) const;
+    virtual bool CellIsFree(CBoard &board, int deltaTime, CCoord<> location) const;
 };
 

@@ -29,7 +29,7 @@ public:
     CEnemySmart &operator=(const CEnemySmart &other) = default;
     virtual ~CEnemySmart() = default;
 
-    virtual void Update(CBoard * board, int deltaTime) override;
+    virtual void Update(CBoard & board, int deltaTime) override;
 
     virtual int TryKill(unsigned int distance) override;
 

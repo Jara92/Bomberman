@@ -36,7 +36,7 @@ public:
     * @param board Game board
     * @param deltaTime DeltaTime
     */
-    virtual void Update(CBoard *board, int deltaTime) override
+    virtual void Update(CBoard &board, int deltaTime) override
     {}
 
     /**

@@ -46,7 +46,7 @@ public:
 
     virtual ~CBomb() = default;
 
-    virtual void Update(CBoard *board, int deltaTime) override;
+    virtual void Update(CBoard &board, int deltaTime) override;
 
     /**
      * Get bombs owner.
@@ -63,13 +63,13 @@ public:
     { return this->m_IsPassableForOwner; }
 
     /** Explodes the bomb if m_ExplosionDelay = 0. */
-    void Detonate(CBoard *board);
+    void Detonate(CBoard &board);
 
     /**
      * Bomb explosion.
      * @param board
      */
-    void Explode(CBoard *board);
+    void Explode(CBoard &board);
 
 protected:
     CPlayer *m_Owner;

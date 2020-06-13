@@ -5,7 +5,7 @@
 #include "CEnemy.h"
 #include "../../CBoard.h"
 
-std::vector<std::pair<ETextureType, CCoord<double>>> CEnemy::GetPossibleMoveDirections(CBoard *board, int deltaTime)
+std::vector<std::pair<ETextureType, CCoord<double>>> CEnemy::GetPossibleMoveDirections(CBoard &board, int deltaTime)
 {
     CCoord<> oldLocation = this->m_Location;
 
@@ -44,7 +44,7 @@ CCoord<> CEnemy::FindWayOut(CBoard *board)
     return CCoord<>(0, -1);
 }
 /*====================================================================================================================*/
-void CEnemy::Update(CBoard *board, int deltaTime)
+void CEnemy::Update(CBoard &board, int deltaTime)
 {
     CMovable::Update(board, deltaTime);
 

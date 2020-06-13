@@ -7,7 +7,7 @@
 #include "CFire.h"
 #include "../CBoard.h"
 
-void CFire::Update(CBoard *board, int deltaTime)
+void CFire::Update(CBoard &board, int deltaTime)
 {
     CGameObject::Update(board, deltaTime);
 
@@ -16,5 +16,5 @@ void CFire::Update(CBoard *board, int deltaTime)
 
     // Destroy this fire
     if (this->m_DurationCounter > this->m_Duration)
-    { board->DestroyExplosion(this); }
+    { board.DestroyExplosion(this); }
 }

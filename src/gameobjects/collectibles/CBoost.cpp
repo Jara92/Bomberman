@@ -28,7 +28,7 @@ void CBoost::Apply(CPlayer *player)
 }
 
 /*====================================================================================================================*/
-void CBoost::Update(CBoard *board, int deltaTime)
+void CBoost::Update(CBoard &board, int deltaTime)
 {
     if (this->m_TargetPlayer)
     {
@@ -39,7 +39,7 @@ void CBoost::Update(CBoard *board, int deltaTime)
     }
 
     if (!this->m_IsAlive)
-    { board->DestroyCollectible(this); }
+    { board.DestroyCollectible(this); }
 }
 
 /*====================================================================================================================*/

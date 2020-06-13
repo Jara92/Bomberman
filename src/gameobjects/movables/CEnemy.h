@@ -36,7 +36,7 @@ public:
      * @param board Game board.
      * @param deltaTime Delta time.
      */
-    virtual void Update(CBoard *board, int deltaTime) override;
+    virtual void Update(CBoard &board, int deltaTime) override;
 
     /**
      * Try to kill this enemy.
@@ -53,7 +53,7 @@ protected:
      * @param board Game board.
      * @return Avaible directions.
      */
-    std::vector<std::pair<ETextureType, CCoord<double>>> GetPossibleMoveDirections(CBoard *board, int deltaTime) ;
+    std::vector<std::pair<ETextureType, CCoord<double>>> GetPossibleMoveDirections(CBoard &board, int deltaTime) ;
 
     CCoord<> FindWayOut(CBoard * board);
 };

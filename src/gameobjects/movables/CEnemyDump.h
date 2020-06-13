@@ -27,7 +27,7 @@ public:
     CEnemyDump &operator=(const CEnemyDump &other) = default;
     virtual ~CEnemyDump() = default;
 
-    virtual void Update(CBoard * board, int deltaTime) override;
+    virtual void Update(CBoard & board, int deltaTime) override;
 
     int TryKill(unsigned int distance) override;
 

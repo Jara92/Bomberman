@@ -89,7 +89,7 @@ void CBoard::DetonateBombs(const CPlayer *player)
     for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
     {
         if (i->second->GetOwner() == player)
-        { i->second->Detonate(this); }
+        { i->second->Detonate(*this); }
     }
 }
 
@@ -289,19 +289,19 @@ void CBoard::Update(int deltaTime)
         {
             // Update if object is alive
             if (this->m_Map[i][j]/* && this->m_Map[i][j]->IsAlive()*/)
-            { this->m_Map[i][j]->Update(this, deltaTime); }
+            { this->m_Map[i][j]->Update(*this, deltaTime); }
         }
     }
 
     // Update players
     for (size_t i = 0; i < this->m_Players.size(); i++)
-    { this->m_Players[i]->Update(this, deltaTime); }
+    { this->m_Players[i]->Update(*this, deltaTime); }
 
     // Update enemies
     for (size_t i = 0; i < this->m_Enemies.size(); i++)
     {
         // Polymorphic call
-        this->m_Enemies[i]->Update(this, deltaTime);
+        this->m_Enemies[i]->Update(*this, deltaTime);
     }
 
     // Update collectibles
@@ -310,7 +310,7 @@ void CBoard::Update(int deltaTime)
         // Save iterator to next object because current bomb could be removed in Update().
         auto item = i++;
         if (item->second)
-        { item->second->Update(this, deltaTime); }
+        { item->second->Update(*this, deltaTime); }
         else
         {
             // Remove null item
@@ -324,7 +324,7 @@ void CBoard::Update(int deltaTime)
         // Save iterator to next object because current bomb could be removed in Update().
         auto item = i++;
         if (item->second)
-        { item->second->Update(this, deltaTime); }
+        { item->second->Update(*this, deltaTime); }
         else
         { this->m_Bombs.erase(item); /* Remove null item*/ }
     }
@@ -335,7 +335,7 @@ void CBoard::Update(int deltaTime)
         // Save iterator to next object because current fire could be removed in Update().
         auto item = i++;
         if (item->second)
-        { item->second->Update(this, deltaTime); }
+        { item->second->Update(*this, deltaTime); }
         else
         { this->m_Fires.erase(item); /* Remove null item */ }
     }
