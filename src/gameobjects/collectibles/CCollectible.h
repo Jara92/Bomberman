@@ -21,7 +21,7 @@ public:
     */
     explicit CCollectible(std::shared_ptr<CTexturePack> texturePack, CCoord <>size = CCoord<>(1,1), CCoord <>location = CCoord<>(0,0),
                           size_t scoreBonus = 0, int duration = 0)
-            : CGameObject(std::move(texturePack), size, location, true), m_Duration(duration), m_IsVisible(false),
+            : CGameObject(std::move(texturePack), size, location), m_Duration(duration), m_IsVisible(false),
               m_ScoreBonus(scoreBonus),
               m_TargetPlayer(nullptr)
     {}
@@ -39,6 +39,8 @@ public:
      * @param player Target player
      */
     virtual void Apply(CPlayer *player) = 0;
+
+    virtual void Reset(CBoard & board) override ;
 
     /*virtual void CollisionWith(CPlayer & player)
     {std::cout << "player" << std::endl;}*/
@@ -71,4 +73,6 @@ protected:
     size_t m_ScoreBonus;
     CPlayer *m_TargetPlayer;
 };
+
+
 

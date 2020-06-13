@@ -53,8 +53,7 @@ public:
     /** Kill the player. */
     void Kill();
 
-    /** Reset the player and prepare for a next round. */
-    virtual void Reset();
+    virtual void Reset(CBoard & board) override;
 
     /**======================
     * Boost interface.

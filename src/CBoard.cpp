@@ -430,7 +430,7 @@ void CBoard::ClearBoard(bool clearLevelObjects)
 
     // Rerun players locations
     for (size_t i = 0; i < this->m_Players.size(); i++)
-    { this->m_Players[i]->Reset(); }
+    { this->m_Players[i]->Reset(*this); }
 }
 
 /*====================================================================================================================*/

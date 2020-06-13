@@ -21,7 +21,7 @@ public:
     explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1),
                       CCoord<> location = CCoord<>(0, 0), double speed = 0.005, bool wallPass = false,
                       bool bombPass = false, int lives = 1)
-            : CGameObject(std::move(texturePack), size, location, true), // every movable object is passable
+            : CGameObject(std::move(texturePack), size, location), // every movable object is passable
               m_StartingLocation(location), m_Speed(speed), m_WallPass(wallPass), m_BombPass(bombPass),
               m_Movement(CCoord<>(0, 0)), m_Lives(lives)
     {}
@@ -53,7 +53,7 @@ public:
     void DeactivateWallPass()
     { this->m_BombPass = false; }
 
-    virtual void Reset();
+    virtual void Reset(CBoard & board) override;
 
     int GetLives() const
     { return this->m_Lives; }

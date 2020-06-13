@@ -180,9 +180,9 @@ void CPlayer::Kill()
 }
 
 /*====================================================================================================================*/
-void CPlayer::Reset()
+void CPlayer::Reset(CBoard & board)
 {
-    CMovable::Reset();
+    CMovable::Reset(board);
     this->m_ActiveBombs = 0;
     this->m_LevelUp = false;
 }

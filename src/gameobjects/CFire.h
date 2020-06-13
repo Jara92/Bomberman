@@ -22,7 +22,7 @@ public:
      */
     explicit CFire(std::shared_ptr<CTexturePack> texturePack, CCoord <>size = CCoord<>(1, 1),
                    CCoord<> location = CCoord<>(0, 0), unsigned int duration = 750)
-            : CGameObject(std::move(texturePack), size, location, false) // Fire is not passable
+            : CGameObject(std::move(texturePack), size, location)
             , m_Duration(duration), m_DurationCounter(0)
     {}
 

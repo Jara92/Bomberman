@@ -31,9 +31,7 @@ public:
             : m_Players(std::move(players)), m_Map(std::move(map)), m_Settings(std::move(settings)),
               m_BoardSize(boardSize), m_CellSize(cellSize), m_GroundObject(std::move(ground)),
               m_BombObjectTexturePack(std::move(bombTexturePack)), m_FireObjectTexturePack(std::move(fireTexturePack))
-    {
-
-    }
+    {    }
 
     ~CBoard();
 
