@@ -25,7 +25,7 @@ public:
     */
     explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size, CControls controls,
                      double speed = 0.0025, int lives = 2)
-            : CMovable(std::move(texturePack), size, location, speed, false, false, lives), m_Score(0),
+            : CMovable(std::move(texturePack), size, location, speed, false, true, lives), m_Score(0),
               m_ExplosionRadius(3), m_MaxBombs(15), m_ActiveBombs(0), m_RemoteExplosion(true), m_FireImmunity(false),
               m_PlantingAvaible(false), m_IsPlanting(false), m_DetonatingAvaible(false), m_IsDetonating(false),
               m_LevelUp(false), m_Controls(controls)

@@ -12,9 +12,9 @@
 #include <random>
 #include "Messages.h"
 #include "EGameStatus.h"
-#include "CWall.h"
-#include "gameobjects/CFire.h"
-#include "gameobjects/CBomb.h"
+#include "blocks/CWall.h"
+#include "blocks/CFire.h"
+#include "blocks/CBomb.h"
 #include "gameobjects/collectibles/CCollectible.h"
 #include "gameobjects/movables/CEnemyDump.h"
 #include "gameobjects/movables/CEnemySmart.h"
@@ -85,17 +85,12 @@ public:
     bool PlaceBomb(CPlayer *player);
 
     /**
-     * Detonate bombs owned by player
-     * @param player Player
-     */
-    void DetonateBombs(const CPlayer *player);
-
-    /**
      * Cause explosion in game board.
      * @param bomb Bomb to explode.
      */
-    void CauseExplosion(CBomb * bomb)
-    {this->m_BombsToExplode.insert(bomb);    }
+    void CauseExplosion(CBomb *bomb)
+    { this->m_BombsToExplode.insert(bomb); }
+
     /**
      * Trigger explosion in bombs location.
      * @param bomb Exploding bomb.
@@ -136,6 +131,22 @@ public:
         return CCoord<unsigned int>((random() % (this->m_BoardSize.m_X)), (random() % (this->m_BoardSize.m_Y)));
     }
 
+    /**
+     * Get block from the map at given location.
+     * @param location Location in 2D array.
+     * @throws std::out_of_range When the location is out of bound.
+     * @return CBlock at given location
+     */
+    CBlock *GetMapItem(CCoord<unsigned int> location);
+
+    /**
+     * Set block at given location.
+     * @param block Block to be set.
+     * @param location Location in 2D array.
+     * @throws std::out_of_range When the location is out of bound.
+     */
+    void SetMapItem(CBlock *block, CCoord<unsigned int> location);
+
     CCoord<unsigned int> GetBoardSize() const
     { return this->m_BoardSize; }
 
@@ -148,7 +159,7 @@ public:
     std::vector<std::vector<CBlock *>> m_Map;
     std::vector<CGameObject *> m_GameObjects;
 
-    std::set<CBomb*,std::less<> > m_BombsToExplode;
+    std::set<CBomb *, std::less<> > m_BombsToExplode;
 
     /** Game settings */
     std::shared_ptr<CSettings> m_Settings;

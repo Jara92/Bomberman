@@ -6,10 +6,11 @@
 #pragma once
 
 #include <memory>
-#include "CGameObject.h"
+#include "../gameobjects/CGameObject.h"
 #include "../CSDLInterface.h"
 #include "../CTexturePack.h"
-#include "collectibles/CCollectible.h"
+#include "../gameobjects/collectibles/CCollectible.h"
+#include "../gameobjects/movables/CEnemy.h"
 
 class CBoard;
 
@@ -45,15 +46,18 @@ public:
      * @param movable Movable object.
      * @return
      */
-    virtual bool IsPassable(const CMovable & movable) const
-    {return this->m_IsPassable;}
+    virtual bool IsPassable(CCoord<unsigned int> thisLocation, const CMovable & movable) const;
 
     /**
     * Are these objects colliding?
      * @param thisLocation Location of this object in game board.
     * @param other Other object
     */
-    bool IsColliding(CCoord<unsigned int> thisLocation, const CGameObject *other) const;
+    bool IsColliding(CCoord<unsigned int> thisLocation, const CGameObject &other) const;
+
+    virtual void PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer & player){}
+
+    virtual void EnemyCollision(CCoord<unsigned int> thisLocation, CEnemy & enemy){}
 
     /**
     * Updates object state using deltatime.

@@ -6,8 +6,8 @@
 #pragma once
 
 #include "CBlock.h"
-#include "CGameObject.h"
-#include "movables/CPlayer.h"
+#include "../gameobjects/CGameObject.h"
+#include "../gameobjects/movables/CPlayer.h"
 #include "../CTimer.h"
 
 /**
@@ -47,6 +47,8 @@ public:
 
     virtual void Update(CBoard &board, int deltaTime) override;
 
+    virtual void PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player) override;
+
     /**
      * Get bombs owner.
      * @return Bombs owner. Nullptr if the bomb has no owner.
@@ -54,15 +56,7 @@ public:
     CPlayer *GetOwner() const
     { return this->m_Owner; }
 
-    /**
-     * Is this bomb passable for its owner?
-     * @return True - is passable.
-     */
-    bool IsPassableForOwner() const
-    { return this->m_IsPassableForOwner; }
-
-    /** Explodes the bomb if m_ExplosionDelay = 0. */
-    void Detonate(CBoard &board);
+    virtual bool IsPassable(CCoord<unsigned int> thisLocation, const CMovable &movable) const override;
 
     /**
      * Bomb explosion.

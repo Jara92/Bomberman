@@ -25,23 +25,10 @@ CBoard::~CBoard()
 /*====================================================================================================================*/
 bool CBoard::IsPassable(CCoord<unsigned int> coord, const CMovable *movable)
 {
-    // Array index check.
-    if (coord.m_X < 0 || coord.m_X >= CBoard::m_BoardSize.m_X || coord.m_Y < 0 || coord.m_Y >= CBoard::m_BoardSize.m_Y)
-    { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
+    CBlock *block = this->GetMapItem(coord);
 
-    CBlock *block = this->m_Map[coord.m_X][coord.m_Y];
-
-    if (block && block->IsAlive() && !block->IsPassable(*movable))
+    if (block && block->IsAlive() && !block->IsPassable(coord, *movable))
     { return false; }
-
-    // Search for bombs in location.
-    /* auto bomb = this->m_Bombs.find(coord);
-     if (bomb != this->m_Bombs.end() && bomb->second && !movable->GetBombPass() && movable->IsColliding(bomb->second))
-     {
-         // Player is not owner or the bomb is not passable for owner
-         if (bomb->second->GetOwner() != movable || !bomb->second->IsPassableForOwner())
-         { return false; }
-     }*/
 
     return true;
 }
@@ -59,20 +46,11 @@ bool CBoard::PlaceBomb(CPlayer *player)
     if (player->GetRemoteExplosion())
     { delay = 100; }
 
-    CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, CCoord<>(1, 1), player, delay, player->GetRemoteExplosion());
+    CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, this->m_BombObjectTexturePack->GetTextureSize(), player,
+                            delay, player->GetRemoteExplosion());
     this->m_Map[location.m_X][location.m_Y] = bomb;
 
     return true;
-}
-
-/*====================================================================================================================*/
-void CBoard::DetonateBombs(const CPlayer *player)
-{
-    /*  for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
-      {
-          if (i->second->GetOwner() == player)
-          { i->second->Detonate(*this); }
-      }*/
 }
 
 /*====================================================================================================================*/
@@ -83,9 +61,7 @@ void CBoard::CreateExplosion(CBomb *bomb, CCoord<unsigned int> bombLocation)
         CPlayer *owner = bomb->GetOwner();
 
         // Remove the bomb.
-        bomb->Kill();
-        delete this->m_Map[bombLocation.m_X][bombLocation.m_Y];
-        this->m_Map[bombLocation.m_X][bombLocation.m_Y] = nullptr;
+        this->SetMapItem(nullptr, bombLocation);
 
         if (owner)
         {
@@ -109,16 +85,10 @@ void CBoard::CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> 
     {
         CCoord<unsigned int> locationToExplode = (bombLocation.ToDouble() + (i * direction).ToDouble()).ToUnsignedInt();
 
-        if (locationToExplode.m_X < 0 || locationToExplode.m_X >= CBoard::m_BoardSize.m_X ||
-            locationToExplode.m_Y < 0 || locationToExplode.m_Y >= CBoard::m_BoardSize.m_Y)
-        { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
-
         // Target exists and its not destructible.
-        CBlock *target = this->m_Map[locationToExplode.m_X][locationToExplode.m_Y];
+        CBlock *target = this->GetMapItem(locationToExplode);
         if ((target && !target->IsDestructible()))
-        {
-            std::cout << "break " << locationToExplode << std::endl;
-            break; /* Leave for loop - The wave was stopped by this indestructible wall.*/        }
+        { break; /* Leave for loop - The wave was stopped by this indestructible wall.*/        }
 
         bool wallDestroyed = false;
 
@@ -128,9 +98,7 @@ void CBoard::CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> 
             {
                 wallDestroyed = true;
             } else if (!target->IsAlive())
-            {
-                std::cout << "break2" << std::endl;
-                break;  /* Leave for loop - The wave was stopped by this wall.*/            }
+            { break;  /* Leave for loop - The wave was stopped by this wall.*/            }
         }
 
         // Find collectible in location to explode.
@@ -141,7 +109,7 @@ void CBoard::CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> 
 
         // Create new fire.
         CFire *fire = new CFire(this->m_FireObjectTexturePack, this->m_FireObjectTexturePack->GetTextureSize());
-        this->m_Map[locationToExplode.m_X][locationToExplode.m_Y] = fire;
+        this->SetMapItem(fire, locationToExplode);
 
         if (wallDestroyed)
         { break; /* Explosion was stopped by destroyed wall. */ }
@@ -268,50 +236,61 @@ void CBoard::Update(int deltaTime)
 /*====================================================================================================================*/
 void CBoard::UpdatePhysicEvents()
 {
+    CCoord<int> directions[5] = {CCoord<int>(0,0), CCoord<int>(0, 1), CCoord<int>(0, -1), CCoord<int>(1, 0), CCoord<int>(-1, 0)};
     for (auto player = this->m_Players.begin(); player != this->m_Players.end(); player++)
     {
         if ((*(player)) && (*(player))->IsAlive())
         {
-            for (auto object = this->m_GameObjects.begin(); object != this->m_GameObjects.end(); object++)
+            CCoord<unsigned int> playerCenterCell = (*player)->GetLocationCell();
+
+            // Check collisions with objects around the player.
+            for (unsigned int i = 0; i < 5; i++)
             {
-                // Resolving a potential collision with an object.
-                /*  if((*object) && (*object)->IsAlive())
-                  {(*player)->CollisionWith(*(*object));}*/
+                CCoord<unsigned int> blockLocation = (playerCenterCell.ToInt() + directions[i]).ToUnsignedInt();
+                CBlock *block = this->GetMapItem(blockLocation);
+                if (block)
+                { block->PlayerCollision(blockLocation, *(*player)); }
             }
-
-     return;
-
-            // Collectible collision - Apply collectible on the player.
-            for (auto collectible = this->m_Collectibles.begin();
-                 collectible != this->m_Collectibles.end(); collectible++)
-            {
-                if (collectible->second && collectible->second->IsVisible() &&
-                    (*player)->IsColliding(collectible->second))
-                {
-                    // Polymorphic call
-                    collectible->second->Apply((*player)); // Apply item
-                }
-            }
-
-            // Fire collision - Kill the player.
-            /* for (auto fire = this->m_Fires.begin(); fire != this->m_Fires.end(); fire++)
-             {
-                    // Kill player if player is colliding fire and do he does not have fire imunity.
-                    if (fire->second && !(*player)->GetFireImunity() && (*player)->IsColliding(fire->second))
-                    { (*player)->Kill(); }
-             }*/
-
-            // Enemy collision - Kill the player.
-            /*for (auto enemy = this->m_Enemies.begin(); enemy != this->m_Enemies.end(); enemy++)
-            {
-                if (*enemy && (*enemy)->IsAlive() &&
-                    (*player)->IsColliding((*enemy)))
-                { (*player)->Kill(); }
-            }*/
         }
+
+
+        return;
+
+        /* for (auto object = this->m_GameObjects.begin(); object != this->m_GameObjects.end(); object++)
+    {
+        // Resolving a potential collision with an object.
+        //  if((*object) && (*object)->IsAlive())
+        //  {(*player)->CollisionWith(*(*object));}
+    }*/
+
+        // Collectible collision - Apply collectible on the player.
+        for (auto collectible = this->m_Collectibles.begin();
+             collectible != this->m_Collectibles.end(); collectible++)
+        {
+            if (collectible->second && collectible->second->IsVisible() &&
+                (*player)->IsColliding(collectible->second))
+            {
+                // Polymorphic call
+                collectible->second->Apply((*player)); // Apply item
+            }
+        }
+
+        // Fire collision - Kill the player.
+        /* for (auto fire = this->m_Fires.begin(); fire != this->m_Fires.end(); fire++)
+         {
+                // Kill player if player is colliding fire and do he does not have fire imunity.
+                if (fire->second && !(*player)->GetFireImunity() && (*player)->IsColliding(fire->second))
+                { (*player)->Kill(); }
+         }*/
+
+        // Enemy collision - Kill the player.
+        /*for (auto enemy = this->m_Enemies.begin(); enemy != this->m_Enemies.end(); enemy++)
+        {
+            if (*enemy && (*enemy)->IsAlive() &&
+                (*player)->IsColliding((*enemy)))
+            { (*player)->Kill(); }
+        }*/
     }
-
-
 }
 
 /*====================================================================================================================*/
@@ -350,12 +329,10 @@ void CBoard::ClearBoard(bool clearLevelObjects)
 /*====================================================================================================================*/
 bool CBoard::PositionFree(CCoord<unsigned int> coord)
 {
-    if (coord.m_X < 0 || coord.m_X >= CBoard::m_BoardSize.m_X ||
-        coord.m_Y < 0 || coord.m_Y >= CBoard::m_BoardSize.m_Y)
-    { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
+    CBlock *block = this->GetMapItem(coord);
 
     // Check walls
-    if (this->m_Map[coord.m_X][coord.m_Y] != nullptr ||
+    if (block != nullptr ||
         this->m_Collectibles.find(coord) != this->m_Collectibles.end())
     { return false; }
 
@@ -398,4 +375,31 @@ bool CBoard::PlayerDirectionFree(CCoord<unsigned int> location, CPlayer *player,
     }
 
     return true;
+}
+
+/*====================================================================================================================*/
+CBlock *CBoard::GetMapItem(CCoord<unsigned int> location)
+{
+    if (location.m_X < 0 || location.m_X >= CBoard::m_BoardSize.m_X ||
+        location.m_Y < 0 || location.m_Y >= CBoard::m_BoardSize.m_Y)
+    { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
+
+    return this->m_Map[location.m_X][location.m_Y];
+}
+
+/*====================================================================================================================*/
+void CBoard::SetMapItem(CBlock *block, CCoord<unsigned int> location)
+{
+    if (location.m_X < 0 || location.m_X >= CBoard::m_BoardSize.m_X ||
+        location.m_Y < 0 || location.m_Y >= CBoard::m_BoardSize.m_Y)
+    { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
+
+    // Kill and delete old block.
+    if (this->m_Map[location.m_X][location.m_Y])
+    {
+        this->m_Map[location.m_X][location.m_Y]->Kill();
+        delete this->m_Map[location.m_X][location.m_Y];
+    }
+
+    this->m_Map[location.m_X][location.m_Y] = block;
 }

@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "CGameObject.h"
+#include "../gameobjects/CGameObject.h"
 #include "CBlock.h"
 
 /**
@@ -33,6 +33,8 @@ public:
     virtual ~CFire() = default;
 
     virtual void Update(CBoard &board, int deltaTime) override;
+
+    virtual void PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player) override;
 
     virtual bool IsDestructible() const override
     { return true; }

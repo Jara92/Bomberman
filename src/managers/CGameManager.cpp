@@ -74,6 +74,9 @@ CGameManager::CGameManager(CSDLInterface &interface)
     this->m_GameOverSubtext->SetLocation(
             CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0),
                      (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0) + this->m_DefaultFontSize * 2.5));
+
+    // We need one tick because of wrong deltatime value.
+    this->m_Clock.Tick();
 }
 
 /*====================================================================================================================*/

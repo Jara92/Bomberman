@@ -20,16 +20,25 @@ void CBlock::Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCo
                             cellSize * this->m_TexturePack->GetTextureSize());
 }
 
-bool CBlock::IsColliding(CCoord<unsigned int> thisLocation, const CGameObject *other) const
+bool CBlock::IsColliding(CCoord<unsigned int> thisLocation, const CGameObject &other) const
 {
     double cellSize = 1;
-    CCoord<> b = other->GetLocation() + ((CCoord<>(1, 1) - other->GetSize()) / 2);
+    CCoord<> a = thisLocation.ToDouble() + ((CCoord<>(1, 1) - this->m_Size) / 2);
+    CCoord<> b = other.GetLocation() + ((CCoord<>(1, 1) - other.GetSize()) / 2);
 
-    if (thisLocation.m_X < b.m_X + std::min(other->GetSize().m_X, cellSize) &&
-        thisLocation.m_X + std::min(this->m_Size.m_X, cellSize) > b.m_X &&
-        thisLocation.m_Y < b.m_Y + std::min(other->GetSize().m_Y, cellSize) &&
-        thisLocation.m_Y + std::min(this->m_Size.m_Y, cellSize) > b.m_Y)
+    if (a.m_X < b.m_X + std::min(other.GetSize().m_X, cellSize) &&
+        a.m_X + std::min(this->m_Size.m_X, cellSize) > b.m_X &&
+        a.m_Y < b.m_Y + std::min(other.GetSize().m_Y, cellSize) &&
+        a.m_Y + std::min(this->m_Size.m_Y, cellSize) > b.m_Y)
     { return true; }
 
     return false;
+}
+
+bool CBlock::IsPassable(CCoord<unsigned int> thisLocation, const CMovable &movable) const
+{
+    if(this->IsColliding(thisLocation, movable))
+    {return this->m_IsPassable;}
+
+    return true;
 }

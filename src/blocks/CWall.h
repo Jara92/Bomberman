@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "gameobjects/CBlock.h"
+#include "CBlock.h"
 
 class CWall : public CBlock
 {

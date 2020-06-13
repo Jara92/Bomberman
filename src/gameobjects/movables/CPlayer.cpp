@@ -170,6 +170,7 @@ void CPlayer::TryPlaceBomb(CBoard &board)
 /*====================================================================================================================*/
 void CPlayer::Kill()
 {
+    std::cout << "kill" << std::endl;
     if (this->m_IsAlive)
     {
         //this->m_Lives--;

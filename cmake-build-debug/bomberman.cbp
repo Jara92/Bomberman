@@ -137,12 +137,6 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CTimer.h">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CWall.cpp">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CWall.h">
-			<Option target="bomberman"/>
-		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/EApplicationStatus.h">
 			<Option target="bomberman"/>
 		</Unit>
@@ -158,22 +152,28 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/ETextureType.h">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CBlock.cpp">
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/blocks/CBlock.cpp">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CBlock.h">
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/blocks/CBlock.h">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CBomb.cpp">
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/blocks/CBomb.cpp">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CBomb.h">
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/blocks/CBomb.h">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CFire.cpp">
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/blocks/CFire.cpp">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CFire.h">
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/blocks/CFire.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/blocks/CWall.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/blocks/CWall.h">
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CGameObject.cpp">

@@ -42,10 +42,10 @@ bool CGameObject::IsColliding(const CGameObject *other) const
     CCoord<> a = this->GetLocation() + ((CCoord<>(1, 1) - this->m_Size) / 2);
     CCoord<> b = other->GetLocation() + ((CCoord<>(1, 1) - other->m_Size) / 2);
 
-    if (a.m_X < b.m_X + /*b.width*/std::min(other->GetSize().m_X, cellSize) &&
-        a.m_X + /*a.width*/std::min(this->GetSize().m_X, cellSize) > b.m_X &&
-        a.m_Y < b.m_Y + /*b.height*/std::min(other->GetSize().m_Y, cellSize) &&
-        a.m_Y + /*a.height*/std::min(this->GetSize().m_Y, cellSize) > b.m_Y)
+    if (a.m_X < b.m_X + std::min(other->GetSize().m_X, cellSize) &&
+        a.m_X + std::min(this->GetSize().m_X, cellSize) > b.m_X &&
+        a.m_Y < b.m_Y + std::min(other->GetSize().m_Y, cellSize) &&
+        a.m_Y + std::min(this->GetSize().m_Y, cellSize) > b.m_Y)
     { return true; }
 
     return false;
