@@ -137,6 +137,12 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CTimer.h">
 			<Option target="bomberman"/>
 		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CWall.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CWall.h">
+			<Option target="bomberman"/>
+		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/EApplicationStatus.h">
 			<Option target="bomberman"/>
 		</Unit>
@@ -171,12 +177,6 @@
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CGround.h">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CWall.cpp">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CWall.h">
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CBoost.cpp">

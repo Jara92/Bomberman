@@ -5,45 +5,43 @@
 
 #pragma once
 
-#include "CGameObject.h"
-#include "collectibles/CCollectible.h"
+#include "gameobjects/collectibles/CCollectible.h"
 
-class CWall : public CGameObject
+class CWall
 {
 public:
     /**
     * Game object contructor
     * @param texturePack Texturepack to be rendered.
-    * @param size Object size.
-    * @param location Object location
     * @param isDestructible Is this wall destructible?
-    * @param collectible Attached collectible object which will be displayed when the wall is destroyed
+    * @param size Object size.
     */
-    CWall(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1), CCoord <>location = CCoord<>(0, 0),
-          bool isDestructible = false, CCollectible *collectible = nullptr)
-            : CGameObject(std::move(texturePack), size, location, false), // no wall is passable
-              m_IsDestructible(isDestructible), m_Collectible(collectible)
+    CWall(std::shared_ptr<CTexturePack> texturePack, bool isDestructible)
+            : m_TexturePack(std::move(texturePack)), m_IsDestructible(isDestructible), m_IsAlive(true), m_Collectible(
+            nullptr)
     {}
 
     CWall(const CWall &other) = default;
 
     CWall &operator=(const CWall &other) = default;
 
-    virtual ~CWall() = default;
+    ~CWall() = default;
 
     /**
     * Updates object state using deltatime.
     * @param board Game board
     * @param deltaTime DeltaTime
     */
-    virtual void Update(CBoard &board, int deltaTime) override
+    void Update(CBoard &board, int deltaTime)
     {}
+
+    void Draw(CSDLInterface *interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0));
 
     /**
     * Try to destroy the wall.
     * @param distance Distance from the bomb.
     */
-    virtual bool TryDestroy(unsigned int distance);
+    bool TryDestroy(unsigned int distance);
 
     /**
      * Is this wall destructible?
@@ -69,8 +67,12 @@ public:
     bool HasCollectible() const
     { return this->m_Collectible; }
 
+    bool IsAlive() const
+    {return this->m_IsAlive;}
+
 protected:
-    bool m_IsDestructible;
+    std::shared_ptr<CTexturePack> m_TexturePack;
+    bool m_IsDestructible, m_IsAlive;
     CCollectible *m_Collectible;
 };
 

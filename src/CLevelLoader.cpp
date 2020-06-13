@@ -80,8 +80,7 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
                 // We just need to fill array MAP_WIDTH x MAP_HEIGHT - we are not interested in the remaining data
                 if (wallLocation.m_X >= MAP_WIDTH || wallLocation.m_Y >= MAP_HEIGHT)
                 { break; }
-                map[wallLocation.m_X][wallLocation.m_Y] = new CWall(texturePack, CCoord<>(1, 1),
-                                                                    wallLocation.ToDouble());
+                map[wallLocation.m_X][wallLocation.m_Y] = new CWall(texturePack, false);
             }
         }
 
@@ -185,7 +184,7 @@ void CLevelLoader::GenerateObstacles(std::shared_ptr<CBoard> &board, size_t leve
         { random = board->GetRandomBoardLocation(); }
         while (!board->PositionFree(random) || !board->PlayersAreaFree(random));
 
-        board->m_Map[random.m_X][random.m_Y] = new CWall(texturePack, CCoord<>(1, 1), random.ToDouble(), true, nullptr);
+        board->m_Map[random.m_X][random.m_Y] = new CWall(texturePack, true);
     }
 }
 

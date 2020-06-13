@@ -312,6 +312,33 @@ src/CTexturePack.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CTexturePack.cpp.s
 .PHONY : src/CTexturePack.cpp.s
 
+src/CWall.o: src/CWall.cpp.o
+
+.PHONY : src/CWall.o
+
+# target to build an object file
+src/CWall.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CWall.cpp.o
+.PHONY : src/CWall.cpp.o
+
+src/CWall.i: src/CWall.cpp.i
+
+.PHONY : src/CWall.i
+
+# target to preprocess a source file
+src/CWall.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CWall.cpp.i
+.PHONY : src/CWall.cpp.i
+
+src/CWall.s: src/CWall.cpp.s
+
+.PHONY : src/CWall.s
+
+# target to generate assembly for a file
+src/CWall.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CWall.cpp.s
+.PHONY : src/CWall.cpp.s
+
 src/gameobjects/CBomb.o: src/gameobjects/CBomb.cpp.o
 
 .PHONY : src/gameobjects/CBomb.o
@@ -392,33 +419,6 @@ src/gameobjects/CGameObject.s: src/gameobjects/CGameObject.cpp.s
 src/gameobjects/CGameObject.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.s
 .PHONY : src/gameobjects/CGameObject.cpp.s
-
-src/gameobjects/CWall.o: src/gameobjects/CWall.cpp.o
-
-.PHONY : src/gameobjects/CWall.o
-
-# target to build an object file
-src/gameobjects/CWall.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.o
-.PHONY : src/gameobjects/CWall.cpp.o
-
-src/gameobjects/CWall.i: src/gameobjects/CWall.cpp.i
-
-.PHONY : src/gameobjects/CWall.i
-
-# target to preprocess a source file
-src/gameobjects/CWall.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.i
-.PHONY : src/gameobjects/CWall.cpp.i
-
-src/gameobjects/CWall.s: src/gameobjects/CWall.cpp.s
-
-.PHONY : src/gameobjects/CWall.s
-
-# target to generate assembly for a file
-src/gameobjects/CWall.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.s
-.PHONY : src/gameobjects/CWall.cpp.s
 
 src/gameobjects/collectibles/CBoost.o: src/gameobjects/collectibles/CBoost.cpp.o
 
@@ -882,6 +882,9 @@ help:
 	@echo "... src/CTexturePack.o"
 	@echo "... src/CTexturePack.i"
 	@echo "... src/CTexturePack.s"
+	@echo "... src/CWall.o"
+	@echo "... src/CWall.i"
+	@echo "... src/CWall.s"
 	@echo "... src/gameobjects/CBomb.o"
 	@echo "... src/gameobjects/CBomb.i"
 	@echo "... src/gameobjects/CBomb.s"
@@ -891,9 +894,6 @@ help:
 	@echo "... src/gameobjects/CGameObject.o"
 	@echo "... src/gameobjects/CGameObject.i"
 	@echo "... src/gameobjects/CGameObject.s"
-	@echo "... src/gameobjects/CWall.o"
-	@echo "... src/gameobjects/CWall.i"
-	@echo "... src/gameobjects/CWall.s"
 	@echo "... src/gameobjects/collectibles/CBoost.o"
 	@echo "... src/gameobjects/collectibles/CBoost.i"
 	@echo "... src/gameobjects/collectibles/CBoost.s"

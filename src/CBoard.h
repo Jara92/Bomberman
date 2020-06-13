@@ -13,7 +13,7 @@
 #include "Messages.h"
 #include "EGameStatus.h"
 #include "gameobjects/CGround.h"
-#include "gameobjects/CWall.h"
+#include "CWall.h"
 #include "gameobjects/CFire.h"
 #include "gameobjects/CBomb.h"
 #include "gameobjects/collectibles/CCollectible.h"
