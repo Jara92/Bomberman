@@ -5,9 +5,10 @@
 
 #pragma once
 
+#include "gameobjects/CBlock.h"
 #include "gameobjects/collectibles/CCollectible.h"
 
-class CWall
+class CWall : public CBlock
 {
 public:
     /**
@@ -16,8 +17,7 @@ public:
     * @param isDestructible Is this wall destructible?
     */
     CWall(std::shared_ptr<CTexturePack> texturePack, bool isDestructible)
-            : m_TexturePack(std::move(texturePack)), m_IsDestructible(isDestructible), m_IsAlive(true), m_Collectible(
-            nullptr)
+            : CBlock(std::move(texturePack)), m_IsDestructible(isDestructible), m_IsAlive(true), m_Collectible(nullptr)
     {}
 
     CWall(const CWall &other) = default;
@@ -25,16 +25,6 @@ public:
     CWall &operator=(const CWall &other) = default;
 
     ~CWall() = default;
-
-    /**
-    * Updates object state using deltatime.
-    * @param board Game board
-    * @param deltaTime DeltaTime
-    */
-    void Update(CBoard &board, int deltaTime)
-    {}
-
-    void Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0));
 
     /**
     * Try to destroy the wall.
@@ -59,6 +49,10 @@ public:
         { this->m_Collectible = collectible; }
     }
 
+    /** Detach attached collectible object. */
+    void DetachCollectible()
+    { this->m_Collectible = nullptr; }
+
     /**
      * Has this wall already collectible object?
      * @return True - Has collectible object.
@@ -67,10 +61,9 @@ public:
     { return this->m_Collectible; }
 
     bool IsAlive() const
-    {return this->m_IsAlive;}
+    { return this->m_IsAlive; }
 
 protected:
-    std::shared_ptr<CTexturePack> m_TexturePack;
     bool m_IsDestructible, m_IsAlive;
     CCollectible *m_Collectible;
 };

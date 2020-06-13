@@ -189,14 +189,14 @@ void CLevelLoader::GenerateObstacles(std::shared_ptr<CBoard> &board, size_t leve
 }
 
 /*====================================================================================================================*/
-std::shared_ptr<CGround> CLevelLoader::LoadGround() const
+std::shared_ptr<CBlock> CLevelLoader::LoadGround() const
 {
     std::map<ETextureType, const std::vector<std::string>> textures
             {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/BackgroundTile.png"}}}};
 
     std::shared_ptr<CTexturePack> texturePack = std::make_shared<CTexturePack>(this->m_Interface, textures);
     // create reference wall to make copies
-    return std::make_shared<CGround>(CGround(texturePack));
+    return std::make_shared<CBlock>(CBlock(texturePack));
 }
 
 /*====================================================================================================================*/

@@ -44,7 +44,7 @@ SDL_Texture *CGameObject::GetTexture() const
 
 /*====================================================================================================================*/
 
-bool CGameObject::IsColiding(const CGameObject *other) const
+bool CGameObject::IsColliding(const CGameObject *other) const
 {
     double cellSize = 1;
     CCoord<> a = this->GetLocation() + ((CCoord<>(1, 1) - this->m_Size) / 2);

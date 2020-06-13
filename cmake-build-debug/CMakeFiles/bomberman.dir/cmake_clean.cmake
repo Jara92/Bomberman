@@ -7,6 +7,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/bomberman.dir/src/CScoreSaver.cpp.o"
   "CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o"
   "CMakeFiles/bomberman.dir/src/CWall.cpp.o"
+  "CMakeFiles/bomberman.dir/src/gameobjects/CBlock.cpp.o"
   "CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o"
   "CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.o"
   "CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o"

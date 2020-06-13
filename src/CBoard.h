@@ -12,7 +12,6 @@
 #include <random>
 #include "Messages.h"
 #include "EGameStatus.h"
-#include "gameobjects/CGround.h"
 #include "CWall.h"
 #include "gameobjects/CFire.h"
 #include "gameobjects/CBomb.h"
@@ -26,13 +25,15 @@ class CBoard
 {
 public:
     CBoard(std::shared_ptr<CSettings> settings, std::vector<std::vector<CWall *>> map, std::vector<CPlayer *> players,
-           CCoord<unsigned int> boardSize, std::shared_ptr<CGround> ground,
+           CCoord<unsigned int> boardSize, std::shared_ptr<CBlock> ground,
            std::shared_ptr<CTexturePack> bombTexturePack,
            std::shared_ptr<CTexturePack> fireTexturePack, unsigned int cellSize)
             : m_Players(std::move(players)), m_Map(std::move(map)), m_Settings(std::move(settings)),
               m_BoardSize(boardSize), m_CellSize(cellSize), m_GroundObject(std::move(ground)),
               m_BombObjectTexturePack(std::move(bombTexturePack)), m_FireObjectTexturePack(std::move(fireTexturePack))
-    {}
+    {
+
+    }
 
     ~CBoard();
 
@@ -63,8 +64,6 @@ public:
      * @return True if is passable.
      */
     bool IsPassable(CCoord<unsigned int> coord, const CMovable *movable);
-
-    bool IsEmpty(const CMovable * movable);
 
     /**
      * Is this position totaly free?
@@ -152,11 +151,12 @@ public:
     std::map<CCoord<unsigned int>, CFire *> m_Fires;
     std::map<CCoord<unsigned int>, CBomb *> m_Bombs;
     std::vector<std::vector<CWall *>> m_Map;
+    std::vector<CGameObject *> m_GameObjects;
 
     /** Game settings */
     std::shared_ptr<CSettings> m_Settings;
 
-    std::shared_ptr<CGround> GetGroundObject() const
+    std::shared_ptr<CBlock> GetGroundObject() const
     { return this->m_GroundObject; }
 
 protected:
@@ -167,7 +167,7 @@ protected:
     static constexpr unsigned int PLAYER_SAVE_ZONE = 3;
 
     /** Ground object template */
-    std::shared_ptr<CGround> m_GroundObject;
+    std::shared_ptr<CBlock> m_GroundObject;
 
     /** Texture packs to be used as template. */
     std::shared_ptr<CTexturePack> m_BombObjectTexturePack, m_FireObjectTexturePack;

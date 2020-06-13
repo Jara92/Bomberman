@@ -339,6 +339,33 @@ src/CWall.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CWall.cpp.s
 .PHONY : src/CWall.cpp.s
 
+src/gameobjects/CBlock.o: src/gameobjects/CBlock.cpp.o
+
+.PHONY : src/gameobjects/CBlock.o
+
+# target to build an object file
+src/gameobjects/CBlock.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CBlock.cpp.o
+.PHONY : src/gameobjects/CBlock.cpp.o
+
+src/gameobjects/CBlock.i: src/gameobjects/CBlock.cpp.i
+
+.PHONY : src/gameobjects/CBlock.i
+
+# target to preprocess a source file
+src/gameobjects/CBlock.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CBlock.cpp.i
+.PHONY : src/gameobjects/CBlock.cpp.i
+
+src/gameobjects/CBlock.s: src/gameobjects/CBlock.cpp.s
+
+.PHONY : src/gameobjects/CBlock.s
+
+# target to generate assembly for a file
+src/gameobjects/CBlock.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/CBlock.cpp.s
+.PHONY : src/gameobjects/CBlock.cpp.s
+
 src/gameobjects/CBomb.o: src/gameobjects/CBomb.cpp.o
 
 .PHONY : src/gameobjects/CBomb.o
@@ -885,6 +912,9 @@ help:
 	@echo "... src/CWall.o"
 	@echo "... src/CWall.i"
 	@echo "... src/CWall.s"
+	@echo "... src/gameobjects/CBlock.o"
+	@echo "... src/gameobjects/CBlock.i"
+	@echo "... src/gameobjects/CBlock.s"
 	@echo "... src/gameobjects/CBomb.o"
 	@echo "... src/gameobjects/CBomb.i"
 	@echo "... src/gameobjects/CBomb.s"

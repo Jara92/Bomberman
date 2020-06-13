@@ -84,7 +84,10 @@ public:
      * Are these objects colliding?
      * @param other Other object
      */
-    bool IsColiding(const CGameObject *other) const;
+    bool IsColliding(const CGameObject *other) const;
+
+    virtual void CollisionWith(CGameObject & other)
+    {}
 
     void SetLocation(CCoord<> location)
     {this->m_Location = location;}

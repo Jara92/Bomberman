@@ -80,7 +80,7 @@ protected:
      * Get object which will be rendered as ground.
      * @return Ground object
      */
-    std::shared_ptr<CGround> LoadGround() const;
+    std::shared_ptr<CBlock> LoadGround() const;
 
     /**
      * Generate obstacles for game map.

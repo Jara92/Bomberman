@@ -158,6 +158,12 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/ETextureType.h">
 			<Option target="bomberman"/>
 		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CBlock.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CBlock.h">
+			<Option target="bomberman"/>
+		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CBomb.cpp">
 			<Option target="bomberman"/>
 		</Unit>

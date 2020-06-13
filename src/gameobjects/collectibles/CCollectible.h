@@ -40,6 +40,12 @@ public:
      */
     virtual void Apply(CPlayer *player) = 0;
 
+    /*virtual void CollisionWith(CPlayer & player)
+    {std::cout << "player" << std::endl;}*/
+
+   /* virtual void CollisionWith(CGameObject & object)
+    {std::cout << "object" << std::endl;}*/
+
     /**
      * Make collectible object visible
      */
