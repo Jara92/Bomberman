@@ -54,7 +54,7 @@ public:
      * @param interface Interface to be used.
      * @param offset Board offset in window.
      */
-    void Draw(CSDLInterface *interface, CCoord<> offset = CCoord<>(0, 0));
+    void Draw(CSDLInterface &interface, CCoord<> offset = CCoord<>(0, 0));
 
     /**
      * Is this coord passable for the player?

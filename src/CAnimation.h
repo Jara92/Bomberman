@@ -18,7 +18,7 @@
 class CAnimation
 {
 public:
-    CAnimation(CSDLInterface *interface, const std::vector< std::string > &textures);
+    CAnimation(CSDLInterface &interface, const std::vector< std::string > &textures);
 
     ~CAnimation();
 

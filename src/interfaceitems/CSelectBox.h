@@ -15,7 +15,7 @@ template<class T>
 class CSelectBox : public CInterfaceItem
 {
 public:
-    CSelectBox(CSDLInterface *interface, CCoord<> location, CCoord<> size, unsigned int fontSize,
+    CSelectBox(CSDLInterface &interface, CCoord<> location, CCoord<> size, unsigned int fontSize,
                const std::map<std::string, T> &options, CCoord<unsigned int> defaultOption, SDL_Colour itemColor,
                SDL_Colour itemHoverColor, SDL_Colour itemSelectedColor, std::function<void(T)> callback = {});
 
@@ -38,7 +38,11 @@ public:
      * Draw item.
      * @param interface Interface to be used.
      */
-    virtual void Draw(CSDLInterface *interface) override;
+    virtual void Draw(CSDLInterface &interface) override
+    {
+        for (auto item = this->m_Items.begin(); item != this->m_Items.end(); item++)
+        { item->second->Draw(interface); }
+    }
 
     virtual void MouseEventHandler(SDL_Event &e) override;
 
@@ -57,7 +61,7 @@ protected:
 };
 
 template<class T>
-CSelectBox<T>::CSelectBox(CSDLInterface *interface, CCoord<> location, CCoord<> size, unsigned int fontSize,
+CSelectBox<T>::CSelectBox(CSDLInterface &interface, CCoord<> location, CCoord<> size, unsigned int fontSize,
                           const std::map<std::string, T> &options, CCoord<unsigned int> defaultOption,
                           SDL_Colour itemColor, SDL_Colour itemHoverColor, SDL_Colour itemSelectedColor,
                           std::function<void(T)> callback)
@@ -103,14 +107,6 @@ void CSelectBox<T>::Update(int deltaTime)
 {
     for (auto item = this->m_Items.begin(); item != this->m_Items.end(); item++)
     { item->second->Update(deltaTime); }
-}
-
-/*====================================================================================================================*/
-template<class T>
-void CSelectBox<T>::Draw(CSDLInterface *interface)
-{
-    for (auto item = this->m_Items.begin(); item != this->m_Items.end(); item++)
-    { item->second->Draw(interface); }
 }
 
 /*====================================================================================================================*/

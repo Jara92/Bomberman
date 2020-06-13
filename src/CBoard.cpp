@@ -218,7 +218,7 @@ void CBoard::DestroyCollectible(CCollectible *collectible)
 }
 
 /*====================================================================================================================*/
-void CBoard::Draw(CSDLInterface *interface, CCoord<> offset)
+void CBoard::Draw(CSDLInterface &interface, CCoord<> offset)
 {
     // draw map
     for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
@@ -245,7 +245,7 @@ void CBoard::Draw(CSDLInterface *interface, CCoord<> offset)
             SDL_Rect rect{static_cast<int>(location.m_X * (m_CellSize)),
                           static_cast<int>(location.m_Y * (m_CellSize)),
                           static_cast<int>(m_CellSize), static_cast<int>(m_CellSize)};
-            interface->RenderRectangle(&rect);
+            interface.RenderRectangle(&rect);
         }
     }
 

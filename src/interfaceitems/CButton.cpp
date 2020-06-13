@@ -6,7 +6,7 @@
 
 #include "CButton.h"
 
-CButton::CButton(CSDLInterface *interface, const std::string &text, CCoord<> location, SDL_Colour textColor,
+CButton::CButton(CSDLInterface &interface, const std::string &text, CCoord<> location, SDL_Colour textColor,
                  SDL_Colour textHoverColor, CCoord<> size, std::function<void(void)> clickCallBack)
         : CInterfaceItem(location, size),
           m_IsHovering(false), m_ClickCallBack(std::move(clickCallBack))
@@ -20,7 +20,7 @@ CButton::CButton(CSDLInterface *interface, const std::string &text, CCoord<> loc
 }
 
 /*====================================================================================================================*/
-void CButton::Draw(CSDLInterface *interface)
+void CButton::Draw(CSDLInterface &interface)
 {
     if (this->m_IsHovering)
     { this->m_TextHover->Draw(interface); }

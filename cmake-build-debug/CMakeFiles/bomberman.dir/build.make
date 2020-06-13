@@ -135,18 +135,18 @@ CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaroslav/CLionProjects/bomberman/src/managers/CGameManager.cpp -o CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.s
 
-CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.o: CMakeFiles/bomberman.dir/flags.make
-CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.o: ../src/gameobjects/CWall.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/gameobjects/CWall.cpp
+CMakeFiles/bomberman.dir/src/CWall.cpp.o: CMakeFiles/bomberman.dir/flags.make
+CMakeFiles/bomberman.dir/src/CWall.cpp.o: ../src/CWall.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/bomberman.dir/src/CWall.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/CWall.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/CWall.cpp
 
-CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jaroslav/CLionProjects/bomberman/src/gameobjects/CWall.cpp > CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.i
+CMakeFiles/bomberman.dir/src/CWall.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bomberman.dir/src/CWall.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jaroslav/CLionProjects/bomberman/src/CWall.cpp > CMakeFiles/bomberman.dir/src/CWall.cpp.i
 
-CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaroslav/CLionProjects/bomberman/src/gameobjects/CWall.cpp -o CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.s
+CMakeFiles/bomberman.dir/src/CWall.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bomberman.dir/src/CWall.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaroslav/CLionProjects/bomberman/src/CWall.cpp -o CMakeFiles/bomberman.dir/src/CWall.cpp.s
 
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o: ../src/gameobjects/movables/CPlayer.cpp
@@ -416,7 +416,7 @@ bomberman_OBJECTS = \
 "CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o" \
 "CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o" \
 "CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o" \
-"CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.o" \
+"CMakeFiles/bomberman.dir/src/CWall.cpp.o" \
 "CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o" \
 "CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o" \
 "CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o" \
@@ -447,7 +447,7 @@ bomberman: CMakeFiles/bomberman.dir/src/CApplication.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o
-bomberman: CMakeFiles/bomberman.dir/src/gameobjects/CWall.cpp.o
+bomberman: CMakeFiles/bomberman.dir/src/CWall.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/gameobjects/CBomb.cpp.o

@@ -11,10 +11,9 @@ class CWall
 {
 public:
     /**
-    * Game object contructor
-    * @param texturePack Texturepack to be rendered.
+    * Wall constructor.
+    * @param texturePack Texture pack to be rendered.
     * @param isDestructible Is this wall destructible?
-    * @param size Object size.
     */
     CWall(std::shared_ptr<CTexturePack> texturePack, bool isDestructible)
             : m_TexturePack(std::move(texturePack)), m_IsDestructible(isDestructible), m_IsAlive(true), m_Collectible(
@@ -35,7 +34,7 @@ public:
     void Update(CBoard &board, int deltaTime)
     {}
 
-    void Draw(CSDLInterface *interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0));
+    void Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0));
 
     /**
     * Try to destroy the wall.

@@ -9,36 +9,36 @@
 int CApplication::Run(int argc, char *argv[])
 {
     std::shared_ptr<CSettings> settings = this->Init(argc, argv);
-    std::shared_ptr<CSDLInterface> interface = std::make_shared<CSDLInterface>("Bomberman", settings,
-                                                                               "Fonts/Piedra-Regular.ttf");
+    CSDLInterface interface ("Bomberman", settings,"Fonts/Piedra-Regular.ttf");
     try
     {
-        if (interface->InitInterface())
+        // ToDO poladit, aby při chybě načtení SDL nebylo voláno okno show message box
+        if (interface.InitInterface())
         {
             EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME;
             //EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_MENU;
 
             // Run manager while application is running and get next application state.
             while (applicationStatus != EApplicationStatus::APPLICATION_STATUS_EXIT)
-            { applicationStatus = this->GetWindowManagerByState(interface.get(), applicationStatus)->Run(); }
+            { applicationStatus = this->GetWindowManagerByState(interface, applicationStatus)->Run(); }
         }
     }
     catch (std::ios::failure &ex)
     {
         std::cerr << ex.what() << std::endl;
-        interface->ShowMessageBox(SDL_MESSAGEBOX_ERROR, MESSAGE_FILESYSTEM_ERROR, ex.what());
+        interface.ShowMessageBox(SDL_MESSAGEBOX_ERROR, MESSAGE_FILESYSTEM_ERROR, ex.what());
         return 1;
     }
     catch (std::exception &ex)
     {
         std::cerr << ex.what() << std::endl;
-        interface->ShowMessageBox(SDL_MESSAGEBOX_ERROR, MESSAGE_UNKNOWN_ERROR, ex.what());
+        interface.ShowMessageBox(SDL_MESSAGEBOX_ERROR, MESSAGE_UNKNOWN_ERROR, ex.what());
         return 1;
     }
     catch (...)
     {
         std::cerr << MESSAGE_UNKNOWN_ERROR << std::endl;
-        interface->ShowMessageBox(SDL_MESSAGEBOX_ERROR, MESSAGE_UNKNOWN_ERROR, MESSAGE_UNKNOWN_ERROR);
+        interface.ShowMessageBox(SDL_MESSAGEBOX_ERROR, MESSAGE_UNKNOWN_ERROR, MESSAGE_UNKNOWN_ERROR);
         return 1;
     }
 
@@ -67,7 +67,7 @@ std::shared_ptr<CSettings> CApplication::Init(int argc, char *argv[])
 }
 
 std::shared_ptr<CWindowManager>
-CApplication::GetWindowManagerByState(CSDLInterface *interface, EApplicationStatus applicationStatus) const
+CApplication::GetWindowManagerByState(CSDLInterface &interface, EApplicationStatus applicationStatus) const
 {
     switch (applicationStatus)
     {

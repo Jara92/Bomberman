@@ -6,7 +6,7 @@
 
 #include "CText.h"
 
-void CText::SetText(CSDLInterface *interface, const std::string &text, CCoord<> size, SDL_Color color)
+void CText::SetText(CSDLInterface &interface, const std::string &text, CCoord<> size, SDL_Color color)
 {
     this->m_Text = text;
 
@@ -16,7 +16,7 @@ void CText::SetText(CSDLInterface *interface, const std::string &text, CCoord<> 
 
     // Get new texture
     CCoord<unsigned int> defaultSize;
-    this->m_Texture = interface->LoadTextTexture(text, defaultSize, color);
+    this->m_Texture = interface.LoadTextTexture(text, defaultSize, color);
 
     this->m_Size = size;
 

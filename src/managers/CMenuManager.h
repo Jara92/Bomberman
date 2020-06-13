@@ -17,7 +17,7 @@ public:
     * Constructor.
     * @param interface Interface to be used.
     */
-    explicit CMenuManager(CSDLInterface *interface);
+    explicit CMenuManager(CSDLInterface &interface);
 
     virtual ~CMenuManager() = default;
     CMenuManager(const CMenuManager &other) = delete;

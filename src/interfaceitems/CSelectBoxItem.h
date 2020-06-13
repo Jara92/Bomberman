@@ -20,7 +20,7 @@ public:
      * @param itemHoverColor Color of the item when the mouse is hovering it.
      * @param itemActivateColor Color of the item when the item is selected.
      */
-    CSelectBoxItem(CSDLInterface *interface, CCoord<> location, const std::string &text, CCoord<> size,
+    CSelectBoxItem(CSDLInterface &interface, CCoord<> location, const std::string &text, CCoord<> size,
                    SDL_Colour itemColor, SDL_Colour itemHoverColor, SDL_Colour itemActivateColor
     )
             : CInterfaceItem(location, size), m_IsActive(false), m_IsHovering(false)
@@ -45,7 +45,7 @@ public:
     virtual void Update(int deltaTime) override
     {}
 
-    virtual void Draw(CSDLInterface *interface) override ;
+    virtual void Draw(CSDLInterface &interface) override ;
 
     virtual void SetLocation(CCoord <>location) override;
 

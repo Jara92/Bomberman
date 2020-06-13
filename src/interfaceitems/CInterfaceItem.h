@@ -42,7 +42,7 @@ public:
      * Draw item.
      * @param interface Interface to be used.
      */
-    virtual void Draw(CSDLInterface *interface) = 0;
+    virtual void Draw(CSDLInterface &interface) = 0;
 
     /**
      * Set item location.

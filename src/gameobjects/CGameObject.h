@@ -78,7 +78,7 @@ public:
      * @param location Target cell location
      * @param offset Texture global offset
      */
-    virtual void Draw(CSDLInterface *interface, int cellSize, CCoord <>location, CCoord <> offset = CCoord<>(0, 0)) const;
+    virtual void Draw(CSDLInterface &interface, int cellSize, CCoord <>location, CCoord <> offset = CCoord<>(0, 0)) const;
 
     /**
      * Are these objects colliding?

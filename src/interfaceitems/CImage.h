@@ -16,10 +16,10 @@ public:
      * @param size Item size.
      * @param texturePath Path to texture.
      */
-    CImage(CSDLInterface * interface, CCoord <>location, CCoord<> size, std::string texturePath)
+    CImage(CSDLInterface & interface, CCoord <>location, CCoord<> size, std::string texturePath)
     : CInterfaceItem(location, size)
     {
-        this->m_Texture = interface->LoadTexture( texturePath);
+        this->m_Texture = interface.LoadTexture( texturePath);
     }
 
     virtual ~CImage()
@@ -42,8 +42,8 @@ public:
      * Draw item.
      * @param interface Interface to be used.
      */
-    virtual void Draw(CSDLInterface *interface)
-    {interface->RenderTexture(this->m_Texture, this->m_Location, this->m_Size);}
+    virtual void Draw(CSDLInterface &interface)
+    {interface.RenderTexture(this->m_Texture, this->m_Location, this->m_Size);}
 
 protected:
     SDL_Texture * m_Texture;

@@ -23,7 +23,7 @@ public:
      * @param isCentered Is this texture centered?
      * @param textureSize Texture size
      */
-    CTexturePack(CSDLInterface *interface, std::map<ETextureType, const std::vector<std::string> > &textures,
+    CTexturePack(CSDLInterface &interface, std::map<ETextureType, const std::vector<std::string> > &textures,
                  bool isCentered = true, CCoord<> textureSize = CCoord<>(1, 1));
 
     /* I dont want to allow copying this object. It does not make sense to copy object which could not be changed.

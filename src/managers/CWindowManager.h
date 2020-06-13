@@ -25,7 +25,7 @@ public:
      * Constructor.
      * @param interface Interface to be used.
      */
-    explicit CWindowManager(CSDLInterface *interface)
+    explicit CWindowManager(CSDLInterface &interface)
     : m_Interface(interface), m_NextApplicationState(EApplicationStatus::APPLICATON_STATUS_NONE)
     {}
     virtual ~CWindowManager() = default;
@@ -38,7 +38,7 @@ public:
     virtual void Init() = 0;
 
 protected:
-    CSDLInterface * m_Interface;
+    CSDLInterface & m_Interface;
     /** Interface items in the view. */
     std::vector<std::unique_ptr<CInterfaceItem>> m_InterfaceItems;
     EApplicationStatus m_NextApplicationState;

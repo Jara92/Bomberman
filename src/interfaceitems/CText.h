@@ -18,7 +18,7 @@ public:
      * @param size Item size. Set {0,0} to autosize. Set {0, X} or {X, 0} to autosize one dimension.
      * @param texturePath Path to texture.
      */
-    CText(CSDLInterface *interface, CCoord<> location, const std::string &text, CCoord<> size = {0, 0},
+    CText(CSDLInterface &interface, CCoord<> location, const std::string &text, CCoord<> size = {0, 0},
           SDL_Color color = {255, 255, 255, 255}
     ) : CInterfaceItem(location, size), m_Texture(NULL), m_Text(text)
     {
@@ -39,7 +39,7 @@ public:
      * @param interface Interface to be used.
      * @param text Text to be set.
      */
-    void SetText(CSDLInterface *interface, const std::string &text, CCoord<> size = {0, 0},
+    void SetText(CSDLInterface &interface, const std::string &text, CCoord<> size = {0, 0},
                  SDL_Color color = {255, 255, 255, 255});
 
     /**
@@ -47,22 +47,22 @@ public:
      * @param interface Interface to be used.
      * @param color Color to be set.
      */
-    void SetColor(CSDLInterface *interface, SDL_Color color)
+    void SetColor(CSDLInterface &interface, SDL_Color color)
     { this->SetText(interface, this->m_Text, this->m_Size, color); }
 
     /**
      * Update item.
      * @param deltaTime Delta time.
      */
-    virtual void Update(int deltaTime)
+    virtual void Update(int deltaTime) override
     {}
 
     /**
      * Draw item.
      * @param interface Interface to be used.
      */
-    virtual void Draw(CSDLInterface *interface)
-    { interface->RenderTexture(this->m_Texture, this->m_Location, this->m_Size); }
+    virtual void Draw(CSDLInterface &interface) override
+    { interface.RenderTexture(this->m_Texture, this->m_Location, this->m_Size); }
 
 protected:
     SDL_Texture *m_Texture;

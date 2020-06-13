@@ -6,10 +6,10 @@
 
 #include "CSettingsManager.h"
 
-CSettingsManager::CSettingsManager(CSDLInterface *interface) : CWindowManager(interface)
+CSettingsManager::CSettingsManager(CSDLInterface &interface) : CWindowManager(interface)
 {
-    this->m_Interface->SetMenuScreenSize();
-    CCoord<unsigned int> windowSize = interface->GetWindowSize();
+    this->m_Interface.SetMenuScreenSize();
+    CCoord<unsigned int> windowSize = interface.GetWindowSize();
     CCoord<> itemSize;
     unsigned int padding = 10;
 
@@ -34,9 +34,9 @@ CSettingsManager::CSettingsManager(CSDLInterface *interface) : CWindowManager(in
                                                                    {"1150x700", CCoord<unsigned int>(1150, 700)}};
     this->m_InterfaceItems.push_back(
             std::make_unique<CSelectBox<CCoord<unsigned int>>>(interface, selectBoxLocation,
-                                                               (this->m_Interface->GetWindowSize().ToDouble() -
+                                                               (this->m_Interface.GetWindowSize().ToDouble() -
                                                                 selectBoxLocation), 48, resolutions,
-                                                               this->m_Interface->GetSettings()->GetGameScreenSize(),
+                                                               this->m_Interface.GetSettings()->GetGameScreenSize(),
                                                                defaultFontColor, hoverFontColor, selectedFontColor,
                                                                [=](CCoord<unsigned int> newRes)
                                                                { this->UpdateResolution(newRes); }));
@@ -66,12 +66,12 @@ EApplicationStatus CSettingsManager::Run()
 /*====================================================================================================================*/
 void CSettingsManager::Draw() const
 {
-    this->m_Interface->SetRenderColor(0, 0, 0, 255);
-    this->m_Interface->Clear();
+    this->m_Interface.SetRenderColor(0, 0, 0, 255);
+    this->m_Interface.Clear();
 
     CWindowManager::Draw();
 
-    this->m_Interface->Present();
+    this->m_Interface.Present();
 }
 
 /*====================================================================================================================*/

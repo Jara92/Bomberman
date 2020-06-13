@@ -6,7 +6,7 @@
 #include "CGameObject.h"
 #include "../CBoard.h"
 
-void CGameObject::Draw(CSDLInterface *interface, int cellSize, CCoord<> location, CCoord<> offset) const
+void CGameObject::Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset) const
 {
     // Create texture offset to target cell.
     CCoord<> textureOffset = CCoord<>((1 - this->m_TexturePack->GetTextureSize().m_X),
@@ -18,7 +18,7 @@ void CGameObject::Draw(CSDLInterface *interface, int cellSize, CCoord<> location
 
     // Setup final location and draw texture in right position.
     location = location + textureOffset + offset;
-    interface->RenderTexture(this->GetTexture(), CCoord<>(location.m_X * cellSize, location.m_Y * cellSize),
+    interface.RenderTexture(this->GetTexture(), CCoord<>(location.m_X * cellSize, location.m_Y * cellSize),
                              cellSize * this->m_TexturePack->GetTextureSize());
 
     // FIXME debug

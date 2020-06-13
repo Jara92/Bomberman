@@ -27,7 +27,7 @@ public:
      * @param clickCallBack Function to be call on button click event.
      *
     */
-    CButton(CSDLInterface *interface, const std::string &text, CCoord<> location, SDL_Colour textColor,
+    CButton(CSDLInterface &interface, const std::string &text, CCoord<> location, SDL_Colour textColor,
             SDL_Colour textHoverColor, CCoord<> size = {0, 0},
             std::function<void(void)> clickCallBack = []()
             {});
@@ -52,7 +52,7 @@ public:
      * Draw item.
      * @param interface Interface to be used.
      */
-    virtual void Draw(CSDLInterface *interface);
+    virtual void Draw(CSDLInterface &interface) override ;
 
     virtual void SetLocation(CCoord<> location) override;
 
@@ -69,7 +69,7 @@ public:
      * @param interface Interface to create new text.
      * @param color Color to be set.
      */
-    void SetColor(CSDLInterface *interface, SDL_Colour color)
+    void SetColor(CSDLInterface &interface, SDL_Colour color)
     { this->m_Text->SetColor(interface, color); }
 
     /**
@@ -77,7 +77,7 @@ public:
      * @param interface Interface to create new text.
      * @param color Color to be set.
      */
-    void SetHoverColor(CSDLInterface *interface, SDL_Colour color)
+    void SetHoverColor(CSDLInterface &interface, SDL_Colour color)
     { this->m_TextHover->SetColor(interface, color); }
 
 protected:

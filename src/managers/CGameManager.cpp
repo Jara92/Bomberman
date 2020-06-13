@@ -6,12 +6,12 @@
 
 #include "CGameManager.h"
 
-CGameManager::CGameManager(CSDLInterface *interface)
+CGameManager::CGameManager(CSDLInterface &interface)
         : CWindowManager(interface), m_Board(nullptr), m_BoardOffset(CCoord<>(0, 2)),
           m_GameStatus(EGameStatus::GAME_STATUS_RUNNING), m_NextGameStatus(EGameStatus::GAME_STATUS_RUNNING),
           m_Level(1)
 {
-    this->m_Interface->SetGameScreenSize();
+    this->m_Interface.SetGameScreenSize();
 
     this->m_LevelLoader = std::make_unique<CLevelLoader>(interface);
 
@@ -20,13 +20,13 @@ CGameManager::CGameManager(CSDLInterface *interface)
     { this->KillAllPlayers(); });
 
     // Get board and load first level
-    this->m_Board = this->m_LevelLoader->GetBoard(1, this->m_Interface->GetSettings());
+    this->m_Board = this->m_LevelLoader->GetBoard(1, this->m_Interface.GetSettings());
     this->m_LevelLoader->LoadLevel(this->m_Board, 1);
 
     // UI items
     unsigned int padding = 5;
     this->m_DefaultFontSize = this->m_Board->GetCellSize() - 2 * padding;
-    CCoord<unsigned int> windowSize = this->m_Interface->GetWindowSize();
+    CCoord<unsigned int> windowSize = this->m_Interface.GetWindowSize();
 
     // Top menu background
     for (unsigned int i = 0; i < this->m_Board->GetBoardSize().m_X; i++)
@@ -91,8 +91,8 @@ EApplicationStatus CGameManager::Run()
 /*====================================================================================================================*/
 void CGameManager::Draw() const
 {
-    this->m_Interface->SetRenderColor(0, 0, 0, 255);
-    this->m_Interface->Clear();
+    this->m_Interface.SetRenderColor(0, 0, 0, 255);
+    this->m_Interface.Clear();
 
     // Render screen game game status
     switch (this->m_GameStatus)
@@ -116,13 +116,13 @@ void CGameManager::Draw() const
             break;
     }
 
-    this->m_Interface->Present();
+    this->m_Interface.Present();
 }
 
 /*====================================================================================================================*/
 void CGameManager::DrawGame() const
 {
-    this->m_Board->Draw(this->m_Interface, this->m_Interface->GetSettings()->GetOffset().ToDouble());
+    this->m_Board->Draw(this->m_Interface, this->m_Interface.GetSettings()->GetOffset().ToDouble());
 
     // Top menu background
     for (unsigned int i = 0; i < this->m_Board->GetBoardSize().m_X; i++)
@@ -273,9 +273,9 @@ void CGameManager::RoundOver()
 void CGameManager::GameOver()
 {
     if (this->m_Board->m_Players.size() == 0 || !this->m_Board->m_Players[0] ||
-        !CScoreSaver(this->m_Interface->GetSettings()).TrySetTopScore(this->m_Board->m_Players[0]->GetScore()))
+        !CScoreSaver(this->m_Interface.GetSettings()).TrySetTopScore(this->m_Board->m_Players[0]->GetScore()))
     {
-        this->m_Interface->ShowMessageBox(SDL_MESSAGEBOX_ERROR, "Runtime error",
+        this->m_Interface.ShowMessageBox(SDL_MESSAGEBOX_ERROR, "Runtime error",
                                           "Cannot save new score in the file.");
         std::cerr << "Runtime error: " << "Cannot save new score in the file." << std::endl;
     }
@@ -327,7 +327,7 @@ void CGameManager::GlobalInput(const Uint8 *input)
     {}
 
     // Debug options
-    if (this->m_Interface->GetSettings()->GetDebugMode())
+    if (this->m_Interface.GetSettings()->GetDebugMode())
     {
         if (input[SDL_SCANCODE_F1])
         {

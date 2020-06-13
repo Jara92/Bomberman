@@ -7,7 +7,7 @@
 #include "CSelectBoxItem.h"
 
 /*====================================================================================================================*/
-void CSelectBoxItem::Draw(CSDLInterface *interface)
+void CSelectBoxItem::Draw(CSDLInterface &interface)
 {
     if (this->m_IsActive)
     { this->m_ActiveText->Draw(interface); }

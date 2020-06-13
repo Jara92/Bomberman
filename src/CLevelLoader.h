@@ -24,13 +24,13 @@
 class CLevelLoader
 {
 public:
-    CLevelLoader(CSDLInterface *interface, std::string mapFileName = "map", std::string levelFileName = "levels/level");
+    CLevelLoader(CSDLInterface &interface, std::string mapFileName = "map", std::string levelFileName = "levels/level");
 
     ~CLevelLoader() = default;
 
-    CLevelLoader(const CLevelLoader &mapLoader) = default;
+    CLevelLoader(const CLevelLoader &mapLoader) = delete;
 
-    CLevelLoader & operator=(const CLevelLoader &mapLoader) = default;
+    CLevelLoader & operator=(const CLevelLoader &mapLoader) = delete;
 
     std::shared_ptr<CBoard> GetBoard(int playersCount, const std::shared_ptr<CSettings> & settings);
 
@@ -57,7 +57,7 @@ protected:
     /** How many properties enemy item should have? */
     static const unsigned int ENEMY_ITEM_PROPERTIES_COUNT = 6;
 
-    CSDLInterface *m_Interface;
+    CSDLInterface &m_Interface;
 
     /** Texture packs used for dynamically added objects. */
     std::vector<std::shared_ptr<CTexturePack>> m_EnemyTexturePacks, m_CollectibleTexturePacks;

@@ -4,7 +4,7 @@
 
 #include "CLevelLoader.h"
 
-CLevelLoader::CLevelLoader(CSDLInterface *interface, std::string mapFileName, std::string levelFileName)
+CLevelLoader::CLevelLoader(CSDLInterface &interface, std::string mapFileName, std::string levelFileName)
         : m_MapFileName(std::move(mapFileName)), m_LevelFileName(std::move(levelFileName)), m_Interface(interface)
 {
     this->m_EnemyTexturePacks = this->LoadEnemyTexturePacks();
@@ -60,7 +60,7 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
     { map[i].resize(CLevelLoader::MAP_HEIGHT, nullptr); }
 
     unsigned int row = 0, col = 0;
-    std::ifstream fileReader(this->m_Interface->GetSettings()->GetDataPath() + this->m_MapFileName,
+    std::ifstream fileReader(this->m_Interface.GetSettings()->GetDataPath() + this->m_MapFileName,
                              std::ios::binary | std::ios::in);
 
     // Is file reader ok?
@@ -333,7 +333,7 @@ std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadCollectiblesTexture
 void CLevelLoader::LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level)
 {
     std::ifstream fileReader(
-            (this->m_Interface->GetSettings()->GetDataPath() + this->m_LevelFileName) + std::to_string(level),
+            (this->m_Interface.GetSettings()->GetDataPath() + this->m_LevelFileName) + std::to_string(level),
             std::ios::in);
 
     // Is file reader ok?

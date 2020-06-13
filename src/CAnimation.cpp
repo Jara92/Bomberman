@@ -6,10 +6,10 @@
 
 #include "CAnimation.h"
 
-CAnimation::CAnimation(CSDLInterface *interface, const std::vector<std::string> &textures)
+CAnimation::CAnimation(CSDLInterface &interface, const std::vector<std::string> &textures)
 {
     for (std::vector<std::string>::size_type i = 0; i < textures.size(); i++)
-    { this->m_Textures.push_back(interface->LoadTexture(textures[i])); }
+    { this->m_Textures.push_back(interface.LoadTexture(textures[i])); }
 }
 
 /*====================================================================================================================*/

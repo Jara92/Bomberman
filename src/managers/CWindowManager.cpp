@@ -21,7 +21,7 @@ EApplicationStatus CWindowManager::Run()
     this->Draw();
 
     // Wait for few miliseconds to draw cca 60 frames per second
-    this->m_Interface->Wait(this->m_Clock.GetDelay());
+    this->m_Interface.Wait(this->m_Clock.GetDelay());
 
     return this->m_NextApplicationState;
 }

@@ -8,12 +8,12 @@
  * Menu window.
  * @param interface Interface to be used.
  */
-CMenuManager::CMenuManager(CSDLInterface *interface)
+CMenuManager::CMenuManager(CSDLInterface &interface)
         : CWindowManager(interface)
 {
     // Set menu window size.
-    this->m_Interface->SetMenuScreenSize();
-    CCoord<unsigned int> windowSize = this->m_Interface->GetWindowSize();
+    this->m_Interface.SetMenuScreenSize();
+    CCoord<unsigned int> windowSize = this->m_Interface.GetWindowSize();
     CCoord<> itemSize;
 
     unsigned int offset = 10, yLocation = offset, fontSize = 64, yButtonMargin = 70;
@@ -33,7 +33,7 @@ CMenuManager::CMenuManager(CSDLInterface *interface)
     this->m_InterfaceItems.push_back(
             std::make_unique<CText>(interface, CCoord<>(0, 0),
                                     "Highest score: " +
-                                    std::to_string(CScoreSaver(this->m_Interface->GetSettings()).GetTopScore()),
+                                    std::to_string(CScoreSaver(this->m_Interface.GetSettings()).GetTopScore()),
                                     CCoord<>(0, fontSize / 1.5),
                                     SDL_Color{255, 215, 0, 255}));
     itemSize = this->m_InterfaceItems.back()->GetSize();
@@ -108,12 +108,12 @@ EApplicationStatus CMenuManager::Run()
 /*====================================================================================================================*/
 void CMenuManager::Draw() const
 {
-    this->m_Interface->SetRenderColor(0, 0, 0, 255);
-    this->m_Interface->Clear();
+    this->m_Interface.SetRenderColor(0, 0, 0, 255);
+    this->m_Interface.Clear();
 
     CWindowManager::Draw();
 
-    this->m_Interface->Present();
+    this->m_Interface.Present();
 }
 
 /*====================================================================================================================*/

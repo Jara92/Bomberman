@@ -22,7 +22,7 @@ public:
      * Constructor.
      * @param interface Interface to be used.
      */
-    explicit CGameManager(CSDLInterface *interface);
+    explicit CGameManager(CSDLInterface &interface);
 
     virtual ~CGameManager() = default;
 

@@ -13,7 +13,7 @@ public:
     * Constructor.
     * @param interface Interface to be used.
     */
-    explicit CSettingsManager(CSDLInterface *interface);
+    explicit CSettingsManager(CSDLInterface &interface);
 
     virtual ~CSettingsManager() = default;
     CSettingsManager(const CSettingsManager &other) = delete;
@@ -32,7 +32,7 @@ protected:
     void UpdateResolution(CCoord <unsigned int>newResolution)
     {
         // Change settings object and reload interface.
-        this->m_Interface->GetSettings()->ChangeGameScreenResolution(newResolution);
+        this->m_Interface.GetSettings()->ChangeGameScreenResolution(newResolution);
     }
 };
 

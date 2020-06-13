@@ -24,6 +24,6 @@ public:
 protected:
     std::shared_ptr<CSettings> Init(int argc, char * argv[]);
 
-    std::shared_ptr<CWindowManager> GetWindowManagerByState(CSDLInterface * interface, EApplicationStatus applicationStatus) const;
+    std::shared_ptr<CWindowManager> GetWindowManagerByState(CSDLInterface & interface, EApplicationStatus applicationStatus) const;
 };
 
