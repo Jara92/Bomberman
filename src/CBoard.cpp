@@ -127,9 +127,6 @@ void CBoard::DestroyCollectible(CCollectible *collectible)
         collectibleToRemove->second = nullptr;
         this->m_Collectibles.erase(collectibleToRemove);
     }
-        // Error message when the collectible is not found - this should never happen
-    else
-    { std::cerr << "Collectible " << collectibleLocation << " not found " << std::endl; }
 }
 
 /*====================================================================================================================*/
@@ -274,14 +271,6 @@ void CBoard::UpdatePhysicEvents()
                 collectible->second->Apply((*player)); // Apply item
             }
         }
-
-        // Fire collision - Kill the player.
-        /* for (auto fire = this->m_Fires.begin(); fire != this->m_Fires.end(); fire++)
-         {
-                // Kill player if player is colliding fire and do he does not have fire imunity.
-                if (fire->second && !(*player)->GetFireImunity() && (*player)->IsColliding(fire->second))
-                { (*player)->Kill(); }
-         }*/
 
         // Enemy collision - Kill the player.
         /*for (auto enemy = this->m_Enemies.begin(); enemy != this->m_Enemies.end(); enemy++)
