@@ -120,6 +120,9 @@ public:
     bool IsAlive() const
     {return this->m_IsAlive;}
 
+    void Kill()
+    {this->m_IsAlive = false;}
+
 protected:
     std::shared_ptr<CTexturePack> m_TexturePack;
     CCoord<> m_Size;

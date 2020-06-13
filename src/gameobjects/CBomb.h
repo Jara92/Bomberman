@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include "CBlock.h"
 #include "CGameObject.h"
 #include "movables/CPlayer.h"
 #include "../CTimer.h"
@@ -12,7 +13,7 @@
 /**
  * Represents object which could explode - Bomb. Bomb can be triggered by remote control or by timer.
  */
-class CBomb : public CGameObject
+class CBomb : public CBlock
 {
 public:
     /**
@@ -25,10 +26,9 @@ public:
      * @param remoteTrigger Must this bomb be triggered to explode by the player?
      */
 
-    CBomb(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1), CCoord<> location = CCoord<>(0, 0),
-          CPlayer *owner = nullptr,
-          int explosionDelay = 2000, bool remoteTrigger = false)
-            : CGameObject(std::move(texturePack), size, location), m_Owner(owner), m_IsPassableForOwner(true),
+    CBomb(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1),
+          CPlayer *owner = nullptr,int explosionDelay = 2000, bool remoteTrigger = false)
+            : CBlock(std::move(texturePack), false, size), m_Owner(owner), m_IsPassableForOwner(true),
               m_RemoteTrigger(remoteTrigger), m_IsTriggered(false), m_ExplosionDelay(explosionDelay)
     {
         // Set auto explosion timer.

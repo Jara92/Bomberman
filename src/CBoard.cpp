@@ -43,13 +43,13 @@ bool CBoard::IsPassable(CCoord<unsigned int> coord, const CMovable *movable)
     { return false; }
 
     // Search for bombs in location.
-    auto bomb = this->m_Bombs.find(coord);
-    if (bomb != this->m_Bombs.end() && bomb->second && !movable->GetBombPass() && movable->IsColliding(bomb->second))
-    {
-        // Player is not owner or the bomb is not passable for owner
-        if (bomb->second->GetOwner() != movable || !bomb->second->IsPassableForOwner())
-        { return false; }
-    }
+    /* auto bomb = this->m_Bombs.find(coord);
+     if (bomb != this->m_Bombs.end() && bomb->second && !movable->GetBombPass() && movable->IsColliding(bomb->second))
+     {
+         // Player is not owner or the bomb is not passable for owner
+         if (bomb->second->GetOwner() != movable || !bomb->second->IsPassableForOwner())
+         { return false; }
+     }*/
 
     return true;
 }
@@ -66,35 +66,35 @@ bool CBoard::PlaceBomb(CPlayer *player)
     int delay = 2000;
     if (player->GetRemoteExplosion())
     { delay = 100; }
-    // If this location is free.
-    if (this->m_Bombs.find(location) == this->m_Bombs.end())
-    {
-        CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, this->m_BombObjectTexturePack->GetTextureSize(),
-                                location.ToDouble(), player, delay, player->GetRemoteExplosion());
 
-        this->m_Bombs.insert({location.ToUnsignedInt(), bomb});
-        return true;
-    }
+    CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, this->m_BombObjectTexturePack->GetTextureSize(), player,
+                            delay, player->GetRemoteExplosion());
+    this->m_Map[location.m_X][location.m_Y] = bomb;
 
-    return false;
+    return true;
 }
 
 /*====================================================================================================================*/
 void CBoard::DetonateBombs(const CPlayer *player)
 {
-    for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
+  /*  for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)
     {
         if (i->second->GetOwner() == player)
         { i->second->Detonate(*this); }
-    }
+    }*/
 }
 
 /*====================================================================================================================*/
-void CBoard::CreateExplosion(CBomb *bomb)
+void CBoard::CreateExplosion(CBomb *bomb, CCoord<unsigned int> bombLocation)
 {
     if (bomb)
     {
         CPlayer *owner = bomb->GetOwner();
+
+        // Remove the bomb.
+        bomb->Kill();
+        delete this->m_Map[bombLocation.m_X][bombLocation.m_Y];
+        this->m_Map[bombLocation.m_X][bombLocation.m_Y] = nullptr;
 
         if (owner)
         {
@@ -103,26 +103,17 @@ void CBoard::CreateExplosion(CBomb *bomb)
             // Explosion in all directions.
             CCoord<int> directions[4] = {CCoord<int>(0, 1), CCoord<int>(0, -1), CCoord<int>(1, 0), CCoord<int>(-1, 0)};
             for (int i = 0; i < 4; i++)
-            { this->CreateExplosionWave(bomb, directions[i], explosionRadius); }
-        }
-
-        CCoord<unsigned int> location = bomb->GetLocation().ToUnsignedInt();
-        auto bombToRemove = this->m_Bombs.find(location);
-        if (bombToRemove != this->m_Bombs.end())
-        {
-            delete bombToRemove->second;
-            bombToRemove->second = nullptr;
-            this->m_Bombs.erase(bombToRemove);
+            { this->CreateExplosionWave(bombLocation, directions[i], explosionRadius); }
         }
     }
 }
 
 /*====================================================================================================================*/
-void CBoard::CreateExplosionWave(CBomb *bomb, CCoord<int> direction, unsigned int explosionRadius)
+void CBoard::CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> direction, unsigned int explosionRadius)
 {
     for (unsigned int i = 0; i <= explosionRadius; i++)
     {
-        CCoord<unsigned int> locationToExplode = (bomb->GetLocation() + (i * direction).ToDouble()).ToUnsignedInt();
+        CCoord<unsigned int> locationToExplode = (bombLocation.ToDouble() + (i * direction).ToDouble()).ToUnsignedInt();
 
         if (locationToExplode.m_X < 0 || locationToExplode.m_X >= CBoard::m_BoardSize.m_X ||
             locationToExplode.m_Y < 0 || locationToExplode.m_Y >= CBoard::m_BoardSize.m_Y)
@@ -130,7 +121,7 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord<int> direction, unsigned in
 
         // Target exists and its not destructible.
         CBlock *target = this->m_Map[locationToExplode.m_X][locationToExplode.m_Y];
-        if ((target && !target->IsDestructible() && bomb->GetLocation().ToUnsignedInt() != locationToExplode))
+        if ((target && !target->IsDestructible()))
         {
             std::cout << "break " << locationToExplode << std::endl;
             break; /* Leave for loop - The wave was stopped by this indestructible wall.*/        }
@@ -142,7 +133,7 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord<int> direction, unsigned in
             if (target->TryDestroy(i) && !target->IsAlive())
             {
                 wallDestroyed = true;
-            } else if (!target->IsAlive() && bomb->GetLocation().ToUnsignedInt() != locationToExplode)
+            } else if (!target->IsAlive())
             {
                 std::cout << "break2" << std::endl;
                 break;  /* Leave for loop - The wave was stopped by this wall.*/            }
@@ -153,11 +144,6 @@ void CBoard::CreateExplosionWave(CBomb *bomb, CCoord<int> direction, unsigned in
                 locationToExplode.ToUnsignedInt());
         if (foundCollectible != this->m_Collectibles.end())
         { break; /* leave for loop - We dont want burning collectibles*/        }
-
-        // Find bomb in location to explode.
-        auto foundBomb = this->m_Bombs.find(locationToExplode.ToUnsignedInt());
-        if (foundBomb != this->m_Bombs.end() && foundBomb->second != bomb)
-        { break; /* leave for loop - We dont want burning bombs.*/        }
 
         // Create new fire.
         CFire *fire = new CFire(this->m_FireObjectTexturePack, this->m_FireObjectTexturePack->GetTextureSize());
@@ -255,10 +241,17 @@ void CBoard::Update(int deltaTime)
         for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
         {
             // Update if object is alive.
-            if (this->m_Map[i][j] && this->m_Map[i][j]->IsAlive())
-            { this->m_Map[i][j]->Update(*this, deltaTime); }
+            if (this->m_Map[i][j])
+            {
+                auto bomb = this->m_BombsToExplode.find((this->m_Map[i][j]));
+
+                if (bomb != this->m_BombsToExplode.end())
+                { this->CreateExplosion((*bomb), CCoord<unsigned int>(i, j)); }
+                else if (this->m_Map[i][j]->IsAlive())
+                { this->m_Map[i][j]->Update(*this, deltaTime); }
+            }
                 // Delete dead objects.
-            else
+            if(this->m_Map[i][j] && !this->m_Map[i][j]->IsAlive())
             {
                 delete this->m_Map[i][j];
                 this->m_Map[i][j] = nullptr;

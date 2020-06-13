@@ -24,12 +24,8 @@ void CPlayer::Update(CBoard &board, int deltaTime)
     if (this->m_IsPlanting)
     { this->TryPlaceBomb(board); }
 
-    // Detonation action.
-    if (this->m_IsDetonating)
-    { board.DetonateBombs(this); }
-
     // Clean input.
-    this->m_IsDetonating = this->m_IsPlanting = false;
+    this->m_IsPlanting = false;
     this->m_Movement = CCoord<>(0, 0);
 }
 
@@ -152,6 +148,8 @@ void CPlayer::HandleInput(const Uint8 *keyState)
             this->m_DetonatingAvaible = false;
             this->m_IsDetonating = true;
         }
+        else if(keyState[this->m_Controls.m_Detonation] && this->m_IsDetonating && !this->m_DetonatingAvaible)
+        {this->m_IsDetonating = false;}
 
             // Detonating is not avaible until the button is released
         else if (!keyState[this->m_Controls.m_Detonation])

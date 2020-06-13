@@ -31,7 +31,7 @@ public:
             : m_Players(std::move(players)), m_Map(std::move(map)), m_Settings(std::move(settings)),
               m_BoardSize(boardSize), m_CellSize(cellSize), m_GroundObject(std::move(ground)),
               m_BombObjectTexturePack(std::move(bombTexturePack)), m_FireObjectTexturePack(std::move(fireTexturePack))
-    {    }
+    {}
 
     ~CBoard();
 
@@ -91,18 +91,24 @@ public:
     void DetonateBombs(const CPlayer *player);
 
     /**
+     * Cause explosion in game board.
+     * @param bomb Bomb to explode.
+     */
+    void CauseExplosion(CBomb * bomb)
+    {this->m_BombsToExplode.insert(bomb);    }
+    /**
      * Trigger explosion in bombs location.
      * @param bomb Exploding bomb.
      */
-    void CreateExplosion(CBomb *bomb);
+    void CreateExplosion(CBomb *bomb, CCoord<unsigned int> bombLocation);
 
     /**
      * Trigger explosion in one direction.
-     * @param bomb Source bomb.
+     * @param bombLocation Source bomb location.
      * @param direction Direction vector.
      * @param explosionRadius Explosion radius.
      */
-    void CreateExplosionWave(CBomb *bomb, CCoord<int> direction, unsigned int explosionRadius);
+    void CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> direction, unsigned int explosionRadius);
 
     /**
      * Delete collectible from the map.
@@ -143,6 +149,8 @@ public:
     std::map<CCoord<unsigned int>, CBomb *> m_Bombs;
     std::vector<std::vector<CBlock *>> m_Map;
     std::vector<CGameObject *> m_GameObjects;
+
+    std::set<CBomb*,std::less<> > m_BombsToExplode;
 
     /** Game settings */
     std::shared_ptr<CSettings> m_Settings;
