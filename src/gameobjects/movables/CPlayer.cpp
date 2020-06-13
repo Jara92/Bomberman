@@ -77,7 +77,7 @@ void CPlayer::VerticalCenter(CBoard &board, int deltaTime, int direction)
     // Turn smoothly when player is very close to empty cell
     if ((decPart >= CPlayer::MIN_TURNING_VALUE) &&
         board.IsPassable(CCoord<unsigned int>(this->m_Location.m_X + direction, std::ceil(this->m_Location.m_Y)),
-                          this))
+                         this))
     {
         this->m_Location.m_Y = std::min(this->m_Location.m_Y + this->m_Speed * deltaTime,
                                         std::ceil(this->m_Location.m_Y));
@@ -103,7 +103,7 @@ void CPlayer::HorizontalCenter(CBoard &board, int deltaTime, int direction)
     // Turn smoothly when player is very close to empty cell
     if ((decPart >= CPlayer::MAX_TURNING_VALUE) &&
         board.IsPassable(CCoord<unsigned int>(std::ceil(this->m_Location.m_X), this->m_Location.m_Y + direction),
-                          this))
+                         this))
     {
         this->m_Location.m_X = std::min(this->m_Location.m_X + this->m_Speed * deltaTime,
                                         std::ceil(this->m_Location.m_X));
@@ -180,7 +180,7 @@ void CPlayer::Kill()
 }
 
 /*====================================================================================================================*/
-void CPlayer::Reset(CBoard & board)
+void CPlayer::Reset(CBoard &board)
 {
     CMovable::Reset(board);
     this->m_ActiveBombs = 0;
@@ -193,7 +193,7 @@ void CPlayer::UpdateTextureType(CCoord<> oldLocation)
     // Calculate movement vector.
     CCoord<> diff = oldLocation - this->m_Location;
     // Move in both dimensions.
-    if (diff != CCoord<>(0,0))
+    if (diff != CCoord<>(0, 0))
     {
         // Set smaller move step to zero.
         if (std::abs(diff.m_X) > std::abs(diff.m_Y))
@@ -201,7 +201,7 @@ void CPlayer::UpdateTextureType(CCoord<> oldLocation)
         else
         { diff.m_X = 0; }
     }
-    // Player is not moving. Use input movement direction to setup animation.
+        // Player is not moving. Use input movement direction to setup animation.
     else
     { diff = -1 * this->m_Movement; }
 
@@ -215,4 +215,11 @@ void CPlayer::UpdateTextureType(CCoord<> oldLocation)
     else if (diff.m_Y > 0)
     { this->m_ActualTexture = ETextureType::TEXTURE_BACK; }
 }
+
+/*void CPlayer::CollisionWith(CGameObject &other)
+{
+    if (this->IsColliding(&other))
+    {    std::cout << "is here" << std::endl; other.Coll); }
+
+}*/
 

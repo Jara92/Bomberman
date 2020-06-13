@@ -474,6 +474,33 @@ src/gameobjects/collectibles/CBoost.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.s
 .PHONY : src/gameobjects/collectibles/CBoost.cpp.s
 
+src/gameobjects/collectibles/CCollectible.o: src/gameobjects/collectibles/CCollectible.cpp.o
+
+.PHONY : src/gameobjects/collectibles/CCollectible.o
+
+# target to build an object file
+src/gameobjects/collectibles/CCollectible.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o
+.PHONY : src/gameobjects/collectibles/CCollectible.cpp.o
+
+src/gameobjects/collectibles/CCollectible.i: src/gameobjects/collectibles/CCollectible.cpp.i
+
+.PHONY : src/gameobjects/collectibles/CCollectible.i
+
+# target to preprocess a source file
+src/gameobjects/collectibles/CCollectible.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.i
+.PHONY : src/gameobjects/collectibles/CCollectible.cpp.i
+
+src/gameobjects/collectibles/CCollectible.s: src/gameobjects/collectibles/CCollectible.cpp.s
+
+.PHONY : src/gameobjects/collectibles/CCollectible.s
+
+# target to generate assembly for a file
+src/gameobjects/collectibles/CCollectible.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.s
+.PHONY : src/gameobjects/collectibles/CCollectible.cpp.s
+
 src/gameobjects/collectibles/CDoor.o: src/gameobjects/collectibles/CDoor.cpp.o
 
 .PHONY : src/gameobjects/collectibles/CDoor.o
@@ -927,6 +954,9 @@ help:
 	@echo "... src/gameobjects/collectibles/CBoost.o"
 	@echo "... src/gameobjects/collectibles/CBoost.i"
 	@echo "... src/gameobjects/collectibles/CBoost.s"
+	@echo "... src/gameobjects/collectibles/CCollectible.o"
+	@echo "... src/gameobjects/collectibles/CCollectible.i"
+	@echo "... src/gameobjects/collectibles/CCollectible.s"
 	@echo "... src/gameobjects/collectibles/CDoor.o"
 	@echo "... src/gameobjects/collectibles/CDoor.i"
 	@echo "... src/gameobjects/collectibles/CDoor.s"

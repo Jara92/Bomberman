@@ -21,12 +21,11 @@ public:
     * @param texturePack Texturepack to be rendered.
     * @param size Object size.
     * @param location Starting location.
-    * @param levelBased
     */
     explicit CGameObject(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1),
-                         CCoord<> location = CCoord<>(0, 0), bool levelBased = false)
+                         CCoord<> location = CCoord<>(0, 0))
             : m_TexturePack(std::move(texturePack)), m_ActualTexture(ETextureType::TEXTURE_FRONT),
-              m_IsAlive(true), m_IsLevelBased(levelBased), m_Size(size), m_Location(location), m_AnimationIndex(0),
+              m_IsAlive(true), m_Size(size), m_Location(location), m_AnimationIndex(0),
               m_AnimationUpdateInterval(100), m_AnimationTimer(0)
     {}
 
@@ -84,14 +83,12 @@ public:
      */
     bool IsColliding(const CGameObject *other) const;
 
-    virtual void CollisionWith(CGameObject &other)
+    virtual void CollisionWithObject(CGameObject &other)
     {}
+
 
     void SetLocation(CCoord<> location)
     { this->m_Location = location; }
-
-    bool IsLevelBased() const
-    { return this->m_IsLevelBased; }
 
 protected:
     /** Texturepack which is used for rendering. */
@@ -99,7 +96,7 @@ protected:
     /** Actual texture type to be rendered. */
     ETextureType m_ActualTexture;
     /** Is this object passable for other objects? */
-    bool m_IsAlive, m_IsLevelBased;
+    bool m_IsAlive;
     CCoord<> m_Size;
     CCoord<> m_Location;
 

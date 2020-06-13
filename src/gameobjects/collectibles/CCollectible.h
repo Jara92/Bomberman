@@ -19,11 +19,10 @@ public:
     * @param scoreBonus Bonus to be claimed by collector.
     * @param duration Collectible duration in seconds. Set 0 for unlimited duration.
     */
-    explicit CCollectible(std::shared_ptr<CTexturePack> texturePack, CCoord <>size = CCoord<>(1,1), CCoord <>location = CCoord<>(0,0),
-                          size_t scoreBonus = 0, int duration = 0)
+    CCollectible(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1),
+                          CCoord<> location = CCoord<>(0, 0), size_t scoreBonus = 0, int duration = 0)
             : CGameObject(std::move(texturePack), size, location), m_Duration(duration), m_IsVisible(false),
-              m_ScoreBonus(scoreBonus),
-              m_TargetPlayer(nullptr)
+              m_ScoreBonus(scoreBonus), m_TargetPlayer(nullptr)
     {}
 
     CCollectible(const CCollectible &other) = default;
@@ -34,19 +33,23 @@ public:
 
     virtual void Update(CBoard &board, int deltaTime) override = 0;
 
+    virtual void
+    Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0)) const override
+    {
+        // Render collectible only when this object is visible.
+        if(this->m_IsVisible)
+        {CGameObject::Draw(interface, cellSize, location, offset);}
+    }
+
     /**
      * Apply collectible on the player.
      * @param player Target player
      */
     virtual void Apply(CPlayer *player) = 0;
 
-    virtual void Reset(CBoard & board) override ;
-
-    /*virtual void CollisionWith(CPlayer & player)
-    {std::cout << "player" << std::endl;}*/
-
-   /* virtual void CollisionWith(CGameObject & object)
-    {std::cout << "object" << std::endl;}*/
+    virtual void Reset(CBoard &board) override;
+    virtual void CollisionWithPlayer(CPlayer & player)
+    {this->Apply(&player);}
 
     /**
      * Make collectible object visible
@@ -58,7 +61,7 @@ public:
      * Make collectible object invisible again.
      */
     void MakeInvisible()
-    {this->m_IsVisible = false;}
+    { this->m_IsVisible = false; }
 
     /**
      * Is this collectible object visible?

@@ -15,6 +15,7 @@
 #include "SDL2/SDL_image.h"
 #include "CBoard.h"
 #include "CSDLInterface.h"
+#include "gameobjects/collectibles/CCollectible.h"
 #include "gameobjects/collectibles/CBoost.h"
 #include "gameobjects/collectibles/CDoor.h"
 #include "ECollectibleType.h"
@@ -132,7 +133,7 @@ protected:
      * @param duration Collectible duration.
      * @throws std::invalid_argument Unknown collectible type.
      */
-    void CreateCollectibleAtRandomLocation(std::shared_ptr<CBoard> &board, ECollectibleType type, std::size_t score, std::size_t duration);
+    void CreateCollectible(std::shared_ptr<CBoard> &board, ECollectibleType type, std::size_t score, std::size_t duration);
 
     /**
      * Create new CEnemy at random location.
@@ -143,7 +144,7 @@ protected:
      * @param speed Enemy moving speed.
      * @param wallPass Can the enemy walk through the walls?
      */
-    void CreateEnemyAtRandomLocation(std::shared_ptr<CBoard> &board, EEnemyType type, std::size_t lives, std::size_t score, double speed, bool wallPass);
+    void CreateEnemy(std::shared_ptr<CBoard> &board, EEnemyType type, std::size_t lives, std::size_t score, double speed, bool wallPass);
 
     /**
     * Get bomb texture pack.

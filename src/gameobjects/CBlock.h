@@ -18,10 +18,9 @@ public:
     * Game object contructor
     * @param texturePack Texturepack to be rendered.
     * @param size Object size.
-    * @param location Object location.
     */
-    CBlock(std::shared_ptr<CTexturePack> texturePack)
-    : m_TexturePack(std::move(texturePack))
+    CBlock(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = {1,1})
+    : m_TexturePack(std::move(texturePack)), m_Size(size), m_IsAlive(true)
     {}
 
     CBlock(const CBlock &other) = default;
@@ -47,7 +46,12 @@ public:
      */
     void Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0));
 
+    bool IsAlive() const
+    {return this->m_IsAlive;}
+
 protected:
     std::shared_ptr<CTexturePack> m_TexturePack;
+    CCoord<> m_Size;
+    bool m_IsAlive;
 };
 

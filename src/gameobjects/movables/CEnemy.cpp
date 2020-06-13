@@ -38,11 +38,13 @@ std::vector<std::pair<ETextureType, CCoord<double>>> CEnemy::GetPossibleMoveDire
 
     return outputDirections;
 }
+
 /*====================================================================================================================*/
 CCoord<> CEnemy::FindWayOut(CBoard *board)
 {
     return CCoord<>(0, -1);
 }
+
 /*====================================================================================================================*/
 void CEnemy::Update(CBoard &board, int deltaTime)
 {
@@ -53,4 +55,18 @@ void CEnemy::Update(CBoard &board, int deltaTime)
     { this->m_Location.m_X = std::floor(this->m_Location.m_X); }
     else if (this->m_Movement.m_Y == 0)
     { this->m_Location.m_Y = std::floor(this->m_Location.m_Y); }
+}
+
+/*====================================================================================================================*/
+void CEnemy::Reset(CBoard &board)
+{
+    CMovable::Reset(board);
+
+    // Set random location for this enemy.
+    CCoord<unsigned int> random;
+    do
+    { random = board.GetRandomBoardLocation(); }
+    while (!board.PositionFree(random) || !board.PlayersAreaFree(random));
+
+    this->SetLocation(random.ToDouble());
 }

@@ -38,6 +38,8 @@ public:
      */
     virtual void Update(CBoard &board, int deltaTime) override;
 
+    virtual void Reset(CBoard & board);
+
     /**
      * Try to kill this enemy.
      * @param distance Distance between the enemy and a killer.

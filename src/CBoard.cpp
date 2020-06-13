@@ -232,6 +232,12 @@ void CBoard::Draw(CSDLInterface &interface, CCoord<> offset)
         }
     }
 
+    for (auto i = this->m_GameObjects.begin(); i != this->m_GameObjects.end(); i++)
+    {
+        if (*i)
+        { (*i)->Draw(interface, this->m_CellSize, (*i)->GetLocation(), offset); }
+    }
+
     // Draw boosts is visible
     for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
     {
@@ -348,12 +354,21 @@ void CBoard::UpdatePhysicEvents()
     {
         if ((*(player)) && (*(player))->IsAlive())
         {
+            for (auto object = this->m_GameObjects.begin(); object != this->m_GameObjects.end(); object++)
+            {
+                // Resolving a potential collision with an object.
+              /*  if((*object) && (*object)->IsAlive())
+                {(*player)->CollisionWith(*(*object));}*/
+            }
+
+            return;
+
             // Collectible collision - Apply collectible on the player.
             for (auto collectible = this->m_Collectibles.begin();
                  collectible != this->m_Collectibles.end(); collectible++)
             {
                 if (collectible->second && collectible->second->IsVisible() &&
-                        (*player)->IsColliding(collectible->second))
+                    (*player)->IsColliding(collectible->second))
                 {
                     // Polymorphic call
                     collectible->second->Apply((*player)); // Apply item
@@ -372,11 +387,13 @@ void CBoard::UpdatePhysicEvents()
             for (auto enemy = this->m_Enemies.begin(); enemy != this->m_Enemies.end(); enemy++)
             {
                 if (*enemy && (*enemy)->IsAlive() &&
-                        (*player)->IsColliding((*enemy)))
+                    (*player)->IsColliding((*enemy)))
                 { (*player)->Kill(); }
             }
         }
     }
+
+
 }
 
 /*====================================================================================================================*/
@@ -396,21 +413,16 @@ void CBoard::ClearBoard(bool clearLevelObjects)
         }
     }
 
-    // Delete level objects - New level is going to ge loaded.
-    if (clearLevelObjects)
+    for (auto object = this->m_GameObjects.begin(); object != this->m_GameObjects.end(); object++)
     {
-        for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
-        { delete (i->second); }
-        this->m_Collectibles.clear();
-
-        for (auto i = this->m_Enemies.begin(); i != this->m_Enemies.end(); i++)
-        { delete (*i); }
-        this->m_Enemies.clear();
-    } else
-    {
-        for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
-        { i->second->MakeInvisible(); }
+        if(clearLevelObjects)
+        {delete (*object);}
+        else
+        {(*object)->Reset(*this);}
     }
+
+    if(clearLevelObjects)
+    {this->m_GameObjects.clear();}
 
     // Delete bombs
     for (auto i = this->m_Bombs.begin(); i != this->m_Bombs.end(); i++)

@@ -24,9 +24,9 @@ public:
      * @param lives Object starting lives.
     */
     explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size, CControls controls,
-                     double speed = 0.0025, int lives = 3)
+                     double speed = 0.0025, int lives = 2)
             : CMovable(std::move(texturePack), size, location, speed, false, false, lives), m_Score(0),
-              m_ExplosionRadius(1), m_MaxBombs(15), m_ActiveBombs(0), m_RemoteExplosion(true), m_FireImmunity(true),
+              m_ExplosionRadius(1), m_MaxBombs(15), m_ActiveBombs(0), m_RemoteExplosion(true), m_FireImmunity(false),
               m_PlantingAvaible(false), m_IsPlanting(false), m_DetonatingAvaible(false), m_IsDetonating(false),
               m_LevelUp(false), m_Controls(controls)
     {}
@@ -43,6 +43,8 @@ public:
     * @param deltaTime DeltaTime
     */
     virtual void Update(CBoard &board, int deltaTime) override;
+
+//    virtual void CollisionWith(CGameObject &other) override ;
 
     /**
      * Handle keyboard input.

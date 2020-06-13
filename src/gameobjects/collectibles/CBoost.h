@@ -53,6 +53,10 @@ public:
 
     virtual void Apply(CPlayer *player);
 
+    /** Reset the object and prepare for a next round. */
+  /*  virtual void Reset(CBoard & board)
+    {}*/
+
 protected:
     std::function<void( CPlayer *)> m_Apply;
     std::function<void( CPlayer *)> m_Deactivate;

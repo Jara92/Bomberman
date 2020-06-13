@@ -53,7 +53,7 @@ public:
     void DeactivateWallPass()
     { this->m_BombPass = false; }
 
-    virtual void Reset(CBoard & board) override;
+    virtual void Reset(CBoard & board) override ;
 
     int GetLives() const
     { return this->m_Lives; }

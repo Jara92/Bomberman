@@ -5,6 +5,7 @@
 
 
 #include "CDoor.h"
+#include "../../CBoard.h"
 
 void CDoor::Apply(CPlayer *player)
 {
