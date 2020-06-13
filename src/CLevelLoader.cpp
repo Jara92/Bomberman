@@ -45,7 +45,7 @@ std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, const std::shar
 }
 
 /*====================================================================================================================*/
-std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
+std::vector<std::vector<CBlock *>> CLevelLoader::LoadMap()
 {
     // Create indestructible wall texture pack.
     std::map<ETextureType, const std::vector<std::string>> textures
@@ -53,7 +53,7 @@ std::vector<std::vector<CWall *>> CLevelLoader::LoadMap()
     std::shared_ptr<CTexturePack> texturePack = std::make_shared<CTexturePack>(this->m_Interface, textures);
 
     // Init 2D array
-    std::vector<std::vector<CWall *>> map;
+    std::vector<std::vector<CBlock *>> map;
     map.resize(CLevelLoader::MAP_WIDTH);
 
     for (unsigned int i = 0; i < map.size(); i++)

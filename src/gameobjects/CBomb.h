@@ -24,6 +24,7 @@ public:
      * @param explosionDelay Time to explode.
      * @param remoteTrigger Must this bomb be triggered to explode by the player?
      */
+
     CBomb(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1), CCoord<> location = CCoord<>(0, 0),
           CPlayer *owner = nullptr,
           int explosionDelay = 2000, bool remoteTrigger = false)

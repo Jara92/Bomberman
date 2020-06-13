@@ -68,7 +68,7 @@ protected:
      * @return Map saved in 2D vector.
      * @throws std::ios:failure When
      */
-    std::vector<std::vector<CWall *>> LoadMap();
+    std::vector<std::vector<CBlock *>> LoadMap();
 
     /**
      * Get players from game.

@@ -24,7 +24,7 @@
 class CBoard
 {
 public:
-    CBoard(std::shared_ptr<CSettings> settings, std::vector<std::vector<CWall *>> map, std::vector<CPlayer *> players,
+    CBoard(std::shared_ptr<CSettings> settings, std::vector<std::vector<CBlock *>> map, std::vector<CPlayer *> players,
            CCoord<unsigned int> boardSize, std::shared_ptr<CBlock> ground,
            std::shared_ptr<CTexturePack> bombTexturePack,
            std::shared_ptr<CTexturePack> fireTexturePack, unsigned int cellSize)
@@ -105,12 +105,6 @@ public:
     void CreateExplosionWave(CBomb *bomb, CCoord<int> direction, unsigned int explosionRadius);
 
     /**
-     * Delete fire from the map.
-     * @param fire Fire to be removed.
-     */
-    void DestroyExplosion(CFire *fire);
-
-    /**
      * Delete collectible from the map.
      * @param collectible Collectible to be removed.
      */
@@ -146,9 +140,8 @@ public:
     std::vector<CPlayer *> m_Players;
     std::vector<CEnemy *> m_Enemies;
     std::map<CCoord<unsigned int>, CCollectible *> m_Collectibles;
-    std::map<CCoord<unsigned int>, CFire *> m_Fires;
     std::map<CCoord<unsigned int>, CBomb *> m_Bombs;
-    std::vector<std::vector<CWall *>> m_Map;
+    std::vector<std::vector<CBlock *>> m_Map;
     std::vector<CGameObject *> m_GameObjects;
 
     /** Game settings */

@@ -14,7 +14,7 @@ void CCollectible::Reset(CBoard &board)
 
     // Atach this collectible to new existing and destructible Wall which has not collectible yet.
     CCoord<unsigned int> randomWallLocation;
-    CWall *randomWall = nullptr;
+    CBlock *randomWall = nullptr;
     do
     {
         randomWallLocation = board.GetRandomBoardLocation();

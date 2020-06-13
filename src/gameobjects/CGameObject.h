@@ -124,6 +124,10 @@ protected:
     * Returns the texture to be rendered.
     * @return SDL_Texture * to be rendered. Nullptr if there is no texture (this should never happen).
     */
-    SDL_Texture *GetTexture() const;
+    SDL_Texture *GetTexture() const
+    {
+        SDL_Texture *texture = this->m_TexturePack.get()->GetTexture(this->m_ActualTexture, &(this->m_AnimationIndex));
+        return texture;
+    }
 };
 

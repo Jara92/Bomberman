@@ -17,6 +17,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CFire.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/gameobjects/CGameObject.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CBoost.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o"
+  "/home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CCollectible.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CDoor.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CEnemy.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CEnemyDump.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.o"

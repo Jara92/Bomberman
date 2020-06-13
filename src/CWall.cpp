@@ -23,3 +23,12 @@ bool CWall::TryDestroy(unsigned int distance)
 
     return false;
 }
+
+bool CWall::IsPassable(const CMovable &movable) const
+{
+    // Destructible walls are passable for movables which are able to pass walls.
+    if(movable.GetWallPass() && this->m_IsDestructible)
+    {return true;}
+
+    return false;
+}

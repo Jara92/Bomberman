@@ -6,7 +6,6 @@
 #pragma once
 
 #include "gameobjects/CBlock.h"
-#include "gameobjects/collectibles/CCollectible.h"
 
 class CWall : public CBlock
 {
@@ -17,7 +16,7 @@ public:
     * @param isDestructible Is this wall destructible?
     */
     CWall(std::shared_ptr<CTexturePack> texturePack, bool isDestructible)
-            : CBlock(std::move(texturePack)), m_IsDestructible(isDestructible), m_IsAlive(true), m_Collectible(nullptr)
+            : CBlock(std::move(texturePack), false), m_IsDestructible(isDestructible), m_Collectible(nullptr)
     {}
 
     CWall(const CWall &other) = default;
@@ -26,45 +25,24 @@ public:
 
     ~CWall() = default;
 
-    /**
-    * Try to destroy the wall.
-    * @param distance Distance from the bomb.
-    */
-    bool TryDestroy(unsigned int distance);
+    virtual bool IsPassable(const CMovable & movable) const;
 
-    /**
-     * Is this wall destructible?
-     * @return True - is destructible.
-     */
-    bool IsDestructible()
+    virtual bool TryDestroy(unsigned int distance) override ;
+
+    virtual bool IsDestructible() const override
     { return this->m_IsDestructible; }
 
-    /**
-     * Attach collectible object to this wall.
-     * @param collectible Collectible object.
-     */
-    void AttachCollectible(CCollectible *collectible)
+    virtual void AttachCollectible(CCollectible *collectible) override
     {
         if (!this->m_Collectible && this->m_IsDestructible)
         { this->m_Collectible = collectible; }
     }
 
-    /** Detach attached collectible object. */
-    void DetachCollectible()
-    { this->m_Collectible = nullptr; }
-
-    /**
-     * Has this wall already collectible object?
-     * @return True - Has collectible object.
-     */
-    bool HasCollectible() const
+   virtual bool HasCollectible() const override
     { return this->m_Collectible; }
 
-    bool IsAlive() const
-    { return this->m_IsAlive; }
-
 protected:
-    bool m_IsDestructible, m_IsAlive;
+    bool m_IsDestructible;
     CCollectible *m_Collectible;
 };
 

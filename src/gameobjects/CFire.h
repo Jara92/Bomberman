@@ -6,11 +6,12 @@
 #pragma once
 
 #include "CGameObject.h"
+#include "CBlock.h"
 
 /**
  * Represents fire caused by bomb explosion. Collision with fire will kill movable objects and destroy destructible walls.
  */
-class CFire : public CGameObject
+class CFire : public CBlock
 {
 public:
     /**
@@ -20,10 +21,9 @@ public:
      * @param size Object size.
      * @param duration Duration of this fire in miliseconds.
      */
-    explicit CFire(std::shared_ptr<CTexturePack> texturePack, CCoord <>size = CCoord<>(1, 1),
-                   CCoord<> location = CCoord<>(0, 0), unsigned int duration = 750)
-            : CGameObject(std::move(texturePack), size, location)
-            , m_Duration(duration), m_DurationCounter(0)
+    explicit CFire(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1),
+                   unsigned int duration = 750)
+            : CBlock(std::move(texturePack), true, size), m_Duration(duration), m_DurationCounter(0)
     {}
 
     CFire(const CFire &other) = default;
@@ -33,6 +33,15 @@ public:
     virtual ~CFire() = default;
 
     virtual void Update(CBoard &board, int deltaTime) override;
+
+    virtual bool IsDestructible() const override
+    { return true; }
+
+    virtual bool TryDestroy(unsigned int distance) override
+    {
+        this->m_DurationCounter = 0;
+        return false;
+    }
 
 protected:
     unsigned int m_Duration;

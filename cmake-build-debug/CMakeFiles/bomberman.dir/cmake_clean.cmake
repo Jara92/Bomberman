@@ -12,6 +12,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/bomberman.dir/src/gameobjects/CFire.cpp.o"
   "CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o"
   "CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o"
+  "CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o"
   "CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o"
   "CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o"
   "CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.o"

@@ -35,14 +35,6 @@ void CGameObject::Draw(CSDLInterface &interface, int cellSize, CCoord<> location
 }
 
 /*====================================================================================================================*/
-SDL_Texture *CGameObject::GetTexture() const
-{
-    SDL_Texture *texture = this->m_TexturePack.get()->GetTexture(this->m_ActualTexture, &(this->m_AnimationIndex));
-
-    return texture;
-}
-
-/*====================================================================================================================*/
 
 bool CGameObject::IsColliding(const CGameObject *other) const
 {
