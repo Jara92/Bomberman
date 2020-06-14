@@ -123,6 +123,6 @@ protected:
     int m_Lives;
 
     /** Is current location free? */
-    virtual bool CellIsFree(CBoard &board, int deltaTime, CCoord<> location) const;
+    virtual bool CellIsFree(CBoard &board, CCoord<> location) const;
 };
 

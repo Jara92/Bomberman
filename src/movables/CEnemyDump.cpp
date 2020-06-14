@@ -35,35 +35,39 @@ int CEnemyDump::TryKill(unsigned int distance)
 /*====================================================================================================================*/
 void CEnemyDump::WalkAround(CBoard & board, int deltaTime)
 {
-    // Save old location and move.
-    CCoord<> oldLocation = this->m_Location;
-    this->m_Location += (this->m_Movement * deltaTime * this->m_Speed);
-
-    // If enemy stands still or new location is not free.
-    if(this->m_Movement == CCoord<>(0,0) || !this->CellIsFree(board, deltaTime, this->m_Location))
+    // Move deltaTime times.
+    for(int i = 0; i < deltaTime; i++)
     {
-        // Recover location and get avaible directions to go.
-        this->m_Location = oldLocation;
-        auto directions = this->GetPossibleMoveDirections(board, deltaTime);
+        // Save old location and move.
+        CCoord<> oldLocation = this->m_Location;
+        this->m_Location += (this->m_Movement * this->m_Speed);
 
-        // Stand still if there is no direction to go.
-        if(directions.empty())
+        // If enemy stands still or new location is not free.
+        if (this->m_Movement == CCoord<>(0, 0) || !this->CellIsFree(board, this->m_Location))
         {
-            this->m_Movement = CCoord<>(0,0);
-            this->m_Body.SetActualTextureType(ETextureType ::TEXTURE_FRONT);
-        }
-            // Go to random direction.
-        else
-        {
-            unsigned seed = std::chrono::system_clock::now().time_since_epoch().count() * rand();
-            std::default_random_engine randomEngine(seed);
+            // Recover location and get avaible directions to go.
+            this->m_Location = oldLocation;
+            auto directions = this->GetPossibleMoveDirections(board);
 
-            // Choose random direction and set new movemnt and texture type.
-            unsigned int random = randomEngine() % directions.size();
-            this->m_Movement = directions[random].second;
-            this->m_Body.SetActualTextureType(directions[random].first);
+            // Stand still if there is no direction to go.
+            if (directions.empty())
+            {
+                this->m_Movement = CCoord<>(0, 0);
+                this->m_Body.SetActualTextureType(ETextureType::TEXTURE_FRONT);
+            }
+                // Go to random direction.
+            else
+            {
+                unsigned seed = std::chrono::system_clock::now().time_since_epoch().count() * rand();
+                std::default_random_engine randomEngine(seed);
 
-            this->m_Location += (this->m_Movement * deltaTime * this->m_Speed);
+                // Choose random direction and set new movemnt and texture type.
+                unsigned int random = randomEngine() % directions.size();
+                this->m_Movement = directions[random].second;
+                this->m_Body.SetActualTextureType(directions[random].first);
+
+                this->m_Location += (this->m_Movement * this->m_Speed);
+            }
         }
     }
 }

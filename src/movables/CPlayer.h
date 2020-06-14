@@ -172,32 +172,28 @@ protected:
     /**
     * Movement along the axis Y
     * @param board Game board
-    * @param deltaTime DeltaTime
     */
-    void VerticalMove(CBoard &board, int deltaTime);
+    void VerticalMove(CBoard &board);
 
     /**
      * Movement along the axis X
      * @param board Game board
-     * @param deltaTime DeltaTime
      */
-    void HorizontalMove(CBoard &board, int deltaTime);
+    void HorizontalMove(CBoard &board);
 
     /**
      * Center vertical players position.
      * @param board Game board
-     * @param deltaTime DeltaTime
      * @param direction Direction
      */
-    void VerticalCenter(CBoard &board, int deltaTime, int direction);
+    void VerticalCenter(CBoard &board, int direction);
 
     /**
     * Center horiz players position.
     * @param board Game board
-    * @param deltaTime DeltaTime
     * @param direction Direction
     */
-    void HorizontalCenter(CBoard &board, int deltaTime, int direction);
+    void HorizontalCenter(CBoard &board, int direction);
 
     /**
      * Update the displayed texture according to the real movement of the player.

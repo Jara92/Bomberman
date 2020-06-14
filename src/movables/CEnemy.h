@@ -55,7 +55,7 @@ protected:
      * @param board Game board.
      * @return Avaible directions.
      */
-    std::vector<std::pair<ETextureType, CCoord<double>>> GetPossibleMoveDirections(CBoard &board, int deltaTime) ;
+    std::vector<std::pair<ETextureType, CCoord<double>>> GetPossibleMoveDirections(CBoard &board) ;
 
     CCoord<> FindWayOut(CBoard * board);
 };
