@@ -96,22 +96,9 @@ CMakeFiles/bomberman.dir/src/CApplication.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bomberman.dir/src/CApplication.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaroslav/CLionProjects/bomberman/src/CApplication.cpp -o CMakeFiles/bomberman.dir/src/CApplication.cpp.s
 
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: CMakeFiles/bomberman.dir/flags.make
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/gameobjects/CGameObject.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/gameobjects/CGameObject.cpp
-
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jaroslav/CLionProjects/bomberman/src/gameobjects/CGameObject.cpp > CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.i
-
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jaroslav/CLionProjects/bomberman/src/gameobjects/CGameObject.cpp -o CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.s
-
 CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o: ../src/CSDLInterface.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/CSDLInterface.cpp
 
 CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.i: cmake_force
@@ -124,7 +111,7 @@ CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/managers/CGameManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/managers/CGameManager.cpp
 
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.i: cmake_force
@@ -137,7 +124,7 @@ CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/blocks/CWall.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/blocks/CWall.cpp
 
 CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.i: cmake_force
@@ -150,7 +137,7 @@ CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o: ../src/gameobjects/movables/CPlayer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CPlayer.cpp
 
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.i: cmake_force
@@ -163,7 +150,7 @@ CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o: ../src/gameobjects/movables/CEnemy.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CEnemy.cpp
 
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.i: cmake_force
@@ -176,7 +163,7 @@ CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: ../src/blocks/CBomb.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/blocks/CBomb.cpp
 
 CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.i: cmake_force
@@ -189,7 +176,7 @@ CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: ../src/blocks/CFire.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/blocks/CFire.cpp
 
 CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.i: cmake_force
@@ -202,7 +189,7 @@ CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/gameobjects/collectibles/CCollectible.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CCollectible.cpp
 
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.i: cmake_force
@@ -215,7 +202,7 @@ CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.s: cmake_
 
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/CLevelLoader.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/CLevelLoader.cpp
 
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.i: cmake_force
@@ -228,7 +215,7 @@ CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o: ../src/CTexturePack.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/CTexturePack.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/CTexturePack.cpp
 
 CMakeFiles/bomberman.dir/src/CTexturePack.cpp.i: cmake_force
@@ -241,7 +228,7 @@ CMakeFiles/bomberman.dir/src/CTexturePack.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.o: ../src/gameobjects/movables/CMovable.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CMovable.cpp
 
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.i: cmake_force
@@ -254,7 +241,7 @@ CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o: ../src/gameobjects/collectibles/CDoor.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CDoor.cpp
 
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.i: cmake_force
@@ -267,7 +254,7 @@ CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: ../src/gameobjects/collectibles/CBoost.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CBoost.cpp
 
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.i: cmake_force
@@ -280,7 +267,7 @@ CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.o: ../src/gameobjects/movables/CEnemyDump.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CEnemyDump.cpp
 
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.i: cmake_force
@@ -293,7 +280,7 @@ CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.o: ../src/gameobjects/movables/CEnemySmart.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CEnemySmart.cpp
 
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.i: cmake_force
@@ -306,7 +293,7 @@ CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/CAnimation.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/CAnimation.cpp.o: ../src/CAnimation.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/bomberman.dir/src/CAnimation.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/bomberman.dir/src/CAnimation.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/CAnimation.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/CAnimation.cpp
 
 CMakeFiles/bomberman.dir/src/CAnimation.cpp.i: cmake_force
@@ -319,7 +306,7 @@ CMakeFiles/bomberman.dir/src/CAnimation.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/CScoreSaver.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/CScoreSaver.cpp.o: ../src/CScoreSaver.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/bomberman.dir/src/CScoreSaver.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/bomberman.dir/src/CScoreSaver.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/CScoreSaver.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/CScoreSaver.cpp
 
 CMakeFiles/bomberman.dir/src/CScoreSaver.cpp.i: cmake_force
@@ -332,7 +319,7 @@ CMakeFiles/bomberman.dir/src/CScoreSaver.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.o: ../src/managers/CMenuManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/managers/CMenuManager.cpp
 
 CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.i: cmake_force
@@ -345,7 +332,7 @@ CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o: ../src/managers/CWindowManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/managers/CWindowManager.cpp
 
 CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.i: cmake_force
@@ -358,7 +345,7 @@ CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o: ../src/managers/CSettingsManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/managers/CSettingsManager.cpp
 
 CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.i: cmake_force
@@ -371,7 +358,7 @@ CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.o: ../src/interfaceitems/CInterfaceItem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CInterfaceItem.cpp
 
 CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.i: cmake_force
@@ -384,7 +371,7 @@ CMakeFiles/bomberman.dir/src/interfaceitems/CInterfaceItem.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.o: ../src/interfaceitems/CText.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CText.cpp
 
 CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.i: cmake_force
@@ -397,7 +384,7 @@ CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o: ../src/interfaceitems/CButton.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CButton.cpp
 
 CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.i: cmake_force
@@ -410,7 +397,7 @@ CMakeFiles/bomberman.dir/src/interfaceitems/CButton.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBoxItem.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBoxItem.cpp.o: ../src/interfaceitems/CSelectBoxItem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBoxItem.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBoxItem.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBoxItem.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CSelectBoxItem.cpp
 
 CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBoxItem.cpp.i: cmake_force
@@ -423,7 +410,7 @@ CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBoxItem.cpp.s: cmake_force
 
 CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: CMakeFiles/bomberman.dir/flags.make
 CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: ../src/blocks/CBlock.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o -c /home/jaroslav/CLionProjects/bomberman/src/blocks/CBlock.cpp
 
 CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.i: cmake_force
@@ -439,7 +426,6 @@ bomberman_OBJECTS = \
 "CMakeFiles/bomberman.dir/src/main.cpp.o" \
 "CMakeFiles/bomberman.dir/src/CBoard.cpp.o" \
 "CMakeFiles/bomberman.dir/src/CApplication.cpp.o" \
-"CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o" \
 "CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o" \
 "CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o" \
 "CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o" \
@@ -472,7 +458,6 @@ bomberman_EXTERNAL_OBJECTS =
 bomberman: CMakeFiles/bomberman.dir/src/main.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/CBoard.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/CApplication.cpp.o
-bomberman: CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/CSDLInterface.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o
@@ -500,7 +485,7 @@ bomberman: CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBoxItem.cpp.o
 bomberman: CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o
 bomberman: CMakeFiles/bomberman.dir/build.make
 bomberman: CMakeFiles/bomberman.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Linking CXX executable bomberman"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Linking CXX executable bomberman"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/bomberman.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

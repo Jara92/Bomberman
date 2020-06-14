@@ -151,7 +151,7 @@ public:
     std::vector<CPlayer *> m_Players;
     std::map<CCoord<unsigned int>, CCollectible *> m_Collectibles;
     std::vector<std::vector<CBlock *>> m_Map;
-    std::vector<CGameObject *> m_GameObjects;
+    std::vector<CMovable *> m_Movables;
 
     std::set<CBomb *, std::less<> > m_BombsToExplode;
 

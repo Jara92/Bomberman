@@ -6,7 +6,7 @@
 #pragma once
 
 #include <memory>
-#include "../gameobjects/CGameObject.h"
+#include "../gameobjects/movables/CMovable.h"
 #include "../CSDLInterface.h"
 #include "../CTexturePack.h"
 #include "../gameobjects/movables/CPlayer.h"
@@ -54,7 +54,7 @@ public:
      * @param thisLocation Location of this object in game board.
     * @param other Other object
     */
-    bool IsColliding(CCoord<unsigned int> thisLocation, const CGameObject &other) const;
+    bool IsColliding(CCoord<unsigned int> thisLocation, const CMovable &other) const;
 
     virtual void PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer & player){}
 

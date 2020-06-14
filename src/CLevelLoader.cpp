@@ -382,7 +382,7 @@ void CLevelLoader::ReorganizeLevelObjects(std::shared_ptr<CBoard> &board, std::v
     { (*collectible)->Reset(*board); }
 
     // Reset all objects (random location, attach to random wall...)
-    for (auto object = board->m_GameObjects.begin(); object != board->m_GameObjects.end(); object++)
+    for (auto object = board->m_Movables.begin(); object != board->m_Movables.end(); object++)
     { (*object)->Reset(*board); }
 }
 
@@ -466,12 +466,12 @@ void CLevelLoader::CreateEnemy(std::shared_ptr<CBoard> &board, EEnemyType type, 
     switch (type)
     {
         case EEnemyType::ENEMY_TYPE_DUMP:
-            board->m_GameObjects.push_back(
+            board->m_Movables.push_back(
                     new CEnemyDump(this->m_EnemyTexturePacks[typeInt], CCoord<>(0, 0), enemySize, score, speed,
                                    wallPass, lives));
             break;
         case EEnemyType::ENEMY_TYPE_SMART:
-            board->m_GameObjects.push_back(
+            board->m_Movables.push_back(
                     new CEnemySmart(this->m_EnemyTexturePacks[typeInt], CCoord<>(0, 0), enemySize, score, speed,
                                     wallPass, lives));
             break;

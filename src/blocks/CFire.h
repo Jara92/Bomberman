@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include "../gameobjects/CGameObject.h"
 #include "CBlock.h"
 
 /**

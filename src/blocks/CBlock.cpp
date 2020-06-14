@@ -20,7 +20,7 @@ void CBlock::Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCo
                             cellSize * this->m_TexturePack->GetTextureSize());
 }
 
-bool CBlock::IsColliding(CCoord<unsigned int> thisLocation, const CGameObject &other) const
+bool CBlock::IsColliding(CCoord<unsigned int> thisLocation, const CMovable &other) const
 {
     double cellSize = 1;
     CCoord<> a = thisLocation.ToDouble() + ((CCoord<>(1, 1) - this->m_Size) / 2);

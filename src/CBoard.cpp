@@ -132,7 +132,7 @@ void CBoard::Draw(CSDLInterface &interface, CCoord<> offset)
         }
     }
 
-    for (auto i = this->m_GameObjects.begin(); i != this->m_GameObjects.end(); i++)
+    for (auto i = this->m_Movables.begin(); i != this->m_Movables.end(); i++)
     {
         if (*i)
         { (*i)->Draw(interface, this->m_CellSize, (*i)->GetLocation(), offset); }
@@ -195,7 +195,7 @@ void CBoard::Update(int deltaTime)
     }
 
     /* std::vector<std::size_t> objectsToRemove;
-     for (auto i = this->m_GameObjects.begin(); i != this->m_GameObjects.end(); i++)
+     for (auto i = this->m_Movables.begin(); i != this->m_Movables.end(); i++)
      {
          if (*i && (*i)->IsAlive())
          { (*i)->Update(*this, deltaTime); }
@@ -244,7 +244,7 @@ void CBoard::UpdatePhysicEvents()
 
         return;
 
-        /* for (auto object = this->m_GameObjects.begin(); object != this->m_GameObjects.end(); object++)
+        /* for (auto object = this->m_Movables.begin(); object != this->m_Movables.end(); object++)
     {
         // Resolving a potential collision with an object.
         //  if((*object) && (*object)->IsAlive())
@@ -290,7 +290,7 @@ void CBoard::ClearBoard(bool clearLevelObjects)
         }
     }
 
-    for (auto object = this->m_GameObjects.begin(); object != this->m_GameObjects.end(); object++)
+    for (auto object = this->m_Movables.begin(); object != this->m_Movables.end(); object++)
     {
         if (clearLevelObjects)
         { delete (*object); }
@@ -299,7 +299,7 @@ void CBoard::ClearBoard(bool clearLevelObjects)
     }
 
     if (clearLevelObjects)
-    { this->m_GameObjects.clear(); }
+    { this->m_Movables.clear(); }
 
     // Rerun players locations
     for (size_t i = 0; i < this->m_Players.size(); i++)

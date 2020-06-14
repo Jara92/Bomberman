@@ -6,7 +6,6 @@
 #pragma once
 
 #include "CBlock.h"
-#include "../gameobjects/CGameObject.h"
 #include "../gameobjects/movables/CPlayer.h"
 #include "../CTimer.h"
 

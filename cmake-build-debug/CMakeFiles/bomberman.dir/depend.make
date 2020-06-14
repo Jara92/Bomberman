@@ -32,7 +32,6 @@ CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/blocks/CBlock.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/blocks/CWall.h
-CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/gameobjects/CGameObject.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/gameobjects/collectibles/CBoost.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/gameobjects/collectibles/CDoor.h
@@ -68,7 +67,6 @@ CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/blocks/CBlock.h
 CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/blocks/CWall.h
-CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/gameobjects/CGameObject.h
 CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
 CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/gameobjects/movables/CEnemy.h
 CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/gameobjects/movables/CEnemyDump.h
@@ -95,7 +93,6 @@ CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/blocks/CBlock.h
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/blocks/CWall.h
-CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/gameobjects/CGameObject.h
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/gameobjects/collectibles/CBoost.h
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/gameobjects/collectibles/CDoor.h
@@ -136,7 +133,6 @@ CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: ../src/ETextureType.h
 CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: ../src/Messages.h
 CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: ../src/blocks/CBlock.cpp
 CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: ../src/blocks/CBlock.h
-CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: ../src/gameobjects/CGameObject.h
 CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: ../src/gameobjects/movables/CEnemy.h
 CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: ../src/gameobjects/movables/CMovable.h
 CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: ../src/gameobjects/movables/CPlayer.h
@@ -157,7 +153,6 @@ CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: ../src/blocks/CBomb.cpp
 CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: ../src/blocks/CWall.h
-CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: ../src/gameobjects/CGameObject.h
 CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
 CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: ../src/gameobjects/movables/CEnemy.h
 CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: ../src/gameobjects/movables/CEnemyDump.h
@@ -181,7 +176,6 @@ CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: ../src/blocks/CFire.cpp
 CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: ../src/blocks/CWall.h
-CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: ../src/gameobjects/CGameObject.h
 CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
 CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: ../src/gameobjects/movables/CEnemy.h
 CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: ../src/gameobjects/movables/CEnemyDump.h
@@ -200,35 +194,10 @@ CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/Messages.h
 CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/blocks/CBlock.h
 CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/blocks/CWall.cpp
 CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/blocks/CWall.h
-CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/gameobjects/CGameObject.h
 CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
 CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/gameobjects/movables/CEnemy.h
 CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/gameobjects/movables/CMovable.h
 CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/gameobjects/movables/CPlayer.h
-
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/CAnimation.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/CBoard.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/CControls.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/CCoord.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/CSDLInterface.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/CSettings.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/CTexturePack.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/CTimer.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/EGameStatus.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/ETextureType.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/Messages.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/blocks/CBlock.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/blocks/CBomb.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/blocks/CFire.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/blocks/CWall.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/gameobjects/CGameObject.cpp
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/gameobjects/CGameObject.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/gameobjects/movables/CEnemy.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/gameobjects/movables/CEnemyDump.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/gameobjects/movables/CEnemySmart.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/gameobjects/movables/CMovable.h
-CMakeFiles/bomberman.dir/src/gameobjects/CGameObject.cpp.o: ../src/gameobjects/movables/CPlayer.h
 
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: ../src/CAnimation.h
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: ../src/CBoard.h
@@ -245,7 +214,6 @@ CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: ../src/block
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: ../src/blocks/CWall.h
-CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: ../src/gameobjects/CGameObject.h
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: ../src/gameobjects/collectibles/CBoost.cpp
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: ../src/gameobjects/collectibles/CBoost.h
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
@@ -270,7 +238,6 @@ CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/blocks/CWall.h
-CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/gameobjects/CGameObject.h
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/gameobjects/collectibles/CCollectible.cpp
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o: ../src/gameobjects/movables/CEnemy.h
@@ -294,7 +261,6 @@ CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o: ../src/blocks
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o: ../src/blocks/CWall.h
-CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o: ../src/gameobjects/CGameObject.h
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o: ../src/gameobjects/collectibles/CDoor.cpp
 CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o: ../src/gameobjects/collectibles/CDoor.h
@@ -319,7 +285,6 @@ CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o: ../src/blocks/CB
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o: ../src/blocks/CWall.h
-CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o: ../src/gameobjects/CGameObject.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o: ../src/gameobjects/movables/CEnemy.cpp
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o: ../src/gameobjects/movables/CEnemy.h
@@ -343,7 +308,6 @@ CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.o: ../src/block
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.o: ../src/blocks/CWall.h
-CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.o: ../src/gameobjects/CGameObject.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.o: ../src/gameobjects/movables/CEnemy.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.o: ../src/gameobjects/movables/CEnemyDump.cpp
@@ -361,7 +325,6 @@ CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.o: ../src/CTex
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.o: ../src/ETextureType.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.o: ../src/Messages.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.o: ../src/blocks/CBlock.h
-CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.o: ../src/gameobjects/CGameObject.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.o: ../src/gameobjects/movables/CEnemy.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.o: ../src/gameobjects/movables/CEnemySmart.cpp
@@ -384,7 +347,6 @@ CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.o: ../src/blocks/
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.o: ../src/blocks/CWall.h
-CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.o: ../src/gameobjects/CGameObject.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.o: ../src/gameobjects/movables/CEnemy.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.o: ../src/gameobjects/movables/CEnemyDump.h
@@ -408,7 +370,6 @@ CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o: ../src/blocks/C
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o: ../src/blocks/CWall.h
-CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o: ../src/gameobjects/CGameObject.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o: ../src/gameobjects/movables/CEnemy.h
 CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o: ../src/gameobjects/movables/CEnemyDump.h
@@ -472,7 +433,6 @@ CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/blocks/CBlock.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/blocks/CWall.h
-CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/gameobjects/CGameObject.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/gameobjects/collectibles/CBoost.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/gameobjects/collectibles/CDoor.h
@@ -514,7 +474,6 @@ CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/blocks/CBlock.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/blocks/CWall.h
-CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/gameobjects/CGameObject.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/gameobjects/collectibles/CBoost.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/gameobjects/collectibles/CCollectible.h
 CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o: ../src/gameobjects/collectibles/CDoor.h
