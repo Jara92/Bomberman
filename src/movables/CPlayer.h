@@ -8,7 +8,7 @@
 #include <cmath>
 #include <set>
 #include "CMovable.h"
-#include "../../CControls.h"
+#include "../CControls.h"
 
 /** Player which can be controlled. Every player has his own controls and can move in game map. */
 class CPlayer : public CMovable

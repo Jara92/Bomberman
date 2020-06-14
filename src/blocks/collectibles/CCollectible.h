@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../../blocks/CBlock.h"
-#include "../movables/CPlayer.h"
+#include "../CBlock.h"
+#include "../../movables/CPlayer.h"
 
 class CCollectible : public CBlock
 {

@@ -176,52 +176,22 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/blocks/CWall.h">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CBoost.cpp">
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/blocks/collectibles/CBoost.cpp">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CBoost.h">
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/blocks/collectibles/CBoost.h">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CCollectible.cpp">
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/blocks/collectibles/CCollectible.cpp">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CCollectible.h">
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/blocks/collectibles/CCollectible.h">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CDoor.cpp">
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/blocks/collectibles/CDoor.cpp">
 			<Option target="bomberman"/>
 		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/collectibles/CDoor.h">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CEnemy.cpp">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CEnemy.h">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CEnemyDump.cpp">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CEnemyDump.h">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CEnemySmart.cpp">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CEnemySmart.h">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CMovable.cpp">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CMovable.h">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CPlayer.cpp">
-			<Option target="bomberman"/>
-		</Unit>
-		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/gameobjects/movables/CPlayer.h">
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/blocks/collectibles/CDoor.h">
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CButton.cpp">
@@ -279,6 +249,36 @@
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/managers/CWindowManager.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/movables/CEnemy.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/movables/CEnemy.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/movables/CEnemyDump.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/movables/CEnemyDump.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/movables/CEnemySmart.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/movables/CEnemySmart.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/movables/CMovable.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/movables/CMovable.h">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/movables/CPlayer.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/movables/CPlayer.h">
 			<Option target="bomberman"/>
 		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/CMakeLists.txt">

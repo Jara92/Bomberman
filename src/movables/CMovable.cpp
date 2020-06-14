@@ -5,7 +5,7 @@
 
 
 #include "CMovable.h"
-#include "../../CBoard.h"
+#include "../CBoard.h"
 
 /*====================================================================================================================*/
 bool CMovable::CellIsFree(CBoard &board, int deltaTime, CCoord<> location) const

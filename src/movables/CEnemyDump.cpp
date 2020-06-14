@@ -5,7 +5,7 @@
 
 
 #include "CEnemyDump.h"
-#include "../../CBoard.h"
+#include "../CBoard.h"
 
 void CEnemyDump::Update(CBoard &board, int deltaTime)
 {

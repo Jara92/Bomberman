@@ -6,7 +6,7 @@
 #pragma once
 #include "CEnemy.h"
 #include "CPlayer.h"
-#include "../collectibles/CCollectible.h"
+#include "../blocks/collectibles/CCollectible.h"
 
 class CEnemySmart : public CEnemy
 {

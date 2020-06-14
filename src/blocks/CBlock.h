@@ -6,13 +6,14 @@
 #pragma once
 
 #include <memory>
-#include "../gameobjects/movables/CMovable.h"
+#include "../movables/CMovable.h"
 #include "../CSDLInterface.h"
 #include "../CTexturePack.h"
-#include "../gameobjects/movables/CPlayer.h"
-#include "../gameobjects/movables/CEnemy.h"
+#include "../movables/CPlayer.h"
+#include "../movables/CEnemy.h"
 
 class CBoard;
+
 class CCollectible;
 
 class CBlock
@@ -24,9 +25,10 @@ public:
      * @param isPassable Is this object passable for moving objects?
     * @param size Object size.
     */
-    CBlock(std::shared_ptr<CTexturePack> texturePack, bool isPassable = false, CCoord<> size = {1,1})
-    : m_TexturePack(std::move(texturePack)), m_Size(size), m_IsAlive(true),  m_IsPassable(isPassable), m_AnimationIndex(0),
-    m_AnimationUpdateInterval(100), m_AnimationTimer(0)
+    CBlock(std::shared_ptr<CTexturePack> texturePack, bool isPassable = false, CCoord<> size = {1, 1})
+            : m_TexturePack(std::move(texturePack)), m_Size(size), m_IsAlive(true), m_IsPassable(isPassable),
+              m_AnimationIndex(0),
+              m_AnimationUpdateInterval(100), m_AnimationTimer(0)
     {}
 
     CBlock(const CBlock &other) = default;
@@ -40,14 +42,14 @@ public:
     * @param distance Distance from the bomb.
     */
     virtual bool TryDestroy(unsigned int distance)
-    {return false;}
+    { return false; }
 
     /**
      * Is this object passable for movement?
      * @param movable Movable object.
      * @return
      */
-    virtual bool IsPassable(CCoord<unsigned int> thisLocation, const CMovable & movable) const;
+    virtual bool IsPassable(CCoord<unsigned int> thisLocation, const CMovable &movable) const;
 
     /**
     * Are these objects colliding?
@@ -56,9 +58,11 @@ public:
     */
     bool IsColliding(CCoord<unsigned int> thisLocation, const CMovable &other) const;
 
-    virtual void PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer & player){}
+    virtual void PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player)
+    {}
 
-    virtual void EnemyCollision(CCoord<unsigned int> thisLocation, CEnemy & enemy){}
+    virtual void EnemyCollision(CCoord<unsigned int> thisLocation, CEnemy &enemy)
+    {}
 
     /**
     * Updates object state using deltatime.
@@ -66,7 +70,7 @@ public:
     * @param deltaTime DeltaTime
     */
     virtual void Update(CBoard &board, int deltaTime)
-    {this->Animate(deltaTime);}
+    { this->Animate(deltaTime); }
 
     /**
     * Update animation state
@@ -88,7 +92,8 @@ public:
     */
     SDL_Texture *GetTexture() const
     {
-        SDL_Texture *texture = this->m_TexturePack.get()->GetTexture(ETextureType ::TEXTURE_FRONT, &(this->m_AnimationIndex));
+        SDL_Texture *texture = this->m_TexturePack.get()->GetTexture(ETextureType::TEXTURE_FRONT,
+                                                                     &(this->m_AnimationIndex));
         return texture;
     }
 
@@ -99,7 +104,8 @@ public:
      * @param location Block location.
      * @param offset Drawing offset.
      */
-    virtual void Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0)) const;
+    virtual void
+    Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0)) const;
 
     /**
      * Is this wall destructible?
@@ -113,7 +119,7 @@ public:
      * @param collectible Collectible object.
      */
     virtual void AttachCollectible(CCollectible *collectible)
-    {    }
+    {}
 
     /**
      * Has this wall already collectible object?
@@ -122,14 +128,14 @@ public:
     virtual bool HasCollectible() const
     { return false; }
 
-    virtual CCollectible * GetCollectible()
-    {return nullptr;}
+    virtual CCollectible *GetCollectible()
+    { return nullptr; }
 
     bool IsAlive() const
-    {return this->m_IsAlive;}
+    { return this->m_IsAlive; }
 
     void Kill()
-    {this->m_IsAlive = false;}
+    { this->m_IsAlive = false; }
 
 protected:
     std::shared_ptr<CTexturePack> m_TexturePack;

@@ -5,7 +5,7 @@
 #pragma once
 
 #include <memory>
-#include "../../CTexturePack.h"
+#include "../CTexturePack.h"
 
 class CBoard;
 

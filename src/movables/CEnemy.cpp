@@ -3,7 +3,7 @@
 */
 
 #include "CEnemy.h"
-#include "../../CBoard.h"
+#include "../CBoard.h"
 
 std::vector<std::pair<ETextureType, CCoord<double>>> CEnemy::GetPossibleMoveDirections(CBoard &board, int deltaTime)
 {

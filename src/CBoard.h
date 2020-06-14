@@ -15,10 +15,10 @@
 #include "blocks/CWall.h"
 #include "blocks/CFire.h"
 #include "blocks/CBomb.h"
-#include "gameobjects/collectibles/CCollectible.h"
-#include "gameobjects/movables/CEnemyDump.h"
-#include "gameobjects/movables/CEnemySmart.h"
-#include "gameobjects/movables/CPlayer.h"
+#include "blocks/collectibles/CCollectible.h"
+#include "movables/CEnemyDump.h"
+#include "movables/CEnemySmart.h"
+#include "movables/CPlayer.h"
 
 /** Game board contains gameobjects which are rendered in window. */
 class CBoard
@@ -149,7 +149,6 @@ public:
 
     /** Saved objects */
     std::vector<CPlayer *> m_Players;
-    std::map<CCoord<unsigned int>, CCollectible *> m_Collectibles;
     std::vector<std::vector<CBlock *>> m_Map;
     std::vector<CMovable *> m_Movables;
 

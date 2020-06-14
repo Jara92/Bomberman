@@ -420,221 +420,86 @@ src/blocks/CWall.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.s
 .PHONY : src/blocks/CWall.cpp.s
 
-src/gameobjects/collectibles/CBoost.o: src/gameobjects/collectibles/CBoost.cpp.o
+src/blocks/collectibles/CBoost.o: src/blocks/collectibles/CBoost.cpp.o
 
-.PHONY : src/gameobjects/collectibles/CBoost.o
-
-# target to build an object file
-src/gameobjects/collectibles/CBoost.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.o
-.PHONY : src/gameobjects/collectibles/CBoost.cpp.o
-
-src/gameobjects/collectibles/CBoost.i: src/gameobjects/collectibles/CBoost.cpp.i
-
-.PHONY : src/gameobjects/collectibles/CBoost.i
-
-# target to preprocess a source file
-src/gameobjects/collectibles/CBoost.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.i
-.PHONY : src/gameobjects/collectibles/CBoost.cpp.i
-
-src/gameobjects/collectibles/CBoost.s: src/gameobjects/collectibles/CBoost.cpp.s
-
-.PHONY : src/gameobjects/collectibles/CBoost.s
-
-# target to generate assembly for a file
-src/gameobjects/collectibles/CBoost.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CBoost.cpp.s
-.PHONY : src/gameobjects/collectibles/CBoost.cpp.s
-
-src/gameobjects/collectibles/CCollectible.o: src/gameobjects/collectibles/CCollectible.cpp.o
-
-.PHONY : src/gameobjects/collectibles/CCollectible.o
+.PHONY : src/blocks/collectibles/CBoost.o
 
 # target to build an object file
-src/gameobjects/collectibles/CCollectible.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.o
-.PHONY : src/gameobjects/collectibles/CCollectible.cpp.o
+src/blocks/collectibles/CBoost.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/blocks/collectibles/CBoost.cpp.o
+.PHONY : src/blocks/collectibles/CBoost.cpp.o
 
-src/gameobjects/collectibles/CCollectible.i: src/gameobjects/collectibles/CCollectible.cpp.i
+src/blocks/collectibles/CBoost.i: src/blocks/collectibles/CBoost.cpp.i
 
-.PHONY : src/gameobjects/collectibles/CCollectible.i
+.PHONY : src/blocks/collectibles/CBoost.i
 
 # target to preprocess a source file
-src/gameobjects/collectibles/CCollectible.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.i
-.PHONY : src/gameobjects/collectibles/CCollectible.cpp.i
+src/blocks/collectibles/CBoost.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/blocks/collectibles/CBoost.cpp.i
+.PHONY : src/blocks/collectibles/CBoost.cpp.i
 
-src/gameobjects/collectibles/CCollectible.s: src/gameobjects/collectibles/CCollectible.cpp.s
+src/blocks/collectibles/CBoost.s: src/blocks/collectibles/CBoost.cpp.s
 
-.PHONY : src/gameobjects/collectibles/CCollectible.s
+.PHONY : src/blocks/collectibles/CBoost.s
 
 # target to generate assembly for a file
-src/gameobjects/collectibles/CCollectible.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CCollectible.cpp.s
-.PHONY : src/gameobjects/collectibles/CCollectible.cpp.s
+src/blocks/collectibles/CBoost.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/blocks/collectibles/CBoost.cpp.s
+.PHONY : src/blocks/collectibles/CBoost.cpp.s
 
-src/gameobjects/collectibles/CDoor.o: src/gameobjects/collectibles/CDoor.cpp.o
+src/blocks/collectibles/CCollectible.o: src/blocks/collectibles/CCollectible.cpp.o
 
-.PHONY : src/gameobjects/collectibles/CDoor.o
+.PHONY : src/blocks/collectibles/CCollectible.o
 
 # target to build an object file
-src/gameobjects/collectibles/CDoor.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.o
-.PHONY : src/gameobjects/collectibles/CDoor.cpp.o
+src/blocks/collectibles/CCollectible.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/blocks/collectibles/CCollectible.cpp.o
+.PHONY : src/blocks/collectibles/CCollectible.cpp.o
 
-src/gameobjects/collectibles/CDoor.i: src/gameobjects/collectibles/CDoor.cpp.i
+src/blocks/collectibles/CCollectible.i: src/blocks/collectibles/CCollectible.cpp.i
 
-.PHONY : src/gameobjects/collectibles/CDoor.i
+.PHONY : src/blocks/collectibles/CCollectible.i
 
 # target to preprocess a source file
-src/gameobjects/collectibles/CDoor.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.i
-.PHONY : src/gameobjects/collectibles/CDoor.cpp.i
+src/blocks/collectibles/CCollectible.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/blocks/collectibles/CCollectible.cpp.i
+.PHONY : src/blocks/collectibles/CCollectible.cpp.i
 
-src/gameobjects/collectibles/CDoor.s: src/gameobjects/collectibles/CDoor.cpp.s
+src/blocks/collectibles/CCollectible.s: src/blocks/collectibles/CCollectible.cpp.s
 
-.PHONY : src/gameobjects/collectibles/CDoor.s
+.PHONY : src/blocks/collectibles/CCollectible.s
 
 # target to generate assembly for a file
-src/gameobjects/collectibles/CDoor.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/collectibles/CDoor.cpp.s
-.PHONY : src/gameobjects/collectibles/CDoor.cpp.s
+src/blocks/collectibles/CCollectible.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/blocks/collectibles/CCollectible.cpp.s
+.PHONY : src/blocks/collectibles/CCollectible.cpp.s
 
-src/gameobjects/movables/CEnemy.o: src/gameobjects/movables/CEnemy.cpp.o
+src/blocks/collectibles/CDoor.o: src/blocks/collectibles/CDoor.cpp.o
 
-.PHONY : src/gameobjects/movables/CEnemy.o
+.PHONY : src/blocks/collectibles/CDoor.o
 
 # target to build an object file
-src/gameobjects/movables/CEnemy.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.o
-.PHONY : src/gameobjects/movables/CEnemy.cpp.o
+src/blocks/collectibles/CDoor.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/blocks/collectibles/CDoor.cpp.o
+.PHONY : src/blocks/collectibles/CDoor.cpp.o
 
-src/gameobjects/movables/CEnemy.i: src/gameobjects/movables/CEnemy.cpp.i
+src/blocks/collectibles/CDoor.i: src/blocks/collectibles/CDoor.cpp.i
 
-.PHONY : src/gameobjects/movables/CEnemy.i
-
-# target to preprocess a source file
-src/gameobjects/movables/CEnemy.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.i
-.PHONY : src/gameobjects/movables/CEnemy.cpp.i
-
-src/gameobjects/movables/CEnemy.s: src/gameobjects/movables/CEnemy.cpp.s
-
-.PHONY : src/gameobjects/movables/CEnemy.s
-
-# target to generate assembly for a file
-src/gameobjects/movables/CEnemy.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemy.cpp.s
-.PHONY : src/gameobjects/movables/CEnemy.cpp.s
-
-src/gameobjects/movables/CEnemyDump.o: src/gameobjects/movables/CEnemyDump.cpp.o
-
-.PHONY : src/gameobjects/movables/CEnemyDump.o
-
-# target to build an object file
-src/gameobjects/movables/CEnemyDump.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.o
-.PHONY : src/gameobjects/movables/CEnemyDump.cpp.o
-
-src/gameobjects/movables/CEnemyDump.i: src/gameobjects/movables/CEnemyDump.cpp.i
-
-.PHONY : src/gameobjects/movables/CEnemyDump.i
+.PHONY : src/blocks/collectibles/CDoor.i
 
 # target to preprocess a source file
-src/gameobjects/movables/CEnemyDump.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.i
-.PHONY : src/gameobjects/movables/CEnemyDump.cpp.i
+src/blocks/collectibles/CDoor.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/blocks/collectibles/CDoor.cpp.i
+.PHONY : src/blocks/collectibles/CDoor.cpp.i
 
-src/gameobjects/movables/CEnemyDump.s: src/gameobjects/movables/CEnemyDump.cpp.s
+src/blocks/collectibles/CDoor.s: src/blocks/collectibles/CDoor.cpp.s
 
-.PHONY : src/gameobjects/movables/CEnemyDump.s
-
-# target to generate assembly for a file
-src/gameobjects/movables/CEnemyDump.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemyDump.cpp.s
-.PHONY : src/gameobjects/movables/CEnemyDump.cpp.s
-
-src/gameobjects/movables/CEnemySmart.o: src/gameobjects/movables/CEnemySmart.cpp.o
-
-.PHONY : src/gameobjects/movables/CEnemySmart.o
-
-# target to build an object file
-src/gameobjects/movables/CEnemySmart.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.o
-.PHONY : src/gameobjects/movables/CEnemySmart.cpp.o
-
-src/gameobjects/movables/CEnemySmart.i: src/gameobjects/movables/CEnemySmart.cpp.i
-
-.PHONY : src/gameobjects/movables/CEnemySmart.i
-
-# target to preprocess a source file
-src/gameobjects/movables/CEnemySmart.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.i
-.PHONY : src/gameobjects/movables/CEnemySmart.cpp.i
-
-src/gameobjects/movables/CEnemySmart.s: src/gameobjects/movables/CEnemySmart.cpp.s
-
-.PHONY : src/gameobjects/movables/CEnemySmart.s
+.PHONY : src/blocks/collectibles/CDoor.s
 
 # target to generate assembly for a file
-src/gameobjects/movables/CEnemySmart.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/movables/CEnemySmart.cpp.s
-.PHONY : src/gameobjects/movables/CEnemySmart.cpp.s
-
-src/gameobjects/movables/CMovable.o: src/gameobjects/movables/CMovable.cpp.o
-
-.PHONY : src/gameobjects/movables/CMovable.o
-
-# target to build an object file
-src/gameobjects/movables/CMovable.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.o
-.PHONY : src/gameobjects/movables/CMovable.cpp.o
-
-src/gameobjects/movables/CMovable.i: src/gameobjects/movables/CMovable.cpp.i
-
-.PHONY : src/gameobjects/movables/CMovable.i
-
-# target to preprocess a source file
-src/gameobjects/movables/CMovable.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.i
-.PHONY : src/gameobjects/movables/CMovable.cpp.i
-
-src/gameobjects/movables/CMovable.s: src/gameobjects/movables/CMovable.cpp.s
-
-.PHONY : src/gameobjects/movables/CMovable.s
-
-# target to generate assembly for a file
-src/gameobjects/movables/CMovable.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/movables/CMovable.cpp.s
-.PHONY : src/gameobjects/movables/CMovable.cpp.s
-
-src/gameobjects/movables/CPlayer.o: src/gameobjects/movables/CPlayer.cpp.o
-
-.PHONY : src/gameobjects/movables/CPlayer.o
-
-# target to build an object file
-src/gameobjects/movables/CPlayer.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.o
-.PHONY : src/gameobjects/movables/CPlayer.cpp.o
-
-src/gameobjects/movables/CPlayer.i: src/gameobjects/movables/CPlayer.cpp.i
-
-.PHONY : src/gameobjects/movables/CPlayer.i
-
-# target to preprocess a source file
-src/gameobjects/movables/CPlayer.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.i
-.PHONY : src/gameobjects/movables/CPlayer.cpp.i
-
-src/gameobjects/movables/CPlayer.s: src/gameobjects/movables/CPlayer.cpp.s
-
-.PHONY : src/gameobjects/movables/CPlayer.s
-
-# target to generate assembly for a file
-src/gameobjects/movables/CPlayer.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/gameobjects/movables/CPlayer.cpp.s
-.PHONY : src/gameobjects/movables/CPlayer.cpp.s
+src/blocks/collectibles/CDoor.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/blocks/collectibles/CDoor.cpp.s
+.PHONY : src/blocks/collectibles/CDoor.cpp.s
 
 src/interfaceitems/CButton.o: src/interfaceitems/CButton.cpp.o
 
@@ -879,6 +744,141 @@ src/managers/CWindowManager.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.s
 .PHONY : src/managers/CWindowManager.cpp.s
 
+src/movables/CEnemy.o: src/movables/CEnemy.cpp.o
+
+.PHONY : src/movables/CEnemy.o
+
+# target to build an object file
+src/movables/CEnemy.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CEnemy.cpp.o
+.PHONY : src/movables/CEnemy.cpp.o
+
+src/movables/CEnemy.i: src/movables/CEnemy.cpp.i
+
+.PHONY : src/movables/CEnemy.i
+
+# target to preprocess a source file
+src/movables/CEnemy.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CEnemy.cpp.i
+.PHONY : src/movables/CEnemy.cpp.i
+
+src/movables/CEnemy.s: src/movables/CEnemy.cpp.s
+
+.PHONY : src/movables/CEnemy.s
+
+# target to generate assembly for a file
+src/movables/CEnemy.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CEnemy.cpp.s
+.PHONY : src/movables/CEnemy.cpp.s
+
+src/movables/CEnemyDump.o: src/movables/CEnemyDump.cpp.o
+
+.PHONY : src/movables/CEnemyDump.o
+
+# target to build an object file
+src/movables/CEnemyDump.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CEnemyDump.cpp.o
+.PHONY : src/movables/CEnemyDump.cpp.o
+
+src/movables/CEnemyDump.i: src/movables/CEnemyDump.cpp.i
+
+.PHONY : src/movables/CEnemyDump.i
+
+# target to preprocess a source file
+src/movables/CEnemyDump.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CEnemyDump.cpp.i
+.PHONY : src/movables/CEnemyDump.cpp.i
+
+src/movables/CEnemyDump.s: src/movables/CEnemyDump.cpp.s
+
+.PHONY : src/movables/CEnemyDump.s
+
+# target to generate assembly for a file
+src/movables/CEnemyDump.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CEnemyDump.cpp.s
+.PHONY : src/movables/CEnemyDump.cpp.s
+
+src/movables/CEnemySmart.o: src/movables/CEnemySmart.cpp.o
+
+.PHONY : src/movables/CEnemySmart.o
+
+# target to build an object file
+src/movables/CEnemySmart.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CEnemySmart.cpp.o
+.PHONY : src/movables/CEnemySmart.cpp.o
+
+src/movables/CEnemySmart.i: src/movables/CEnemySmart.cpp.i
+
+.PHONY : src/movables/CEnemySmart.i
+
+# target to preprocess a source file
+src/movables/CEnemySmart.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CEnemySmart.cpp.i
+.PHONY : src/movables/CEnemySmart.cpp.i
+
+src/movables/CEnemySmart.s: src/movables/CEnemySmart.cpp.s
+
+.PHONY : src/movables/CEnemySmart.s
+
+# target to generate assembly for a file
+src/movables/CEnemySmart.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CEnemySmart.cpp.s
+.PHONY : src/movables/CEnemySmart.cpp.s
+
+src/movables/CMovable.o: src/movables/CMovable.cpp.o
+
+.PHONY : src/movables/CMovable.o
+
+# target to build an object file
+src/movables/CMovable.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CMovable.cpp.o
+.PHONY : src/movables/CMovable.cpp.o
+
+src/movables/CMovable.i: src/movables/CMovable.cpp.i
+
+.PHONY : src/movables/CMovable.i
+
+# target to preprocess a source file
+src/movables/CMovable.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CMovable.cpp.i
+.PHONY : src/movables/CMovable.cpp.i
+
+src/movables/CMovable.s: src/movables/CMovable.cpp.s
+
+.PHONY : src/movables/CMovable.s
+
+# target to generate assembly for a file
+src/movables/CMovable.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CMovable.cpp.s
+.PHONY : src/movables/CMovable.cpp.s
+
+src/movables/CPlayer.o: src/movables/CPlayer.cpp.o
+
+.PHONY : src/movables/CPlayer.o
+
+# target to build an object file
+src/movables/CPlayer.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CPlayer.cpp.o
+.PHONY : src/movables/CPlayer.cpp.o
+
+src/movables/CPlayer.i: src/movables/CPlayer.cpp.i
+
+.PHONY : src/movables/CPlayer.i
+
+# target to preprocess a source file
+src/movables/CPlayer.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CPlayer.cpp.i
+.PHONY : src/movables/CPlayer.cpp.i
+
+src/movables/CPlayer.s: src/movables/CPlayer.cpp.s
+
+.PHONY : src/movables/CPlayer.s
+
+# target to generate assembly for a file
+src/movables/CPlayer.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CPlayer.cpp.s
+.PHONY : src/movables/CPlayer.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -921,30 +921,15 @@ help:
 	@echo "... src/blocks/CWall.o"
 	@echo "... src/blocks/CWall.i"
 	@echo "... src/blocks/CWall.s"
-	@echo "... src/gameobjects/collectibles/CBoost.o"
-	@echo "... src/gameobjects/collectibles/CBoost.i"
-	@echo "... src/gameobjects/collectibles/CBoost.s"
-	@echo "... src/gameobjects/collectibles/CCollectible.o"
-	@echo "... src/gameobjects/collectibles/CCollectible.i"
-	@echo "... src/gameobjects/collectibles/CCollectible.s"
-	@echo "... src/gameobjects/collectibles/CDoor.o"
-	@echo "... src/gameobjects/collectibles/CDoor.i"
-	@echo "... src/gameobjects/collectibles/CDoor.s"
-	@echo "... src/gameobjects/movables/CEnemy.o"
-	@echo "... src/gameobjects/movables/CEnemy.i"
-	@echo "... src/gameobjects/movables/CEnemy.s"
-	@echo "... src/gameobjects/movables/CEnemyDump.o"
-	@echo "... src/gameobjects/movables/CEnemyDump.i"
-	@echo "... src/gameobjects/movables/CEnemyDump.s"
-	@echo "... src/gameobjects/movables/CEnemySmart.o"
-	@echo "... src/gameobjects/movables/CEnemySmart.i"
-	@echo "... src/gameobjects/movables/CEnemySmart.s"
-	@echo "... src/gameobjects/movables/CMovable.o"
-	@echo "... src/gameobjects/movables/CMovable.i"
-	@echo "... src/gameobjects/movables/CMovable.s"
-	@echo "... src/gameobjects/movables/CPlayer.o"
-	@echo "... src/gameobjects/movables/CPlayer.i"
-	@echo "... src/gameobjects/movables/CPlayer.s"
+	@echo "... src/blocks/collectibles/CBoost.o"
+	@echo "... src/blocks/collectibles/CBoost.i"
+	@echo "... src/blocks/collectibles/CBoost.s"
+	@echo "... src/blocks/collectibles/CCollectible.o"
+	@echo "... src/blocks/collectibles/CCollectible.i"
+	@echo "... src/blocks/collectibles/CCollectible.s"
+	@echo "... src/blocks/collectibles/CDoor.o"
+	@echo "... src/blocks/collectibles/CDoor.i"
+	@echo "... src/blocks/collectibles/CDoor.s"
 	@echo "... src/interfaceitems/CButton.o"
 	@echo "... src/interfaceitems/CButton.i"
 	@echo "... src/interfaceitems/CButton.s"
@@ -972,6 +957,21 @@ help:
 	@echo "... src/managers/CWindowManager.o"
 	@echo "... src/managers/CWindowManager.i"
 	@echo "... src/managers/CWindowManager.s"
+	@echo "... src/movables/CEnemy.o"
+	@echo "... src/movables/CEnemy.i"
+	@echo "... src/movables/CEnemy.s"
+	@echo "... src/movables/CEnemyDump.o"
+	@echo "... src/movables/CEnemyDump.i"
+	@echo "... src/movables/CEnemyDump.s"
+	@echo "... src/movables/CEnemySmart.o"
+	@echo "... src/movables/CEnemySmart.i"
+	@echo "... src/movables/CEnemySmart.s"
+	@echo "... src/movables/CMovable.o"
+	@echo "... src/movables/CMovable.i"
+	@echo "... src/movables/CMovable.s"
+	@echo "... src/movables/CPlayer.o"
+	@echo "... src/movables/CPlayer.i"
+	@echo "... src/movables/CPlayer.s"
 .PHONY : help
 
 

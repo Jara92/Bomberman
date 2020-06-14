@@ -312,16 +312,16 @@ std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadCollectiblesTexture
                     {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/Portal.png"}}}},
                     {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Powerups/LivesPowerup.png"}}}}};
 
-    std::vector<CCoord<>> sizes{{0.9, 0.9},
-                                {0.9, 0.9},
-                                {0.9, 0.9},
-                                {0.9, 0.9},
-                                {0.9, 0.9},
-                                {0.9, 0.9},
-                                {0.9, 0.9},
-                                {0.9, 0.9},
+    std::vector<CCoord<>> sizes{{0.7, 0.7},
+                                {0.7, 0.7},
+                                {0.7, 0.7},
+                                {0.7, 0.7},
+                                {0.7, 0.7},
+                                {0.7, 0.7},
+                                {0.7, 0.7},
+                                {0.7, 0.7},
                                 {1,   1},
-                                {0.9, 0.9},};
+                                {0.7, 0.7}};
 
     // Create texture packs shared pointers.
     std::vector<std::shared_ptr<CTexturePack>> texturePacks;

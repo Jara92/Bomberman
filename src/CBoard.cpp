@@ -16,10 +16,6 @@ CBoard::~CBoard()
     for (size_t i = 0; i < this->m_Players.size(); i++)
     { delete this->m_Players[i]; }
     this->m_Players.clear();
-
-    for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
-    { delete i->second; }
-    this->m_Collectibles.clear();
 }
 
 /*====================================================================================================================*/
@@ -39,16 +35,15 @@ bool CBoard::PlaceBomb(CPlayer *player)
     CCoord<unsigned int> location = player->GetLocationCell();
 
     // We do not want to plant bombs on a wall.
-    if (this->m_Map[location.m_X][location.m_Y] != nullptr)
+    if (this->GetMapItem(location) != nullptr)
     { return false; }
 
-    int delay = 2000;
-    if (player->GetRemoteExplosion())
-    { delay = 100; }
+    // Set explosion delay.
+    int delay = (player->GetRemoteExplosion() ? CBomb::TRIGGER_EXPLOSION_DELAY : CBomb::AUTO_EXPLOSION_DELAY);
 
     CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, this->m_BombObjectTexturePack->GetTextureSize(), player,
                             delay, player->GetRemoteExplosion());
-    this->m_Map[location.m_X][location.m_Y] = bomb;
+    this->SetMapItem(bomb, location);
 
     return true;
 }
@@ -96,16 +91,13 @@ void CBoard::CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> 
         {
             if (target->TryDestroy(i) && !target->IsAlive())
             {
+                if (target->HasCollectible())
+                { break; /* Leave for loop - The wave was stopped by targets attached collectible object. */ }
                 wallDestroyed = true;
-            } else if (!target->IsAlive())
+            }
+            else if (!target->IsAlive())
             { break;  /* Leave for loop - The wave was stopped by this wall.*/            }
         }
-
-        // Find collectible in location to explode.
-        auto foundCollectible = this->m_Collectibles.find(
-                locationToExplode.ToUnsignedInt());
-        if (foundCollectible != this->m_Collectibles.end())
-        { break; /* leave for loop - We dont want burning collectibles*/        }
 
         // Create new fire.
         CFire *fire = new CFire(this->m_FireObjectTexturePack, this->m_FireObjectTexturePack->GetTextureSize());
@@ -137,23 +129,6 @@ void CBoard::Draw(CSDLInterface &interface, CCoord<> offset)
         if (*i)
         { (*i)->Draw(interface, this->m_CellSize, (*i)->GetLocation(), offset); }
     }
-
-    // Draw boosts is visible
-    /* for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
-     {
-         // std::cout << i->second->GetLocation() << std::endl;
-         if (i->second && i->second->IsVisible())
-         { i->second->Draw(interface, this->m_CellSize, i->first.ToDouble(), offset); }
-             //==DEBUG==
-         else if (this->m_Settings->GetDebugMode())
-         {
-             CCoord<int> location = i->second->GetLocation().ToInt() + offset.ToInt();
-             SDL_Rect rect{static_cast<int>(location.m_X * (m_CellSize)),
-                           static_cast<int>(location.m_Y * (m_CellSize)),
-                           static_cast<int>(m_CellSize), static_cast<int>(m_CellSize)};
-             interface.RenderRectangle(&rect);
-         }
-     }*/
 
     // TODO změnit pořadí renderu tak, aby nejdříve byly renderovány objekty, které jsou vespod.
     // draw players
@@ -204,20 +179,6 @@ void CBoard::Update(int deltaTime)
     // Update players
     for (size_t i = 0; i < this->m_Players.size(); i++)
     { this->m_Players[i]->Update(*this, deltaTime); }
-
-    // Update collectibles
-    for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end();/* i++*/)
-    {
-        // Save iterator to next object because current bomb could be removed in Update().
-        auto item = i++;
-        if (item->second)
-        { item->second->Update(*this, deltaTime); }
-        else
-        {
-            // Remove null item
-            this->m_Collectibles.erase(item);
-        }
-    }
 }
 
 /*====================================================================================================================*/
@@ -240,36 +201,6 @@ void CBoard::UpdatePhysicEvents()
                 { block->PlayerCollision(blockLocation, *(*player)); }
             }
         }
-
-
-        return;
-
-        /* for (auto object = this->m_Movables.begin(); object != this->m_Movables.end(); object++)
-    {
-        // Resolving a potential collision with an object.
-        //  if((*object) && (*object)->IsAlive())
-        //  {(*player)->CollisionWith(*(*object));}
-    }*/
-
-        // Collectible collision - Apply collectible on the player.
-        /* for (auto collectible = this->m_Collectibles.begin();
-              collectible != this->m_Collectibles.end(); collectible++)
-         {
-             if (collectible->second && collectible->second->IsVisible() &&
-                 (*player)->IsColliding(collectible->second))
-             {
-                 // Polymorphic call
-                 collectible->second->Apply((*player)); // Apply item
-             }
-         }*/
-
-        // Enemy collision - Kill the player.
-        /*for (auto enemy = this->m_Enemies.begin(); enemy != this->m_Enemies.end(); enemy++)
-        {
-            if (*enemy && (*enemy)->IsAlive() &&
-                (*player)->IsColliding((*enemy)))
-            { (*player)->Kill(); }
-        }*/
     }
 }
 
@@ -312,8 +243,7 @@ bool CBoard::PositionFree(CCoord<unsigned int> coord)
     CBlock *block = this->GetMapItem(coord);
 
     // Check walls
-    if (block != nullptr ||
-        this->m_Collectibles.find(coord) != this->m_Collectibles.end())
+    if (block != nullptr)
     { return false; }
 
     for (size_t i = 0; i < this->m_Players.size(); i++)

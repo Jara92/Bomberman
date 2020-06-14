@@ -6,12 +6,10 @@
 #pragma once
 
 #include "CBlock.h"
-#include "../gameobjects/movables/CPlayer.h"
+#include "../movables/CPlayer.h"
 #include "../CTimer.h"
 
-/**
- * Represents object which could explode - Bomb. Bomb can be triggered by remote control or by timer.
- */
+/** Represents object which could explode - Bomb. Bomb can be triggered by remote control or by timer. */
 class CBomb : public CBlock
 {
 public:
@@ -19,7 +17,6 @@ public:
      * Bomb contructor.
      * @param texturePack Texturepack to be rendered.
      * @param size Object size.
-     * @param location Object location.
      * @param owner Object owner.
      * @param explosionDelay Time to explode.
      * @param remoteTrigger Must this bomb be triggered to explode by the player?
@@ -63,7 +60,10 @@ public:
      */
     void Explode(CBoard &board);
 
+    static constexpr int AUTO_EXPLOSION_DELAY = 2000;
+    static constexpr int TRIGGER_EXPLOSION_DELAY = 100;
 protected:
+
     CPlayer *m_Owner;
     /** Every bomb is passable for owner until the player left bombs cell. */
     bool m_IsPassableForOwner, m_RemoteTrigger, m_IsTriggered;

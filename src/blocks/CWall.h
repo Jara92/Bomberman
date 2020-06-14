@@ -6,7 +6,7 @@
 #pragma once
 
 #include "CBlock.h"
-#include "../gameobjects/collectibles/CCollectible.h"
+#include "collectibles/CCollectible.h"
 
 class CWall : public CBlock
 {

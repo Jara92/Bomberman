@@ -5,7 +5,7 @@
 
 
 #include "CPlayer.h"
-#include "../../CBoard.h"
+#include "../CBoard.h"
 
 /*====================================================================================================================*/
 void CPlayer::Update(CBoard &board, int deltaTime)
@@ -170,7 +170,7 @@ void CPlayer::TryPlaceBomb(CBoard &board)
 /*====================================================================================================================*/
 void CPlayer::Kill()
 {
-    std::cout << "kill" << std::endl;
+  //  std::cout << "kill" << std::endl;
     if (this->m_IsAlive)
     {
         //this->m_Lives--;
