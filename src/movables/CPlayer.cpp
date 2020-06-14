@@ -59,7 +59,7 @@ void CPlayer::HorizontalMove(CBoard &board)
     if (!this->CellIsFree(board, this->m_Location))
     {
         this->m_Location = oldLocation;
-        // Try center horizontal position if horizontal direction is none
+        // Try center horizontal position if horizontal direction is 0.
         // This handles problems with turning. When the player is close to turn I will try to center his position to allow him turn this direction.
         if (m_Movement.m_Y == 0)
         { this->VerticalCenter(board, static_cast<int>(this->m_Movement.m_X)); }
@@ -80,10 +80,8 @@ void CPlayer::VerticalCenter(CBoard &board, int direction)
     {
         this->m_Location.m_Y = std::min(this->m_Location.m_Y + this->m_Speed, std::ceil(this->m_Location.m_Y));
 
-    } else if ((decPart <= CPlayer::MAX_TURNING_VALUE) &&
-               board.IsPassable(
-                       CCoord<unsigned int>(this->m_Location.m_X + direction, std::floor(this->m_Location.m_Y)),
-                       *this))
+    } else if ((decPart <= CPlayer::MAX_TURNING_VALUE) && board.IsPassable(
+            CCoord<unsigned int>(this->m_Location.m_X + direction, std::floor(this->m_Location.m_Y)), *this))
     {
         this->m_Location.m_Y = std::max(this->m_Location.m_Y - this->m_Speed, std::floor(this->m_Location.m_Y));
     }
@@ -97,20 +95,17 @@ void CPlayer::HorizontalCenter(CBoard &board, int direction)
     double decPart, intpart;
     decPart = modf(this->m_Location.m_X, &intpart);
 
-    // Turn smoothly when player is very close to empty cell
+    // Turn smoothly right when player is very close to empty cell
     if ((decPart >= CPlayer::MAX_TURNING_VALUE) &&
         board.IsPassable(CCoord<unsigned int>(std::ceil(this->m_Location.m_X), this->m_Location.m_Y + direction),
                          *this))
     {
         this->m_Location.m_X = std::min(this->m_Location.m_X + this->m_Speed, std::ceil(this->m_Location.m_X));
-
-    } else if ((decPart <= CPlayer::MIN_TURNING_VALUE) &&
-               board.IsPassable(
-                       CCoord<unsigned int>(std::floor(this->m_Location.m_X), this->m_Location.m_Y + direction),
-                       *this))
-    {
-        this->m_Location.m_X = std::max(this->m_Location.m_X - this->m_Speed, std::floor(this->m_Location.m_X));
     }
+        // Turn smoothly left
+    else if ((decPart <= CPlayer::MIN_TURNING_VALUE) && board.IsPassable(
+            CCoord<unsigned int>(std::floor(this->m_Location.m_X), this->m_Location.m_Y + direction), *this))
+    { this->m_Location.m_X = std::max(this->m_Location.m_X - this->m_Speed, std::floor(this->m_Location.m_X)); }
 
 }
 
@@ -199,8 +194,8 @@ void CPlayer::UpdateTextureType(CCoord<> oldLocation)
         { diff.m_X = 0; }
     }
     // Player is not moving. Use input movement direction to setup animation.
-    /*   else
-       { diff = -1 * this->m_Movement; }*/
+       else
+       { diff = -1 * this->m_Movement; }
 
     // Set right texture by movement vector.
     if (diff.m_X < -this->m_Speed)

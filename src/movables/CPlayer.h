@@ -135,10 +135,9 @@ public:
     bool IsDetonating() const
     { return (this->m_IsDetonating && this->m_RemoteExplosion); }
 
-    static constexpr double ENEMY_SAVE_ZONE = 3;
-    static constexpr double OBSTACLES_SAVE_ZONE = 1;
+    /** Player save zones when generation new map / loading level. */
+    static constexpr double ENEMY_SAVE_ZONE = 4, OBSTACLES_SAVE_ZONE = 2;
 protected:
-    /** Achieved score. */
     std::size_t m_Score;
 
     /*====================
@@ -200,6 +199,5 @@ protected:
      * @param oldLocation Original position before starting the movement.
      */
     void UpdateTextureType(CCoord<> oldLocation);
-
 };
 

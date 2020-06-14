@@ -1,6 +1,5 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
 
 #pragma once
@@ -10,9 +9,7 @@
 #include <stdint.h>
 #include "Messages.h"
 
-/**
- * Clock which controls game refresh rate.
- */
+/** Clock which controls game refresh rate. */
 class CGameClock
 {
 public:
@@ -84,18 +81,10 @@ public:
         return 0;
     }
 
-    Uint32 GetElapsedTicks() const
-    {
-        if (this->m_LastTicks >= UINT32_MAX - 100)
-        { throw std::runtime_error(MESSAGE_CLOCK_OVERFLOW); }
-
-        return this->m_LastTicks;
-    }
-
 protected:
+    /** How many ticks sould take one frame to achieve the required FPS.*/
     unsigned int m_TicksPerFrame;
-    Uint32 m_LastTicks;
-    Uint32 m_FPSUpdateCounter;
+    Uint32 m_LastTicks, m_FPSUpdateCounter;
 
     int m_DeltaTime;
     double m_FPS;
