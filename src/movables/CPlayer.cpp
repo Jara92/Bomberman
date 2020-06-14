@@ -73,7 +73,7 @@ void CPlayer::VerticalCenter(CBoard &board, int deltaTime, int direction)
     // Turn smoothly when player is very close to empty cell
     if ((decPart >= CPlayer::MIN_TURNING_VALUE) &&
         board.IsPassable(CCoord<unsigned int>(this->m_Location.m_X + direction, std::ceil(this->m_Location.m_Y)),
-                         this))
+                         *this))
     {
         this->m_Location.m_Y = std::min(this->m_Location.m_Y + this->m_Speed * deltaTime,
                                         std::ceil(this->m_Location.m_Y));
@@ -81,7 +81,7 @@ void CPlayer::VerticalCenter(CBoard &board, int deltaTime, int direction)
     } else if ((decPart <= CPlayer::MAX_TURNING_VALUE) &&
                board.IsPassable(
                        CCoord<unsigned int>(this->m_Location.m_X + direction, std::floor(this->m_Location.m_Y)),
-                       this))
+                       *this))
     {
         this->m_Location.m_Y = std::max(this->m_Location.m_Y - this->m_Speed * deltaTime,
                                         std::floor(this->m_Location.m_Y));
@@ -99,7 +99,7 @@ void CPlayer::HorizontalCenter(CBoard &board, int deltaTime, int direction)
     // Turn smoothly when player is very close to empty cell
     if ((decPart >= CPlayer::MAX_TURNING_VALUE) &&
         board.IsPassable(CCoord<unsigned int>(std::ceil(this->m_Location.m_X), this->m_Location.m_Y + direction),
-                         this))
+                         *this))
     {
         this->m_Location.m_X = std::min(this->m_Location.m_X + this->m_Speed * deltaTime,
                                         std::ceil(this->m_Location.m_X));
@@ -107,7 +107,7 @@ void CPlayer::HorizontalCenter(CBoard &board, int deltaTime, int direction)
     } else if ((decPart <= CPlayer::MIN_TURNING_VALUE) &&
                board.IsPassable(
                        CCoord<unsigned int>(std::floor(this->m_Location.m_X), this->m_Location.m_Y + direction),
-                       this))
+                       *this))
     {
         this->m_Location.m_X = std::max(this->m_Location.m_X - this->m_Speed * deltaTime,
                                         std::floor(this->m_Location.m_X));

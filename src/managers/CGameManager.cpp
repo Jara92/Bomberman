@@ -1,8 +1,6 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
-
 
 #include "CGameManager.h"
 
@@ -16,7 +14,7 @@ CGameManager::CGameManager(CSDLInterface &interface)
     this->m_LevelLoader = std::make_unique<CLevelLoader>(interface);
 
     // Kill all players when the time runs out.
-    this->m_GameEndDelay.Run(CGameManager::STARTING_TIME, [=](void)
+    this->m_GameEndDelay.Run(CGameManager::GAME_STATUS_UPDATE_DELAY/*STARTING_TIME*/, [=](void)
     { this->KillAllPlayers(); });
 
     // Get board and load first level

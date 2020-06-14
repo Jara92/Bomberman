@@ -61,7 +61,7 @@ public:
      * @param movable Movable object.
      * @return True if is passable.
      */
-    bool IsPassable(CCoord<unsigned int> coord, const CMovable *movable);
+    bool IsPassable(CCoord<unsigned int> coord, const CMovable &movable);
 
     /**
      * Is this position totaly free?
@@ -108,8 +108,9 @@ public:
     /**
      * Remove all dynamically added objects. (Bombs, Enemies, Boosts, DestructibleWalls)
      * @param clearLevelObjects Remove boosts from the board?
+     * @param collectibles Output vector to return every CCollectible objects which is in the board or attached to CWall.
      */
-    void ClearBoard(bool clearLevelObjects = true);
+    void PrepareBoard(bool clearLevelObjects, std::vector<CCollectible *> &collectibles);
 
     /**
     * Get random location in the board.

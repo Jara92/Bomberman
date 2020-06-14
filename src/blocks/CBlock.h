@@ -37,6 +37,9 @@ public:
 
     virtual ~CBlock() = default;
 
+    virtual CBlock * Clone() const
+    {return new CBlock(*this);}
+
     /**
     * Try to destroy the wall.
     * @param distance Distance from the bomb.

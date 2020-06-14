@@ -14,17 +14,25 @@ CLevelLoader::CLevelLoader(CSDLInterface &interface, std::string mapFileName, st
 /*====================================================================================================================*/
 bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool loadDynamicObjects)
 {
-    board->ClearBoard(loadDynamicObjects);
+    std::vector<CCollectible *> collectibles;
+
+    /*  if(!loadDynamicObjects)
+      {collectibles = board->GetCollectibles();}*/
+
+    board->PrepareBoard(loadDynamicObjects, collectibles);
 
     // Generate random obstacles.
     size_t obstaclesCount = (board->GetBoardSize().m_X * board->GetBoardSize().m_Y) * 0.125;
     this->GenerateObstacles(board, level, obstaclesCount);
 
-    std::vector<CCollectible *> collectibles;
-
     // Load enemies and boosts from the file.
     if (loadDynamicObjects)
-    { this->LoadLevelFile(board, level, collectibles); }
+    {
+        for (std::vector<CCollectible *>::size_type i = 0; i < collectibles.size(); i++)
+        { delete collectibles[i]; }
+        collectibles.clear();
+        this->LoadLevelFile(board, level, collectibles);
+    }
 
     // Random location for every collectable and enemy object.
     this->ReorganizeLevelObjects(board, collectibles);
@@ -332,7 +340,8 @@ std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadCollectiblesTexture
 }
 
 /*====================================================================================================================*/
-void CLevelLoader::LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level, std::vector<CCollectible *> & collectibles)
+void CLevelLoader::LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level,
+                                 std::vector<CCollectible *> &collectibles)
 {
     std::ifstream fileReader(
             (this->m_Interface.GetSettings()->GetDataPath() + this->m_LevelFileName) + std::to_string(level),
@@ -375,11 +384,12 @@ CLevelLoader::ReadProperty(const std::vector<std::string> &input, std::vector<st
 }
 
 /*====================================================================================================================*/
-void CLevelLoader::ReorganizeLevelObjects(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> & collectibles)
+void CLevelLoader::ReorganizeLevelObjects(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> &collectibles)
 {
-    // Reset all objects (random location, attach to random wall...)
+    // Reset all collectibles (random location, attach to random wall...)
     for (auto collectible = collectibles.begin(); collectible != collectibles.end(); collectible++)
     { (*collectible)->Reset(*board); }
+    collectibles.clear();
 
     // Reset all objects (random location, attach to random wall...)
     for (auto object = board->m_Movables.begin(); object != board->m_Movables.end(); object++)
@@ -387,8 +397,9 @@ void CLevelLoader::ReorganizeLevelObjects(std::shared_ptr<CBoard> &board, std::v
 }
 
 /*====================================================================================================================*/
-void CLevelLoader::CreateCollectible(std::vector<CCollectible *> & collectibles, ECollectibleType type, std::size_t score,
-                                     std::size_t duration)
+void
+CLevelLoader::CreateCollectible(std::vector<CCollectible *> &collectibles, ECollectibleType type, std::size_t score,
+                                std::size_t duration)
 {
     // Lamda which are used to apply / deactivate collectable item.
     std::function<void(CPlayer *)> applyFunc;
@@ -482,7 +493,7 @@ void CLevelLoader::CreateEnemy(std::shared_ptr<CBoard> &board, EEnemyType type, 
 
 /*====================================================================================================================*/
 bool CLevelLoader::ReadItem(std::shared_ptr<CBoard> &board, const std::vector<std::string> &input,
-                            const std::string &itemType, std::vector<CCollectible *> & collectibles)
+                            const std::string &itemType, std::vector<CCollectible *> &collectibles)
 {
     try
     {

@@ -30,6 +30,8 @@ public:
 
     virtual ~CCollectible() = default;
 
+    virtual CCollectible * Clone() const override = 0;
+
     virtual void Update(CBoard &board, int deltaTime) override = 0;
 
     virtual void Draw(CSDLInterface &interface, int cellSize, CCoord<> location,
@@ -48,8 +50,7 @@ public:
 
     virtual void Reset(CBoard &board);
 
-    virtual void CollisionWithPlayer(CPlayer &player)
-    { this->Apply(&player); }
+    virtual void PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player) override;
 
     /**
      * Make collectible object visible
@@ -63,12 +64,21 @@ public:
     void MakeInvisible()
     { this->m_IsVisible = false; }
 
+    virtual bool HasCollectible() const
+    { return true; }
+
+    virtual CCollectible *GetCollectible()
+    { return this; }
+
     /**
      * Is this collectible object visible?
      * @return True - Is visible; False - Is invisible
      */
     bool IsVisible() const
     { return this->m_IsVisible; }
+
+    virtual bool IsDestructible() const override
+    { return false; }
 
 protected:
     int m_Duration;

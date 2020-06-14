@@ -9,7 +9,6 @@
 
 void CCollectible::Reset(CBoard &board)
 {
-    //CBlock::Reset(board);
     this->m_IsVisible = false;
 
     // Atach this collectible to new existing and destructible Wall which has not collectible yet.
@@ -22,4 +21,11 @@ void CCollectible::Reset(CBoard &board)
     } while (!randomWall || !randomWall->IsDestructible() || randomWall->HasCollectible());
 
     randomWall->AttachCollectible(this);
+}
+
+/*====================================================================================================================*/
+void CCollectible::PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player)
+{
+    if (this->IsColliding(thisLocation, player))
+    { this->Apply(&player); }
 }

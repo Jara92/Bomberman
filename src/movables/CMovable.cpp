@@ -13,11 +13,11 @@ bool CMovable::CellIsFree(CBoard &board, int deltaTime, CCoord<> location) const
     // All player corners must be passable - Look deltaTime * oneStep forward.
     double correction = (1 - deltaTime * this->m_Speed);
 
-    if (!board.IsPassable(CCoord<unsigned int>(location.m_X, location.m_Y), this) ||
-        !board.IsPassable(CCoord<unsigned int>(location.m_X + correction, location.m_Y), this) ||
-        !board.IsPassable(CCoord<unsigned int>(location.m_X, location.m_Y + correction), this) ||
+    if (!board.IsPassable(CCoord<unsigned int>(location.m_X, location.m_Y), *this) ||
+        !board.IsPassable(CCoord<unsigned int>(location.m_X + correction, location.m_Y), *this) ||
+        !board.IsPassable(CCoord<unsigned int>(location.m_X, location.m_Y + correction), *this) ||
         !board.IsPassable(CCoord<unsigned int>(location.m_X + correction, location.m_Y + correction),
-                          this))
+                          *this))
     { return false; }
 
     return true;
