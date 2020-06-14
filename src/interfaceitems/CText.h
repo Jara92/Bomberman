@@ -15,14 +15,14 @@ public:
      * @param interface Interface used for texture setup.
      * @param location Item location.
      * @param text Text to be rendered.
-     * @param size Item size. Set {0,0} to autosize. Set {0, X} or {X, 0} to autosize one dimension.
+     * @param fontSize Font size.
      * @param texturePath Path to texture.
      */
-    CText(CSDLInterface &interface, CCoord<> location, const std::string &text, CCoord<> size = {0, 0},
+    CText(CSDLInterface &interface, CCoord<> location, const std::string &text, int fontSize,
           SDL_Color color = {255, 255, 255, 255}
-    ) : CInterfaceItem(location, size), m_Texture(NULL), m_Text(""), m_Color(color)
+    ) : CInterfaceItem(location), m_Texture(NULL), m_Text(""), m_FontSize(0), m_Color()
     {
-        this->SetText(interface, text, size, color);
+        this->SetText(interface, text, fontSize, color);
     }
 
     virtual ~CText()
@@ -38,10 +38,10 @@ public:
      * Change displayed text.
      * @param interface Interface to be used.
      * @param text Text to be set.
+     * @param fontSize Font size.
      * @param color Color to be set.
      */
-    void SetText(CSDLInterface &interface, const std::string &text, CCoord<> size = {0, 0},
-                 SDL_Color color = {255, 255, 255, 255});
+    void SetText(CSDLInterface &interface, const std::string &text, int fontSize, SDL_Color color);
 
     /**
      * Change text color.
@@ -49,7 +49,10 @@ public:
      * @param color Color to be set.
      */
     void SetColor(CSDLInterface &interface, SDL_Color color)
-    { this->SetText(interface, this->m_Text, this->m_Size, color); }
+    { this->SetText(interface, this->m_Text, this->m_FontSize, color); }
+
+    void SetFontSize(CSDLInterface &interface, int fontSize)
+    { this->SetText(interface, this->m_Text, fontSize, this->m_Color); }
 
     /**
      * Update item.
@@ -65,9 +68,13 @@ public:
     virtual void Draw(CSDLInterface &interface) override
     { interface.RenderTexture(this->m_Texture, this->m_Location, this->m_Size); }
 
+    SDL_Colour GetColor() const
+    { return this->m_Color; }
+
 protected:
     SDL_Texture *m_Texture;
     std::string m_Text;
+    int m_FontSize;
     SDL_Colour m_Color;
 };
 

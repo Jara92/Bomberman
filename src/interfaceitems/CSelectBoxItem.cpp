@@ -28,11 +28,11 @@ void CSelectBoxItem::SetLocation(CCoord<> location)
 }
 
 /*====================================================================================================================*/
-void CSelectBoxItem::SetSize(CCoord<> size)
+/*void CSelectBoxItem::SetSize(CCoord<> size)
 {
     CInterfaceItem::SetSize(size);
 
     this->m_Text->SetSize(size);
     this->m_HoverText->SetSize(size);
     this->m_ActiveText->SetSize(size);
-}
+}*/

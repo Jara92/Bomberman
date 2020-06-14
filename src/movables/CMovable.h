@@ -58,8 +58,8 @@ public:
     { this->m_Body.Draw(interface, cellSize, this->m_Location, this->m_Size, offset); }
 
     /**
-     * Try to kill this enemy.
-     * @param distance Distance between the enemy and a killer.
+     * Try to kill this movable.
+     * @param distance Distance between the movable and a killer.
      * @return Score to be achieved.
      */
     virtual unsigned int TryKill(unsigned int distance = 0) = 0;

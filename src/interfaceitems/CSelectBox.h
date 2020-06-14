@@ -79,10 +79,8 @@ CSelectBox<T>::CSelectBox(CSDLInterface &interface, CCoord<> location, CCoord<> 
     for (auto option = options.begin(); option != options.end(); option++)
     {
         std::unique_ptr<CSelectBoxItem> item = std::make_unique<CSelectBoxItem>(interface, CCoord<>(0, 0),
-                                                                                option->first, CCoord<>(0, fontSize),
-                                                                                itemColor, itemHoverColor,
-                                                                                itemSelectedColor);
-
+                                                                                option->first, fontSize, itemColor,
+                                                                                itemHoverColor, itemSelectedColor);
         itemSize = item->GetSize();
         item->SetLocation(CCoord<>((this->m_Size.m_X / 2) - (itemSize.m_X / 2),
                                    locationY += static_cast<unsigned int>(itemSize.m_Y * margin)));

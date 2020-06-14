@@ -23,14 +23,13 @@ public:
      * @param location Button location.
      * @param textColor Default text color.
      * @param textHoverColor Text color when the button is hovered by the mouse cursor.
-     * @param size Button size. Set {0, 0} to auto-size. Set {0, X} or {X, 0} to auto-size one dimension.
+     * @param fontSize Font size.
      * @param clickCallBack Function to be call on button click event.
      *
     */
     CButton(CSDLInterface &interface, const std::string &text, CCoord<> location, SDL_Colour textColor,
-            SDL_Colour textHoverColor, CCoord<> size = {0, 0},
-            std::function<void(void)> clickCallBack = []()
-            {});
+            SDL_Colour textHoverColor, int fontSize, std::function<void(void)> clickCallBack = []()
+    {});
 
     virtual ~CButton() = default;
 
@@ -52,11 +51,11 @@ public:
      * Draw item.
      * @param interface Interface to be used.
      */
-    virtual void Draw(CSDLInterface &interface) override ;
+    virtual void Draw(CSDLInterface &interface) override;
 
     virtual void SetLocation(CCoord<> location) override;
 
-    virtual void SetSize(CCoord<> size) override;
+    virtual void SetFontSize(CSDLInterface & interface, int fontSize);
 
     /**
      * Process mouse events.

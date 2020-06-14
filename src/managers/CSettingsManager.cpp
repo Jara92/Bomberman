@@ -23,7 +23,7 @@ CSettingsManager::CSettingsManager(CSDLInterface &interface) : CWindowManager(in
 
     // Add select box title
     this->m_InterfaceItems.push_back(
-            std::make_unique<CText>(interface, CCoord<>(0, 0), "Game screen resolution", CCoord<>(0, 64)));
+            std::make_unique<CText>(interface, CCoord<>(0, 0), "Game screen resolution", 64));
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2), padding));
 
@@ -44,7 +44,7 @@ CSettingsManager::CSettingsManager(CSDLInterface &interface) : CWindowManager(in
     // Back button
     this->m_InterfaceItems.push_back(
             std::make_unique<CButton>(interface, "Back", CCoord<>(0, 0), SDL_Colour{0, 0, 0, 255}, hoverFontColor,
-                                      CCoord<>(0, 35), [=]()
+                                      35, [=]()
                                       { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_MENU; }));
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(CCoord<>(padding, windowSize.m_Y - itemSize.m_Y - padding));

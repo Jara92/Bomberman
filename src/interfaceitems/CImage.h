@@ -45,6 +45,13 @@ public:
     virtual void Draw(CSDLInterface &interface)
     {interface.RenderTexture(this->m_Texture, this->m_Location, this->m_Size);}
 
+    /**
+    * Set item size.
+     * @param size New size.
+    */
+    virtual  void SetSize(CCoord<> size)
+    { this->m_Size = size; }
+
 protected:
     SDL_Texture * m_Texture;
 };

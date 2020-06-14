@@ -5,13 +5,13 @@
 #include "CButton.h"
 
 CButton::CButton(CSDLInterface &interface, const std::string &text, CCoord<> location, SDL_Colour textColor,
-                 SDL_Colour textHoverColor, CCoord<> size, std::function<void(void)> clickCallBack)
-        : CInterfaceItem(location, size),
+                 SDL_Colour textHoverColor, int fontSize, std::function<void(void)> clickCallBack)
+        : CInterfaceItem(location),
           m_IsHovering(false), m_ClickCallBack(std::move(clickCallBack))
 {
     // Create textures.
-    this->m_Text = std::make_unique<CText>(interface, location, text, size, textColor);
-    this->m_TextHover = std::make_unique<CText>(interface, location, text, size, textHoverColor);
+    this->m_Text = std::make_unique<CText>(interface, location, text, fontSize, textColor);
+    this->m_TextHover = std::make_unique<CText>(interface, location, text, fontSize, textHoverColor);
 
     // Set size.
     this->m_Size = this->m_Text->GetSize();
@@ -36,12 +36,12 @@ void CButton::SetLocation(CCoord<> location)
 }
 
 /*====================================================================================================================*/
-void CButton::SetSize(CCoord<> size)
+void CButton::SetFontSize(CSDLInterface & interface, int fontSize)
 {
-    CInterfaceItem::SetSize(size);
+    this->m_Text->SetFontSize(interface, fontSize);
+    this->m_TextHover->SetFontSize(interface, fontSize);
 
-    this->m_Text->SetSize(size);
-    this->m_TextHover->SetSize(size);
+    this->m_Size = this->m_Text->GetSize();
 }
 
 /*====================================================================================================================*/

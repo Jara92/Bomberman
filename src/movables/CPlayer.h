@@ -132,13 +132,8 @@ public:
     static constexpr double ENEMY_SAVE_ZONE = 4, OBSTACLES_SAVE_ZONE = 2;
 protected:
     std::size_t m_Score;
-
-    /*====================
-     * Player abilities.
-     =====================*/
-    unsigned int m_ExplosionRadius;
-    unsigned int m_MaxBombs;
-    unsigned int m_ActiveBombs;
+    /* Player abilities. */
+    unsigned int m_ExplosionRadius, m_MaxBombs, m_ActiveBombs;
     bool m_RemoteExplosion, m_FireImmunity, m_LevelUp;
     CInput m_Input;
 

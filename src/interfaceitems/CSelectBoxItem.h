@@ -15,19 +15,19 @@ public:
      * @param interface Interface used for texture setup.
      * @param location Item location.
      * @param text Text to be rendered.
-     * @param size Item size. Set {0,0} to autosize. Set {0, X} or {X, 0} to autosize one dimension.
+     * @param fontSize FOnt size.
      * @param itemColor Default item color.
      * @param itemHoverColor Color of the item when the mouse is hovering it.
      * @param itemActivateColor Color of the item when the item is selected.
      */
-    CSelectBoxItem(CSDLInterface &interface, CCoord<> location, const std::string &text, CCoord<> size,
+    CSelectBoxItem(CSDLInterface &interface, CCoord<> location, const std::string &text, int fontSize,
                    SDL_Colour itemColor, SDL_Colour itemHoverColor, SDL_Colour itemActivateColor
     )
-            : CInterfaceItem(location, size), m_IsActive(false), m_IsHovering(false)
+            : CInterfaceItem(location), m_IsActive(false), m_IsHovering(false)
     {
-        this->m_Text = std::make_unique<CText>(interface, location, text, size, itemColor);
-        this->m_HoverText = std::make_unique<CText>(interface, location, text, size, itemHoverColor);
-        this->m_ActiveText = std::make_unique<CText>(interface, location, text, size, itemActivateColor);
+        this->m_Text = std::make_unique<CText>(interface, location, text, fontSize, itemColor);
+        this->m_HoverText = std::make_unique<CText>(interface, location, text,  fontSize, itemHoverColor);
+        this->m_ActiveText = std::make_unique<CText>(interface, location, text, fontSize, itemActivateColor);
 
         // Set item size to be equal to text size.
         this->m_Size = this->m_Text->GetSize();
@@ -48,8 +48,6 @@ public:
     virtual void Draw(CSDLInterface &interface) override ;
 
     virtual void SetLocation(CCoord <>location) override;
-
-    virtual void SetSize(CCoord <>size) override;
 
     void SetActive(bool active)
     {this->m_IsActive = active;}

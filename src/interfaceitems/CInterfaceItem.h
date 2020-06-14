@@ -10,18 +10,16 @@
 #include "../CSDLInterface.h"
 #include "../CCoord.h"
 
-/**
- * UI item.
- */
+/** UI item. */
 class CInterfaceItem
 {
 public:
     /**
      * Constructor.
-     * @param location Item location. Use {0,0} to center location. Use {0, X} or {X, 0} to center one direction.
+     * @param location Item location.
      * @param size Item size.
      */
-    explicit CInterfaceItem(CCoord <> location, CCoord <>size)
+    explicit CInterfaceItem(CCoord <> location, CCoord<> size = {0,0})
             : m_Location(location), m_Size(size)
     {}
 
@@ -45,13 +43,6 @@ public:
     virtual void Draw(CSDLInterface &interface) = 0;
 
     /**
-     * Set item location.
-     * @param location New location.
-     */
-    virtual void SetLocation(CCoord<> location)
-    { this->m_Location = location; }
-
-    /**
      * Handle mouse events.
      * @param e Event structure.
      */
@@ -59,16 +50,23 @@ public:
     {}
 
     /**
-     * Set item size.
-     * @param size New size.
-     */
-   virtual  void SetSize(CCoord<> size)
-    { this->m_Size = size; }
+    * Is this button colliding with mouse?
+    * @param mouseLocation Current mouse location.
+    * @return True - Colliding.
+    */
+    bool MouseCollision(CCoord <unsigned int> mouseLocation) const;
 
     /**
-     * Get object top-left corner location.
-     * @return Location.
+     * Set item location.
+     * @param location New location.
      */
+    virtual void SetLocation(CCoord<> location)
+    { this->m_Location = location; }
+
+    /**
+    * Get object top-left corner location.
+    * @return Location.
+    */
     CCoord<> GetLocation() const
     {return this->m_Location;}
 
@@ -78,13 +76,6 @@ public:
      */
     CCoord <>GetSize() const
     {return this->m_Size;}
-
-    /**
-    * Is this button colliding with mouse?
-    * @param mouseLocation Current mouse location.
-    * @return True - Colliding.
-    */
-    bool MouseCollision(CCoord <unsigned int> mouseLocation) const;
 
 protected:
     CCoord <>m_Location;

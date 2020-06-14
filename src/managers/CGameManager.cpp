@@ -28,42 +28,41 @@ CGameManager::CGameManager(CSDLInterface &interface)
 
     // Menu texts.
     this->m_TimeText = std::make_unique<CText>(this->m_Interface, CCoord<>(0.5 * this->m_Board->GetCellSize(), padding),
-                                               "", CCoord<>(0, this->m_DefaultFontSize));
+                                               "", this->m_DefaultFontSize);
 
     this->m_ScoreText = std::make_unique<CText>(this->m_Interface,
                                                 CCoord<>(5 * this->m_Board->GetCellSize() + padding, padding), "",
-                                                CCoord<>(0, this->m_DefaultFontSize));
+                                                this->m_DefaultFontSize);
 
     this->m_LivesText = std::make_unique<CText>(this->m_Interface,
                                                 CCoord<>(20.5 * this->m_Board->GetCellSize() + padding, padding), "",
-                                                CCoord<>(0, this->m_DefaultFontSize));
+                                                this->m_DefaultFontSize);
 
     this->m_FPSText = std::make_unique<CText>(this->m_Interface,
                                               CCoord<>(padding, this->m_Board->GetCellSize() + padding), "",
-                                              CCoord<>(0, this->m_DefaultFontSize / 2));
+                                              this->m_DefaultFontSize / 2);
 
     // Scene messages.
     this->m_RoundOverText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "Round over!",
-                                                    CCoord<>(0, this->m_DefaultFontSize * 3));
+                                                    3 * this->m_DefaultFontSize);
     CCoord<> itemSize = this->m_RoundOverText->GetSize();
     this->m_RoundOverText->SetLocation(
             CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0), (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0)));
 
     this->m_NextRoundText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "Round X!",
-                                                    CCoord<>(0, this->m_DefaultFontSize * 3));
+                                                    3 * this->m_DefaultFontSize);
     itemSize = this->m_NextRoundText->GetSize();
     this->m_NextRoundText->SetLocation(
             CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0), (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0)));
 
     this->m_GameOverText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "Game over",
-                                                   CCoord<>(0, this->m_DefaultFontSize * 3));
+                                                   3 * this->m_DefaultFontSize);
     itemSize = this->m_GameOverText->GetSize();
     this->m_GameOverText->SetLocation(
             CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0), (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0)));
 
     this->m_GameOverSubtext = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0),
-                                                      "Press [ENTER] to return to the menu",
-                                                      CCoord<>(0, this->m_DefaultFontSize));
+                                                      "Press [ENTER] to return to the menu",this->m_DefaultFontSize);
     itemSize = this->m_GameOverSubtext->GetSize();
     this->m_GameOverSubtext->SetLocation(
             CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0),
@@ -142,7 +141,7 @@ void CGameManager::Update(int deltaTime)
 
         this->m_TimeText->SetText(this->m_Interface,
                                   "Time: " + std::to_string(this->m_GameEndDelay.GetRemainingTime() / 1000),
-                                  CCoord<>(0, this->m_DefaultFontSize));
+                                  this->m_DefaultFontSize, this->m_TimeText->GetColor());
 
         if (this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
         {
@@ -152,14 +151,14 @@ void CGameManager::Update(int deltaTime)
 
             this->m_ScoreText->SetText(this->m_Interface,
                                        "Score: " + std::to_string(this->m_Board->m_Players[0]->GetScore()),
-                                       CCoord<>(0, this->m_DefaultFontSize));
+                                       this->m_DefaultFontSize, this->m_ScoreText->GetColor());
 
             this->m_LivesText->SetText(this->m_Interface,
                                        "Lives: " + std::to_string(std::max(0, this->m_Board->m_Players[0]->GetLives())),
-                                       CCoord<>(0, this->m_DefaultFontSize), color);
+                                       this->m_DefaultFontSize, color);
         }
         this->m_FPSText->SetText(this->m_Interface, "FPS: " + std::to_string(this->m_Clock.GetFPS()),
-                                 CCoord<>(0, this->m_DefaultFontSize / 2));
+                                 this->m_DefaultFontSize / 2, this->m_FPSText->GetColor());
     }
 
     this->m_GameStatusDelay.Tick(deltaTime);
@@ -177,8 +176,8 @@ void CGameManager::UpdateEvents()
     this->GlobalInput(keystate);
 
     // send state to all players
-  /*  for (std::vector<CPlayer *>::size_type i = 0; i < this->m_Board->m_Players.size(); i++)
-    { this->m_Board->m_Players[i]->HandleInput(keystate); }*/
+    /*  for (std::vector<CPlayer *>::size_type i = 0; i < this->m_Board->m_Players.size(); i++)
+      { this->m_Board->m_Players[i]->HandleInput(keystate); }*/
 
     this->m_Board->UpdatePhysicEvents();
 
@@ -288,7 +287,7 @@ void CGameManager::NextRound()
 {
     this->m_Level++;
     this->m_NextRoundText->SetText(this->m_Interface, "Round " + std::to_string(this->m_Level) + "!",
-                                   CCoord<>(0, this->m_DefaultFontSize * 3));
+                                   3 * this->m_DefaultFontSize, this->m_NextRoundText->GetColor());
 
     // End game if this was last level.
     if (this->m_Level > CGameManager::GAME_LEVELS_COUNT)
