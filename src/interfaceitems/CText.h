@@ -21,9 +21,7 @@ public:
     CText(CSDLInterface &interface, CCoord<> location, const std::string &text, int fontSize,
           SDL_Color color = {255, 255, 255, 255}
     ) : CInterfaceItem(location), m_Texture(NULL), m_Text(""), m_FontSize(0), m_Color()
-    {
-        this->SetText(interface, text, fontSize, color);
-    }
+    { this->SetText(text, fontSize, color); this->Refresh(interface);}
 
     virtual ~CText()
     { SDL_DestroyTexture(this->m_Texture); }
@@ -34,39 +32,28 @@ public:
 
     CText &operator=(const CText &other) = delete;
 
+    virtual void Draw(CSDLInterface &interface) override
+    { interface.RenderTexture(this->m_Texture, this->m_Location, this->m_Size); }
+
+    virtual void Refresh(CSDLInterface &interface) override;
+
     /**
      * Change displayed text.
-     * @param interface Interface to be used.
      * @param text Text to be set.
      * @param fontSize Font size.
      * @param color Color to be set.
      */
-    void SetText(CSDLInterface &interface, const std::string &text, int fontSize, SDL_Color color);
+    void SetText(const std::string &text, int fontSize, SDL_Color color);
 
     /**
      * Change text color.
-     * @param interface Interface to be used.
      * @param color Color to be set.
      */
-    void SetColor(CSDLInterface &interface, SDL_Color color)
-    { this->SetText(interface, this->m_Text, this->m_FontSize, color); }
+    void SetColor(SDL_Color color)
+    { this->SetText(this->m_Text, this->m_FontSize, color); }
 
-    void SetFontSize(CSDLInterface &interface, int fontSize)
-    { this->SetText(interface, this->m_Text, fontSize, this->m_Color); }
-
-    /**
-     * Update item.
-     * @param deltaTime Delta time.
-     */
-    virtual void Update(int deltaTime) override
-    {}
-
-    /**
-     * Draw item.
-     * @param interface Interface to be used.
-     */
-    virtual void Draw(CSDLInterface &interface) override
-    { interface.RenderTexture(this->m_Texture, this->m_Location, this->m_Size); }
+    void SetFontSize(int fontSize)
+    { this->SetText(this->m_Text, fontSize, this->m_Color); }
 
     SDL_Colour GetColor() const
     { return this->m_Color; }

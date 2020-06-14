@@ -36,15 +36,6 @@ void CButton::SetLocation(CCoord<> location)
 }
 
 /*====================================================================================================================*/
-void CButton::SetFontSize(CSDLInterface & interface, int fontSize)
-{
-    this->m_Text->SetFontSize(interface, fontSize);
-    this->m_TextHover->SetFontSize(interface, fontSize);
-
-    this->m_Size = this->m_Text->GetSize();
-}
-
-/*====================================================================================================================*/
 void CButton::MouseEventHandler(SDL_Event &e)
 {
     switch (e.type)

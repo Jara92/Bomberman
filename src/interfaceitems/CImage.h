@@ -17,10 +17,8 @@ public:
      * @param texturePath Path to texture.
      */
     CImage(CSDLInterface & interface, CCoord <>location, CCoord<> size, std::string texturePath)
-    : CInterfaceItem(location, size)
-    {
-        this->m_Texture = interface.LoadTexture( texturePath);
-    }
+    : CInterfaceItem(location, size), m_Texture(NULL), m_TexturePath(texturePath)
+    { this->Refresh(interface);   }
 
     virtual ~CImage()
     {SDL_DestroyTexture(this->m_Texture);}
@@ -31,19 +29,16 @@ public:
     CImage(const CImage &other) = delete;
     CImage &operator=(const CImage &other) = delete;
 
-    /**
-     * Update item.
-     * @param deltaTime Delta time.
-     */
-    virtual void Update(int deltaTime)
-    {}
-
-    /**
-     * Draw item.
-     * @param interface Interface to be used.
-     */
     virtual void Draw(CSDLInterface &interface)
     {interface.RenderTexture(this->m_Texture, this->m_Location, this->m_Size);}
+
+    virtual void Refresh(CSDLInterface & interface) override
+    {
+        if(this->m_Texture)
+        {SDL_DestroyTexture(this->m_Texture);}
+        this->m_Texture = interface.LoadTexture( this->m_TexturePath);
+        this->m_IsActual = true;
+    }
 
     /**
     * Set item size.
@@ -54,5 +49,6 @@ public:
 
 protected:
     SDL_Texture * m_Texture;
+    std::string m_TexturePath;
 };
 

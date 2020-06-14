@@ -42,9 +42,6 @@ public:
 
     CSelectBoxItem &operator=(const CSelectBoxItem &other) = delete;
 
-    virtual void Update(int deltaTime) override
-    {}
-
     virtual void Draw(CSDLInterface &interface) override ;
 
     virtual void SetLocation(CCoord <>location) override;

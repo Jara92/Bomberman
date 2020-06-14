@@ -62,7 +62,7 @@ CGameManager::CGameManager(CSDLInterface &interface)
             CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0), (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0)));
 
     this->m_GameOverSubtext = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0),
-                                                      "Press [ENTER] to return to the menu",this->m_DefaultFontSize);
+                                                      "Press [ENTER] to return to the menu", this->m_DefaultFontSize);
     itemSize = this->m_GameOverSubtext->GetSize();
     this->m_GameOverSubtext->SetLocation(
             CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0),
@@ -139,8 +139,7 @@ void CGameManager::Update(int deltaTime)
         this->m_Board->Update(deltaTime);
         this->m_GameEndDelay.Tick(deltaTime);
 
-        this->m_TimeText->SetText(this->m_Interface,
-                                  "Time: " + std::to_string(this->m_GameEndDelay.GetRemainingTime() / 1000),
+        this->m_TimeText->SetText("Time: " + std::to_string(this->m_GameEndDelay.GetRemainingTime() / 1000),
                                   this->m_DefaultFontSize, this->m_TimeText->GetColor());
 
         if (this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
@@ -149,18 +148,32 @@ void CGameManager::Update(int deltaTime)
             if (this->m_Board->m_Players[0]->GetLives() <= 0)
             { color = {128, 0, 0, 255}; }
 
-            this->m_ScoreText->SetText(this->m_Interface,
-                                       "Score: " + std::to_string(this->m_Board->m_Players[0]->GetScore()),
+            this->m_ScoreText->SetText("Score: " + std::to_string(this->m_Board->m_Players[0]->GetScore()),
                                        this->m_DefaultFontSize, this->m_ScoreText->GetColor());
 
-            this->m_LivesText->SetText(this->m_Interface,
-                                       "Lives: " + std::to_string(std::max(0, this->m_Board->m_Players[0]->GetLives())),
+            this->m_LivesText->SetText("Lives: " + std::to_string(std::max(0, this->m_Board->m_Players[0]->GetLives())),
                                        this->m_DefaultFontSize, color);
         }
-        this->m_FPSText->SetText(this->m_Interface, "FPS: " + std::to_string(this->m_Clock.GetFPS()),
+        this->m_FPSText->SetText("FPS: " + std::to_string(this->m_Clock.GetFPS()),
                                  this->m_DefaultFontSize / 2, this->m_FPSText->GetColor());
-    }
 
+        this->m_TimeText->Update(this->m_Interface, deltaTime);
+        this->m_ScoreText->Update(this->m_Interface, deltaTime);
+        this->m_LivesText->Update(this->m_Interface, deltaTime);
+        this->m_FPSText->Update(this->m_Interface, deltaTime);
+    }
+    // Update round over text.
+    else if (this->m_GameStatus == EGameStatus::GAME_STATUS_ROUND_OVER)
+    { this->m_RoundOverText->Update(this->m_Interface, deltaTime); }
+    // Update next round text.
+    else if (this->m_GameStatus == EGameStatus::GAME_STATUS_NEXT_ROUND)
+    { this->m_NextRoundText->Update(this->m_Interface, deltaTime); }
+    // Update game over text.
+    else if (this->m_GameStatus == EGameStatus::GAME_STATUS_GAME_OVER)
+    {
+        this->m_GameOverText->Update(this->m_Interface, deltaTime);
+        this->m_GameOverSubtext->Update(this->m_Interface, deltaTime);
+    }
     this->m_GameStatusDelay.Tick(deltaTime);
 }
 
@@ -174,10 +187,6 @@ void CGameManager::UpdateEvents()
 
     // Catch global input keys.
     this->GlobalInput(keystate);
-
-    // send state to all players
-    /*  for (std::vector<CPlayer *>::size_type i = 0; i < this->m_Board->m_Players.size(); i++)
-      { this->m_Board->m_Players[i]->HandleInput(keystate); }*/
 
     this->m_Board->UpdatePhysicEvents();
 
@@ -286,7 +295,7 @@ void CGameManager::GameOver()
 void CGameManager::NextRound()
 {
     this->m_Level++;
-    this->m_NextRoundText->SetText(this->m_Interface, "Round " + std::to_string(this->m_Level) + "!",
+    this->m_NextRoundText->SetText("Round " + std::to_string(this->m_Level) + "!",
                                    3 * this->m_DefaultFontSize, this->m_NextRoundText->GetColor());
 
     // End game if this was last level.

@@ -28,16 +28,8 @@ public:
 
     CSelectBox &operator=(const CSelectBox &other) = delete;
 
-    /**
-     * Update item.
-     * @param deltaTime Delta time.
-     */
-    virtual void Update(int deltaTime) override;
+    virtual void Update(CSDLInterface & interface, int deltaTime) override;
 
-    /**
-     * Draw item.
-     * @param interface Interface to be used.
-     */
     virtual void Draw(CSDLInterface &interface) override
     {
         for (auto item = this->m_Items.begin(); item != this->m_Items.end(); item++)
@@ -101,10 +93,10 @@ CSelectBox<T>::CSelectBox(CSDLInterface &interface, CCoord<> location, CCoord<> 
 
 /*====================================================================================================================*/
 template<class T>
-void CSelectBox<T>::Update(int deltaTime)
+void CSelectBox<T>::Update(CSDLInterface & interface, int deltaTime)
 {
     for (auto item = this->m_Items.begin(); item != this->m_Items.end(); item++)
-    { item->second->Update(deltaTime); }
+    { item->second->Update(interface, deltaTime); }
 }
 
 /*====================================================================================================================*/

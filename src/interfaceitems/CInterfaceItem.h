@@ -20,7 +20,7 @@ public:
      * @param size Item size.
      */
     explicit CInterfaceItem(CCoord <> location, CCoord<> size = {0,0})
-            : m_Location(location), m_Size(size)
+            : m_Location(location), m_Size(size), m_IsActual(false)
     {}
 
     virtual ~CInterfaceItem() = default;
@@ -32,15 +32,27 @@ public:
 
     /**
      * Update item.
+     * @param interface Interface to be used.
      * @param deltaTime Delta time.
      */
-    virtual void Update(int deltaTime) = 0;
+    virtual void Update(CSDLInterface & interface, int deltaTime)
+    {
+        if(!this->m_IsActual)
+        {this->Refresh(interface);}
+    }
 
     /**
      * Draw item.
      * @param interface Interface to be used.
      */
     virtual void Draw(CSDLInterface &interface) = 0;
+
+    /**
+     * Refresh object state.
+     * @param interface
+     */
+    virtual void Refresh(CSDLInterface & interface)
+    {}
 
     /**
      * Handle mouse events.
@@ -80,6 +92,7 @@ public:
 protected:
     CCoord <>m_Location;
     CCoord <>m_Size;
+    bool m_IsActual;
 
     /**
      * Handle mouse click

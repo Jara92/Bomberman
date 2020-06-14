@@ -40,22 +40,22 @@ public:
 
     CButton &operator=(const CButton &other) = delete;
 
-    /**
-     * Update item.
-     * @param deltaTime Delta time.
-     */
-    virtual void Update(int deltaTime)
-    {}
+    virtual void Update(CSDLInterface &interface, int deltaTime)
+    {
+        this->m_Text->Update(interface, deltaTime);
+        this->m_TextHover->Update(interface, deltaTime);
+    }
 
-    /**
-     * Draw item.
-     * @param interface Interface to be used.
-     */
     virtual void Draw(CSDLInterface &interface) override;
 
     virtual void SetLocation(CCoord<> location) override;
 
-    virtual void SetFontSize(CSDLInterface & interface, int fontSize);
+    virtual void SetFontSize(CSDLInterface &interface, int fontSize)
+    {
+        this->m_Text->SetFontSize(fontSize);
+        this->m_TextHover->SetFontSize(fontSize);
+        this->m_Size = this->m_Text->GetSize();
+    }
 
     /**
      * Process mouse events.
@@ -69,7 +69,7 @@ public:
      * @param color Color to be set.
      */
     void SetColor(CSDLInterface &interface, SDL_Colour color)
-    { this->m_Text->SetColor(interface, color); }
+    { this->m_Text->SetColor(color); }
 
     /**
      * Set new hover color
@@ -77,7 +77,7 @@ public:
      * @param color Color to be set.
      */
     void SetHoverColor(CSDLInterface &interface, SDL_Colour color)
-    { this->m_TextHover->SetColor(interface, color); }
+    { this->m_TextHover->SetColor(color); }
 
 protected:
     /** Text to be rendered. */

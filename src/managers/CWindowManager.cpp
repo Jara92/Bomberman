@@ -58,5 +58,5 @@ void CWindowManager::Draw() const
 void CWindowManager::Update(int deltaTime)
 {
     for (auto item = this->m_InterfaceItems.begin(); item != this->m_InterfaceItems.end(); item++)
-    { item->get()->Update(deltaTime); }
+    { item->get()->Update(this->m_Interface, deltaTime); }
 }
