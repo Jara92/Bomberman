@@ -6,6 +6,7 @@
 #pragma once
 
 #include <memory>
+#include "../CBody.h"
 #include "../movables/CMovable.h"
 #include "../CSDLInterface.h"
 #include "../CTexturePack.h"
@@ -22,13 +23,11 @@ public:
     /**
     * Game object contructor
     * @param texturePack Texturepack to be rendered.
-     * @param isPassable Is this object passable for moving objects?
+    * @param isPassable Is this object passable for moving objects?
     * @param size Object size.
     */
     CBlock(std::shared_ptr<CTexturePack> texturePack, bool isPassable = false, CCoord<> size = {1, 1})
-            : m_TexturePack(std::move(texturePack)), m_Size(size), m_IsAlive(true), m_IsPassable(isPassable),
-              m_AnimationIndex(0),
-              m_AnimationUpdateInterval(100), m_AnimationTimer(0)
+            : m_Body(std::move(texturePack), 100), m_Size(size), m_IsAlive(true), m_IsPassable(isPassable)
     {}
 
     CBlock(const CBlock &other) = default;
@@ -36,9 +35,6 @@ public:
     CBlock &operator=(const CBlock &other) = default;
 
     virtual ~CBlock() = default;
-
-    virtual CBlock * Clone() const
-    {return new CBlock(*this);}
 
     /**
     * Try to destroy the wall.
@@ -52,14 +48,16 @@ public:
      * @param movable Movable object.
      * @return
      */
-    virtual bool IsPassable(CCoord<unsigned int> thisLocation, const CMovable &movable) const;
+    virtual bool IsPassable(CCoord<unsigned int> thisLocation, const CMovable &movable) const
+    { return (this->IsColliding(thisLocation, movable) ? this->m_IsPassable : true); }
 
     /**
     * Are these objects colliding?
      * @param thisLocation Location of this object in game board.
     * @param other Other object
     */
-    bool IsColliding(CCoord<unsigned int> thisLocation, const CMovable &other) const;
+    bool IsColliding(CCoord<unsigned int> thisLocation, const CMovable &other) const
+    { return this->m_Body.IsColliding(thisLocation.ToDouble(), this->m_Size, other.GetLocation(), other.GetSize()); }
 
     virtual void PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player)
     {}
@@ -73,32 +71,7 @@ public:
     * @param deltaTime DeltaTime
     */
     virtual void Update(CBoard &board, int deltaTime)
-    { this->Animate(deltaTime); }
-
-    /**
-    * Update animation state
-    * @param deltaTime DeltaTime
-    */
-    virtual void Animate(int deltaTime)
-    {
-        this->m_AnimationTimer += deltaTime;
-        if (this->m_AnimationTimer >= this->m_AnimationUpdateInterval)
-        {
-            this->m_AnimationIndex++;
-            this->m_AnimationTimer = 0;
-        }
-    }
-
-    /**
-    * Returns the texture to be rendered.
-    * @return SDL_Texture * to be rendered. Nullptr if there is no texture (this should never happen).
-    */
-    SDL_Texture *GetTexture() const
-    {
-        SDL_Texture *texture = this->m_TexturePack.get()->GetTexture(ETextureType::TEXTURE_FRONT,
-                                                                     &(this->m_AnimationIndex));
-        return texture;
-    }
+    { this->m_Body.Update(board, deltaTime); }
 
     /**
      * Draw block.
@@ -108,7 +81,8 @@ public:
      * @param offset Drawing offset.
      */
     virtual void
-    Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0)) const;
+    Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0)) const
+    { this->m_Body.Draw(interface, cellSize, location, this->m_Size, offset); }
 
     /**
      * Is this wall destructible?
@@ -125,7 +99,7 @@ public:
     {}
 
     /**
-     * Has this wall already collectible object?
+     * Has this object attached collectible object?
      * @return True - Has collectible object.
      */
     virtual bool HasCollectible() const
@@ -141,14 +115,8 @@ public:
     { this->m_IsAlive = false; }
 
 protected:
-    std::shared_ptr<CTexturePack> m_TexturePack;
+    CBody m_Body;
     CCoord<> m_Size;
     bool m_IsAlive, m_IsPassable;
-
-    /* Mutable keyword is very useful here. Animation index is not important for CGameObject, because it
- * does not disrupt the internal structure of the object. It is just auxiliary variable.*/
-    mutable unsigned int m_AnimationIndex;
-    unsigned int m_AnimationUpdateInterval;
-    unsigned int m_AnimationTimer;
 };
 

@@ -5,7 +5,7 @@
 #pragma once
 
 #include <memory>
-#include "../CTexturePack.h"
+#include "../CBody.h"
 
 class CBoard;
 
@@ -24,10 +24,8 @@ public:
     explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1),
                       CCoord<> location = CCoord<>(0, 0), double speed = 0.005, bool wallPass = false,
                       bool bombPass = false, int lives = 1)
-            : m_TexturePack(std::move(texturePack)), m_ActualTexture(ETextureType::TEXTURE_FRONT), m_Size(size),
-              m_Location(location), m_StartingLocation(location), m_Speed(speed), m_WallPass(wallPass),
-              m_BombPass(bombPass), m_Movement(CCoord<>(0, 0)), m_Lives(lives), m_AnimationIndex(0),
-              m_AnimationUpdateInterval(100), m_AnimationTimer(0)
+            : m_Body(std::move(texturePack), 100), m_Size(size), m_Location(location), m_StartingLocation(location),
+              m_Speed(speed), m_WallPass(wallPass), m_BombPass(bombPass), m_Movement(CCoord<>(0, 0)), m_Lives(lives)
     {}
 
     CMovable(const CMovable &other) = default;
@@ -42,7 +40,11 @@ public:
     * @param deltaTime DeltaTime
     */
     virtual void Update(CBoard &board, int deltaTime)
-    { this->Animate(deltaTime); }
+    {
+        // Update when moving.
+        if (this->m_Movement != CCoord<>(0, 0))
+        { this->m_Body.Update(board, deltaTime); }
+    }
 
     /**
      * Draw the gameobject
@@ -52,7 +54,8 @@ public:
      * @param offset Texture global offset
      */
     virtual void
-    Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0)) const;
+    Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0)) const
+    { this->m_Body.Draw(interface, cellSize, location, this->m_Size, offset); } // TODO remove location param
 
     bool GetWallPass() const
     { return this->m_WallPass; }
@@ -79,7 +82,8 @@ public:
     * Are these objects colliding?
     * @param other Other object
     */
-    bool IsColliding(const CMovable *other) const;
+    bool IsColliding(const CMovable &other) const
+    { return this->m_Body.IsColliding(this->m_Location, this->m_Size, other.m_Location, other.m_Size); }
 
     void SetLocation(CCoord<> location)
     { this->m_Location = location; }
@@ -108,10 +112,7 @@ public:
     { return this->m_Lives; }
 
 protected:
-    /** Texturepack which is used for rendering. */
-    std::shared_ptr<CTexturePack> m_TexturePack;
-    /** Actual texture type to be rendered. */
-    ETextureType m_ActualTexture;
+    CBody m_Body;
     /** Is this object passable for other objects? */
     bool m_IsAlive;
     CCoord<> m_Size, m_Location, m_StartingLocation;
@@ -121,29 +122,7 @@ protected:
     CCoord<> m_Movement;
     int m_Lives;
 
-    /* Mutable keyword is very useful here. Animation index is not important for CGameObject, because it
-    * does not disrupt the internal structure of the object. It is just auxiliary variable.*/
-    mutable unsigned int m_AnimationIndex;
-    unsigned int m_AnimationUpdateInterval;
-    unsigned int m_AnimationTimer;
-
-    /**
-    * Update animation state
-    * @param deltaTime DeltaTime
-    */
-    virtual void Animate(int deltaTime);
-
     /** Is current location free? */
     virtual bool CellIsFree(CBoard &board, int deltaTime, CCoord<> location) const;
-
-    /**
-    * Returns the texture to be rendered.
-    * @return SDL_Texture * to be rendered. Nullptr if there is no texture (this should never happen).
-    */
-    SDL_Texture *GetTexture() const
-    {
-        SDL_Texture *texture = this->m_TexturePack.get()->GetTexture(this->m_ActualTexture, &(this->m_AnimationIndex));
-        return texture;
-    }
 };
 

@@ -147,9 +147,8 @@ void CPlayer::HandleInput(const Uint8 *keyState)
         {
             this->m_DetonatingAvaible = false;
             this->m_IsDetonating = true;
-        }
-        else if(keyState[this->m_Controls.m_Detonation] && this->m_IsDetonating && !this->m_DetonatingAvaible)
-        {this->m_IsDetonating = false;}
+        } else if (keyState[this->m_Controls.m_Detonation] && this->m_IsDetonating && !this->m_DetonatingAvaible)
+        { this->m_IsDetonating = false; }
 
             // Detonating is not avaible until the button is released
         else if (!keyState[this->m_Controls.m_Detonation])
@@ -170,7 +169,7 @@ void CPlayer::TryPlaceBomb(CBoard &board)
 /*====================================================================================================================*/
 void CPlayer::Kill()
 {
-  //  std::cout << "kill" << std::endl;
+    //  std::cout << "kill" << std::endl;
     if (this->m_IsAlive)
     {
         //this->m_Lives--;
@@ -206,12 +205,12 @@ void CPlayer::UpdateTextureType(CCoord<> oldLocation)
 
     // Set right texture by movement vector.
     if (diff.m_X < -this->m_Speed)
-    { this->m_ActualTexture = ETextureType::TEXTURE_RIGHT; }
+    { this->m_Body.SetActualTextureType(ETextureType::TEXTURE_RIGHT); }
     else if (diff.m_X > this->m_Speed)
-    { this->m_ActualTexture = ETextureType::TEXTURE_LEFT; }
+    { this->m_Body.SetActualTextureType(ETextureType::TEXTURE_LEFT); }
     else if (diff.m_Y < -this->m_Speed)
-    { this->m_ActualTexture = ETextureType::TEXTURE_FRONT; }
+    { this->m_Body.SetActualTextureType(ETextureType::TEXTURE_FRONT); }
     else if (diff.m_Y > this->m_Speed)
-    { this->m_ActualTexture = ETextureType::TEXTURE_BACK; }
+    { this->m_Body.SetActualTextureType(ETextureType::TEXTURE_BACK); }
 }
 

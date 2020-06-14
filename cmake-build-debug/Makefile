@@ -204,6 +204,33 @@ src/CBoard.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CBoard.cpp.s
 .PHONY : src/CBoard.cpp.s
 
+src/CBody.o: src/CBody.cpp.o
+
+.PHONY : src/CBody.o
+
+# target to build an object file
+src/CBody.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CBody.cpp.o
+.PHONY : src/CBody.cpp.o
+
+src/CBody.i: src/CBody.cpp.i
+
+.PHONY : src/CBody.i
+
+# target to preprocess a source file
+src/CBody.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CBody.cpp.i
+.PHONY : src/CBody.cpp.i
+
+src/CBody.s: src/CBody.cpp.s
+
+.PHONY : src/CBody.s
+
+# target to generate assembly for a file
+src/CBody.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CBody.cpp.s
+.PHONY : src/CBody.cpp.s
+
 src/CLevelLoader.o: src/CLevelLoader.cpp.o
 
 .PHONY : src/CLevelLoader.o
@@ -897,6 +924,9 @@ help:
 	@echo "... src/CBoard.o"
 	@echo "... src/CBoard.i"
 	@echo "... src/CBoard.s"
+	@echo "... src/CBody.o"
+	@echo "... src/CBody.i"
+	@echo "... src/CBody.s"
 	@echo "... src/CLevelLoader.o"
 	@echo "... src/CLevelLoader.i"
 	@echo "... src/CLevelLoader.s"

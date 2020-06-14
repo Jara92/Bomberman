@@ -50,7 +50,7 @@ void CEnemyDump::WalkAround(CBoard & board, int deltaTime)
         if(directions.empty())
         {
             this->m_Movement = CCoord<>(0,0);
-            this->m_ActualTexture = ETextureType ::TEXTURE_FRONT;
+            this->m_Body.SetActualTextureType(ETextureType ::TEXTURE_FRONT);
         }
             // Go to random direction.
         else
@@ -61,7 +61,7 @@ void CEnemyDump::WalkAround(CBoard & board, int deltaTime)
             // Choose random direction and set new movemnt and texture type.
             unsigned int random = randomEngine() % directions.size();
             this->m_Movement = directions[random].second;
-            this->m_ActualTexture = directions[random].first;
+            this->m_Body.SetActualTextureType(directions[random].first);
 
             this->m_Location += (this->m_Movement * deltaTime * this->m_Speed);
         }
