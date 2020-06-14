@@ -21,7 +21,7 @@ std::vector<std::pair<ETextureType, CCoord<double>>> CEnemy::GetPossibleMoveDire
                                                                  {ETextureType::TEXTURE_LEFT,  CCoord<double>(
                                                                          -correction, 0)}};
     // Test every directional vector.
-    std::cout << "Avaibles:=================" << std::endl;
+    // std::cout << "Avaibles:=================" << std::endl;
     for (unsigned int i = 0; i < directions.size(); i++)
     {
         this->m_Location += (directions[i].second * 5 * deltaTime * this->m_Speed);
@@ -29,7 +29,7 @@ std::vector<std::pair<ETextureType, CCoord<double>>> CEnemy::GetPossibleMoveDire
         if (this->CellIsFree(board, deltaTime, this->m_Location))
         {
             outputDirections.push_back(directions[i]);
-            std::cout << "avaible: " << i << " - " << directions[i].second << std::endl;
+            //   std::cout << "avaible: " << i << " - " << directions[i].second << std::endl;
         }
 
         this->m_Location = oldLocation;

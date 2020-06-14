@@ -205,20 +205,13 @@ void CPlayer::UpdateTextureType(CCoord<> oldLocation)
     { diff = -1 * this->m_Movement; }
 
     // Set right texture by movement vector.
-    if (diff.m_X < 0)
+    if (diff.m_X < -this->m_Speed)
     { this->m_ActualTexture = ETextureType::TEXTURE_RIGHT; }
-    else if (diff.m_X > 0)
+    else if (diff.m_X > this->m_Speed)
     { this->m_ActualTexture = ETextureType::TEXTURE_LEFT; }
-    else if (diff.m_Y < 0)
+    else if (diff.m_Y < -this->m_Speed)
     { this->m_ActualTexture = ETextureType::TEXTURE_FRONT; }
-    else if (diff.m_Y > 0)
+    else if (diff.m_Y > this->m_Speed)
     { this->m_ActualTexture = ETextureType::TEXTURE_BACK; }
 }
-
-/*void CPlayer::CollisionWith(CGameObject &other)
-{
-    if (this->IsColliding(&other))
-    {    std::cout << "is here" << std::endl; other.Coll); }
-
-}*/
 

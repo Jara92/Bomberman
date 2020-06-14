@@ -9,7 +9,23 @@ CBoard::~CBoard()
     for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
     {
         for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
-        { delete this->m_Map[i][j]; }
+        {
+            if(this->m_Map[i][j])
+            {
+                // Delete collectible (Collectible may be attached to CWall or a Collectible may be directly in 2D array)
+                CCollectible * collectible = this->m_Map[i][j]->GetCollectible();
+                if(collectible)
+                {delete collectible;}
+
+                // Delete collectible parent if it has parent.
+                if(this->m_Map[i][j] != collectible)
+                {
+                    delete this->m_Map[i][j];
+                    this->m_Map[i][j] = nullptr;
+                }
+
+            }
+        }
     }
     this->m_Map.clear();
 
