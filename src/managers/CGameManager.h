@@ -10,7 +10,7 @@
 #include "../CGameClock.h"
 #include "../CBoard.h"
 #include "../CLevelLoader.h"
-#include "../EGameStatus.h"
+#include "../enums/EGameStatus.h"
 #include "../CTimer.h"
 #include "../CScoreSaver.h"
 

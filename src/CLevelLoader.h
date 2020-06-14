@@ -1,6 +1,5 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
 
 #pragma once
@@ -15,11 +14,10 @@
 #include "SDL2/SDL_image.h"
 #include "CBoard.h"
 #include "CSDLInterface.h"
-#include "blocks/collectibles/CCollectible.h"
 #include "blocks/collectibles/CBoost.h"
 #include "blocks/collectibles/CDoor.h"
-#include "ECollectibleType.h"
-#include "EEnemyType.h"
+#include "enums/ECollectibleType.h"
+#include "enums/EEnemyType.h"
 #include "Messages.h"
 
 class CLevelLoader
@@ -47,7 +45,7 @@ public:
 protected:
     std::string m_MapFileName;
     std::string m_LevelFileName;
-    /* Saved map size */
+    /* Saved map size. Widht must be divisible by eight (Binary file).*/
     static const unsigned int FILE_MAP_WIDTH = 24, FILE_MAP_HEIGHT = 13;
     /* Real map size (Real map is smaller because the map is saved as binary file. I have to remember which bits are valid) */
     static const unsigned int MAP_WIDTH = 23, MAP_HEIGHT = 13;
@@ -99,13 +97,13 @@ protected:
      * @param loadLevelObjects Load collectible objects from the file or use existing collectibles?
      * @throws std::ios::failure When level file not found.
      */
-    void LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level, std::vector<CCollectible *> & collectibles );
+    void LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level, std::vector<CCollectible *> &collectibles);
 
     /**
      * Move every collectible to random location and attach it to assign it to the wall in the same position.
      * @param board Game board.
      */
-    void ReorganizeLevelObjects(std::shared_ptr<CBoard> &board, std::vector<CCollectible *>& collectibles);
+    void ReorganizeLevelObjects(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> &collectibles);
 
     /**
      * Read one property from the input array.
@@ -124,7 +122,7 @@ protected:
      * @return True - success.
      */
     bool ReadItem(std::shared_ptr<CBoard> &board, const std::vector<std::string> &input, const std::string &itemType,
-                  std::vector<CCollectible *> & collectibles);
+                  std::vector<CCollectible *> &collectibles);
 
     /**
      * Create new CCollectible at random location and attach it to CWall.
@@ -134,7 +132,7 @@ protected:
      * @param duration Collectible duration.
      * @throws std::invalid_argument Unknown collectible type.
      */
-    void CreateCollectible(std::vector<CCollectible *> & collectibles, ECollectibleType type, std::size_t score,
+    void CreateCollectible(std::vector<CCollectible *> &collectibles, ECollectibleType type, std::size_t score,
                            std::size_t duration);
 
     /**

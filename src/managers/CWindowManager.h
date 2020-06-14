@@ -7,7 +7,7 @@
 #include <memory>
 #include <queue>
 #include "../CSDLInterface.h"
-#include "../EApplicationStatus.h"
+#include "../enums/EApplicationStatus.h"
 #include "../CGameClock.h"
 #include "../interfaceitems/CImage.h"
 #include "../interfaceitems/CText.h"

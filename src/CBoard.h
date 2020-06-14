@@ -11,7 +11,7 @@
 #include <chrono>
 #include <random>
 #include "Messages.h"
-#include "EGameStatus.h"
+#include "enums/EGameStatus.h"
 #include "blocks/CWall.h"
 #include "blocks/CFire.h"
 #include "blocks/CBomb.h"

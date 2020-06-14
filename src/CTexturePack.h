@@ -9,7 +9,7 @@
 #include <map>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "ETextureType.h"
+#include "enums/ETextureType.h"
 #include "CAnimation.h"
 #include "CSDLInterface.h"
 
@@ -24,7 +24,13 @@ public:
      * @param textureSize Texture size
      */
     CTexturePack(CSDLInterface &interface, std::map<ETextureType, const std::vector<std::string> > &textures,
-                 bool isCentered = true, CCoord<> textureSize = CCoord<>(1, 1));
+                 bool isCentered = true, CCoord<> textureSize = CCoord<>(1, 1))
+            : m_TextureSize(textureSize), m_IsCentered(isCentered)
+    {
+        // For every texture type create CAnimation object
+        for (auto texture = textures.begin(); texture != textures.end(); texture++)
+        { this->m_Animations.insert({texture->first, std::make_unique<CAnimation>(interface, texture->second)}); }
+    }
 
     /* I dont want to allow copying this object. It does not make sense to copy object which could not be changed.
      * It is better to use pointer to 1 common object to save memory. */
@@ -32,7 +38,7 @@ public:
 
     CTexturePack operator=(CTexturePack &other) = delete;
 
-    ~CTexturePack();
+    ~CTexturePack() = default;
 
     /**
      * Return texture by texturetype
@@ -52,9 +58,8 @@ public:
     { return this->m_IsCentered; }
 
 protected:
-    std::map<ETextureType, CAnimation *> m_Animations;
+    std::map<ETextureType, std::unique_ptr<CAnimation>> m_Animations;
     CCoord<> m_TextureSize;
-    /** Is this texture centered in target cell? */
     bool m_IsCentered;
 };
 
