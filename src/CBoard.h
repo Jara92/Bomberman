@@ -153,6 +153,7 @@ public:
     std::vector<std::vector<CBlock *>> m_Map;
     std::vector<CMovable *> m_Movables;
 
+    /** The set of bombs that will be detonated when "CBoard::Update ()" is called */
     std::set<CBomb *, std::less<> > m_BombsToExplode;
 
     /** Game settings */

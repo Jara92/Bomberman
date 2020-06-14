@@ -10,15 +10,15 @@ CBoard::~CBoard()
     {
         for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
         {
-            if(this->m_Map[i][j])
+            if (this->m_Map[i][j])
             {
                 // Delete collectible (Collectible may be attached to CWall or a Collectible may be directly in 2D array)
-                CCollectible * collectible = this->m_Map[i][j]->GetCollectible();
-                if(collectible)
-                {delete collectible;}
+                CCollectible *collectible = this->m_Map[i][j]->GetCollectible();
+                if (collectible)
+                { delete collectible; }
 
                 // Delete collectible parent if it has parent.
-                if(this->m_Map[i][j] != collectible)
+                if (this->m_Map[i][j] != collectible)
                 {
                     delete this->m_Map[i][j];
                     this->m_Map[i][j] = nullptr;
@@ -72,7 +72,7 @@ void CBoard::Draw(CSDLInterface &interface, CCoord<> offset)
 /*====================================================================================================================*/
 void CBoard::Update(int deltaTime)
 {
-    // Update map (Walls)
+    // Update map.
     for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
     {
         for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
@@ -100,11 +100,16 @@ void CBoard::Update(int deltaTime)
         }
     }
 
-    std::vector<std::size_t> objectsToRemove;
-    for (auto i = this->m_Movables.begin(); i != this->m_Movables.end(); i++)
+    // Update movables objects.
+    for (auto item = this->m_Movables.begin(); item != this->m_Movables.end(); /* item++*/)
     {
-        if (*i && (*i)->IsAlive())
-        { (*i)->Update(*this, deltaTime); }
+        // Save iterator to current item and increment control variable.
+        auto currentItem = item++;
+        if (*currentItem && (*currentItem)->IsAlive())
+        { (*currentItem)->Update(*this, deltaTime); }
+            // Remove nullptr or dead item.
+        else
+        { this->m_Movables.erase(currentItem); }
     }
 
     // Update players
@@ -268,6 +273,8 @@ void CBoard::PrepareBoard(bool clearLevelObjects, std::vector<CCollectible *> &c
     // Rerun players locations
     for (size_t i = 0; i < this->m_Players.size(); i++)
     { this->m_Players[i]->Reset(*this); }
+
+    this->m_BombsToExplode.clear();
 }
 
 /*====================================================================================================================*/

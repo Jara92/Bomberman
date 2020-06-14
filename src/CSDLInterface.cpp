@@ -1,9 +1,6 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
-
-
 
 #include "CSDLInterface.h"
 
