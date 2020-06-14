@@ -140,7 +140,8 @@ bool CBoard::PlaceBomb(CPlayer *player)
     // Set explosion delay.
     int delay = (player->GetRemoteExplosion() ? CBomb::TRIGGER_EXPLOSION_DELAY : CBomb::AUTO_EXPLOSION_DELAY);
 
-    CBomb *bomb = new CBomb(this->m_BombObjectTexturePack, this->m_BombObjectTexturePack->GetTextureSize(), player,
+    CBomb *bomb = new CBomb(this->m_BombObjectTexturePack,
+                            this->m_BombObjectTexturePack->GetTextureSize() + CCoord<>(0.05, 0.05), player,
                             delay, player->GetRemoteExplosion());
     this->SetMapItem(bomb, location);
 

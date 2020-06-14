@@ -1,6 +1,5 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
 
 #pragma once
@@ -15,6 +14,7 @@
 #include "../CTimer.h"
 #include "../CScoreSaver.h"
 
+/** Manager for single player game. */
 class CGameManager : public CWindowManager
 {
 public:
@@ -30,10 +30,12 @@ public:
 
     CGameManager &operator=(const CGameManager &other) = delete;
 
-    /** Run the game. */
+    /**
+     * Run the game.
+     * @returns Next application status.
+    */
     virtual EApplicationStatus Run() override;
 
-    /** Init game */
     virtual void Init() override
     {}
 
@@ -52,6 +54,7 @@ protected:
     /** Timer which updates game state updates a time delay. */
     CTimer m_GameStatusDelay;
 
+    /** UI items which has special meaning. */
     std::unique_ptr<CText> m_TimeText, m_ScoreText, m_LivesText, m_FPSText;
     std::unique_ptr<CText> m_RoundOverText, m_NextRoundText, m_GameOverText, m_GameOverSubtext;
     unsigned int m_DefaultFontSize;
