@@ -29,7 +29,7 @@ public:
 
     virtual void Update(CBoard & board, int deltaTime) override;
 
-    int TryKill(unsigned int distance) override;
+    unsigned int TryKill(unsigned int distance) override;
 
 protected:
     void WalkAround(CBoard & board, int deltaTime);

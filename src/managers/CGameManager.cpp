@@ -5,21 +5,18 @@
 #include "CGameManager.h"
 
 CGameManager::CGameManager(CSDLInterface &interface)
-        : CWindowManager(interface), m_Board(nullptr), m_BoardOffset(CCoord<>(0, 2)),
-          m_GameStatus(EGameStatus::GAME_STATUS_RUNNING), m_NextGameStatus(EGameStatus::GAME_STATUS_RUNNING),
-          m_Level(1)
+        : CWindowManager(interface), m_Board(nullptr), m_BoardOffset(CCoord<>(0, 2)), m_LevelLoader(interface),
+          m_GameStatus(EGameStatus::GAME_STATUS_RUNNING), m_NextGameStatus(EGameStatus::GAME_STATUS_RUNNING), m_Level(1)
 {
     this->m_Interface.SetGameScreenSize();
-
-    this->m_LevelLoader = std::make_unique<CLevelLoader>(interface);
 
     // Kill all players when the time runs out.
     this->m_GameEndDelay.Run(CGameManager::/*GAME_STATUS_UPDATE_DELAY*/STARTING_TIME, [=](void)
     { this->KillAllPlayers(); });
 
     // Get board and load first level
-    this->m_Board = this->m_LevelLoader->GetBoard(1, this->m_Interface.GetSettings());
-    this->m_LevelLoader->LoadLevel(this->m_Board, 1);
+    this->m_Board = this->m_LevelLoader.GetBoard(1, this->m_Interface.GetSettings());
+    this->m_LevelLoader.LoadLevel(this->m_Board, 1);
 
     unsigned int padding = 5;
     this->m_DefaultFontSize = this->m_Board->GetCellSize() - 2 * padding;
@@ -244,7 +241,7 @@ void CGameManager::KillAllPlayers()
     // Kill all players.
     for (auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
     {
-        (*(player))->Kill();
+        (*(player))->TryKill();
 
         // Player is totally dead - game over.
         if ((*(player)) && (*(player))->GetLives() <= 0)
@@ -263,7 +260,7 @@ void CGameManager::RoundOver()
     // Update game state and prepare level when timer is done.
     this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_UPDATE_DELAY, [=](void)
     {
-        this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level, false);
+        this->m_LevelLoader.LoadLevel(this->m_Board, this->m_Level, false);
         this->UpdateStatus();
         this->m_GameEndDelay.Rerun();
     });
@@ -306,7 +303,7 @@ void CGameManager::NextRound()
     // Update game state and prepare next level when timer is done.
     this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_UPDATE_DELAY, [=](void)
     {
-        this->m_LevelLoader->LoadLevel(this->m_Board, this->m_Level, true);
+        this->m_LevelLoader.LoadLevel(this->m_Board, this->m_Level, true);
         this->UpdateStatus();
         this->m_GameEndDelay.Rerun();
     });
@@ -333,7 +330,7 @@ void CGameManager::GlobalInput(const Uint8 *input)
         {
 
         }
-        // Destroy every destructible wall.
+            // Destroy every destructible wall.
         else if (input[SDL_SCANCODE_F2])
         {
             for (unsigned int i = 0; i < this->m_Board->GetBoardSize().m_X; i++)
@@ -354,13 +351,13 @@ void CGameManager::GlobalInput(const Uint8 *input)
                 }
             }
         }
-        // Inkrement score.
+            // Inkrement score.
         else if (input[SDL_SCANCODE_F3])
         {
             if (this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
             { this->m_Board->m_Players[0]->IncreseScore(1000); }
         }
-        // Turn on rendering bounding boxes.
+            // Turn on rendering bounding boxes.
         else if (input[SDL_SCANCODE_F4])
         { this->m_Interface.GetSettings()->SetRenderBoundingBox(true); }
     }

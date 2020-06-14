@@ -40,12 +40,7 @@ public:
 
     virtual void Reset(CBoard & board);
 
-    /**
-     * Try to kill this enemy.
-     * @param distance Distance between the enemy and a killer.
-     * @return Score to be achieved.
-     */
-    virtual int TryKill(unsigned int distance) = 0;
+    virtual unsigned int TryKill(unsigned int distance) = 0;
 
 protected:
     int m_Score;

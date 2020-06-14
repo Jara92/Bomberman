@@ -25,6 +25,6 @@ void CFire::PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player)
     {
         // Kill the player if he doesnt have fire imunity.
         if(!player.GetFireImunity())
-        {player.Kill();}
+        {player.TryKill();}
     }
 }

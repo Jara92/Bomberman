@@ -15,7 +15,7 @@ void CEnemyDump::Update(CBoard &board, int deltaTime)
 }
 
 /*====================================================================================================================*/
-int CEnemyDump::TryKill(unsigned int distance)
+unsigned int CEnemyDump::TryKill(unsigned int distance)
 {
     this->m_Lives--;
 

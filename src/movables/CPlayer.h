@@ -24,7 +24,7 @@ public:
      * @param lives Object starting lives.
     */
     explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size, CControls controls,
-                     double speed = 0.0025, int lives = 2)
+                     double speed = 0.0025, int lives = 3)
             : CMovable(std::move(texturePack), size, location, speed, false, false, lives), m_Score(0),
               m_ExplosionRadius(1), m_MaxBombs(1), m_ActiveBombs(0), m_RemoteExplosion(false), m_FireImmunity(false),
               m_PlantingAvaible(false), m_IsPlanting(false), m_DetonatingAvaible(false), m_IsDetonating(false),
@@ -53,7 +53,7 @@ public:
     void HandleInput(const Uint8 *keyState);
 
     /** Kill the player. */
-    void Kill();
+    virtual unsigned int TryKill(unsigned int distance = 0) override ;
 
     virtual void Reset(CBoard &board) override;
 

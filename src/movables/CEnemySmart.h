@@ -31,7 +31,7 @@ public:
 
     virtual void Update(CBoard & board, int deltaTime) override;
 
-    virtual int TryKill(unsigned int distance) override;
+    virtual unsigned int TryKill(unsigned int distance) override;
 
 protected:
     /**

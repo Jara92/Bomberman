@@ -57,6 +57,13 @@ public:
     Draw(CSDLInterface &interface, int cellSize, CCoord<> offset = CCoord<>(0, 0)) const
     { this->m_Body.Draw(interface, cellSize, this->m_Location, this->m_Size, offset); }
 
+    /**
+     * Try to kill this enemy.
+     * @param distance Distance between the enemy and a killer.
+     * @return Score to be achieved.
+     */
+    virtual unsigned int TryKill(unsigned int distance = 0) = 0;
+
     bool GetWallPass() const
     { return this->m_WallPass; }
 

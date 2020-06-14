@@ -161,14 +161,18 @@ void CPlayer::TryPlaceBomb(CBoard &board)
 }
 
 /*====================================================================================================================*/
-void CPlayer::Kill()
+unsigned int CPlayer::TryKill(unsigned int distance)
 {
-    //  std::cout << "kill" << std::endl;
+      std::cout << "kill" << std::endl;
     if (this->m_IsAlive)
     {
-        //this->m_Lives--;
-        // this->m_IsAlive = false;
+        this->m_Lives--;
+         this->m_IsAlive = false;
+
+         return 1;
     }
+
+    return 0;
 }
 
 /*====================================================================================================================*/
