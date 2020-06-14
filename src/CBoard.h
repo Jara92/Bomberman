@@ -106,12 +106,6 @@ public:
     void CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> direction, unsigned int explosionRadius);
 
     /**
-     * Delete collectible from the map.
-     * @param collectible Collectible to be removed.
-     */
-    void DestroyCollectible(CCollectible *collectible);
-
-    /**
      * Remove all dynamically added objects. (Bombs, Enemies, Boosts, DestructibleWalls)
      * @param clearLevelObjects Remove boosts from the board?
      */

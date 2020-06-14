@@ -20,12 +20,14 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool 
     size_t obstaclesCount = (board->GetBoardSize().m_X * board->GetBoardSize().m_Y) * 0.125;
     this->GenerateObstacles(board, level, obstaclesCount);
 
+    std::vector<CCollectible *> collectibles;
+
     // Load enemies and boosts from the file.
     if (loadDynamicObjects)
-    { this->LoadLevelFile(board, level); }
+    { this->LoadLevelFile(board, level, collectibles); }
 
     // Random location for every collectable and enemy object.
-    this->ReorganizeLevelObjects(board);
+    this->ReorganizeLevelObjects(board, collectibles);
 
     return true;
 }
@@ -330,7 +332,7 @@ std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadCollectiblesTexture
 }
 
 /*====================================================================================================================*/
-void CLevelLoader::LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level)
+void CLevelLoader::LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level, std::vector<CCollectible *> & collectibles)
 {
     std::ifstream fileReader(
             (this->m_Interface.GetSettings()->GetDataPath() + this->m_LevelFileName) + std::to_string(level),
@@ -356,7 +358,7 @@ void CLevelLoader::LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int le
         std::string itemType = this->ReadProperty(results, 0);
 
         // Process this line and save the object.
-        this->ReadItem(board, results, itemType);
+        this->ReadItem(board, results, itemType, collectibles);
     }
 
     fileReader.close();
@@ -373,16 +375,20 @@ CLevelLoader::ReadProperty(const std::vector<std::string> &input, std::vector<st
 }
 
 /*====================================================================================================================*/
-void CLevelLoader::ReorganizeLevelObjects(std::shared_ptr<CBoard> &board)
+void CLevelLoader::ReorganizeLevelObjects(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> & collectibles)
 {
+    // Reset all objects (random location, attach to random wall...)
+    for (auto collectible = collectibles.begin(); collectible != collectibles.end(); collectible++)
+    { (*collectible)->Reset(*board); }
+
     // Reset all objects (random location, attach to random wall...)
     for (auto object = board->m_GameObjects.begin(); object != board->m_GameObjects.end(); object++)
     { (*object)->Reset(*board); }
 }
 
 /*====================================================================================================================*/
-void CLevelLoader::CreateCollectible(std::shared_ptr<CBoard> &board, ECollectibleType type,
-                                     std::size_t score, std::size_t duration)
+void CLevelLoader::CreateCollectible(std::vector<CCollectible *> & collectibles, ECollectibleType type, std::size_t score,
+                                     std::size_t duration)
 {
     // Lamda which are used to apply / deactivate collectable item.
     std::function<void(CPlayer *)> applyFunc;
@@ -390,74 +396,64 @@ void CLevelLoader::CreateCollectible(std::shared_ptr<CBoard> &board, ECollectibl
     CCoord<> boostSize = CCoord<>(0.7, 0.7);
     unsigned int typeInt = static_cast<unsigned int>(type);
 
+    CCollectible *newCollectible = nullptr;
     // Create new boost.
     switch (type)
     {
         case ECollectibleType::COLLECTIBLE_TYPE_SPEED:
             applyFunc = [](CPlayer *player)
             { player->SpeedUp(); };
-            board->m_GameObjects.push_back(
-                    new CBoost(this->m_CollectibleTexturePacks[typeInt], applyFunc, boostSize, CCoord<>(0,0),
-                               score));
+            newCollectible = new CBoost(this->m_CollectibleTexturePacks[typeInt], applyFunc, boostSize, score);
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_EXPLOSION_RADIUS:
             applyFunc = [](CPlayer *player)
             { player->IncreseExplosionRadius(); };
-            board->m_GameObjects.push_back(
-                    new CBoost(this->m_CollectibleTexturePacks[typeInt], applyFunc, boostSize, CCoord<>(0,0),
-                               score));
+            newCollectible = new CBoost(this->m_CollectibleTexturePacks[typeInt], applyFunc, boostSize, score);
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_MAX_BOMBS:
             applyFunc = [](CPlayer *player)
             { player->IncreseMaxBombs(); };
-            board->m_GameObjects.push_back(
-                    new CBoost(this->m_CollectibleTexturePacks[typeInt], applyFunc, boostSize, CCoord<>(0,0),
-                               score));
+            newCollectible = new CBoost(this->m_CollectibleTexturePacks[typeInt], applyFunc, boostSize, score);
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_REMOTE_EXPLOSION:
             applyFunc = [](CPlayer *player)
             { player->ActivateRemoteExplosion(); };
-            board->m_GameObjects.push_back(
-                    new CBoost(this->m_CollectibleTexturePacks[typeInt], applyFunc, boostSize, CCoord<>(0,0),
-                               score));
+            newCollectible = new CBoost(this->m_CollectibleTexturePacks[typeInt], applyFunc, boostSize, score);
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_BOMB_PASS:
             applyFunc = [](CPlayer *player)
             { player->ActivateBombPass(); };
-            board->m_GameObjects.push_back(new CBoost(this->m_CollectibleTexturePacks[typeInt],
-                                                      applyFunc, boostSize, CCoord<>(0,0), score));
+            newCollectible = new CBoost(this->m_CollectibleTexturePacks[typeInt], applyFunc, boostSize, score);
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_WALL_PASS:
             applyFunc = [](CPlayer *player)
             { player->ActivateWallPass(); };
-            board->m_GameObjects.push_back(new CBoost(this->m_CollectibleTexturePacks[typeInt],
-                                                      applyFunc, boostSize, CCoord<>(0,0), score));
+            newCollectible = new CBoost(this->m_CollectibleTexturePacks[typeInt], applyFunc, boostSize, score);
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_FIRE_IMUNITY:
             applyFunc = [](CPlayer *player)
             { player->ActivateFireImmunity(); };
-            board->m_GameObjects.push_back(new CBoost(this->m_CollectibleTexturePacks[typeInt],
-                                                      applyFunc, boostSize, CCoord<>(0,0), score));
+            newCollectible = new CBoost(this->m_CollectibleTexturePacks[typeInt], applyFunc, boostSize, score);
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_SCORE_BONUS:
             applyFunc = [](CPlayer *player)
             {};
-            board->m_GameObjects.push_back(new CBoost(this->m_CollectibleTexturePacks[typeInt],
-                                                      applyFunc, boostSize, CCoord<>(0,0), score));
+            newCollectible = new CBoost(this->m_CollectibleTexturePacks[typeInt], applyFunc, boostSize, score);
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_DOOR:
-            board->m_GameObjects.push_back(new CDoor(this->m_CollectibleTexturePacks[typeInt],
-                                                     CCoord<>(0.2, 0.2), CCoord<>(0,0), score));
+            newCollectible = new CDoor(this->m_CollectibleTexturePacks[typeInt], CCoord<>(0.2, 0.2), score);
             break;
         case ECollectibleType::COLLECTIBLE_TYPE_LIVE_BONUS:
             applyFunc = [](CPlayer *player)
             { player->IncreseLiveCount(); };
-            board->m_GameObjects.push_back(new CBoost(this->m_CollectibleTexturePacks[typeInt],
-                                                      applyFunc, boostSize, CCoord<>(0,0), score));
+            newCollectible = new CBoost(this->m_CollectibleTexturePacks[typeInt], applyFunc, boostSize, score);
             break;
         default:
             throw std::invalid_argument(MESSAGE_UNKNOWN_COLLECTIBLE_TYPE);
     }
+
+    if (newCollectible)
+    { collectibles.push_back(newCollectible); }
 }
 
 /*====================================================================================================================*/
@@ -486,7 +482,7 @@ void CLevelLoader::CreateEnemy(std::shared_ptr<CBoard> &board, EEnemyType type, 
 
 /*====================================================================================================================*/
 bool CLevelLoader::ReadItem(std::shared_ptr<CBoard> &board, const std::vector<std::string> &input,
-                            const std::string &itemType)
+                            const std::string &itemType, std::vector<CCollectible *> & collectibles)
 {
     try
     {
@@ -504,7 +500,7 @@ bool CLevelLoader::ReadItem(std::shared_ptr<CBoard> &board, const std::vector<st
 
             ECollectibleType collectibleType = static_cast<ECollectibleType >(collectibleTypeId);
 
-            this->CreateCollectible(board, collectibleType, score, duration);
+            this->CreateCollectible(collectibles, collectibleType, score, duration);
         }
             // Enemy+ std::to_string(" ")
         else if (itemType == "enemy" && input.size() == ENEMY_ITEM_PROPERTIES_COUNT)

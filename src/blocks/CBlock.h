@@ -9,10 +9,11 @@
 #include "../gameobjects/CGameObject.h"
 #include "../CSDLInterface.h"
 #include "../CTexturePack.h"
-#include "../gameobjects/collectibles/CCollectible.h"
+#include "../gameobjects/movables/CPlayer.h"
 #include "../gameobjects/movables/CEnemy.h"
 
 class CBoard;
+class CCollectible;
 
 class CBlock
 {
@@ -98,7 +99,7 @@ public:
      * @param location Block location.
      * @param offset Drawing offset.
      */
-    void Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0));
+    virtual void Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0)) const;
 
     /**
      * Is this wall destructible?
@@ -120,6 +121,9 @@ public:
      */
     virtual bool HasCollectible() const
     { return false; }
+
+    virtual CCollectible * GetCollectible()
+    {return nullptr;}
 
     bool IsAlive() const
     {return this->m_IsAlive;}

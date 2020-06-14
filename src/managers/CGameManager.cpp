@@ -279,7 +279,7 @@ void CGameManager::GameOver()
         !CScoreSaver(this->m_Interface.GetSettings()).TrySetTopScore(this->m_Board->m_Players[0]->GetScore()))
     {
         this->m_Interface.ShowMessageBox(SDL_MESSAGEBOX_ERROR, "Runtime error",
-                                          "Cannot save new score in the file.");
+                                         "Cannot save new score in the file.");
         std::cerr << "Runtime error: " << "Cannot save new score in the file." << std::endl;
     }
 
@@ -343,8 +343,15 @@ void CGameManager::GlobalInput(const Uint8 *input)
                 {
                     if (this->m_Board->m_Map[i][j] && this->m_Board->m_Map[i][j]->TryDestroy(0))
                     {
-                        delete this->m_Board->m_Map[i][j];
-                        this->m_Board->m_Map[i][j] = nullptr;
+                        if (this->m_Board->GetMapItem(CCoord<unsigned int>(i, j))->HasCollectible() &&
+                            this->m_Board->GetMapItem(CCoord<unsigned int>(i, j))->GetCollectible())
+                        {
+                            this->m_Board->SetMapItem(
+                                    this->m_Board->GetMapItem(CCoord<unsigned int>(i, j))->GetCollectible(),
+                                    CCoord<unsigned int>(i, j));
+                        }
+                        else
+                        { this->m_Board->SetMapItem(nullptr, CCoord<unsigned int>(i, j)); }
                     }
                 }
             }

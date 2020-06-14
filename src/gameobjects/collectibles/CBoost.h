@@ -15,21 +15,19 @@ public:
     /**
     * Collectible object contructor
     * @param texturePack Texturepack to be rendered.
-    * @param location Object location.
     * @param size Object size.
     * @param scoreBonus Bonus to be claimed by collector.
     * @param applyFunction Function which will handle boost Apply.
     */
     explicit CBoost(std::shared_ptr<CTexturePack> texturePack, std::function<void(CPlayer *)> applyFunction,
-                    CCoord<> size = CCoord<>(1, 1), CCoord<> location = CCoord<>(0, 0), size_t scoreBonus = 0)
-            : CCollectible(std::move(texturePack), size, location, scoreBonus, 0),
+                    CCoord<> size = CCoord<>(1, 1), size_t scoreBonus = 0)
+            : CCollectible(std::move(texturePack), size, scoreBonus, 0),
               m_Apply(std::move(applyFunction))
     {}
 
     /**
     * Collectible object contructor
     * @param texturePack Texturepack to be rendered.
-    * @param location Object location.
     * @param size Object size.
     * @param scoreBonus Bonus to be claimed by collector.
     * @param applyFunction Function which will handle boost Apply.
@@ -37,10 +35,10 @@ public:
     * @param deactivateFunction Function which will handle boost Deactivate.
     */
     explicit CBoost(std::shared_ptr<CTexturePack> texturePack, std::function<void(CPlayer *)> applyFunction,
-                    int duration, std::function<void(const CPlayer *)> deactivateFunction, CCoord<> size = CCoord<>(1, 1), CCoord<>
-    location = CCoord<>(0, 0), std::size_t scoreBonus = 0)
-            : CCollectible(std::move(texturePack), size, location, scoreBonus, duration), m_Apply(std::move(applyFunction)),
-    m_Deactivate(std::move(deactivateFunction))
+                    int duration, std::function<void(const CPlayer *)> deactivateFunction,
+                    CCoord<> size = CCoord<>(1, 1), std::size_t scoreBonus = 0)
+            : CCollectible(std::move(texturePack), size, scoreBonus, duration),
+              m_Apply(std::move(applyFunction)), m_Deactivate(std::move(deactivateFunction))
     {}
 
     CBoost(const CBoost &other) = default;
@@ -54,12 +52,12 @@ public:
     virtual void Apply(CPlayer *player);
 
     /** Reset the object and prepare for a next round. */
-  /*  virtual void Reset(CBoard & board)
-    {}*/
+    /*  virtual void Reset(CBoard & board)
+      {}*/
 
 protected:
-    std::function<void( CPlayer *)> m_Apply;
-    std::function<void( CPlayer *)> m_Deactivate;
+    std::function<void(CPlayer *)> m_Apply;
+    std::function<void(CPlayer *)> m_Deactivate;
 
     /*** Deativate collectible. */
     virtual void Deactivate();

@@ -10,11 +10,6 @@ bool CWall::TryDestroy(unsigned int distance)
     {
         if (this->m_Collectible)
         { this->m_Collectible->MakeVisible(); }
-        /* This is not MEMLEAK. Another pointer to this object is in the Board.
-        * This pointer is saved to call MakeVisible() method when the wall is being destroyed.
-        * Destroyed object has no reason to have this pointer.
-        */
-        this->m_Collectible = nullptr;
 
         this->m_IsAlive = false;
 
@@ -24,11 +19,12 @@ bool CWall::TryDestroy(unsigned int distance)
     return false;
 }
 
-bool CWall::IsPassable(const CMovable &movable) const
+/*====================================================================================================================*/
+bool CWall::IsPassable(CCoord<unsigned int> thisLocation, const CMovable &movable) const
 {
     // Destructible walls are passable for movables which are able to pass walls.
-    if(movable.GetWallPass() && this->m_IsDestructible)
-    {return true;}
+    if (movable.GetWallPass() && this->m_IsDestructible)
+    { return true; }
 
     return false;
 }

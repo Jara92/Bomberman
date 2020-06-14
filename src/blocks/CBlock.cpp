@@ -4,7 +4,7 @@
 
 #include "CBlock.h"
 
-void CBlock::Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset)
+void CBlock::Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset) const
 {
     // Create texture offset to target cell.
     CCoord<> textureOffset = CCoord<>((1 - this->m_TexturePack->GetTextureSize().m_X),

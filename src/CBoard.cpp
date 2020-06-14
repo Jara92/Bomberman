@@ -117,19 +117,6 @@ void CBoard::CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> 
 }
 
 /*====================================================================================================================*/
-void CBoard::DestroyCollectible(CCollectible *collectible)
-{
-    CCoord<> collectibleLocation = collectible->GetLocation();
-    auto collectibleToRemove = this->m_Collectibles.find(collectibleLocation.ToUnsignedInt());
-    if (collectibleToRemove != this->m_Collectibles.end())
-    {
-        delete (collectibleToRemove->second);
-        collectibleToRemove->second = nullptr;
-        this->m_Collectibles.erase(collectibleToRemove);
-    }
-}
-
-/*====================================================================================================================*/
 void CBoard::Draw(CSDLInterface &interface, CCoord<> offset)
 {
     // draw map
@@ -152,21 +139,21 @@ void CBoard::Draw(CSDLInterface &interface, CCoord<> offset)
     }
 
     // Draw boosts is visible
-    for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
-    {
-        // std::cout << i->second->GetLocation() << std::endl;
-        if (i->second && i->second->IsVisible())
-        { i->second->Draw(interface, this->m_CellSize, i->first.ToDouble(), offset); }
-            /*==DEBUG==*/
-        else if (this->m_Settings->GetDebugMode())
-        {
-            CCoord<int> location = i->second->GetLocation().ToInt() + offset.ToInt();
-            SDL_Rect rect{static_cast<int>(location.m_X * (m_CellSize)),
-                          static_cast<int>(location.m_Y * (m_CellSize)),
-                          static_cast<int>(m_CellSize), static_cast<int>(m_CellSize)};
-            interface.RenderRectangle(&rect);
-        }
-    }
+    /* for (auto i = this->m_Collectibles.begin(); i != this->m_Collectibles.end(); i++)
+     {
+         // std::cout << i->second->GetLocation() << std::endl;
+         if (i->second && i->second->IsVisible())
+         { i->second->Draw(interface, this->m_CellSize, i->first.ToDouble(), offset); }
+             //==DEBUG==
+         else if (this->m_Settings->GetDebugMode())
+         {
+             CCoord<int> location = i->second->GetLocation().ToInt() + offset.ToInt();
+             SDL_Rect rect{static_cast<int>(location.m_X * (m_CellSize)),
+                           static_cast<int>(location.m_Y * (m_CellSize)),
+                           static_cast<int>(m_CellSize), static_cast<int>(m_CellSize)};
+             interface.RenderRectangle(&rect);
+         }
+     }*/
 
     // TODO změnit pořadí renderu tak, aby nejdříve byly renderovány objekty, které jsou vespod.
     // draw players
@@ -195,11 +182,14 @@ void CBoard::Update(int deltaTime)
                 else if (this->m_Map[i][j]->IsAlive())
                 { this->m_Map[i][j]->Update(*this, deltaTime); }
             }
+
             // Delete dead objects.
             if (this->m_Map[i][j] && !this->m_Map[i][j]->IsAlive())
             {
-                delete this->m_Map[i][j];
-                this->m_Map[i][j] = nullptr;
+                if (this->m_Map[i][j]->HasCollectible() && this->m_Map[i][j]->GetCollectible())
+                { this->SetMapItem(this->m_Map[i][j]->GetCollectible(), CCoord<unsigned int>(i, j)); }
+                else
+                { this->SetMapItem(nullptr, CCoord<unsigned int>(i, j)); }
             }
         }
     }
@@ -233,7 +223,8 @@ void CBoard::Update(int deltaTime)
 /*====================================================================================================================*/
 void CBoard::UpdatePhysicEvents()
 {
-    CCoord<int> directions[5] = {CCoord<int>(0,0), CCoord<int>(0, 1), CCoord<int>(0, -1), CCoord<int>(1, 0), CCoord<int>(-1, 0)};
+    CCoord<int> directions[5] = {CCoord<int>(0, 0), CCoord<int>(0, 1), CCoord<int>(0, -1), CCoord<int>(1, 0),
+                                 CCoord<int>(-1, 0)};
     for (auto player = this->m_Players.begin(); player != this->m_Players.end(); player++)
     {
         if ((*(player)) && (*(player))->IsAlive())
@@ -261,16 +252,16 @@ void CBoard::UpdatePhysicEvents()
     }*/
 
         // Collectible collision - Apply collectible on the player.
-        for (auto collectible = this->m_Collectibles.begin();
-             collectible != this->m_Collectibles.end(); collectible++)
-        {
-            if (collectible->second && collectible->second->IsVisible() &&
-                (*player)->IsColliding(collectible->second))
-            {
-                // Polymorphic call
-                collectible->second->Apply((*player)); // Apply item
-            }
-        }
+        /* for (auto collectible = this->m_Collectibles.begin();
+              collectible != this->m_Collectibles.end(); collectible++)
+         {
+             if (collectible->second && collectible->second->IsVisible() &&
+                 (*player)->IsColliding(collectible->second))
+             {
+                 // Polymorphic call
+                 collectible->second->Apply((*player)); // Apply item
+             }
+         }*/
 
         // Enemy collision - Kill the player.
         /*for (auto enemy = this->m_Enemies.begin(); enemy != this->m_Enemies.end(); enemy++)

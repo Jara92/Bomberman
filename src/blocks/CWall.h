@@ -6,6 +6,7 @@
 #pragma once
 
 #include "CBlock.h"
+#include "../gameobjects/collectibles/CCollectible.h"
 
 class CWall : public CBlock
 {
@@ -25,9 +26,9 @@ public:
 
     ~CWall() = default;
 
-    virtual bool IsPassable(const CMovable & movable) const;
+    virtual bool IsPassable(CCoord<unsigned int> thisLocation, const CMovable & movable) const override ;
 
-    virtual bool TryDestroy(unsigned int distance) override ;
+    virtual bool TryDestroy(unsigned int distance) override;
 
     virtual bool IsDestructible() const override
     { return this->m_IsDestructible; }
@@ -38,8 +39,12 @@ public:
         { this->m_Collectible = collectible; }
     }
 
-   virtual bool HasCollectible() const override
+    virtual bool HasCollectible() const override
+    { return (this->m_Collectible); }
+
+    virtual CCollectible *GetCollectible() override
     { return this->m_Collectible; }
+
 
 protected:
     bool m_IsDestructible;

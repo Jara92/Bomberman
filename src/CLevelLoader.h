@@ -31,9 +31,9 @@ public:
 
     CLevelLoader(const CLevelLoader &mapLoader) = delete;
 
-    CLevelLoader & operator=(const CLevelLoader &mapLoader) = delete;
+    CLevelLoader &operator=(const CLevelLoader &mapLoader) = delete;
 
-    std::shared_ptr<CBoard> GetBoard(int playersCount, const std::shared_ptr<CSettings> & settings);
+    std::shared_ptr<CBoard> GetBoard(int playersCount, const std::shared_ptr<CSettings> &settings);
 
     /**
      * Load new level.
@@ -90,7 +90,7 @@ protected:
      * @param count Obstacles count
      * @return Container of obstacles.
      */
-    void GenerateObstacles(std::shared_ptr<CBoard> & board, size_t level, size_t count);
+    void GenerateObstacles(std::shared_ptr<CBoard> &board, size_t level, size_t count);
 
     /**
      * Load config data from file.
@@ -99,13 +99,13 @@ protected:
      * @param loadLevelObjects Load collectible objects from the file or use existing collectibles?
      * @throws std::ios::failure When level file not found.
      */
-    void LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level);
+    void LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level, std::vector<CCollectible *> & collectibles );
 
     /**
      * Move every collectible to random location and attach it to assign it to the wall in the same position.
      * @param board Game board.
      */
-    void ReorganizeLevelObjects(std::shared_ptr<CBoard> & board);
+    void ReorganizeLevelObjects(std::shared_ptr<CBoard> &board, std::vector<CCollectible *>& collectibles);
 
     /**
      * Read one property from the input array.
@@ -114,7 +114,7 @@ protected:
      * @return Property value.
      * @throws std::out_of_range If index doesnt exist.
      */
-    std::string ReadProperty(const std::vector<std::string> & input, std::vector<std::string>::size_type index) const;
+    std::string ReadProperty(const std::vector<std::string> &input, std::vector<std::string>::size_type index) const;
 
     /**
      * Decode input and save new item from the file input.
@@ -123,17 +123,19 @@ protected:
      * @param itemType Item type.
      * @return True - success.
      */
-    bool ReadItem(std::shared_ptr<CBoard> &board, const std::vector<std::string> & input, const std::string & itemType);
+    bool ReadItem(std::shared_ptr<CBoard> &board, const std::vector<std::string> &input, const std::string &itemType,
+                  std::vector<CCollectible *> & collectibles);
 
     /**
      * Create new CCollectible at random location and attach it to CWall.
-     * @param board Game board.
+     * @param collectibles Collectibles list.
      * @param type Collectible type.
      * @param score Score to be achieved.
      * @param duration Collectible duration.
      * @throws std::invalid_argument Unknown collectible type.
      */
-    void CreateCollectible(std::shared_ptr<CBoard> &board, ECollectibleType type, std::size_t score, std::size_t duration);
+    void CreateCollectible(std::vector<CCollectible *> & collectibles, ECollectibleType type, std::size_t score,
+                           std::size_t duration);
 
     /**
      * Create new CEnemy at random location.
@@ -144,7 +146,9 @@ protected:
      * @param speed Enemy moving speed.
      * @param wallPass Can the enemy walk through the walls?
      */
-    void CreateEnemy(std::shared_ptr<CBoard> &board, EEnemyType type, std::size_t lives, std::size_t score, double speed, bool wallPass);
+    void
+    CreateEnemy(std::shared_ptr<CBoard> &board, EEnemyType type, std::size_t lives, std::size_t score, double speed,
+                bool wallPass);
 
     /**
     * Get bomb texture pack.

@@ -1,14 +1,13 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
 
 #pragma once
 
-#include "../CGameObject.h"
+#include "../../blocks/CBlock.h"
 #include "../movables/CPlayer.h"
 
-class CCollectible : public CGameObject
+class CCollectible : public CBlock
 {
 public:
     /**
@@ -19,9 +18,9 @@ public:
     * @param scoreBonus Bonus to be claimed by collector.
     * @param duration Collectible duration in seconds. Set 0 for unlimited duration.
     */
-    CCollectible(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1),
-                          CCoord<> location = CCoord<>(0, 0), size_t scoreBonus = 0, int duration = 0)
-            : CGameObject(std::move(texturePack), size, location), m_Duration(duration), m_IsVisible(false),
+    CCollectible(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1), size_t scoreBonus = 0,
+                 int duration = 0)
+            : CBlock(std::move(texturePack), true, size), m_Duration(duration), m_IsVisible(false),
               m_ScoreBonus(scoreBonus), m_TargetPlayer(nullptr)
     {}
 
@@ -33,12 +32,12 @@ public:
 
     virtual void Update(CBoard &board, int deltaTime) override = 0;
 
-    virtual void
-    Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0)) const override
+    virtual void Draw(CSDLInterface &interface, int cellSize, CCoord<> location,
+                      CCoord<> offset = CCoord<>(0, 0)) const override
     {
         // Render collectible only when this object is visible.
-        if(this->m_IsVisible)
-        {CGameObject::Draw(interface, cellSize, location, offset);}
+        if (this->m_IsVisible)
+        { CBlock::Draw(interface, cellSize, location, offset); }
     }
 
     /**
@@ -47,9 +46,10 @@ public:
      */
     virtual void Apply(CPlayer *player) = 0;
 
-    virtual void Reset(CBoard &board) override;
-    virtual void CollisionWithPlayer(CPlayer & player)
-    {this->Apply(&player);}
+    virtual void Reset(CBoard &board);
+
+    virtual void CollisionWithPlayer(CPlayer &player)
+    { this->Apply(&player); }
 
     /**
      * Make collectible object visible

@@ -35,9 +35,6 @@ void CBoost::Update(CBoard &board, int deltaTime)
         if (this->m_Duration <= 0)
         { this->Deactivate(); }
     }
-
-    if (!this->m_IsAlive)
-    { board.DestroyCollectible(this); }
 }
 
 /*====================================================================================================================*/
