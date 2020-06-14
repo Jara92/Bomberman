@@ -7,6 +7,7 @@
 
 #include <cmath>
 #include <set>
+#include "../interfaceitems/CText.h"
 #include "CMovable.h"
 #include "../CInput.h"
 

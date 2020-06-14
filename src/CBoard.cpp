@@ -328,3 +328,24 @@ void CBoard::SetMapItem(CBlock *block, CCoord<unsigned int> location)
 
     this->m_Map[location.m_X][location.m_Y] = block;
 }
+/*====================================================================================================================*/
+void CBoard::DestroyEveryDestructibleWall()
+{
+    for (unsigned int i = 0; i < this->GetBoardSize().m_X; i++)
+    {
+        for (unsigned int j = 0; j < this->GetBoardSize().m_Y; j++)
+        {
+            if (this->m_Map[i][j] && this->m_Map[i][j]->TryDestroy(0))
+            {
+                // Destroy detructible wall and plant collectible.
+                CCoord<unsigned int> itemLocation = CCoord<unsigned int>(i, j);
+                if (this->GetMapItem(itemLocation)->HasCollectible() &&
+                    this->GetMapItem(itemLocation)->GetCollectible())
+                { this->SetMapItem(this->GetMapItem(itemLocation)->GetCollectible(), itemLocation); }
+                    // Destroy the wall.
+                else
+                { this->SetMapItem(nullptr, itemLocation); }
+            }
+        }
+    }
+}

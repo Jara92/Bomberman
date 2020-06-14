@@ -105,6 +105,8 @@ public:
      */
     void CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> direction, unsigned int explosionRadius);
 
+    void DestroyEveryDestructibleWall();
+
     /**
      * Remove all dynamically added objects. (Bombs, Enemies, Boosts, DestructibleWalls)
      * @param clearLevelObjects Remove boosts from the board?

@@ -162,13 +162,13 @@ void CGameManager::Update(int deltaTime)
         this->m_LivesText->Update(this->m_Interface, deltaTime);
         this->m_FPSText->Update(this->m_Interface, deltaTime);
     }
-    // Update round over text.
+        // Update round over text.
     else if (this->m_GameStatus == EGameStatus::GAME_STATUS_ROUND_OVER)
     { this->m_RoundOverText->Update(this->m_Interface, deltaTime); }
-    // Update next round text.
+        // Update next round text.
     else if (this->m_GameStatus == EGameStatus::GAME_STATUS_NEXT_ROUND)
     { this->m_NextRoundText->Update(this->m_Interface, deltaTime); }
-    // Update game over text.
+        // Update game over text.
     else if (this->m_GameStatus == EGameStatus::GAME_STATUS_GAME_OVER)
     {
         this->m_GameOverText->Update(this->m_Interface, deltaTime);
@@ -340,25 +340,7 @@ void CGameManager::GlobalInput(const Uint8 *input)
         }
             // Destroy every destructible wall.
         else if (input[SDL_SCANCODE_F2])
-        {
-            for (unsigned int i = 0; i < this->m_Board->GetBoardSize().m_X; i++)
-            {
-                for (unsigned int j = 0; j < this->m_Board->GetBoardSize().m_Y; j++)
-                {
-                    if (this->m_Board->m_Map[i][j] && this->m_Board->m_Map[i][j]->TryDestroy(0))
-                    {
-                        if (this->m_Board->GetMapItem(CCoord<unsigned int>(i, j))->HasCollectible() &&
-                            this->m_Board->GetMapItem(CCoord<unsigned int>(i, j))->GetCollectible())
-                        {
-                            this->m_Board->SetMapItem(
-                                    this->m_Board->GetMapItem(CCoord<unsigned int>(i, j))->GetCollectible(),
-                                    CCoord<unsigned int>(i, j));
-                        } else
-                        { this->m_Board->SetMapItem(nullptr, CCoord<unsigned int>(i, j)); }
-                    }
-                }
-            }
-        }
+        {this->m_Board->DestroyEveryDestructibleWall();        }
             // Inkrement score.
         else if (input[SDL_SCANCODE_F3])
         {
