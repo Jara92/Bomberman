@@ -54,8 +54,8 @@ public:
      * @param offset Texture global offset
      */
     virtual void
-    Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0)) const
-    { this->m_Body.Draw(interface, cellSize, location, this->m_Size, offset); } // TODO remove location param
+    Draw(CSDLInterface &interface, int cellSize, CCoord<> offset = CCoord<>(0, 0)) const
+    { this->m_Body.Draw(interface, cellSize, this->m_Location, this->m_Size, offset); }
 
     bool GetWallPass() const
     { return this->m_WallPass; }

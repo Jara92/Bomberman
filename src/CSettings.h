@@ -28,7 +28,7 @@ public:
               unsigned int screenFPS = 60,
               bool sound = true, bool debugMode = false, std::string assetsPath = "./examples/assets/",
               std::string dataPath = "./examples/data/")
-            : m_DebugMode(debugMode), m_AssetsPath(std::move(assetsPath)), m_DataPath(std::move(dataPath)),
+            : m_DebugMode(debugMode), m_RenderBoundingBox(false), m_AssetsPath(std::move(assetsPath)), m_DataPath(std::move(dataPath)),
               m_Offset(offset)
     {
         this->ChangeSettings(gameScreenSize, menuScreenSize, sound);
@@ -59,8 +59,11 @@ public:
         this->m_GameScreenSize = newScreenSize;
     }
 
-    void EnableSound(bool sound)
+    void SetSound(bool sound)
     { this->m_Sound = sound; }
+
+    void SetRenderBoundingBox(bool renderBoundingBox)
+    {this->m_RenderBoundingBox = renderBoundingBox;}
 
     CCoord<unsigned int> GetGameScreenSize() const
     { return this->m_GameScreenSize; }
@@ -70,6 +73,9 @@ public:
 
     bool GetSound() const
     { return this->m_Sound; }
+
+    bool GetRenderBoundingBox() const
+    { return this->m_RenderBoundingBox; }
 
     bool GetDebugMode() const
     { return this->m_DebugMode; }
@@ -85,7 +91,7 @@ public:
 
 protected:
     CCoord<unsigned int> m_GameScreenSize, m_MenuScreenSize;
-    bool m_Sound, m_DebugMode;
+    bool m_Sound, m_DebugMode, m_RenderBoundingBox;
     std::string m_AssetsPath, m_DataPath;
     CCoord<unsigned int> m_Offset;
 };

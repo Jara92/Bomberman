@@ -57,7 +57,7 @@ void CBoard::Draw(CSDLInterface &interface, CCoord<> offset)
     for (auto i = this->m_Movables.begin(); i != this->m_Movables.end(); i++)
     {
         if (*i)
-        { (*i)->Draw(interface, this->m_CellSize, (*i)->GetLocation(), offset); }
+        { (*i)->Draw(interface, this->m_CellSize, offset); }
     }
 
     // TODO změnit pořadí renderu tak, aby nejdříve byly renderovány objekty, které jsou vespod.
@@ -65,7 +65,7 @@ void CBoard::Draw(CSDLInterface &interface, CCoord<> offset)
     for (size_t i = 0; i < this->m_Players.size(); i++)
     {
         if (this->m_Players[i])
-        { this->m_Players[i]->Draw(interface, this->m_CellSize, this->m_Players[i]->GetLocation(), offset); }
+        { this->m_Players[i]->Draw(interface, this->m_CellSize, offset); }
     }
 }
 

@@ -171,7 +171,7 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
     {
         players.push_back(
                 new CPlayer(std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i], false, CCoord<>(1, 2)),
-                            startingLocation[i], CCoord<>(0.6, 0.75), controls[i]));
+                            startingLocation[i], CCoord<>(0.65, 0.75), controls[i]));
     }
 
     return players;
@@ -205,7 +205,7 @@ std::shared_ptr<CBlock> CLevelLoader::LoadGround() const
 
     std::shared_ptr<CTexturePack> texturePack = std::make_shared<CTexturePack>(this->m_Interface, textures);
     // create reference wall to make copies
-    return std::make_shared<CBlock>(CBlock(texturePack, true, CCoord<>(1,1)));
+    return std::make_shared<CBlock>(CBlock(texturePack, true, CCoord<>(1, 1)));
 }
 
 /*====================================================================================================================*/
@@ -294,10 +294,7 @@ std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadEnemyTexturePacks()
     // Create texture packs shared pointers.
     std::vector<std::shared_ptr<CTexturePack>> texturePacks;
     for (size_t i = 0; i < textures.size(); i++)
-    {
-        texturePacks.push_back(
-                std::make_shared<CTexturePack>(this->m_Interface, textures[i], true, sizes[i]));
-    }
+    { texturePacks.push_back(std::make_shared<CTexturePack>(this->m_Interface, textures[i], true, sizes[i])); }
 
     return texturePacks;
 }
@@ -471,7 +468,7 @@ void CLevelLoader::CreateEnemy(std::shared_ptr<CBoard> &board, EEnemyType type, 
                                std::size_t score, double speed, bool wallPass)
 {
     unsigned int typeInt = static_cast<unsigned int>(type);
-    CCoord<> enemySize = CCoord<>(0.9, 0.9);
+    CCoord<> enemySize = CCoord<>(0.80, 0.80);
 
     switch (type)
     {

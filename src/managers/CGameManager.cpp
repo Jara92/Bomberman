@@ -21,7 +21,6 @@ CGameManager::CGameManager(CSDLInterface &interface)
     this->m_Board = this->m_LevelLoader->GetBoard(1, this->m_Interface.GetSettings());
     this->m_LevelLoader->LoadLevel(this->m_Board, 1);
 
-    // UI items
     unsigned int padding = 5;
     this->m_DefaultFontSize = this->m_Board->GetCellSize() - 2 * padding;
     CCoord<unsigned int> windowSize = this->m_Interface.GetWindowSize();
@@ -30,7 +29,7 @@ CGameManager::CGameManager(CSDLInterface &interface)
     for (unsigned int i = 0; i < this->m_Board->GetBoardSize().m_X; i++)
     { this->m_Board->GetGroundObject()->Draw(this->m_Interface, this->m_Board->GetCellSize(), CCoord<double>(i, 0)); }
 
-    // Menu messages
+    // Menu texts.
     this->m_TimeText = std::make_unique<CText>(this->m_Interface, CCoord<>(0.5 * this->m_Board->GetCellSize(), padding),
                                                "", CCoord<>(0, this->m_DefaultFontSize));
 
@@ -46,7 +45,7 @@ CGameManager::CGameManager(CSDLInterface &interface)
                                               CCoord<>(padding, this->m_Board->GetCellSize() + padding), "",
                                               CCoord<>(0, this->m_DefaultFontSize / 2));
 
-    // Scene messages
+    // Scene messages.
     this->m_RoundOverText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "Round over!",
                                                     CCoord<>(0, this->m_DefaultFontSize * 3));
     CCoord<> itemSize = this->m_RoundOverText->GetSize();
@@ -73,8 +72,8 @@ CGameManager::CGameManager(CSDLInterface &interface)
             CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0),
                      (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0) + this->m_DefaultFontSize * 2.5));
 
-    // We need one tick because of wrong deltatime value.
-    this->m_Clock.Tick();
+    // Run the game clock when the constructor is over.
+    this->m_Clock = CGameClock();
 }
 
 /*====================================================================================================================*/
@@ -333,7 +332,9 @@ void CGameManager::GlobalInput(const Uint8 *input)
         if (input[SDL_SCANCODE_F1])
         {
 
-        } else if (input[SDL_SCANCODE_F2])
+        }
+        // Destroy every destructible wall.
+        else if (input[SDL_SCANCODE_F2])
         {
             for (unsigned int i = 0; i < this->m_Board->GetBoardSize().m_X; i++)
             {
@@ -347,16 +348,20 @@ void CGameManager::GlobalInput(const Uint8 *input)
                             this->m_Board->SetMapItem(
                                     this->m_Board->GetMapItem(CCoord<unsigned int>(i, j))->GetCollectible(),
                                     CCoord<unsigned int>(i, j));
-                        }
-                        else
+                        } else
                         { this->m_Board->SetMapItem(nullptr, CCoord<unsigned int>(i, j)); }
                     }
                 }
             }
-        } else if (input[SDL_SCANCODE_F3])
+        }
+        // Inkrement score.
+        else if (input[SDL_SCANCODE_F3])
         {
             if (this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
             { this->m_Board->m_Players[0]->IncreseScore(1000); }
         }
+        // Turn on rendering bounding boxes.
+        else if (input[SDL_SCANCODE_F4])
+        { this->m_Interface.GetSettings()->SetRenderBoundingBox(true); }
     }
 }

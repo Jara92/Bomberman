@@ -17,9 +17,21 @@ void CBody::Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoo
     { textureOffset /= 2; }
 
     // Setup final location and draw texture in right position.
-    location = location + textureOffset + offset;
-    interface.RenderTexture(this->GetTexture(), CCoord<>(location.m_X * cellSize, location.m_Y * cellSize),
+    interface.RenderTexture(this->GetTexture(), cellSize * (location + textureOffset + offset),
                             cellSize * this->m_TexturePack->GetTextureSize());
+
+    // Debug function - Render bounding box.
+    if(interface.GetSettings()->GetRenderBoundingBox())
+    {
+        CCoord<> center = ((CCoord<>(1, 1) - size) / 2);
+
+        interface.SetRenderColor(0, 255, 0, 255);
+        SDL_Rect rect{static_cast<int>((location.m_X + center.m_X + offset.m_X) * cellSize),
+                      static_cast<int>((location.m_Y + center.m_Y + offset.m_Y) * cellSize),
+                      static_cast<int>(cellSize * size.m_X ), static_cast<int>(cellSize * size.m_Y)};
+        interface.RenderRectangle(&rect);
+        interface.SetRenderColor(255, 0, 0, 255);
+    }
 }
 
 /*====================================================================================================================*/
