@@ -200,8 +200,8 @@ void CPlayer::UpdateTextureType(CCoord<> oldLocation)
         { diff.m_X = 0; }
     }
         // Player is not moving. Use input movement direction to setup animation.
-    else
-    { diff = -1 * this->m_Movement; }
+ /*   else
+    { diff = -1 * this->m_Movement; }*/
 
     // Set right texture by movement vector.
     if (diff.m_X < -this->m_Speed)

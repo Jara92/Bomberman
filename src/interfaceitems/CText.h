@@ -20,7 +20,7 @@ public:
      */
     CText(CSDLInterface &interface, CCoord<> location, const std::string &text, CCoord<> size = {0, 0},
           SDL_Color color = {255, 255, 255, 255}
-    ) : CInterfaceItem(location, size), m_Texture(NULL), m_Text(text)
+    ) : CInterfaceItem(location, size), m_Texture(NULL), m_Text(""), m_Color(color)
     {
         this->SetText(interface, text, size, color);
     }
@@ -67,5 +67,6 @@ public:
 protected:
     SDL_Texture *m_Texture;
     std::string m_Text;
+    SDL_Colour m_Color;
 };
 

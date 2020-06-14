@@ -100,10 +100,10 @@ void CSDLInterface::SetGameScreenSize()
 }
 
 /*====================================================================================================================*/
-SDL_Texture *CSDLInterface::LoadTextTexture(const std::string &text, CCoord<unsigned int> &size, SDL_Color color) const
+SDL_Texture *CSDLInterface::LoadTextTexture(const std::string &text, CCoord<unsigned int> &size, SDL_Color color,int quality) const
 {
     // Load font.
-    TTF_Font *font = TTF_OpenFont((this->m_Settings->GetAssetsPath() + this->m_Font).c_str(), 48);
+    TTF_Font *font = TTF_OpenFont((this->m_Settings->GetAssetsPath() + this->m_Font).c_str(), quality);
     if (font == NULL)
     { return NULL; }
 

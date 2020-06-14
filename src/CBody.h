@@ -17,9 +17,8 @@ public:
               m_AnimationUpdateInterval(animationUpdateInterval), m_AnimationTimer(0)
     {}
 
-
     /**
-    * Updates object state using deltatime.
+    * Updates body state using deltatime.
     * @param board Game board
     * @param deltaTime DeltaTime
     */
@@ -36,16 +35,6 @@ public:
     virtual void
     Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> size,
          CCoord<> offset = CCoord<>(0, 0)) const;
-
-    /**
-    * Returns the texture to be rendered.
-    * @return SDL_Texture * to be rendered. Nullptr if there is no texture (this should never happen).
-    */
-    SDL_Texture *GetTexture() const
-    {
-        SDL_Texture *texture = this->m_TexturePack.get()->GetTexture(this->m_ActualTexture, &(this->m_AnimationIndex));
-        return texture;
-    }
 
     /**
     * Are these objects colliding?
@@ -87,6 +76,16 @@ protected:
             this->m_AnimationIndex++;
             this->m_AnimationTimer = 0;
         }
+    }
+
+    /**
+    * Returns the texture to be rendered.
+    * @return SDL_Texture * to be rendered. Nullptr if there is no texture (this should never happen).
+    */
+    SDL_Texture *GetTexture() const
+    {
+        SDL_Texture *texture = this->m_TexturePack.get()->GetTexture(this->m_ActualTexture, &(this->m_AnimationIndex));
+        return texture;
     }
 };
 

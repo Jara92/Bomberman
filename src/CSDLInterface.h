@@ -117,7 +117,8 @@ public:
      */
     SDL_Texture *LoadTextTexture(const std::string &text, CCoord<unsigned int> &size, SDL_Colour color = {255, 255,
                                                                                                           255,
-                                                                                                          255}) const;
+                                                                                                          255},
+                                 int quality = 20) const;
 
     /**
     *  Set the color used for drawing operations (Rect, Line and Clear).

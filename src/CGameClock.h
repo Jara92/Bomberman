@@ -32,6 +32,7 @@ public:
         this->m_DeltaTime = 0;
         this->m_FPS = 0;
         this->m_LastTicks = SDL_GetTicks();
+        this->m_FPSUpdateCounter = 0;
     }
 
     /**
@@ -45,16 +46,22 @@ public:
 
         // Check ticks validity because tick value wraps if the program runs for more than ~49 days.
         if (currentTime >= UINT32_MAX - 100)
-        { throw std::runtime_error(MESSAGE_MAXIMUM_RUNTIME); }
+        { throw std::runtime_error(MESSAGE_CLOCK_OVERFLOW); }
 
         this->m_DeltaTime = static_cast<int>(currentTime - this->m_LastTicks);
 
-        // Calculate FPS
-        if (this->m_DeltaTime != 0)
-        { this->m_FPS = 1000.f / this->m_DeltaTime; }
+        // Calculate every N milliseconds.
+        if (this->m_DeltaTime != 0 && this->m_FPSUpdateCounter >= 250)
+        {
+            this->m_FPS = 1000.f / this->m_DeltaTime;
+            this->m_FPSUpdateCounter = 0;
+        }
 
-        // Update lastticks value
+        // Update lasticks value
         this->m_LastTicks = currentTime;
+
+        // Increment FPS counter.
+        this->m_FPSUpdateCounter += this->m_DeltaTime;
     }
 
     int DeltaTime() const
@@ -69,8 +76,10 @@ public:
      */
     int GetDelay() const
     {
-        if (SDL_GetTicks() - this->m_LastTicks < this->m_TicksPerFrame)
-        { return static_cast<int>(this->m_TicksPerFrame - (SDL_GetTicks() - this->m_LastTicks)); }
+        Uint32 currentTicks = SDL_GetTicks();
+
+        if (currentTicks - this->m_LastTicks < this->m_TicksPerFrame)
+        { return static_cast<int>(this->m_TicksPerFrame - (currentTicks - this->m_LastTicks)); }
 
         return 0;
     }
@@ -78,7 +87,7 @@ public:
     Uint32 GetElapsedTicks() const
     {
         if (this->m_LastTicks >= UINT32_MAX - 100)
-        { throw std::runtime_error(MESSAGE_MAXIMUM_RUNTIME); }
+        { throw std::runtime_error(MESSAGE_CLOCK_OVERFLOW); }
 
         return this->m_LastTicks;
     }
@@ -86,6 +95,7 @@ public:
 protected:
     unsigned int m_TicksPerFrame;
     Uint32 m_LastTicks;
+    Uint32 m_FPSUpdateCounter;
 
     int m_DeltaTime;
     double m_FPS;

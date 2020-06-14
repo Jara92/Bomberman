@@ -205,7 +205,7 @@ std::shared_ptr<CBlock> CLevelLoader::LoadGround() const
 
     std::shared_ptr<CTexturePack> texturePack = std::make_shared<CTexturePack>(this->m_Interface, textures);
     // create reference wall to make copies
-    return std::make_shared<CBlock>(CBlock(texturePack));
+    return std::make_shared<CBlock>(CBlock(texturePack, true, CCoord<>(1,1)));
 }
 
 /*====================================================================================================================*/

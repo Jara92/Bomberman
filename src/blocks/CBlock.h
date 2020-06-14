@@ -26,7 +26,7 @@ public:
     * @param isPassable Is this object passable for moving objects?
     * @param size Object size.
     */
-    CBlock(std::shared_ptr<CTexturePack> texturePack, bool isPassable = false, CCoord<> size = {1, 1})
+    CBlock(std::shared_ptr<CTexturePack> texturePack, bool isPassable, CCoord<> size)
             : m_Body(std::move(texturePack), 100), m_Size(size), m_IsAlive(true), m_IsPassable(isPassable)
     {}
 

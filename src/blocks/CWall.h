@@ -17,7 +17,7 @@ public:
     * @param isDestructible Is this wall destructible?
     */
     CWall(std::shared_ptr<CTexturePack> texturePack, bool isDestructible)
-            : CBlock(std::move(texturePack), false), m_IsDestructible(isDestructible), m_Collectible(nullptr)
+            : CBlock(std::move(texturePack), false, texturePack->GetTextureSize()), m_IsDestructible(isDestructible), m_Collectible(nullptr)
     {}
 
     CWall(const CWall &other) = default;
