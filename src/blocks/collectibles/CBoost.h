@@ -43,9 +43,6 @@ public:
 
     CBoost(const CBoost &other) = default;
 
-    virtual CBoost *Clone() const override
-    { return new CBoost(*this); }
-
     CBoost &operator=(const CBoost &other) = default;
 
     virtual ~CBoost() = default;

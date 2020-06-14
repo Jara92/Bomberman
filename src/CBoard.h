@@ -173,13 +173,4 @@ protected:
 
     /** Texture packs to be used as template. */
     std::shared_ptr<CTexturePack> m_BombObjectTexturePack, m_FireObjectTexturePack;
-
-    /**
-     * Is this direction free to place?
-     * @param location Location
-     * @param player Player
-     * @param direction Direction vector.
-     * @return True - Direction is free.
-     */
-    bool PlayerDirectionFree(CCoord<unsigned int> location, CPlayer *player, CCoord<int> direction);
 };

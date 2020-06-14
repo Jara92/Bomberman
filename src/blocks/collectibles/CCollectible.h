@@ -30,12 +30,10 @@ public:
 
     virtual ~CCollectible() = default;
 
-    virtual CCollectible * Clone() const override = 0;
-
     virtual void Update(CBoard &board, int deltaTime) override = 0;
 
-    virtual void Draw(CSDLInterface &interface, int cellSize, CCoord<> location,
-                      CCoord<> offset = CCoord<>(0, 0)) const override
+    virtual void
+    Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0)) const override
     {
         // Render collectible only when this object is visible.
         if (this->m_IsVisible)
@@ -52,30 +50,15 @@ public:
 
     virtual void PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player) override;
 
-    /**
-     * Make collectible object visible
-     */
+    /** Make collectible object visible */
     void MakeVisible()
     { this->m_IsVisible = true; }
-
-    /**
-     * Make collectible object invisible again.
-     */
-    void MakeInvisible()
-    { this->m_IsVisible = false; }
 
     virtual bool HasCollectible() const
     { return true; }
 
     virtual CCollectible *GetCollectible()
     { return this; }
-
-    /**
-     * Is this collectible object visible?
-     * @return True - Is visible; False - Is invisible
-     */
-    bool IsVisible() const
-    { return this->m_IsVisible; }
 
     virtual bool IsDestructible() const override
     { return false; }

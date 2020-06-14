@@ -85,11 +85,11 @@ void CBoard::Update(int deltaTime)
     }
 
     std::vector<std::size_t> objectsToRemove;
-     for (auto i = this->m_Movables.begin(); i != this->m_Movables.end(); i++)
-     {
-         if (*i && (*i)->IsAlive())
-         { (*i)->Update(*this, deltaTime); }
-     }
+    for (auto i = this->m_Movables.begin(); i != this->m_Movables.end(); i++)
+    {
+        if (*i && (*i)->IsAlive())
+        { (*i)->Update(*this, deltaTime); }
+    }
 
     // Update players
     for (size_t i = 0; i < this->m_Players.size(); i++)
@@ -263,41 +263,15 @@ bool CBoard::PositionFree(CCoord<unsigned int> coord)
     if (block != nullptr)
     { return false; }
 
-    for (size_t i = 0; i < this->m_Players.size(); i++)
-    {
-        if (m_Players[i]->GetLocation().AlmostEqual(coord.ToDouble()))
-        { return false; }
-    }
-
     return true;
 }
 
 /*====================================================================================================================*/
 bool CBoard::PlayersAreaFree(CCoord<unsigned int> coord)
 {
-    // Create direction vectors.
-    CCoord<int> directions[4] = {CCoord<int>(0, 1), CCoord<int>(0, -1), CCoord<int>(1, 0), CCoord<int>(-1, 0)};
-
     for (std::vector<CPlayer *>::size_type i = 0; i < this->m_Players.size(); i++)
     {
-        for (unsigned int j = 0; j < 4; j++)
-        {
-            if (!this->PlayerDirectionFree(coord, this->m_Players[i], directions[j]))
-            { return false; }
-        }
-    }
-
-    return true;
-}
-
-/*====================================================================================================================*/
-bool CBoard::PlayerDirectionFree(CCoord<unsigned int> location, CPlayer *player, CCoord<int> direction)
-{
-    for (unsigned int i = 0; i <= CBoard::PLAYER_SAVE_ZONE; i++)
-    {
-        CCoord<> curLocation = (player->GetLocation() + (direction * i).ToDouble());
-
-        if (curLocation == location.ToDouble())
+        if (this->m_Players[i]->GetLocation().CalcDistnance(coord.ToDouble()) < PLAYER_SAVE_ZONE)
         { return false; }
     }
 

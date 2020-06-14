@@ -23,9 +23,6 @@ public:
 
     CDoor(const CDoor &other) = default;
 
-    virtual CDoor *Clone() const override
-    { return new CDoor(*this); }
-
     CDoor &operator=(const CDoor &other) = default;
 
     virtual ~CDoor() = default;

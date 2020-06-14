@@ -91,13 +91,17 @@ public:
     bool operator!=(const CCoord &other) const
     { return !(*this == other); }
 
-    bool AlmostEqual(const CCoord &other) const
+    /**
+     * Calculates distance between this and the other point
+     * @param other Other Coord.
+     * @return Distance between two points.
+     */
+    double CalcDistnance(const CCoord &other) const
     {
-        CCoord thisCoord = CCoord(floor(this->m_X), floor(this->m_Y));
-        CCoord otherCoord = CCoord(floor(other.m_X), floor(other.m_Y));
-
-        return (thisCoord == otherCoord);
+        return sqrt(
+                ((this->m_X - other.m_X) * (this->m_X - other.m_X)) + ((this->m_Y - other.m_Y) * (this->m_Y - other.m_Y)));
     }
+
 
     /**
      * Convert Coord to CCoord<double>
