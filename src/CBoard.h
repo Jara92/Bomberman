@@ -75,7 +75,7 @@ public:
      * @param coord Position
      * @return True - Location free
      */
-    bool PlayersAreaFree(CCoord<unsigned int> coord);
+    bool PlayersAreaFree(CCoord<unsigned int> coord, double playerSaveZone);
 
     /**
      * Place bomb in game board.
@@ -166,7 +166,6 @@ protected:
     CCoord<unsigned int> m_BoardSize;
     /** Size of one cell in pixels. */
     unsigned int m_CellSize;
-    static constexpr unsigned int PLAYER_SAVE_ZONE = 3;
 
     /** Ground object template */
     std::shared_ptr<CBlock> m_GroundObject;

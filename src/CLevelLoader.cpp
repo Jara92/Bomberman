@@ -16,9 +16,6 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool 
 {
     std::vector<CCollectible *> collectibles;
 
-    /*  if(!loadDynamicObjects)
-      {collectibles = board->GetCollectibles();}*/
-
     board->PrepareBoard(loadDynamicObjects, collectibles);
 
     // Generate random obstacles.
@@ -194,7 +191,7 @@ void CLevelLoader::GenerateObstacles(std::shared_ptr<CBoard> &board, size_t leve
         CCoord<unsigned int> random;
         do
         { random = board->GetRandomBoardLocation(); }
-        while (!board->PositionFree(random) || !board->PlayersAreaFree(random));
+        while (!board->PositionFree(random) || !board->PlayersAreaFree(random, CPlayer::OBSTACLES_SAVE_ZONE));
 
         board->m_Map[random.m_X][random.m_Y] = new CWall(texturePack, true);
     }

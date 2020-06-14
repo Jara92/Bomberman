@@ -66,7 +66,7 @@ void CEnemy::Reset(CBoard &board)
     CCoord<unsigned int> random;
     do
     { random = board.GetRandomBoardLocation(); }
-    while (!board.PositionFree(random) || !board.PlayersAreaFree(random));
+    while (!board.PositionFree(random) || !board.PlayersAreaFree(random, CPlayer::ENEMY_SAVE_ZONE));
 
     this->SetLocation(random.ToDouble());
 }

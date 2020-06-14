@@ -267,11 +267,11 @@ bool CBoard::PositionFree(CCoord<unsigned int> coord)
 }
 
 /*====================================================================================================================*/
-bool CBoard::PlayersAreaFree(CCoord<unsigned int> coord)
+bool CBoard::PlayersAreaFree(CCoord<unsigned int> coord, double playerSaveZone)
 {
     for (std::vector<CPlayer *>::size_type i = 0; i < this->m_Players.size(); i++)
     {
-        if (this->m_Players[i]->GetLocation().CalcDistnance(coord.ToDouble()) < PLAYER_SAVE_ZONE)
+        if (this->m_Players[i]->GetLocation().CalcDistnance(coord.ToDouble()) < playerSaveZone)
         { return false; }
     }
 

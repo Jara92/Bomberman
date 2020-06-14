@@ -135,6 +135,8 @@ public:
     bool IsDetonating() const
     { return (this->m_IsDetonating && this->m_RemoteExplosion); }
 
+    static constexpr double ENEMY_SAVE_ZONE = 3;
+    static constexpr double OBSTACLES_SAVE_ZONE = 1;
 protected:
     /** Achieved score. */
     std::size_t m_Score;
