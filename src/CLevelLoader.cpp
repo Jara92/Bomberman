@@ -28,9 +28,11 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool 
     // Load enemies and boosts from the file.
     if (loadDynamicObjects)
     {
+        // Delete old level collectibles because new level objects will be loaded.
         for (std::vector<CCollectible *>::size_type i = 0; i < collectibles.size(); i++)
         { delete collectibles[i]; }
         collectibles.clear();
+
         this->LoadLevelFile(board, level, collectibles);
     }
 

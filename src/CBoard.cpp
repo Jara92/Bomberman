@@ -23,6 +23,80 @@ CBoard::~CBoard()
 }
 
 /*====================================================================================================================*/
+void CBoard::Draw(CSDLInterface &interface, CCoord<> offset)
+{
+    // draw map
+    for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
+    {
+        for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
+        {
+            // Draw background and the object.
+            if (this->m_GroundObject)
+            { this->m_GroundObject->Draw(interface, this->m_CellSize, CCoord<unsigned int>(i, j).ToDouble(), offset); }
+            if (this->m_Map[i][j])
+            { this->m_Map[i][j]->Draw(interface, this->m_CellSize, CCoord<unsigned int>(i, j).ToDouble(), offset); }
+        }
+    }
+
+    for (auto i = this->m_Movables.begin(); i != this->m_Movables.end(); i++)
+    {
+        if (*i)
+        { (*i)->Draw(interface, this->m_CellSize, (*i)->GetLocation(), offset); }
+    }
+
+    // TODO změnit pořadí renderu tak, aby nejdříve byly renderovány objekty, které jsou vespod.
+    // draw players
+    for (size_t i = 0; i < this->m_Players.size(); i++)
+    {
+        if (this->m_Players[i])
+        { this->m_Players[i]->Draw(interface, this->m_CellSize, this->m_Players[i]->GetLocation(), offset); }
+    }
+}
+
+/*====================================================================================================================*/
+void CBoard::Update(int deltaTime)
+{
+    // Update map (Walls)
+    for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
+    {
+        for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
+        {
+            // Update if object is alive.
+            if (this->m_Map[i][j])
+            {
+                auto bomb = this->m_BombsToExplode.find((this->m_Map[i][j]));
+
+                if (bomb != this->m_BombsToExplode.end())
+                { this->CreateExplosion((*bomb), CCoord<unsigned int>(i, j)); }
+                else if (this->m_Map[i][j]->IsAlive())
+                { this->m_Map[i][j]->Update(*this, deltaTime); }
+            }
+
+            // Delete dead objects.
+            if (this->m_Map[i][j] && !this->m_Map[i][j]->IsAlive())
+            {
+                if (this->m_Map[i][j]->HasCollectible() && this->m_Map[i][j] != this->m_Map[i][j]->GetCollectible() &&
+                    this->m_Map[i][j]->GetCollectible())
+                { this->SetMapItem(this->m_Map[i][j]->GetCollectible(), CCoord<unsigned int>(i, j)); }
+                else
+                { this->SetMapItem(nullptr, CCoord<unsigned int>(i, j)); }
+            }
+        }
+    }
+
+    std::vector<std::size_t> objectsToRemove;
+     for (auto i = this->m_Movables.begin(); i != this->m_Movables.end(); i++)
+     {
+         if (*i && (*i)->IsAlive())
+         { (*i)->Update(*this, deltaTime); }
+     }
+
+    // Update players
+    for (size_t i = 0; i < this->m_Players.size(); i++)
+    { this->m_Players[i]->Update(*this, deltaTime); }
+}
+
+/*====================================================================================================================*/
 bool CBoard::IsPassable(CCoord<unsigned int> coord, const CMovable &movable)
 {
     CBlock *block = this->GetMapItem(coord);
@@ -109,79 +183,6 @@ void CBoard::CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> 
         if (wallDestroyed)
         { break; /* Explosion was stopped by destroyed wall. */ }
     }
-}
-
-/*====================================================================================================================*/
-void CBoard::Draw(CSDLInterface &interface, CCoord<> offset)
-{
-    // draw map
-    for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
-    {
-        for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
-        {
-            // Draw background and the object.
-            if (this->m_GroundObject)
-            { this->m_GroundObject->Draw(interface, this->m_CellSize, CCoord<unsigned int>(i, j).ToDouble(), offset); }
-            if (this->m_Map[i][j])
-            { this->m_Map[i][j]->Draw(interface, this->m_CellSize, CCoord<unsigned int>(i, j).ToDouble(), offset); }
-        }
-    }
-
-    for (auto i = this->m_Movables.begin(); i != this->m_Movables.end(); i++)
-    {
-        if (*i)
-        { (*i)->Draw(interface, this->m_CellSize, (*i)->GetLocation(), offset); }
-    }
-
-    // TODO změnit pořadí renderu tak, aby nejdříve byly renderovány objekty, které jsou vespod.
-    // draw players
-    for (size_t i = 0; i < this->m_Players.size(); i++)
-    {
-        if (this->m_Players[i])
-        { this->m_Players[i]->Draw(interface, this->m_CellSize, this->m_Players[i]->GetLocation(), offset); }
-    }
-}
-
-/*====================================================================================================================*/
-void CBoard::Update(int deltaTime)
-{
-    // Update map (Walls)
-    for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
-    {
-        for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
-        {
-            // Update if object is alive.
-            if (this->m_Map[i][j])
-            {
-                auto bomb = this->m_BombsToExplode.find((this->m_Map[i][j]));
-
-                if (bomb != this->m_BombsToExplode.end())
-                { this->CreateExplosion((*bomb), CCoord<unsigned int>(i, j)); }
-                else if (this->m_Map[i][j]->IsAlive())
-                { this->m_Map[i][j]->Update(*this, deltaTime); }
-            }
-
-            // Delete dead objects.
-            if (this->m_Map[i][j] && !this->m_Map[i][j]->IsAlive())
-            {
-                if (this->m_Map[i][j]->HasCollectible() && this->m_Map[i][j]->GetCollectible())
-                { this->SetMapItem(this->m_Map[i][j]->GetCollectible(), CCoord<unsigned int>(i, j)); }
-                else
-                { this->SetMapItem(nullptr, CCoord<unsigned int>(i, j)); }
-            }
-        }
-    }
-
-    /* std::vector<std::size_t> objectsToRemove;
-     for (auto i = this->m_Movables.begin(); i != this->m_Movables.end(); i++)
-     {
-         if (*i && (*i)->IsAlive())
-         { (*i)->Update(*this, deltaTime); }
-     }*/
-
-    // Update players
-    for (size_t i = 0; i < this->m_Players.size(); i++)
-    { this->m_Players[i]->Update(*this, deltaTime); }
 }
 
 /*====================================================================================================================*/
