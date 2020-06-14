@@ -4,10 +4,10 @@
 */
 
 
-#include "CEnemyDump.h"
+#include "CEnemyDumb.h"
 #include "../CBoard.h"
 
-void CEnemyDump::Update(CBoard &board, int deltaTime)
+void CEnemyDumb::Update(CBoard &board, int deltaTime)
 {
     CEnemy::Update(board, deltaTime);
 
@@ -15,7 +15,7 @@ void CEnemyDump::Update(CBoard &board, int deltaTime)
 }
 
 /*====================================================================================================================*/
-unsigned int CEnemyDump::TryKill(unsigned int distance)
+unsigned int CEnemyDumb::TryKill(unsigned int distance)
 {
     this->m_Lives--;
 
@@ -33,7 +33,7 @@ unsigned int CEnemyDump::TryKill(unsigned int distance)
     return 0;
 }
 /*====================================================================================================================*/
-void CEnemyDump::WalkAround(CBoard & board, int deltaTime)
+void CEnemyDumb::WalkAround(CBoard & board, int deltaTime)
 {
     // Move deltaTime times.
     for(int i = 0; i < deltaTime; i++)

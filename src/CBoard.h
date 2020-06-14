@@ -16,7 +16,7 @@
 #include "blocks/CFire.h"
 #include "blocks/CBomb.h"
 #include "blocks/collectibles/CCollectible.h"
-#include "movables/CEnemyDump.h"
+#include "movables/CEnemyDumb.h"
 #include "movables/CEnemySmart.h"
 #include "movables/CPlayer.h"
 

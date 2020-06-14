@@ -177,8 +177,8 @@ void CGameManager::UpdateEvents()
     this->GlobalInput(keystate);
 
     // send state to all players
-    for (std::vector<CPlayer *>::size_type i = 0; i < this->m_Board->m_Players.size(); i++)
-    { this->m_Board->m_Players[i]->HandleInput(keystate); }
+  /*  for (std::vector<CPlayer *>::size_type i = 0; i < this->m_Board->m_Players.size(); i++)
+    { this->m_Board->m_Players[i]->HandleInput(keystate); }*/
 
     this->m_Board->UpdatePhysicEvents();
 

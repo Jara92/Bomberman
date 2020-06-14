@@ -231,6 +231,33 @@ src/CBody.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CBody.cpp.s
 .PHONY : src/CBody.cpp.s
 
+src/CInput.o: src/CInput.cpp.o
+
+.PHONY : src/CInput.o
+
+# target to build an object file
+src/CInput.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CInput.cpp.o
+.PHONY : src/CInput.cpp.o
+
+src/CInput.i: src/CInput.cpp.i
+
+.PHONY : src/CInput.i
+
+# target to preprocess a source file
+src/CInput.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CInput.cpp.i
+.PHONY : src/CInput.cpp.i
+
+src/CInput.s: src/CInput.cpp.s
+
+.PHONY : src/CInput.s
+
+# target to generate assembly for a file
+src/CInput.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/CInput.cpp.s
+.PHONY : src/CInput.cpp.s
+
 src/CLevelLoader.o: src/CLevelLoader.cpp.o
 
 .PHONY : src/CLevelLoader.o
@@ -798,32 +825,32 @@ src/movables/CEnemy.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CEnemy.cpp.s
 .PHONY : src/movables/CEnemy.cpp.s
 
-src/movables/CEnemyDump.o: src/movables/CEnemyDump.cpp.o
+src/movables/CEnemyDumb.o: src/movables/CEnemyDumb.cpp.o
 
-.PHONY : src/movables/CEnemyDump.o
+.PHONY : src/movables/CEnemyDumb.o
 
 # target to build an object file
-src/movables/CEnemyDump.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CEnemyDump.cpp.o
-.PHONY : src/movables/CEnemyDump.cpp.o
+src/movables/CEnemyDumb.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CEnemyDumb.cpp.o
+.PHONY : src/movables/CEnemyDumb.cpp.o
 
-src/movables/CEnemyDump.i: src/movables/CEnemyDump.cpp.i
+src/movables/CEnemyDumb.i: src/movables/CEnemyDumb.cpp.i
 
-.PHONY : src/movables/CEnemyDump.i
+.PHONY : src/movables/CEnemyDumb.i
 
 # target to preprocess a source file
-src/movables/CEnemyDump.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CEnemyDump.cpp.i
-.PHONY : src/movables/CEnemyDump.cpp.i
+src/movables/CEnemyDumb.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CEnemyDumb.cpp.i
+.PHONY : src/movables/CEnemyDumb.cpp.i
 
-src/movables/CEnemyDump.s: src/movables/CEnemyDump.cpp.s
+src/movables/CEnemyDumb.s: src/movables/CEnemyDumb.cpp.s
 
-.PHONY : src/movables/CEnemyDump.s
+.PHONY : src/movables/CEnemyDumb.s
 
 # target to generate assembly for a file
-src/movables/CEnemyDump.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CEnemyDump.cpp.s
-.PHONY : src/movables/CEnemyDump.cpp.s
+src/movables/CEnemyDumb.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CEnemyDumb.cpp.s
+.PHONY : src/movables/CEnemyDumb.cpp.s
 
 src/movables/CEnemySmart.o: src/movables/CEnemySmart.cpp.o
 
@@ -927,6 +954,9 @@ help:
 	@echo "... src/CBody.o"
 	@echo "... src/CBody.i"
 	@echo "... src/CBody.s"
+	@echo "... src/CInput.o"
+	@echo "... src/CInput.i"
+	@echo "... src/CInput.s"
 	@echo "... src/CLevelLoader.o"
 	@echo "... src/CLevelLoader.i"
 	@echo "... src/CLevelLoader.s"
@@ -990,9 +1020,9 @@ help:
 	@echo "... src/movables/CEnemy.o"
 	@echo "... src/movables/CEnemy.i"
 	@echo "... src/movables/CEnemy.s"
-	@echo "... src/movables/CEnemyDump.o"
-	@echo "... src/movables/CEnemyDump.i"
-	@echo "... src/movables/CEnemyDump.s"
+	@echo "... src/movables/CEnemyDumb.o"
+	@echo "... src/movables/CEnemyDumb.i"
+	@echo "... src/movables/CEnemyDumb.s"
 	@echo "... src/movables/CEnemySmart.o"
 	@echo "... src/movables/CEnemySmart.i"
 	@echo "... src/movables/CEnemySmart.s"

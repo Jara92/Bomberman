@@ -37,10 +37,10 @@ public:
      * Load new level.
      * @param board Game board.
      * @param level Level to be loaded.
-     * @param loadDynamicObjects Load level items from the level file?
+     * @param loadLevelFile Load level items from the level file?
      * @return True - success.
      */
-    bool LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool loadDynamicObjects = true);
+    bool LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool loadLevelFile = true);
 
 protected:
     std::string m_MapFileName;

@@ -12,18 +12,18 @@ CLevelLoader::CLevelLoader(CSDLInterface &interface, std::string mapFileName, st
 }
 
 /*====================================================================================================================*/
-bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool loadDynamicObjects)
+bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool loadLevelFile)
 {
     std::vector<CCollectible *> collectibles;
 
-    board->PrepareBoard(loadDynamicObjects, collectibles);
+    board->PrepareBoard(loadLevelFile, collectibles);
 
     // Generate random obstacles.
-    size_t obstaclesCount = (board->GetBoardSize().m_X * board->GetBoardSize().m_Y) * 0.125;
+    size_t obstaclesCount = (board->GetBoardSize().m_X * board->GetBoardSize().m_Y) * 0.15;
     this->GenerateObstacles(board, level, obstaclesCount);
 
     // Load enemies and boosts from the file.
-    if (loadDynamicObjects)
+    if (loadLevelFile)
     {
         // Delete old level collectibles because new level objects will be loaded.
         for (std::vector<CCollectible *>::size_type i = 0; i < collectibles.size(); i++)
@@ -110,7 +110,7 @@ std::vector<std::vector<CBlock *>> CLevelLoader::LoadMap()
 std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
 {
     // count = 2; // todo remove
-    CControls controls[MAX_PLAYERS] = {
+    CInput controls[MAX_PLAYERS] = {
             {SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A, SDL_SCANCODE_D, SDL_SCANCODE_J, SDL_SCANCODE_K},
             {SDL_SCANCODE_I, SDL_SCANCODE_K, SDL_SCANCODE_J, SDL_SCANCODE_L, SDL_SCANCODE_N, SDL_SCANCODE_M}
     };
@@ -474,7 +474,7 @@ void CLevelLoader::CreateEnemy(std::shared_ptr<CBoard> &board, EEnemyType type, 
     {
         case EEnemyType::ENEMY_TYPE_DUMP:
             board->m_Movables.push_back(
-                    new CEnemyDump(this->m_EnemyTexturePacks[typeInt], CCoord<>(0, 0), enemySize, score, speed,
+                    new CEnemyDumb(this->m_EnemyTexturePacks[typeInt], CCoord<>(0, 0), enemySize, score, speed,
                                    wallPass, lives));
             break;
         case EEnemyType::ENEMY_TYPE_SMART:

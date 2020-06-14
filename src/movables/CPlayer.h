@@ -8,7 +8,7 @@
 #include <cmath>
 #include <set>
 #include "CMovable.h"
-#include "../CControls.h"
+#include "../CInput.h"
 
 /** Player which can be controlled. Every player has his own controls and can move in game map. */
 class CPlayer : public CMovable
@@ -23,12 +23,11 @@ public:
      * @param speed Object moving speed.
      * @param lives Object starting lives.
     */
-    explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size, CControls controls,
+    explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size, CInput controls,
                      double speed = 0.0025, int lives = 3)
             : CMovable(std::move(texturePack), size, location, speed, false, false, lives), m_Score(0),
               m_ExplosionRadius(1), m_MaxBombs(1), m_ActiveBombs(0), m_RemoteExplosion(false), m_FireImmunity(false),
-              m_PlantingAvaible(false), m_IsPlanting(false), m_DetonatingAvaible(false), m_IsDetonating(false),
-              m_LevelUp(false), m_Controls(controls)
+              m_LevelUp(false), m_Input(controls)
     {}
 
     CPlayer(const CPlayer &other) = default;
@@ -46,14 +45,8 @@ public:
 
 //    virtual void CollisionWith(CGameObject &other) override ;
 
-    /**
-     * Handle keyboard input.
-     * @param keyState Keyboard layout
-     */
-    void HandleInput(const Uint8 *keyState);
-
     /** Kill the player. */
-    virtual unsigned int TryKill(unsigned int distance = 0) override ;
+    virtual unsigned int TryKill(unsigned int distance = 0) override;
 
     virtual void Reset(CBoard &board) override;
 
@@ -133,7 +126,7 @@ public:
     { return this->m_ExplosionRadius; }
 
     bool IsDetonating() const
-    { return (this->m_IsDetonating && this->m_RemoteExplosion); }
+    { return (this->m_Input.IsDetonating() && this->m_RemoteExplosion); }
 
     /** Player save zones when generation new map / loading level. */
     static constexpr double ENEMY_SAVE_ZONE = 4, OBSTACLES_SAVE_ZONE = 2;
@@ -146,21 +139,17 @@ protected:
     unsigned int m_ExplosionRadius;
     unsigned int m_MaxBombs;
     unsigned int m_ActiveBombs;
-    bool m_RemoteExplosion;
-    bool m_FireImmunity;
-
-    /*====================
-     * Player input
-     =====================*/
-    bool m_PlantingAvaible;
-    bool m_IsPlanting;
-    bool m_DetonatingAvaible;
-    bool m_IsDetonating;
-    bool m_LevelUp;
-    CControls m_Controls;
+    bool m_RemoteExplosion, m_FireImmunity, m_LevelUp;
+    CInput m_Input;
 
     static constexpr double MIN_TURNING_VALUE = 0.5, MAX_TURNING_VALUE = 0.5;
     static constexpr double SPEED_UP = 1.1;
+
+    /**
+     * Handle keyboard input.
+     * @param deltaTime Delta time.
+     */
+    void HandleInput(int deltaTime);
 
     /**
     * Place bomb on the ground if it is possible.

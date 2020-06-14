@@ -12,6 +12,8 @@ void CPlayer::Update(CBoard &board, int deltaTime)
 {
     CMovable::Update(board, deltaTime);
 
+    this->HandleInput(deltaTime);
+
     // Save old location to calculate actual movement vector.
     CCoord<> oldLocation = this->m_Location;
 
@@ -24,19 +26,15 @@ void CPlayer::Update(CBoard &board, int deltaTime)
     this->UpdateTextureType(oldLocation);
 
     // Plating action.
-    if (this->m_IsPlanting)
+    if (this->m_Input.IsPlanting())
     { this->TryPlaceBomb(board); }
-
-    // Clean input.
-    this->m_IsPlanting = false;
-    this->m_Movement = CCoord<>(0, 0);
 }
 
 /*====================================================================================================================*/
 void CPlayer::VerticalMove(CBoard &board)
 {
     CCoord<> oldLocation = this->m_Location;
-    this->m_Location.m_Y += (this->m_Speed * this->m_Movement.m_Y);
+    this->m_Location.m_Y += (this->m_Speed * this->m_Input.GetMovement().m_Y);
 
     // Check collisions
     if (!this->CellIsFree(board, this->m_Location))
@@ -45,7 +43,7 @@ void CPlayer::VerticalMove(CBoard &board)
         // Try center horizontal position if horizontal direction is none
         // This handles problems with turning. When the player is close to turn I will try to center his position to allow him turn this direction.
         if (m_Movement.m_X == 0)
-        { this->HorizontalCenter(board, static_cast<int>(this->m_Movement.m_Y)); }
+        { this->HorizontalCenter(board, static_cast<int>(this->m_Input.GetMovement().m_Y)); }
     }
 }
 
@@ -53,7 +51,7 @@ void CPlayer::VerticalMove(CBoard &board)
 void CPlayer::HorizontalMove(CBoard &board)
 {
     CCoord<> oldLocation = this->m_Location;
-    this->m_Location.m_X += (this->m_Speed * this->m_Movement.m_X);
+    this->m_Location.m_X += (this->m_Speed * this->m_Input.GetMovement().m_X);
 
     // Check collisions
     if (!this->CellIsFree(board, this->m_Location))
@@ -62,7 +60,7 @@ void CPlayer::HorizontalMove(CBoard &board)
         // Try center horizontal position if horizontal direction is 0.
         // This handles problems with turning. When the player is close to turn I will try to center his position to allow him turn this direction.
         if (m_Movement.m_Y == 0)
-        { this->VerticalCenter(board, static_cast<int>(this->m_Movement.m_X)); }
+        { this->VerticalCenter(board, static_cast<int>(this->m_Input.GetMovement().m_X)); }
     }
 }
 
@@ -73,18 +71,17 @@ void CPlayer::VerticalCenter(CBoard &board, int direction)
     double decPart, intpart;
     decPart = modf(this->m_Location.m_Y, &intpart);
 
-    // Turn smoothly when player is very close to empty cell
+    // Turn smoothly down when player is very close to empty cell
     if ((decPart >= CPlayer::MIN_TURNING_VALUE) &&
         board.IsPassable(CCoord<unsigned int>(this->m_Location.m_X + direction, std::ceil(this->m_Location.m_Y)),
                          *this))
     {
         this->m_Location.m_Y = std::min(this->m_Location.m_Y + this->m_Speed, std::ceil(this->m_Location.m_Y));
-
-    } else if ((decPart <= CPlayer::MAX_TURNING_VALUE) && board.IsPassable(
-            CCoord<unsigned int>(this->m_Location.m_X + direction, std::floor(this->m_Location.m_Y)), *this))
-    {
-        this->m_Location.m_Y = std::max(this->m_Location.m_Y - this->m_Speed, std::floor(this->m_Location.m_Y));
     }
+        // Turn smoothly up
+    else if ((decPart <= CPlayer::MAX_TURNING_VALUE) && board.IsPassable(
+            CCoord<unsigned int>(this->m_Location.m_X + direction, std::floor(this->m_Location.m_Y)), *this))
+    { this->m_Location.m_Y = std::max(this->m_Location.m_Y - this->m_Speed, std::floor(this->m_Location.m_Y)); }
 
 }
 
@@ -110,44 +107,15 @@ void CPlayer::HorizontalCenter(CBoard &board, int direction)
 }
 
 /*====================================================================================================================*/
-void CPlayer::HandleInput(const Uint8 *keyState)
+void CPlayer::HandleInput(int deltaTime)
 {
     // Handle input when the player is alive
     if (this->m_IsAlive && !this->m_LevelUp)
-    {
-        // movement
-        if (keyState[this->m_Controls.m_Up])
-        { this->m_Movement.m_Y = -1; }
-        else if (keyState[this->m_Controls.m_Down])
-        { this->m_Movement.m_Y = 1; }
+    { this->m_Input.Update(deltaTime); }
+    else
+    { this->m_Input.Reset(); }
 
-        if (keyState[this->m_Controls.m_Left])
-        { this->m_Movement.m_X = -1; }
-        else if (keyState[this->m_Controls.m_Right])
-        { this->m_Movement.m_X = 1; }
-
-        // Planting action
-        if (keyState[this->m_Controls.m_PlaceBomb] && this->m_PlantingAvaible)
-        {
-            this->m_IsPlanting = true;
-            this->m_PlantingAvaible = false;
-        }
-            // Planting is not avaible until the button is released
-        else if (!keyState[this->m_Controls.m_PlaceBomb])
-        { this->m_PlantingAvaible = true; }
-
-        // Detonating action
-        if (keyState[this->m_Controls.m_Detonation] && this->m_DetonatingAvaible)
-        {
-            this->m_DetonatingAvaible = false;
-            this->m_IsDetonating = true;
-        } else if (keyState[this->m_Controls.m_Detonation] && this->m_IsDetonating && !this->m_DetonatingAvaible)
-        { this->m_IsDetonating = false; }
-
-            // Detonating is not avaible until the button is released
-        else if (!keyState[this->m_Controls.m_Detonation])
-        { this->m_DetonatingAvaible = true; }
-    }
+    this->m_Movement = this->m_Input.GetMovement();
 }
 
 /*====================================================================================================================*/
@@ -166,9 +134,9 @@ unsigned int CPlayer::TryKill(unsigned int distance)
     if (this->m_IsAlive)
     {
         this->m_Lives--;
-         this->m_IsAlive = false;
+        this->m_IsAlive = false;
 
-         return 1;
+        return 1;
     }
 
     return 0;
@@ -196,9 +164,9 @@ void CPlayer::UpdateTextureType(CCoord<> oldLocation)
         else
         { diff.m_X = 0; }
     }
-    // Player is not moving. Use input movement direction to setup animation.
-       else
-       { diff = -1 * this->m_Movement; }
+        // Player is not moving. Use input movement direction to setup animation.
+    else
+    { diff = -1 * this->m_Input.GetMovement(); }
 
     // Set right texture by movement vector.
     if (diff.m_X < -this->m_Speed)

@@ -38,6 +38,7 @@ public:
      * Change displayed text.
      * @param interface Interface to be used.
      * @param text Text to be set.
+     * @param color Color to be set.
      */
     void SetText(CSDLInterface &interface, const std::string &text, CCoord<> size = {0, 0},
                  SDL_Color color = {255, 255, 255, 255});
