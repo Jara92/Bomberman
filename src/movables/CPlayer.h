@@ -1,6 +1,5 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
 
 #pragma once
@@ -26,7 +25,7 @@ public:
     explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size, CInput controls,
                      double speed = 0.0025, int lives = 3)
             : CMovable(std::move(texturePack), size, location, speed, false, false, lives), m_Score(0),
-              m_ExplosionRadius(1), m_MaxBombs(10), m_ActiveBombs(0), m_RemoteExplosion(true), m_FireImmunity(false),
+              m_ExplosionRadius(1), m_MaxBombs(1), m_ActiveBombs(0), m_RemoteExplosion(false), m_FireImmunity(false),
               m_LevelUp(false), m_Input(controls)
     {}
 
@@ -47,16 +46,14 @@ public:
 
     virtual void CollisionWith(CMovable & movable) override ;
 
-    /** Kill the player. */
+    /** Kill to kill the player. */
     virtual unsigned int TryKill(unsigned int distance = 0) override;
 
     virtual void NextLevel(CBoard &board, bool clearLevelObjects) override;
 
-    /**======================
-    * Boost interface.
-    =========================*/
-    void IncreseScore(std::size_t ammount)
-    { this->m_Score += ammount; }
+    /* Boost interface. */
+    void IncreseScore(std::size_t amount)
+    { this->m_Score += amount; }
 
     void SpeedUp()
     { this->m_Speed *= CPlayer::SPEED_UP; }
@@ -142,6 +139,8 @@ protected:
     static constexpr double MIN_TURNING_VALUE = 0.5, MAX_TURNING_VALUE = 0.5;
     static constexpr double SPEED_UP = 1.1;
 
+    virtual void UpdateTextureType(CCoord<> oldLocation ) override ;
+
     /**
      * Handle keyboard input.
      * @param deltaTime Delta time.
@@ -179,7 +178,5 @@ protected:
     * @param direction Direction
     */
     void HorizontalCenter(CBoard &board, int direction);
-
-    virtual void UpdateTextureType(CCoord<> oldLocation ) override ;
 };
 

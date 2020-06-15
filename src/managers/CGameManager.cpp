@@ -167,7 +167,11 @@ void CGameManager::Update(int deltaTime)
     { this->m_RoundOverText->Update(this->m_Interface, deltaTime); }
         // Update next round text.
     else if (this->m_GameStatus == EGameStatus::GAME_STATUS_NEXT_ROUND)
-    { this->m_NextRoundText->Update(this->m_Interface, deltaTime); }
+    {
+        this->m_NextRoundText->SetText("Round " + std::to_string(this->m_Level) + "!",
+                                       3 * this->m_DefaultFontSize, this->m_NextRoundText->GetColor());
+        this->m_NextRoundText->Update(this->m_Interface, deltaTime);
+    }
         // Update game over text.
     else if (this->m_GameStatus == EGameStatus::GAME_STATUS_GAME_OVER)
     {
@@ -238,7 +242,6 @@ void CGameManager::UpdateEvents()
                 return;
         }
 
-        std::cout << delay << std::endl;
         // Set new callback.
         this->m_GameStatusDelay.Run(delay, callBack);
     }
@@ -296,8 +299,6 @@ void CGameManager::GameOver()
 void CGameManager::NextRound()
 {
     this->m_Level++;
-    this->m_NextRoundText->SetText("Round " + std::to_string(this->m_Level) + "!",
-                                   3 * this->m_DefaultFontSize, this->m_NextRoundText->GetColor());
 
     // End game if this was last level.
     if (this->m_Level > CGameManager::GAME_LEVELS_COUNT)
@@ -341,7 +342,7 @@ void CGameManager::GlobalInput(const Uint8 *input)
         }
             // Destroy every destructible wall.
         else if (input[SDL_SCANCODE_F2])
-        {this->m_Board->DestroyEveryDestructibleWall();        }
+        { this->m_Board->DestroyEveryDestructibleWall(); }
             // Inkrement score.
         else if (input[SDL_SCANCODE_F3])
         {
