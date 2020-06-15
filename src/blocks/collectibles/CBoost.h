@@ -51,8 +51,8 @@ public:
 
     virtual void Apply(CPlayer *player);
 
-    /** Reset the object and prepare for a next round. */
-    /*  virtual void Reset(CBoard & board)
+    /** NextLevel the object and prepare for a next round. */
+    /*  virtual void NextLevel(CBoard & board)
       {}*/
 
 protected:

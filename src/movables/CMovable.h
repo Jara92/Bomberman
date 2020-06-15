@@ -82,8 +82,8 @@ public:
     void DeactivateWallPass()
     { this->m_BombPass = false; }
 
-    /** Reset the object and prepare for a next round. */
-    virtual void Reset(CBoard &board);
+    /** NextLevel the object and prepare for a next round. */
+    virtual void NextLevel(CBoard &board);
 
     /**
     * Are these objects colliding?

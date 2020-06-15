@@ -39,7 +39,7 @@ public:
      */
     void Update(int deltaTime);
 
-    /** Reset input.     */
+    /** NextLevel input.     */
     void Reset()
     {
         this->m_IsPlanting = this->m_IsDetonating = false;

@@ -143,9 +143,9 @@ unsigned int CPlayer::TryKill(unsigned int distance)
 }
 
 /*====================================================================================================================*/
-void CPlayer::Reset(CBoard &board)
+void CPlayer::NextLevel(CBoard &board)
 {
-    CMovable::Reset(board);
+    CMovable::NextLevel(board);
     this->m_ActiveBombs = 0;
     this->m_LevelUp = false;
 }

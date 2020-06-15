@@ -6,7 +6,7 @@
 
 void CInput::Update(int deltaTime)
 {
-    // Reset old input.
+    // NextLevel old input.
     this->m_IsDetonating = this->m_IsPlanting = false;
     this->m_Movement = CCoord<>(0, 0);
 

@@ -21,7 +21,8 @@ public:
     CText(CSDLInterface &interface, CCoord<> location, const std::string &text, int fontSize,
           SDL_Color color = {255, 255, 255, 255}
     ) : CInterfaceItem(location), m_Texture(NULL), m_Text(""), m_FontSize(0), m_Color()
-    { this->SetText(text, fontSize, color); this->Refresh(interface);}
+    { this->SetText(text, fontSize, color);
+        this->ReloadContent(interface);}
 
     virtual ~CText()
     { SDL_DestroyTexture(this->m_Texture); }
@@ -35,7 +36,7 @@ public:
     virtual void Draw(CSDLInterface &interface) override
     { interface.RenderTexture(this->m_Texture, this->m_Location, this->m_Size); }
 
-    virtual void Refresh(CSDLInterface &interface) override;
+    virtual void ReloadContent(CSDLInterface &interface) override;
 
     /**
      * Change displayed text.

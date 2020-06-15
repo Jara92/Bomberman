@@ -23,7 +23,7 @@ CText::SetText(const std::string &text, int fontSize, SDL_Color color = {255, 25
     this->m_IsActual = false;
 }
 
-void CText::Refresh(CSDLInterface &interface)
+void CText::ReloadContent(CSDLInterface &interface)
 {
     // Delete old texture
     if (this->m_Texture != NULL)

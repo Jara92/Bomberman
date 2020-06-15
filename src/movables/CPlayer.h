@@ -49,7 +49,7 @@ public:
     /** Kill the player. */
     virtual unsigned int TryKill(unsigned int distance = 0) override;
 
-    virtual void Reset(CBoard &board) override;
+    virtual void NextLevel(CBoard &board) override;
 
     /**======================
     * Boost interface.

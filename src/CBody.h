@@ -43,7 +43,7 @@ public:
     */
     bool IsColliding(CCoord<> aLocation, CCoord<> aSize, CCoord<> bLocation, CCoord<> bSize) const;
 
-    /** Reset the object and prepare for a next round. */
+    /** NextLevel the object and prepare for a next round. */
     void Reset()
     {
         this->m_AnimationIndex = this->m_AnimationTimer = 0;

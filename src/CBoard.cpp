@@ -141,7 +141,7 @@ bool CBoard::PlaceBomb(CPlayer *player)
     int delay = (player->GetRemoteExplosion() ? CBomb::TRIGGER_EXPLOSION_DELAY : CBomb::AUTO_EXPLOSION_DELAY);
 
     CBomb *bomb = new CBomb(this->m_BombObjectTexturePack,
-                            this->m_BombObjectTexturePack->GetTextureSize() + CCoord<>(0.05, 0.05), player,
+                            CCoord<>(1,1), player,
                             delay, player->GetRemoteExplosion());
     this->SetMapItem(bomb, location);
 
@@ -265,7 +265,7 @@ void CBoard::PrepareBoard(bool clearLevelObjects, std::vector<CCollectible *> &c
         if (clearLevelObjects)
         { delete (*object); }
         /*else
-        {(*object)->Reset(*this);}*/
+        {(*object)->NextLevel(*this);}*/
     }
 
     if (clearLevelObjects)
@@ -273,7 +273,7 @@ void CBoard::PrepareBoard(bool clearLevelObjects, std::vector<CCollectible *> &c
 
     // Rerun players locations
     for (size_t i = 0; i < this->m_Players.size(); i++)
-    { this->m_Players[i]->Reset(*this); }
+    { this->m_Players[i]->NextLevel(*this); }
 
     this->m_BombsToExplode.clear();
 }

@@ -24,7 +24,7 @@ std::vector<std::pair<ETextureType, CCoord<double>>> CEnemy::GetPossibleMoveDire
    //  std::cout << "Avaibles:=================" << std::endl;
     for (unsigned int i = 0; i < directions.size(); i++)
     {
-        this->m_Location += (directions[i].second * 5 * this->m_Speed);
+        this->m_Location += (directions[i].second * 48 * this->m_Speed);
 
         if (this->CellIsFree(board, this->m_Location))
         {
@@ -58,9 +58,9 @@ void CEnemy::Update(CBoard &board, int deltaTime)
 }
 
 /*====================================================================================================================*/
-void CEnemy::Reset(CBoard &board)
+void CEnemy::NextLevel(CBoard &board)
 {
-    CMovable::Reset(board);
+    CMovable::NextLevel(board);
 
     // Set random location for this enemy.
     CCoord<unsigned int> random;

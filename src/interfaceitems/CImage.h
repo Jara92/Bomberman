@@ -18,7 +18,7 @@ public:
      */
     CImage(CSDLInterface & interface, CCoord <>location, CCoord<> size, std::string texturePath)
     : CInterfaceItem(location, size), m_Texture(NULL), m_TexturePath(texturePath)
-    { this->Refresh(interface);   }
+    { this->ReloadContent(interface);   }
 
     virtual ~CImage()
     {SDL_DestroyTexture(this->m_Texture);}
@@ -32,7 +32,7 @@ public:
     virtual void Draw(CSDLInterface &interface)
     {interface.RenderTexture(this->m_Texture, this->m_Location, this->m_Size);}
 
-    virtual void Refresh(CSDLInterface & interface) override
+    virtual void ReloadContent(CSDLInterface & interface) override
     {
         if(this->m_Texture)
         {SDL_DestroyTexture(this->m_Texture);}

@@ -38,7 +38,7 @@ public:
     virtual void Update(CSDLInterface & interface, int deltaTime)
     {
         if(!this->m_IsActual)
-        {this->Refresh(interface);}
+        { this->ReloadContent(interface);}
     }
 
     /**
@@ -48,10 +48,10 @@ public:
     virtual void Draw(CSDLInterface &interface) = 0;
 
     /**
-     * Refresh object state.
+     * ReloadContent object content.
      * @param interface
      */
-    virtual void Refresh(CSDLInterface & interface)
+    virtual void ReloadContent(CSDLInterface & interface)
     {}
 
     /**

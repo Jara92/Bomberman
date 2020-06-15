@@ -38,7 +38,7 @@ public:
      */
     virtual void Update(CBoard &board, int deltaTime) override;
 
-    virtual void Reset(CBoard & board);
+    virtual void NextLevel(CBoard & board);
 
     virtual unsigned int TryKill(unsigned int distance) = 0;
 

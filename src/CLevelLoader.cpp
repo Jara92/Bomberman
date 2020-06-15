@@ -382,14 +382,14 @@ CLevelLoader::ReadProperty(const std::vector<std::string> &input, std::vector<st
 /*====================================================================================================================*/
 void CLevelLoader::ReorganizeLevelObjects(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> &collectibles)
 {
-    // Reset all collectibles (random location, attach to random wall...)
+    // NextLevel all collectibles (random location, attach to random wall...)
     for (auto collectible = collectibles.begin(); collectible != collectibles.end(); collectible++)
     { (*collectible)->Reset(*board); }
     collectibles.clear();
 
-    // Reset all objects (random location, attach to random wall...)
+    // NextLevel all objects (random location, attach to random wall...)
     for (auto object = board->m_Movables.begin(); object != board->m_Movables.end(); object++)
-    { (*object)->Reset(*board); }
+    { (*object)->NextLevel(*board); }
 }
 
 /*====================================================================================================================*/
@@ -468,7 +468,7 @@ void CLevelLoader::CreateEnemy(std::shared_ptr<CBoard> &board, EEnemyType type, 
                                std::size_t score, double speed, bool wallPass)
 {
     unsigned int typeInt = static_cast<unsigned int>(type);
-    CCoord<> enemySize = CCoord<>(0.80, 0.80);
+    CCoord<> enemySize = CCoord<>(0.85, 0.85);
 
     switch (type)
     {
