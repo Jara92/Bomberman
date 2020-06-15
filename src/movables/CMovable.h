@@ -68,9 +68,9 @@ public:
      */
     virtual unsigned int TryKill(unsigned int distance = 0) = 0;
 
-    virtual void CollisionWith(CCoord<unsigned int > blockLocation, CBlock & block) = 0;
+    virtual void CollisionWith(CCoord<unsigned int> blockLocation, CBlock &block) = 0;
 
-    virtual void CollisionWith(CMovable & moavable) = 0;
+    virtual void CollisionWith(CMovable &moavable) = 0;
 
     bool GetWallPass() const
     { return this->m_WallPass; }
@@ -144,7 +144,18 @@ protected:
     CCoord<> m_Movement;
     int m_Lives;
 
-    virtual void UpdateTextureByMovement(CCoord<> diff = {0, 0});
+    /**
+    * Update the displayed texture according to the real movement.
+    * @param oldLocation Original position before starting the movement.
+    */
+    virtual void UpdateTextureType(CCoord<> oldLocation)
+    { this->UpdateTextureByMovement(oldLocation - this->m_Location); }
+
+    /**
+     * Update texture type by difference between the old and the new position.
+     * @param diff difference between the old and the new position.
+     */
+    void UpdateTextureByMovement(CCoord<> diff = {0, 0});
 
     /** Is current location free? */
     virtual bool CellIsFree(CBoard &board, CCoord<> location) const;

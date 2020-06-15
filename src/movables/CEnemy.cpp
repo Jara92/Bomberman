@@ -5,26 +5,22 @@
 #include "CEnemy.h"
 #include "../CBoard.h"
 
-std::vector<std::pair<ETextureType, CCoord<double>>> CEnemy::GetPossibleMoveDirections(CBoard &board)
+std::vector<CCoord<double>> CEnemy::GetPossibleMoveDirections(CBoard &board)
 {
     CCoord<> oldLocation = this->m_Location;
 
-    std::vector<std::pair<ETextureType, CCoord<double>>> outputDirections;
+    std::vector<CCoord<double>> outputDirections;
     // Create directional vectors and texture types.
     double correction = (1 - 2 * this->m_Speed);
-    std::vector<std::pair<ETextureType, CCoord<>>> directions = {{ETextureType::TEXTURE_FRONT, CCoord<double>(0,
-                                                                                                              correction)},
-                                                                 {ETextureType::TEXTURE_BACK,  CCoord<double>(0,
-                                                                                                              -correction)},
-                                                                 {ETextureType::TEXTURE_RIGHT, CCoord<double>(
-                                                                         correction, 0)},
-                                                                 {ETextureType::TEXTURE_LEFT,  CCoord<double>(
-                                                                         -correction, 0)}};
+    std::vector<CCoord<>> directions = {{CCoord<double>(0, correction)},
+                                        {CCoord<double>(0, -correction)},
+                                        {CCoord<double>(correction, 0)},
+                                        {CCoord<double>(-correction, 0)}};
     // Test every directional vector.
     //  std::cout << "Avaibles:=================" << std::endl;
     for (unsigned int i = 0; i < directions.size(); i++)
     {
-        this->m_Location += (directions[i].second * 48 * this->m_Speed);
+        this->m_Location += (directions[i] * 48 * this->m_Speed);
 
         if (this->CellIsFree(board, this->m_Location))
         {

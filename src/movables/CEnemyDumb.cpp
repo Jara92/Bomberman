@@ -12,10 +12,14 @@ void CEnemyDumb::Update(CBoard &board, int deltaTime)
     CEnemy::Update(board, deltaTime);
     this->m_DeadTimer.Tick(deltaTime);
 
+    CCoord<> oldLocation = this->m_Location;
+
     if (this->m_IsAlive)
     {
         this->WalkAround(board, deltaTime);
     }
+
+    this->UpdateTextureType(oldLocation);
 }
 
 /*====================================================================================================================*/
@@ -79,8 +83,7 @@ void CEnemyDumb::WalkAround(CBoard &board, int deltaTime)
 
                 // Choose random direction and set new movemnt and texture type.
                 unsigned int random = randomEngine() % directions.size();
-                this->m_Movement = directions[random].second;
-                this->m_Body.SetActualTextureType(directions[random].first);
+                this->m_Movement = directions[random];
 
                 this->m_Location += (this->m_Movement * this->m_Speed);
             }

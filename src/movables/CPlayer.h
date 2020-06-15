@@ -26,7 +26,7 @@ public:
     explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size, CInput controls,
                      double speed = 0.0025, int lives = 3)
             : CMovable(std::move(texturePack), size, location, speed, false, false, lives), m_Score(0),
-              m_ExplosionRadius(1), m_MaxBombs(1), m_ActiveBombs(0), m_RemoteExplosion(false), m_FireImmunity(false),
+              m_ExplosionRadius(1), m_MaxBombs(10), m_ActiveBombs(0), m_RemoteExplosion(true), m_FireImmunity(false),
               m_LevelUp(false), m_Input(controls)
     {}
 
@@ -180,10 +180,6 @@ protected:
     */
     void HorizontalCenter(CBoard &board, int direction);
 
-    /**
-     * Update the displayed texture according to the real movement of the player.
-     * @param oldLocation Original position before starting the movement.
-     */
-    void UpdateTextureType(CCoord<> oldLocation);
+    virtual void UpdateTextureType(CCoord<> oldLocation ) override ;
 };
 
