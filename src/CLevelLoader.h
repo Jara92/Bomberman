@@ -132,13 +132,14 @@ protected:
 
     /**
      * Create new CCollectible at random location and attach it to CWall.
+     * @param board Game board.
      * @param collectibles Collectibles list.
      * @param type Collectible type.
      * @param score Score to be achieved.
      * @param duration Collectible duration.
      * @throws std::invalid_argument Unknown collectible type.
      */
-    void CreateCollectible(std::vector<CCollectible *> &collectibles, ECollectibleType type, std::size_t score,
+    void CreateCollectible(std::shared_ptr<CBoard> &board,std::vector<CCollectible *> &collectibles, ECollectibleType type, std::size_t score,
                            std::size_t duration);
 
     /**

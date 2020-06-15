@@ -10,10 +10,8 @@
 void CCollectible::NextLevel(CBoard &board, bool clearLevelObjects)
 {
     if (clearLevelObjects)
-    {
-        this->m_IsDestroyed = true;
-        std::cout << "collectible destroyed" << std::endl;
-    } else
+    { this->m_IsDestroyed = true; }
+    else
     {
         this->m_IsVisible = false;
 

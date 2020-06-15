@@ -62,14 +62,12 @@ void CEnemy::NextLevel(CBoard &board, bool clearLevelObjects)
 {
     CMovable::NextLevel(board, clearLevelObjects);
 
-    //std::cout << "next level"<<std::endl;
-
     // Destroy object if required.
     if (clearLevelObjects)
     { this->m_IsDestroyed = true;  }
     // Move ene
     else
-    {  /* std::cout << "random location"<<std::endl;*/
+    {
         // Set random location for this enemy.
         CCoord<unsigned int> random;
         do

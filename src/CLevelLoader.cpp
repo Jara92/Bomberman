@@ -32,10 +32,9 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool 
         collectibles.clear();
 
         this->LoadLevelFile(board, level, collectibles);
-    }
-
-    // Random location for every collectable and enemy object.
-    this->ReorganizeLevelObjects(board, collectibles);
+    } else
+        // Random location for every collectable and enemy object.
+    { this->ReorganizeLevelObjects(board, collectibles); }
 
 
     return true;
@@ -46,7 +45,7 @@ std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, const std::shar
 {
     // calc cellsize
     unsigned int cellSize = static_cast<unsigned int>((settings->GetGameScreenSize().m_Y) /
-                                    (CLevelLoader::MAP_HEIGHT + settings->GetOffset().m_Y));
+                                                      (CLevelLoader::MAP_HEIGHT + settings->GetOffset().m_Y));
 
     // Create new board using loaded objects.
     return std::make_shared<CBoard>(settings, this->LoadMap(), this->LoadPlayers(playersCount),
@@ -164,7 +163,7 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
                                                                                      {textures}};
 
     // Setup default locations
-    CCoord<> startingLocation[CLevelLoader::MAX_PLAYERS] = {{1,  1},
+    CCoord<> startingLocation[CLevelLoader::MAX_PLAYERS] = {{1, 1},
                                                             {21, 11}};
     std::vector<CPlayer *> players;
 
@@ -382,11 +381,11 @@ CLevelLoader::ReadProperty(const std::vector<std::string> &input, std::vector<st
 }
 
 /*====================================================================================================================*/
-void CLevelLoader::ReorganizeLevelObjects(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> &collectibles )
+void CLevelLoader::ReorganizeLevelObjects(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> &collectibles)
 {
     // NextLevel all collectibles (random location, attach to random wall...)
     for (auto collectible = collectibles.begin(); collectible != collectibles.end(); collectible++)
-    { (*collectible)->NextLevel(*board,false ); } //TODO
+    { (*collectible)->NextLevel(*board, false); }
     collectibles.clear();
 
     // NextLevel all objects (random location, attach to random wall...)
@@ -396,7 +395,7 @@ void CLevelLoader::ReorganizeLevelObjects(std::shared_ptr<CBoard> &board, std::v
 
 /*====================================================================================================================*/
 void
-CLevelLoader::CreateCollectible(std::vector<CCollectible *> &collectibles, ECollectibleType type, std::size_t score,
+CLevelLoader::CreateCollectible(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> &collectibles, ECollectibleType type, std::size_t score,
                                 std::size_t duration)
 {
     // Lamda which are used to apply / deactivate collectable item.
@@ -462,7 +461,10 @@ CLevelLoader::CreateCollectible(std::vector<CCollectible *> &collectibles, EColl
     }
 
     if (newCollectible)
-    { collectibles.push_back(newCollectible); }
+    {
+        newCollectible->NextLevel(*board, false);
+        collectibles.push_back(newCollectible);
+    }
 }
 
 /*====================================================================================================================*/
@@ -472,20 +474,26 @@ void CLevelLoader::CreateEnemy(std::shared_ptr<CBoard> &board, EEnemyType type, 
     unsigned int typeInt = static_cast<unsigned int>(type);
     CCoord<> enemySize = CCoord<>(0.85, 0.85);
 
+    CEnemy *newEnemy = nullptr;
+
     switch (type)
     {
         case EEnemyType::ENEMY_TYPE_DUMP:
-            board->m_Movables.push_back(
-                    new CEnemyDumb(this->m_EnemyTexturePacks[typeInt], CCoord<>(0, 0), enemySize, score, speed,
-                                   wallPass, lives));
+            newEnemy = new CEnemyDumb(this->m_EnemyTexturePacks[typeInt], CCoord<>(0, 0), enemySize, score, speed,
+                                      wallPass, lives);
             break;
         case EEnemyType::ENEMY_TYPE_SMART:
-            board->m_Movables.push_back(
-                    new CEnemySmart(this->m_EnemyTexturePacks[typeInt], CCoord<>(0, 0), enemySize, score, speed,
-                                    wallPass, lives));
+            newEnemy = new CEnemySmart(this->m_EnemyTexturePacks[typeInt], CCoord<>(0, 0), enemySize, score, speed,
+                                       wallPass, lives);
             break;
         default:
             throw std::invalid_argument(MESSAGE_UNKNOWN_ENEMY_TYPE);
+    }
+
+    if (newEnemy)
+    {
+        newEnemy->NextLevel(*board, false);
+        board->m_Movables.push_back(newEnemy);
     }
 }
 
@@ -509,7 +517,7 @@ bool CLevelLoader::ReadItem(std::shared_ptr<CBoard> &board, const std::vector<st
 
             ECollectibleType collectibleType = static_cast<ECollectibleType >(collectibleTypeId);
 
-            this->CreateCollectible(collectibles, collectibleType, score, duration);
+            this->CreateCollectible(board, collectibles, collectibleType, score, duration);
         }
             // Enemy+ std::to_string(" ")
         else if (itemType == "enemy" && input.size() == ENEMY_ITEM_PROPERTIES_COUNT)
