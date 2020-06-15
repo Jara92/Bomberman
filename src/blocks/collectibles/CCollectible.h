@@ -48,7 +48,11 @@ public:
      */
     virtual void Apply(CPlayer *player) = 0;
 
-    virtual void PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player) override;
+    virtual void PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player) override
+    {
+        if (this->IsColliding(thisLocation, player))
+        { this->Apply(&player); }
+    }
 
     /** Make collectible object visible */
     void MakeVisible()

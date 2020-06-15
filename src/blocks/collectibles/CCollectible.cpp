@@ -7,12 +7,6 @@
 #include "CCollectible.h"
 #include "../../CBoard.h"
 
-void CCollectible::PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player)
-{
-    if (this->IsColliding(thisLocation, player))
-    { this->Apply(&player); }
-}
-
 void CCollectible::NextLevel(CBoard &board, bool clearLevelObjects)
 {
     if (clearLevelObjects)
@@ -21,7 +15,6 @@ void CCollectible::NextLevel(CBoard &board, bool clearLevelObjects)
         std::cout << "collectible destroyed" << std::endl;
     } else
     {
-        std::cout << "rand" << std::endl;
         this->m_IsVisible = false;
 
         // Atach this collectible to new existing and destructible Wall which has not collectible yet.

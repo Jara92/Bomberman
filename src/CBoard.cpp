@@ -33,8 +33,6 @@ CBoard::~CBoard()
     { delete this->m_Movables[i]; }
     this->m_Movables.clear();
 
-    /* for (size_t i = 0; i < this->m_Players.size(); i++)
-     { delete this->m_Players[i]; }*/
     this->m_Players.clear();
 }
 
@@ -228,7 +226,7 @@ void CBoard::UpdatePhysicEvents()
 /*====================================================================================================================*/
 void CBoard::PrepareBoard(bool clearLevelObjects, std::vector<CCollectible *> &collectibles)
 {
-    // Delete walls
+    // Prepare CBlocks.
     for (size_t i = 0; i < this->m_BoardSize.m_X; i++)
     {
         for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
@@ -237,42 +235,30 @@ void CBoard::PrepareBoard(bool clearLevelObjects, std::vector<CCollectible *> &c
 
             if (item)
             {
-                if (item->HasCollectible() && item != item->GetCollectible())
-                { item->NextLevel(*this, clearLevelObjects); }
+                CCollectible *itemCollectible = item->GetCollectible();
 
+                // Item has collectible.
                 if (item->HasCollectible())
                 {
-                    if (clearLevelObjects)
-                    { delete item->GetCollectible(); }
-                    else
-                    { collectibles.push_back(item->GetCollectible()); this->m_Map[i][j] = nullptr; }
-                }
+                    collectibles.push_back(itemCollectible);
 
-                if (item->IsDestroyed())
+                    // Item is collectible
+                    if (itemCollectible == item)
+                    { this->m_Map[i][j] = item = nullptr; }
+                    else
+                    { item->NextLevel(*this, clearLevelObjects); }
+                }
+                // Item has not collectible.
+                else
+                { item->NextLevel(*this, clearLevelObjects); }
+
+                // Delete block if it was destroyed.
+                if (item && item->IsDestroyed())
                 {
                     delete this->m_Map[i][j];
                     this->m_Map[i][j] = nullptr;
                 }
             }
-
-            /*if (item && item->HasCollectible())
-            {
-                // Insert every CCollectible in vector.
-                collectibles.push_back(item->GetCollectible());
-                if (item == item->GetCollectible())
-                {
-                    // Remove CCollectible block from 2D array but we do not want to delete it. We may use it later.
-                    this->m_Map[i][j] = nullptr;
-                    item = nullptr;
-                }
-            }
-
-            // Delete every destructible objects.
-            if (this->m_Map[i][j] && this->m_Map[i][j]->IsExplodable())
-            {
-                delete this->m_Map[i][j];
-                this->m_Map[i][j] = nullptr;
-            }*/
         }
     }
 
@@ -341,7 +327,7 @@ void CBoard::SetMapItem(CBlock *block, CCoord<unsigned int> location)
         location.m_Y < 0 || location.m_Y >= CBoard::m_BoardSize.m_Y)
     { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
 
-    // Kill and delete old block.
+    // Delete old block.
     if (this->m_Map[location.m_X][location.m_Y])
     {
         this->m_Map[location.m_X][location.m_Y]->Kill();
