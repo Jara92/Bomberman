@@ -46,7 +46,7 @@ public:
     virtual void NextLevel(CBoard &board, bool clearLevelObjects) override
     { this->m_IsDestroyed = true; }
 
-    virtual void PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player) override;
+    virtual void CollisionWith(CCoord<unsigned int> thisLocation, CPlayer &player) override;
 
     /**
      * Get bombs owner.

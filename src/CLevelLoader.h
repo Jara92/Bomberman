@@ -109,7 +109,7 @@ protected:
      * Move every collectible to random location and attach it to assign it to the wall in the same position.
      * @param board Game board.
      */
-    void ReorganizeLevelObjects(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> &collectibles);
+    void NextRoundPrepare(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> &collectibles);
 
     /**
      * Read one property from the input array.

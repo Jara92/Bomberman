@@ -22,7 +22,7 @@ public:
     { this->Reset(); }
 
     /**
-     * Rerun clock status.
+     * Reset clock status.
      */
     void Reset()
     {

@@ -7,7 +7,6 @@
 
 #include <cmath>
 #include <set>
-#include "../interfaceitems/CText.h"
 #include "CMovable.h"
 #include "../CInput.h"
 
@@ -44,7 +43,9 @@ public:
     */
     virtual void Update(CBoard &board, int deltaTime) override;
 
-//    virtual void CollisionWith(CGameObject &other) override ;
+    virtual void CollisionWith(CCoord<unsigned int > blockLocation, CBlock & block) override ;
+
+    virtual void CollisionWith(CMovable & movable) override ;
 
     /** Kill the player. */
     virtual unsigned int TryKill(unsigned int distance = 0) override;

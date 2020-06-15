@@ -22,7 +22,7 @@ void CCollectible::NextLevel(CBoard &board, bool clearLevelObjects)
         {
             randomWallLocation = board.GetRandomBoardLocation();
             randomWall = board.GetMapItem(randomWallLocation);
-        } while (!randomWall || !randomWall->IsExplodable() || randomWall->HasCollectible());
+        } while (!randomWall || !randomWall->IsExplodeable() || randomWall->HasCollectible());
 
         randomWall->AttachCollectible(this);
     }

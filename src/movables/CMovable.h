@@ -6,8 +6,11 @@
 
 #include <memory>
 #include "../CBody.h"
+#include "../CTimer.h"
 
 class CBoard;
+
+class CBlock;
 
 class CMovable
 {
@@ -64,6 +67,10 @@ public:
      * @return Score to be achieved.
      */
     virtual unsigned int TryKill(unsigned int distance = 0) = 0;
+
+    virtual void CollisionWith(CCoord<unsigned int > blockLocation, CBlock & block) = 0;
+
+    virtual void CollisionWith(CMovable & moavable) = 0;
 
     bool GetWallPass() const
     { return this->m_WallPass; }
@@ -136,6 +143,8 @@ protected:
 
     CCoord<> m_Movement;
     int m_Lives;
+
+    virtual void UpdateTextureByMovement(CCoord<> diff = {0, 0});
 
     /** Is current location free? */
     virtual bool CellIsFree(CBoard &board, CCoord<> location) const;

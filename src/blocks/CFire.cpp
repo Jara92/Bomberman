@@ -11,20 +11,42 @@ void CFire::Update(CBoard &board, int deltaTime)
 {
     CBlock::Update(board, deltaTime);
 
-    // Update duration counter and destroy fire.
-    this->m_DurationCounter += deltaTime;
-
-    // Destroy this fire
-    if (this->m_DurationCounter > this->m_Duration)
-    { this->m_IsAlive = false; }
+    this->m_ExpirationTimer.Tick(deltaTime);
 }
+
 /*====================================================================================================================*/
-void CFire::PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player)
+void CFire::CollisionWith(CCoord<unsigned int> thisLocation, CPlayer &player)
 {
-    if(this->IsColliding(thisLocation, player))
+    if (this->IsColliding(thisLocation, player))
     {
         // Kill the player if he doesnt have fire imunity.
-        if(!player.GetFireImunity())
-        {player.TryKill();}
+        if (!player.GetFireImunity())
+        { player.TryKill(); }
     }
 }
+
+/*====================================================================================================================*/
+void CFire::CollisionWith(CCoord<unsigned int> thisLocation, CEnemy &enemy)
+{
+    if (this->IsColliding(thisLocation, enemy))
+    {
+        unsigned int scoreToBeAchieved = enemy.TryKill(0);
+
+        if (this->m_Owner)
+        { this->m_Owner->IncreseScore(scoreToBeAchieved); }
+    }
+}
+
+/*====================================================================================================================*/
+CFire::CFire(std::shared_ptr<CTexturePack> texturePack, CPlayer *owner, CCoord<> size, unsigned int duration)
+        : CBlock(std::move(texturePack), true, size), m_Owner(owner)
+{
+    // Run the timer which will destroy this object after the duration expires.
+    this->m_ExpirationTimer.Run(duration, [=](void)
+    {
+        this->m_IsAlive = false;
+        this->m_IsDestroyed = true;
+    });
+}
+
+

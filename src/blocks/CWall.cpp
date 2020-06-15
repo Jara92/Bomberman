@@ -4,7 +4,7 @@
 
 #include "CWall.h"
 
-bool CWall::TryDestroy(unsigned int distance)
+bool CWall::TryExplode(unsigned int distance)
 {
     if (this->m_IsExplodable)
     {

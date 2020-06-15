@@ -238,6 +238,7 @@ void CGameManager::UpdateEvents()
                 return;
         }
 
+        std::cout << delay << std::endl;
         // Set new callback.
         this->m_GameStatusDelay.Run(delay, callBack);
     }
@@ -270,7 +271,7 @@ void CGameManager::RoundOver()
     {
         this->m_LevelLoader.LoadLevel(this->m_Board, this->m_Level, false);
         this->UpdateStatus();
-        this->m_GameEndDelay.Rerun();
+        this->m_GameEndDelay.Reset();
     });
 }
 
@@ -313,7 +314,7 @@ void CGameManager::NextRound()
     {
         this->m_LevelLoader.LoadLevel(this->m_Board, this->m_Level, true);
         this->UpdateStatus();
-        this->m_GameEndDelay.Rerun();
+        this->m_GameEndDelay.Reset();
     });
 }
 

@@ -10,33 +10,49 @@
 void CEnemyDumb::Update(CBoard &board, int deltaTime)
 {
     CEnemy::Update(board, deltaTime);
+    this->m_DeadTimer.Tick(deltaTime);
 
-    this->WalkAround(board, deltaTime);
+    if (this->m_IsAlive)
+    {
+        this->WalkAround(board, deltaTime);
+    }
 }
 
 /*====================================================================================================================*/
 unsigned int CEnemyDumb::TryKill(unsigned int distance)
 {
-    this->m_Lives--;
-
-    // Check lives of the monster
-    if (this->m_Lives <= 0)
+    if (this->m_IsAlive)
     {
-        this->m_IsAlive = false;
-        int score = this->m_Score;
-        // Set score to 0 to make sure player doesn't get it more than once
-        this->m_Score = 0;
+        this->m_Lives--;
 
-        return score;
+        // Check lives of the monster
+        if (this->m_Lives <= 0)
+        {
+            this->m_IsAlive = false;
+            this->m_Movement = CCoord<>(0, 0);
+
+            int score = this->m_Score;
+            // Set score to 0 to make sure player doesn't get it more than once
+            this->m_Score = 0;
+
+            // Destroy the object with a delay.
+            this->m_DeadTimer.Run(CEnemy::ENEMY_DESTROY_DELAY, [=](void)
+            {
+                this->m_IsDestroyed = true;
+            });
+
+            return score;
+        }
     }
 
     return 0;
 }
+
 /*====================================================================================================================*/
-void CEnemyDumb::WalkAround(CBoard & board, int deltaTime)
+void CEnemyDumb::WalkAround(CBoard &board, int deltaTime)
 {
     // Move deltaTime times.
-    for(int i = 0; i < deltaTime; i++)
+    for (int i = 0; i < deltaTime; i++)
     {
         // Save old location and move.
         CCoord<> oldLocation = this->m_Location;

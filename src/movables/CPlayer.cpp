@@ -6,6 +6,7 @@
 
 #include "CPlayer.h"
 #include "../CBoard.h"
+#include "../blocks/CBlock.h"
 
 /*====================================================================================================================*/
 void CPlayer::Update(CBoard &board, int deltaTime)
@@ -168,14 +169,18 @@ void CPlayer::UpdateTextureType(CCoord<> oldLocation)
     else
     { diff = -1 * this->m_Input.GetMovement(); }
 
-    // Set right texture by movement vector.
-    if (diff.m_X < -this->m_Speed)
-    { this->m_Body.SetActualTextureType(ETextureType::TEXTURE_RIGHT); }
-    else if (diff.m_X > this->m_Speed)
-    { this->m_Body.SetActualTextureType(ETextureType::TEXTURE_LEFT); }
-    else if (diff.m_Y < -this->m_Speed)
-    { this->m_Body.SetActualTextureType(ETextureType::TEXTURE_FRONT); }
-    else if (diff.m_Y > this->m_Speed)
-    { this->m_Body.SetActualTextureType(ETextureType::TEXTURE_BACK); }
+    CMovable::UpdateTextureByMovement(diff);
 }
-
+/*====================================================================================================================*/
+void CPlayer::CollisionWith(CCoord<unsigned int> blockLocation, CBlock &block)
+{
+    block.CollisionWith(blockLocation, *this);
+}
+/*====================================================================================================================*/
+void CPlayer::CollisionWith(CMovable &movable)
+{
+    if (this->IsColliding(movable))
+    {
+        std::cout << "collision player" << std::endl;
+    }
+}

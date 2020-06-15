@@ -34,7 +34,7 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool 
         this->LoadLevelFile(board, level, collectibles);
     } else
         // Random location for every collectable and enemy object.
-    { this->ReorganizeLevelObjects(board, collectibles); }
+    { this->NextRoundPrepare(board, collectibles); }
 
 
     return true;
@@ -381,7 +381,7 @@ CLevelLoader::ReadProperty(const std::vector<std::string> &input, std::vector<st
 }
 
 /*====================================================================================================================*/
-void CLevelLoader::ReorganizeLevelObjects(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> &collectibles)
+void CLevelLoader::NextRoundPrepare(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> &collectibles)
 {
     // NextLevel all collectibles (random location, attach to random wall...)
     for (auto collectible = collectibles.begin(); collectible != collectibles.end(); collectible++)

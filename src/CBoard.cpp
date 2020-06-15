@@ -74,7 +74,7 @@ void CBoard::Update(int deltaTime)
                 auto bomb = this->m_BombsToExplode.find((this->m_Map[i][j]));
 
                 if (bomb != this->m_BombsToExplode.end())
-                { this->CreateExplosion((*bomb), CCoord<unsigned int>(i, j)); }
+                { this->CreateExplosion(*(*bomb), CCoord<unsigned int>(i, j)); }
                 else if (this->m_Map[i][j]->IsAlive())
                 { this->m_Map[i][j]->Update(*this, deltaTime); }
             }
@@ -111,6 +111,44 @@ void CBoard::Update(int deltaTime)
 }
 
 /*====================================================================================================================*/
+void CBoard::UpdatePhysicEvents()
+{
+    CCoord<int> directions[5] = {CCoord<int>(0, 0), CCoord<int>(0, 1), CCoord<int>(0, -1), CCoord<int>(1, 0),
+                                 CCoord<int>(-1, 0)};
+
+    // Movable collisions with blocks.
+    for (auto movable = this->m_Movables.begin(); movable != this->m_Movables.end(); movable++)
+    {
+        if (*movable && (*movable)->IsAlive())
+        {
+            // Check collisions with objects around the movable.
+            for (unsigned int i = 0; i < 5; i++)
+            {
+                CCoord<unsigned int> blockLocation = ((*movable)->GetLocationCell().ToInt() +
+                                                      directions[i]).ToUnsignedInt();
+                CBlock *block = this->GetMapItem(blockLocation);
+                // Check collision and do apply block on the movable when colliding.
+                if (block)
+                { (*movable)->CollisionWith(blockLocation, *block); }
+            }
+        }
+    }
+
+    // Movable collisions with movables.
+    for (auto movable = this->m_Movables.begin(); movable != this->m_Movables.end() - 1; movable++)
+    {
+        auto nextMovable = (movable + 1);
+        while (nextMovable != this->m_Movables.end())
+        {
+            if ((*movable) && (*nextMovable))
+            { (*movable)->CollisionWith(*(*nextMovable)); }
+            nextMovable++;
+        }
+    }
+
+}
+
+/*====================================================================================================================*/
 bool CBoard::IsPassable(CCoord<unsigned int> coord, const CMovable &movable)
 {
     CBlock *block = this->GetMapItem(coord);
@@ -142,11 +180,9 @@ bool CBoard::PlaceBomb(CPlayer *player)
 }
 
 /*====================================================================================================================*/
-void CBoard::CreateExplosion(CBomb *bomb, CCoord<unsigned int> bombLocation)
+void CBoard::CreateExplosion(CBomb &bomb, CCoord<unsigned int> bombLocation)
 {
-    if (bomb)
-    {
-        CPlayer *owner = bomb->GetOwner();
+        CPlayer *owner = bomb.GetOwner();
 
         // Remove the bomb.
         this->SetMapItem(nullptr, bombLocation);
@@ -158,16 +194,15 @@ void CBoard::CreateExplosion(CBomb *bomb, CCoord<unsigned int> bombLocation)
             // Explosion in all directions.
             CCoord<int> directions[4] = {CCoord<int>(0, 1), CCoord<int>(0, -1), CCoord<int>(1, 0), CCoord<int>(-1, 0)};
             for (int i = 0; i < 4; i++)
-            { this->CreateExplosionWave(bombLocation, directions[i], explosionRadius); }
+            { this->CreateExplosionWave(bombLocation, directions[i], explosionRadius, owner); }
         }
 
         // Remove from the list of requests.
-        this->m_BombsToExplode.erase(bomb);
-    }
+        this->m_BombsToExplode.erase(&bomb);
 }
 
 /*====================================================================================================================*/
-void CBoard::CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> direction, unsigned int explosionRadius)
+void CBoard::CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> direction, unsigned int explosionRadius, CPlayer * owner)
 {
     for (unsigned int i = 0; i <= explosionRadius; i++)
     {
@@ -175,14 +210,14 @@ void CBoard::CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> 
 
         // Target exists and its not destructible.
         CBlock *target = this->GetMapItem(locationToExplode);
-        if ((target && !target->IsExplodable()))
+        if ((target && !target->IsExplodeable()))
         { break; /* Leave for loop - The wave was stopped by this indestructible wall.*/        }
 
         bool wallDestroyed = false;
 
         if (target)
         {
-            if (target->TryDestroy(i) && !target->IsAlive())
+            if (target->TryExplode(i) && !target->IsAlive())
             {
                 if (target->HasCollectible())
                 { break; /* Leave for loop - The wave was stopped by targets attached collectible object. */ }
@@ -192,34 +227,11 @@ void CBoard::CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> 
         }
 
         // Create new fire.
-        CFire *fire = new CFire(this->m_FireObjectTexturePack, this->m_FireObjectTexturePack->GetTextureSize());
+        CFire *fire = new CFire(this->m_FireObjectTexturePack, owner, this->m_FireObjectTexturePack->GetTextureSize());
         this->SetMapItem(fire, locationToExplode);
 
         if (wallDestroyed)
         { break; /* Explosion was stopped by destroyed wall. */ }
-    }
-}
-
-/*====================================================================================================================*/
-void CBoard::UpdatePhysicEvents()
-{
-    CCoord<int> directions[5] = {CCoord<int>(0, 0), CCoord<int>(0, 1), CCoord<int>(0, -1), CCoord<int>(1, 0),
-                                 CCoord<int>(-1, 0)};
-    for (auto player = this->m_Players.begin(); player != this->m_Players.end(); player++)
-    {
-        if ((*(player)) && (*(player))->IsAlive())
-        {
-            CCoord<unsigned int> playerCenterCell = (*player)->GetLocationCell();
-
-            // Check collisions with objects around the player.
-            for (unsigned int i = 0; i < 5; i++)
-            {
-                CCoord<unsigned int> blockLocation = (playerCenterCell.ToInt() + directions[i]).ToUnsignedInt();
-                CBlock *block = this->GetMapItem(blockLocation);
-                if (block)
-                { block->PlayerCollision(blockLocation, *(*player)); }
-            }
-        }
     }
 }
 
@@ -248,7 +260,7 @@ void CBoard::PrepareBoard(bool clearLevelObjects, std::vector<CCollectible *> &c
                     else
                     { item->NextLevel(*this, clearLevelObjects); }
                 }
-                // Item has not collectible.
+                    // Item has not collectible.
                 else
                 { item->NextLevel(*this, clearLevelObjects); }
 
@@ -344,7 +356,7 @@ void CBoard::DestroyEveryDestructibleWall()
     {
         for (unsigned int j = 0; j < this->GetBoardSize().m_Y; j++)
         {
-            if (this->m_Map[i][j] && this->m_Map[i][j]->TryDestroy(0))
+            if (this->m_Map[i][j] && this->m_Map[i][j]->TryExplode(0))
             {
                 // Destroy detructible wall and plant collectible.
                 CCoord<unsigned int> itemLocation = CCoord<unsigned int>(i, j);

@@ -97,15 +97,17 @@ public:
      * Trigger explosion in bombs location.
      * @param bomb Exploding bomb.
      */
-    void CreateExplosion(CBomb *bomb, CCoord<unsigned int> bombLocation);
+    void CreateExplosion(CBomb &bomb, CCoord<unsigned int> bombLocation);
 
     /**
      * Trigger explosion in one direction.
      * @param bombLocation Source bomb location.
      * @param direction Direction vector.
      * @param explosionRadius Explosion radius.
+     * @param owner Fire owner. The owner receives a score for killed enemies.
      */
-    void CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> direction, unsigned int explosionRadius);
+    void CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> direction, unsigned int explosionRadius,
+                             CPlayer *owner);
 
     void DestroyEveryDestructibleWall();
 

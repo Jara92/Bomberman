@@ -35,9 +35,9 @@ public:
 
     virtual bool IsPassable(CCoord<unsigned int> thisLocation, const CMovable &movable) const override;
 
-    virtual bool TryDestroy(unsigned int distance) override;
+    virtual bool TryExplode(unsigned int distance) override;
 
-    virtual bool IsExplodable() const override
+    virtual bool IsExplodeable() const override
     { return this->m_IsExplodable; }
 
     virtual void AttachCollectible(CCollectible *collectible) override

@@ -23,7 +23,7 @@ public:
     explicit CEnemy(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size = CCoord<>(1, 1),
                     int score = 100, double speed = 0.005, bool wallPass = false, int lives = 1)
             : CMovable(std::move(texturePack), size, location, speed, wallPass, false, lives), m_Score(score)
-    {}
+    {    }
 
     CEnemy(const CEnemy &other) = default;
 
@@ -38,20 +38,27 @@ public:
      */
     virtual void Update(CBoard &board, int deltaTime) override;
 
-    virtual void NextLevel(CBoard & board, bool clearLevelObjects) override ;
+    virtual void CollisionWith(CCoord<unsigned int> blockLocation, CBlock &block) override;
+
+    virtual void CollisionWith(CMovable &movable) override;
+
+    virtual void NextLevel(CBoard &board, bool clearLevelObjects) override;
 
     virtual unsigned int TryKill(unsigned int distance) = 0;
 
 protected:
     int m_Score;
+    CTimer m_DeadTimer;
+
+    static constexpr unsigned int ENEMY_DESTROY_DELAY = 1000;
 
     /**
      * Get avaible moving directions.
      * @param board Game board.
      * @return Avaible directions.
      */
-    std::vector<std::pair<ETextureType, CCoord<double>>> GetPossibleMoveDirections(CBoard &board) ;
+    std::vector<std::pair<ETextureType, CCoord<double>>> GetPossibleMoveDirections(CBoard &board);
 
-    CCoord<> FindWayOut(CBoard * board);
+    CCoord<> FindWayOut(CBoard *board);
 };
 

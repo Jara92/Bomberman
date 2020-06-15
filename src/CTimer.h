@@ -1,6 +1,5 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
 
 #pragma once
@@ -8,17 +7,16 @@
 #include <iostream>
 #include <functional>
 
-/**
- * Counter.
- */
 class CTimer
 {
 public:
     /**
-     * Constructor.
+     * Timer constructor. Timer is not running until Run() method is called.
+     * @param value Value to be counted.
+     * @param callBack Callback function which will be called when the timer is done.
      */
-    CTimer()
-            : m_Time(0), m_InitTime(0), m_IsOn(false), m_CallBackCalled(false)
+    CTimer(unsigned int value = 0, std::function<void(void)> callBack = {})
+            : m_ActualTime(0), m_TargetTime(value), m_IsOn(false), m_CallBackCalled(std::move(callBack))
     {}
 
     /**
@@ -29,7 +27,7 @@ public:
     bool Tick(int deltaTime)
     {
         if (this->m_IsOn)
-        { this->m_Time -= deltaTime; }
+        { this->m_ActualTime += deltaTime; }
 
         bool done = this->Done();
 
@@ -48,34 +46,31 @@ public:
      * @return True - timer is done
      */
     bool Done() const
-    { return (this->m_Time <= 0); }
+    { return (this->m_ActualTime >= this->m_TargetTime); }
 
-    /**
-     * Run counter again with same parameters.
-     * @param initValue  Time in millisecond.
-     */
-    void Rerun(int initValue = 0)
+    /** Run counter again with same parameters. */
+    void Reset()
     {
         this->m_IsOn = true;
         this->m_CallBackCalled = false;
 
-        if (initValue == 0)
-        { initValue = this->m_InitTime; }
-        else
-        { this->m_InitTime = initValue; }
-
-        this->m_Time = initValue;
+        this->m_ActualTime = 0;
     }
+
+    /** Start the timer using the existing parameters. */
+    void Run()
+    { this->Run(this->m_TargetTime, this->m_Callback); }
 
     /**
      * Turn on timer countdown.
      * @param value Value to be counted.
      * @param callBack Callback function which will be called when the timer is done.
      */
-    void Run(int value, std::function<void(void)> callBack = {})
+    void Run(unsigned int value, std::function<void(void)> callBack = {})
     {
         this->m_IsOn = true;
-        this->m_Time = this->m_InitTime = value;
+        this->m_ActualTime = 0;
+        this->m_TargetTime = value;
         this->m_Callback = std::move(callBack);
         this->m_CallBackCalled = false;
     }
@@ -101,16 +96,13 @@ public:
 
     /**
      * Get remaining time to be counted.
-     * @return Time in milliseconds.
+     * @return Remaining time in milliseconds.
      */
     int GetRemainingTime() const
-    { return std::max(0, this->m_Time); }
-
-    std::function<void(void)> GetCallback() const
-    { return this->m_Callback; }
+    { return ((this->m_TargetTime > this->m_ActualTime) ? (this->m_TargetTime - this->m_ActualTime) : 0); }
 
 protected:
-    int m_Time, m_InitTime;
+    unsigned int m_ActualTime, m_TargetTime;
     bool m_IsOn;
     bool m_CallBackCalled;
 

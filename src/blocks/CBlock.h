@@ -6,6 +6,7 @@
 #pragma once
 
 #include <memory>
+#include "../CTimer.h"
 #include "../CBody.h"
 #include "../movables/CMovable.h"
 #include "../CSDLInterface.h"
@@ -41,7 +42,7 @@ public:
     * Try to destroy the wall.
     * @param distance Distance from the bomb.
     */
-    virtual bool TryDestroy(unsigned int distance)
+    virtual bool TryExplode(unsigned int distance)
     { return false; }
 
     /**
@@ -60,10 +61,10 @@ public:
     bool IsColliding(CCoord<unsigned int> thisLocation, const CMovable &other) const
     { return this->m_Body.IsColliding(thisLocation.ToDouble(), this->m_Size, other.GetLocation(), other.GetSize()); }
 
-    virtual void PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player)
+    virtual void CollisionWith(CCoord<unsigned int> thisLocation, CPlayer &player)
     {}
 
-    virtual void EnemyCollision(CCoord<unsigned int> thisLocation, CEnemy &enemy)
+    virtual void CollisionWith(CCoord<unsigned int> thisLocation, CEnemy &enemy)
     {}
 
     /**
@@ -97,7 +98,7 @@ public:
      * Is this wall destructible?
     * @return True - is destructible.
     */
-    virtual bool IsExplodable() const
+    virtual bool IsExplodeable() const
     { return false; }
 
     /**

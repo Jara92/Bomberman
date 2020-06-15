@@ -51,10 +51,12 @@ void CEnemy::Update(CBoard &board, int deltaTime)
     CMovable::Update(board, deltaTime);
 
     // Calibrate not moving dimension to integer.
-    if (this->m_Movement.m_X == 0)
-    { this->m_Location.m_X = std::floor(this->m_Location.m_X); }
+    if (this->m_Movement == CCoord<>(0, 0))
+    { return; }
+    else if (this->m_Movement.m_X == 0)
+    { this->m_Location.m_X = std::max(std::floor(this->m_Location.m_X), this->m_Location.m_X - this->m_Speed); }
     else if (this->m_Movement.m_Y == 0)
-    { this->m_Location.m_Y = std::floor(this->m_Location.m_Y); }
+    { this->m_Location.m_Y = std::max(std::floor(this->m_Location.m_Y), this->m_Location.m_Y - this->m_Speed); }
 }
 
 /*====================================================================================================================*/
@@ -64,8 +66,8 @@ void CEnemy::NextLevel(CBoard &board, bool clearLevelObjects)
 
     // Destroy object if required.
     if (clearLevelObjects)
-    { this->m_IsDestroyed = true;  }
-    // Move ene
+    { this->m_IsDestroyed = true; }
+        // Move ene
     else
     {
         // Set random location for this enemy.
@@ -75,5 +77,20 @@ void CEnemy::NextLevel(CBoard &board, bool clearLevelObjects)
         while (!board.PositionFree(random) || !board.PlayersAreaFree(random, CPlayer::ENEMY_SAVE_ZONE));
 
         this->SetLocation(random.ToDouble());
+    }
+}
+
+/*====================================================================================================================*/
+void CEnemy::CollisionWith(CCoord<unsigned int> blockLocation, CBlock &block)
+{
+    block.CollisionWith(blockLocation, *this);
+}
+
+/*====================================================================================================================*/
+void CEnemy::CollisionWith(CMovable &movable)
+{
+    if (this->IsColliding(movable))
+    {
+        std::cout << "collision enemy" << std::endl;
     }
 }

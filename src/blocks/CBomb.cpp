@@ -42,7 +42,7 @@ void CBomb::Explode(CBoard &board)
 }
 
 /*====================================================================================================================*/
-void CBomb::PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player)
+void CBomb::CollisionWith(CCoord<unsigned int> thisLocation, CPlayer &player)
 {
     // Make bomb unpassable for owner once he leaves bomb area.
     if (!this->IsColliding(thisLocation, player) && &player == this->m_Owner)
