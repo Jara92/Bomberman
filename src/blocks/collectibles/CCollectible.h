@@ -40,13 +40,13 @@ public:
         { CBlock::Draw(interface, cellSize, location, offset); }
     }
 
+    virtual void NextLevel(CBoard &board, bool clearLevelObjects) override;
+
     /**
      * Apply collectible on the player.
      * @param player Target player
      */
     virtual void Apply(CPlayer *player) = 0;
-
-    virtual void Reset(CBoard &board);
 
     virtual void PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player) override;
 
@@ -60,7 +60,7 @@ public:
     virtual CCollectible *GetCollectible()
     { return this; }
 
-    virtual bool IsDestructible() const override
+    virtual bool IsExplodable() const override
     { return false; }
 
 protected:

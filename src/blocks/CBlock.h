@@ -27,7 +27,8 @@ public:
     * @param size Object size.
     */
     CBlock(std::shared_ptr<CTexturePack> texturePack, bool isPassable, CCoord<> size)
-            : m_Body(std::move(texturePack), 100), m_Size(size), m_IsAlive(true), m_IsPassable(isPassable)
+            : m_Body(std::move(texturePack), 100), m_Size(size), m_IsAlive(true), m_IsDestroyed(false),
+              m_IsPassable(isPassable)
     {}
 
     CBlock(const CBlock &other) = default;
@@ -85,10 +86,18 @@ public:
     { this->m_Body.Draw(interface, cellSize, location, this->m_Size, offset); }
 
     /**
+    * Prepare block for next level.
+    * @param board Game board.
+    * @param clearLevelObjects Objects associated with the level will be deleted.
+    */
+    virtual void NextLevel(CBoard &board, bool clearLevelObjects)
+    {}
+
+    /**
      * Is this wall destructible?
     * @return True - is destructible.
     */
-    virtual bool IsDestructible() const
+    virtual bool IsExplodable() const
     { return false; }
 
     /**
@@ -111,12 +120,15 @@ public:
     bool IsAlive() const
     { return this->m_IsAlive; }
 
+    bool IsDestroyed() const
+    { return this->m_IsDestroyed; }
+
     void Kill()
     { this->m_IsAlive = false; }
 
 protected:
     CBody m_Body;
     CCoord<> m_Size;
-    bool m_IsAlive, m_IsPassable;
+    bool m_IsAlive, m_IsDestroyed, m_IsPassable;
 };
 

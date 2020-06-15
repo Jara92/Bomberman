@@ -16,6 +16,7 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool 
 {
     std::vector<CCollectible *> collectibles;
 
+    // Prepare board for next level.
     board->PrepareBoard(loadLevelFile, collectibles);
 
     // Generate random obstacles.
@@ -36,6 +37,7 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool 
     // Random location for every collectable and enemy object.
     this->ReorganizeLevelObjects(board, collectibles);
 
+
     return true;
 }
 
@@ -43,7 +45,7 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool 
 std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, const std::shared_ptr<CSettings> &settings)
 {
     // calc cellsize
-    int cellSize = static_cast<int>((settings->GetGameScreenSize().m_Y) /
+    unsigned int cellSize = static_cast<unsigned int>((settings->GetGameScreenSize().m_Y) /
                                     (CLevelLoader::MAP_HEIGHT + settings->GetOffset().m_Y));
 
     // Create new board using loaded objects.
@@ -380,16 +382,16 @@ CLevelLoader::ReadProperty(const std::vector<std::string> &input, std::vector<st
 }
 
 /*====================================================================================================================*/
-void CLevelLoader::ReorganizeLevelObjects(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> &collectibles)
+void CLevelLoader::ReorganizeLevelObjects(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> &collectibles )
 {
     // NextLevel all collectibles (random location, attach to random wall...)
     for (auto collectible = collectibles.begin(); collectible != collectibles.end(); collectible++)
-    { (*collectible)->Reset(*board); }
+    { (*collectible)->NextLevel(*board,false ); } //TODO
     collectibles.clear();
 
     // NextLevel all objects (random location, attach to random wall...)
     for (auto object = board->m_Movables.begin(); object != board->m_Movables.end(); object++)
-    { (*object)->NextLevel(*board); }
+    { (*object)->NextLevel(*board, false); }
 }
 
 /*====================================================================================================================*/

@@ -21,7 +21,7 @@ std::vector<std::pair<ETextureType, CCoord<double>>> CEnemy::GetPossibleMoveDire
                                                                  {ETextureType::TEXTURE_LEFT,  CCoord<double>(
                                                                          -correction, 0)}};
     // Test every directional vector.
-   //  std::cout << "Avaibles:=================" << std::endl;
+    //  std::cout << "Avaibles:=================" << std::endl;
     for (unsigned int i = 0; i < directions.size(); i++)
     {
         this->m_Location += (directions[i].second * 48 * this->m_Speed);
@@ -29,7 +29,7 @@ std::vector<std::pair<ETextureType, CCoord<double>>> CEnemy::GetPossibleMoveDire
         if (this->CellIsFree(board, this->m_Location))
         {
             outputDirections.push_back(directions[i]);
-             //  std::cout << "avaible: " << i << " - " << directions[i].second << std::endl;
+            //  std::cout << "avaible: " << i << " - " << directions[i].second << std::endl;
         }
 
         this->m_Location = oldLocation;
@@ -58,15 +58,24 @@ void CEnemy::Update(CBoard &board, int deltaTime)
 }
 
 /*====================================================================================================================*/
-void CEnemy::NextLevel(CBoard &board)
+void CEnemy::NextLevel(CBoard &board, bool clearLevelObjects)
 {
-    CMovable::NextLevel(board);
+    CMovable::NextLevel(board, clearLevelObjects);
 
-    // Set random location for this enemy.
-    CCoord<unsigned int> random;
-    do
-    { random = board.GetRandomBoardLocation(); }
-    while (!board.PositionFree(random) || !board.PlayersAreaFree(random, CPlayer::ENEMY_SAVE_ZONE));
+    //std::cout << "next level"<<std::endl;
 
-    this->SetLocation(random.ToDouble());
+    // Destroy object if required.
+    if (clearLevelObjects)
+    { this->m_IsDestroyed = true;  }
+    // Move ene
+    else
+    {  /* std::cout << "random location"<<std::endl;*/
+        // Set random location for this enemy.
+        CCoord<unsigned int> random;
+        do
+        { random = board.GetRandomBoardLocation(); }
+        while (!board.PositionFree(random) || !board.PlayersAreaFree(random, CPlayer::ENEMY_SAVE_ZONE));
+
+        this->SetLocation(random.ToDouble());
+    }
 }

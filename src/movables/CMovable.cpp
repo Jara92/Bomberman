@@ -22,7 +22,7 @@ bool CMovable::CellIsFree(CBoard &board, CCoord<> location) const
 }
 
 /*====================================================================================================================*/
-void CMovable::NextLevel(CBoard &board)
+void CMovable::NextLevel(CBoard &board, bool clearLevelObjects)
 {
     this->m_Body.Reset();
     this->m_Location = this->m_StartingLocation;

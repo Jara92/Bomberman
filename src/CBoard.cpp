@@ -33,8 +33,8 @@ CBoard::~CBoard()
     { delete this->m_Movables[i]; }
     this->m_Movables.clear();
 
-    for (size_t i = 0; i < this->m_Players.size(); i++)
-    { delete this->m_Players[i]; }
+    /* for (size_t i = 0; i < this->m_Players.size(); i++)
+     { delete this->m_Players[i]; }*/
     this->m_Players.clear();
 }
 
@@ -54,18 +54,11 @@ void CBoard::Draw(CSDLInterface &interface, CCoord<> offset)
         }
     }
 
+    // TODO změnit pořadí renderu tak, aby nejdříve byly renderovány objekty, které jsou vespod.
     for (auto i = this->m_Movables.begin(); i != this->m_Movables.end(); i++)
     {
         if (*i)
         { (*i)->Draw(interface, this->m_CellSize, offset); }
-    }
-
-    // TODO změnit pořadí renderu tak, aby nejdříve byly renderovány objekty, které jsou vespod.
-    // draw players
-    for (size_t i = 0; i < this->m_Players.size(); i++)
-    {
-        if (this->m_Players[i])
-        { this->m_Players[i]->Draw(interface, this->m_CellSize, offset); }
     }
 }
 
@@ -100,21 +93,23 @@ void CBoard::Update(int deltaTime)
         }
     }
 
-    // Update movables objects.
-    for (auto item = this->m_Movables.begin(); item != this->m_Movables.end(); /* item++*/)
+    auto movable = this->m_Movables.begin();
+    while (movable != this->m_Movables.end())
     {
-        // Save iterator to current item and increment control variable.
-        auto currentItem = item++;
-        if (*currentItem && (*currentItem)->IsAlive())
-        { (*currentItem)->Update(*this, deltaTime); }
-            // Remove nullptr or dead item.
+        // Update objects which are not destroyed.
+        if (*movable && !(*movable)->IsDestroyed())
+        {
+            (*movable)->Update(*this, deltaTime);
+            movable++;
+        }
+            // Remove nullptr or destroyed objects.
         else
-        { this->m_Movables.erase(currentItem); }
+        {
+            delete (*movable);
+            *movable = nullptr;
+            movable = this->m_Movables.erase(movable);
+        }
     }
-
-    // Update players
-    for (size_t i = 0; i < this->m_Players.size(); i++)
-    { this->m_Players[i]->Update(*this, deltaTime); }
 }
 
 /*====================================================================================================================*/
@@ -141,7 +136,7 @@ bool CBoard::PlaceBomb(CPlayer *player)
     int delay = (player->GetRemoteExplosion() ? CBomb::TRIGGER_EXPLOSION_DELAY : CBomb::AUTO_EXPLOSION_DELAY);
 
     CBomb *bomb = new CBomb(this->m_BombObjectTexturePack,
-                            CCoord<>(1,1), player,
+                            CCoord<>(1, 1), player,
                             delay, player->GetRemoteExplosion());
     this->SetMapItem(bomb, location);
 
@@ -182,7 +177,7 @@ void CBoard::CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> 
 
         // Target exists and its not destructible.
         CBlock *target = this->GetMapItem(locationToExplode);
-        if ((target && !target->IsDestructible()))
+        if ((target && !target->IsExplodable()))
         { break; /* Leave for loop - The wave was stopped by this indestructible wall.*/        }
 
         bool wallDestroyed = false;
@@ -239,7 +234,28 @@ void CBoard::PrepareBoard(bool clearLevelObjects, std::vector<CCollectible *> &c
         for (size_t j = 0; j < this->m_BoardSize.m_Y; j++)
         {
             CBlock *item = this->GetMapItem(CCoord<unsigned int>(i, j));
-            if (item && item->HasCollectible())
+
+            if (item)
+            {
+                if (item->HasCollectible() && item != item->GetCollectible())
+                { item->NextLevel(*this, clearLevelObjects); }
+
+                if (item->HasCollectible())
+                {
+                    if (clearLevelObjects)
+                    { delete item->GetCollectible(); }
+                    else
+                    { collectibles.push_back(item->GetCollectible()); this->m_Map[i][j] = nullptr; }
+                }
+
+                if (item->IsDestroyed())
+                {
+                    delete this->m_Map[i][j];
+                    this->m_Map[i][j] = nullptr;
+                }
+            }
+
+            /*if (item && item->HasCollectible())
             {
                 // Insert every CCollectible in vector.
                 collectibles.push_back(item->GetCollectible());
@@ -252,28 +268,34 @@ void CBoard::PrepareBoard(bool clearLevelObjects, std::vector<CCollectible *> &c
             }
 
             // Delete every destructible objects.
-            if (this->m_Map[i][j] && this->m_Map[i][j]->IsDestructible())
+            if (this->m_Map[i][j] && this->m_Map[i][j]->IsExplodable())
             {
                 delete this->m_Map[i][j];
                 this->m_Map[i][j] = nullptr;
-            }
+            }*/
         }
     }
 
-    for (auto object = this->m_Movables.begin(); object != this->m_Movables.end(); object++)
+    // Prepare movables for new level.
+    auto movable = this->m_Movables.begin();
+    while (movable != this->m_Movables.end())
     {
-        if (clearLevelObjects)
-        { delete (*object); }
-        /*else
-        {(*object)->NextLevel(*this);}*/
+        // Update objects which are not destroyed.
+        if (*movable)
+        {
+            (*movable)->NextLevel(*this, clearLevelObjects);
+
+            // TODO !movable nemůže nastat
+            // Remove nullptr or destroyed objects.
+            if (!(*movable) || (*movable)->IsDestroyed())
+            {
+                delete (*movable);
+                *movable = nullptr;
+                movable = this->m_Movables.erase(movable);
+            } else
+            { movable++; }
+        }
     }
-
-    if (clearLevelObjects)
-    { this->m_Movables.clear(); }
-
-    // Rerun players locations
-    for (size_t i = 0; i < this->m_Players.size(); i++)
-    { this->m_Players[i]->NextLevel(*this); }
 
     this->m_BombsToExplode.clear();
 }
@@ -328,6 +350,7 @@ void CBoard::SetMapItem(CBlock *block, CCoord<unsigned int> location)
 
     this->m_Map[location.m_X][location.m_Y] = block;
 }
+
 /*====================================================================================================================*/
 void CBoard::DestroyEveryDestructibleWall()
 {

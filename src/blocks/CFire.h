@@ -33,9 +33,12 @@ public:
 
     virtual void Update(CBoard &board, int deltaTime) override;
 
+    virtual void NextLevel(CBoard &board, bool clearLevelObjects) override
+    { this->m_IsDestroyed = true; }
+
     virtual void PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player) override;
 
-    virtual bool IsDestructible() const override
+    virtual bool IsExplodable() const override
     { return true; }
 
     virtual bool TryDestroy(unsigned int distance) override

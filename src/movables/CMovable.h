@@ -24,7 +24,8 @@ public:
     explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1),
                       CCoord<> location = CCoord<>(0, 0), double speed = 0.005, bool wallPass = false,
                       bool bombPass = false, int lives = 1)
-            : m_Body(std::move(texturePack), 100), m_Size(size), m_Location(location), m_StartingLocation(location),
+            : m_Body(std::move(texturePack), 100), m_IsAlive(true), m_IsDestroyed(false), m_Size(size),
+              m_Location(location), m_StartingLocation(location),
               m_Speed(speed), m_WallPass(wallPass), m_BombPass(bombPass), m_Movement(CCoord<>(0, 0)), m_Lives(lives)
     {}
 
@@ -82,8 +83,12 @@ public:
     void DeactivateWallPass()
     { this->m_BombPass = false; }
 
-    /** NextLevel the object and prepare for a next round. */
-    virtual void NextLevel(CBoard &board);
+    /**
+     * Prepare object for next level.
+     * @param board Game board.
+     * @param clearLevelObjects Objects associated with the level will be deleted.
+     */
+    virtual void NextLevel(CBoard &board, bool clearLevelObjects);
 
     /**
     * Are these objects colliding?
@@ -115,13 +120,16 @@ public:
     bool IsAlive() const
     { return this->m_IsAlive; }
 
+    bool IsDestroyed() const
+    { return this->m_IsDestroyed; }
+
     int GetLives() const
     { return this->m_Lives; }
 
 protected:
     CBody m_Body;
     /** Is this object passable for other objects? */
-    bool m_IsAlive;
+    bool m_IsAlive, m_IsDestroyed;
     CCoord<> m_Size, m_Location, m_StartingLocation;
     double m_Speed;
     bool m_WallPass, m_BombPass;

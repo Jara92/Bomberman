@@ -43,6 +43,9 @@ public:
 
     virtual void Update(CBoard &board, int deltaTime) override;
 
+    virtual void NextLevel(CBoard &board, bool clearLevelObjects) override
+    { this->m_IsDestroyed = true; }
+
     virtual void PlayerCollision(CCoord<unsigned int> thisLocation, CPlayer &player) override;
 
     /**

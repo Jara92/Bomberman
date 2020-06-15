@@ -31,7 +31,9 @@ public:
             : m_Players(std::move(players)), m_Map(std::move(map)), m_Settings(std::move(settings)),
               m_BoardSize(boardSize), m_CellSize(cellSize), m_GroundObject(std::move(ground)),
               m_BombObjectTexturePack(std::move(bombTexturePack)), m_FireObjectTexturePack(std::move(fireTexturePack))
-    {}
+    {
+        this->m_Movables.insert(this->m_Movables.end(), this->m_Players.begin(), this->m_Players.end());
+    }
 
     ~CBoard();
 
@@ -150,13 +152,11 @@ public:
     unsigned int GetCellSize() const
     { return this->m_CellSize; }
 
-    /** Saved objects */
+    /** We need to save pointers to players because need to know players score and lives count. */
     std::vector<CPlayer *> m_Players;
+    /** Game map saved as 2D array */
     std::vector<std::vector<CBlock *>> m_Map;
     std::vector<CMovable *> m_Movables;
-
-    /** The set of bombs that will be detonated when "CBoard::Update ()" is called */
-    std::set<CBomb *, std::less<> > m_BombsToExplode;
 
     /** Game settings */
     std::shared_ptr<CSettings> m_Settings;
@@ -169,6 +169,9 @@ protected:
     CCoord<unsigned int> m_BoardSize;
     /** Size of one cell in pixels. */
     unsigned int m_CellSize;
+
+    /** The set of bombs that will be detonated when "CBoard::Update ()" is called */
+    std::set<CBomb *, std::less<> > m_BombsToExplode;
 
     /** Ground object template */
     std::shared_ptr<CBlock> m_GroundObject;

@@ -31,6 +31,12 @@ public:
 
     CLevelLoader &operator=(const CLevelLoader &mapLoader) = delete;
 
+    /**
+     * Create game board and load players.
+     * @param playersCount How many players will be loaded?
+     * @param settings Settings object to be used.
+     * @return New game board.
+     */
     std::shared_ptr<CBoard> GetBoard(int playersCount, const std::shared_ptr<CSettings> &settings);
 
     /**
