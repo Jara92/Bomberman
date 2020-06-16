@@ -13,6 +13,8 @@ bool CWall::TryExplode(unsigned int distance)
 
         this->m_IsAlive = false;
 
+        this->m_IsDestroyed = true;
+
         return true;
     }
 

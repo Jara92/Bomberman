@@ -39,8 +39,9 @@ public:
     virtual ~CBlock() = default;
 
     /**
-    * Try to destroy the wall.
+    * Try to destroy the block.
     * @param distance Distance from the bomb.
+     * @return True - Successfully destroyed.
     */
     virtual bool TryExplode(unsigned int distance)
     { return false; }

@@ -1,12 +1,21 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
-
 
 #include "CFire.h"
 #include "../CBoard.h"
 
+CFire::CFire(std::shared_ptr<CTexturePack> texturePack, CPlayer *owner, CCoord<> size, unsigned int duration)
+        : CBlock(std::move(texturePack), true, size), m_Owner(owner)
+{
+    // Run the timer which will destroy this object after the duration expires.
+    this->m_ExpirationTimer.Run(duration, [=](void)
+    {
+        this->m_IsAlive = false;
+        this->m_IsDestroyed = true;
+    });
+}
+/*====================================================================================================================*/
 void CFire::Update(CBoard &board, int deltaTime)
 {
     CBlock::Update(board, deltaTime);
@@ -37,16 +46,6 @@ void CFire::CollisionWith(CCoord<unsigned int> thisLocation, CEnemy &enemy)
     }
 }
 
-/*====================================================================================================================*/
-CFire::CFire(std::shared_ptr<CTexturePack> texturePack, CPlayer *owner, CCoord<> size, unsigned int duration)
-        : CBlock(std::move(texturePack), true, size), m_Owner(owner)
-{
-    // Run the timer which will destroy this object after the duration expires.
-    this->m_ExpirationTimer.Run(duration, [=](void)
-    {
-        this->m_IsAlive = false;
-        this->m_IsDestroyed = true;
-    });
-}
+
 
 

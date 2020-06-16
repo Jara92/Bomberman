@@ -80,7 +80,7 @@ void CBoard::Update(int deltaTime)
             }
 
             // Delete dead objects.
-            if (this->m_Map[i][j] && !this->m_Map[i][j]->IsAlive())
+            if (this->m_Map[i][j] && /*!this->m_Map[i][j]->IsAlive()*/this->m_Map[i][j]->IsDestroyed())
             {
                 if (this->m_Map[i][j]->HasCollectible() && this->m_Map[i][j] != this->m_Map[i][j]->GetCollectible() &&
                     this->m_Map[i][j]->GetCollectible())
@@ -175,12 +175,23 @@ bool CBoard::PlaceBomb(CPlayer *player)
     if (this->GetMapItem(location) != nullptr)
     { return false; }
 
+    // We do not want to plant bombs on the other movables.
+    CBlock testBlock(this->m_BombObjectTexturePack, false,
+                     this->m_BombObjectTexturePack->GetTextureSize() + CCoord<>(0.1, 0.1));
+
+    for (auto movable = this->m_Movables.begin(); movable != this->m_Movables.end(); movable++)
+    {
+        if (testBlock.IsColliding(location, *(*movable)) && (*movable) != player)
+        { return false; }
+    }
+
     // Set explosion delay.
     int delay = (player->GetRemoteExplosion() ? CBomb::TRIGGER_EXPLOSION_DELAY : CBomb::AUTO_EXPLOSION_DELAY);
 
     CBomb *bomb = new CBomb(this->m_BombObjectTexturePack,
-                            CCoord<>(1, 1), player,
+                            this->m_BombObjectTexturePack->GetTextureSize(), player,
                             delay, player->GetRemoteExplosion());
+
     this->SetMapItem(bomb, location);
 
     return true;
@@ -378,3 +389,4 @@ void CBoard::DestroyEveryDestructibleWall()
         }
     }
 }
+

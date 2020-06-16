@@ -11,18 +11,18 @@ std::vector<CCoord<double>> CEnemy::GetPossibleMoveDirections(CBoard &board)
 
     std::vector<CCoord<double>> outputDirections;
     // Create directional vectors and texture types.
-    double correction = (1 - 2 * this->m_Speed);
-    std::vector<CCoord<>> directions = {{CCoord<double>(0, correction)},
-                                        {CCoord<double>(0, -correction)},
-                                        {CCoord<double>(correction, 0)},
-                                        {CCoord<double>(-correction, 0)}};
+    double move = (1);
+    std::vector<CCoord<>> directions = {{CCoord<double>(0, move)},
+                                        {CCoord<double>(0, -move)},
+                                        {CCoord<double>(move, 0)},
+                                        {CCoord<double>(-move, 0)}};
     // Test every directional vector.
     //  std::cout << "Avaibles:=================" << std::endl;
     for (unsigned int i = 0; i < directions.size(); i++)
     {
-        this->m_Location += (directions[i] * 48 * this->m_Speed);
+        this->m_Location += (directions[i] * 0.5);
 
-        if (this->CellIsFree(board, this->m_Location))
+        if (this->LocationIsFree(board))
         {
             outputDirections.push_back(directions[i]);
             //  std::cout << "avaible: " << i << " - " << directions[i].second << std::endl;
@@ -84,5 +84,5 @@ void CEnemy::CollisionWith(CCoord<unsigned int> blockLocation, CBlock &block)
 
 void CEnemy::CollisionWithPlayer(CPlayer &player)
 {
-    player.TryKill();
+  /*  player.TryKill();*/
 }

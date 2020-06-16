@@ -472,7 +472,7 @@ void CLevelLoader::CreateEnemy(std::shared_ptr<CBoard> &board, EEnemyType type, 
                                std::size_t score, double speed, bool wallPass)
 {
     unsigned int typeInt = static_cast<unsigned int>(type);
-    CCoord<> enemySize = CCoord<>(0.85, 0.85);
+    CCoord<> enemySize = CCoord<>(0.70, 0.70);
 
     CEnemy *newEnemy = nullptr;
 

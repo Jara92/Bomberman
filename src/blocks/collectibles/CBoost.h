@@ -51,10 +51,6 @@ public:
 
     virtual void Apply(CPlayer *player);
 
-    /** NextLevel the object and prepare for a next round. */
-    /*  virtual void NextLevel(CBoard & board)
-      {}*/
-
 protected:
     std::function<void(CPlayer *)> m_Apply;
     std::function<void(CPlayer *)> m_Deactivate;

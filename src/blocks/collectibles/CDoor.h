@@ -30,10 +30,6 @@ public:
     virtual void Update(CBoard &board, int deltaTime) override
     {}
 
-    /** NextLevel the object and prepare for a next round. */
-    /*virtual void NextLevel(CBoard & board)
-    {}*/
-
     virtual void Apply(CPlayer *player);
 
 protected:

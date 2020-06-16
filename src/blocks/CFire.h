@@ -1,6 +1,5 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
 
 #pragma once
@@ -43,9 +42,9 @@ public:
 
     virtual bool TryExplode(unsigned int distance) override
     {
-        // The fire was "recovered.
+        // The fire was "recovered".
         this->m_ExpirationTimer.Reset();
-        return false;
+        return true; // TODO Tady by mělo být asi true, protože skrze ohen by mělo jit vytvořit další ohně
     }
 
 protected:

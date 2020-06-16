@@ -21,7 +21,7 @@ void CBoost::Apply(CPlayer *player)
         { this->m_TargetPlayer = player; }
             // kill object
         else
-        { this->m_IsAlive = false; }
+        { this->m_IsAlive = false; this->m_IsDestroyed = true; }
     }
 }
 

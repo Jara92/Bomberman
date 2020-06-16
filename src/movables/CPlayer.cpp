@@ -38,7 +38,7 @@ void CPlayer::VerticalMove(CBoard &board)
     this->m_Location.m_Y += (this->m_Speed * this->m_Input.GetMovement().m_Y);
 
     // Check collisions
-    if (!this->CellIsFree(board, this->m_Location))
+    if (!this->LocationIsFree(board))
     {
         this->m_Location = oldLocation;
         // Try center horizontal position if horizontal direction is none
@@ -55,7 +55,7 @@ void CPlayer::HorizontalMove(CBoard &board)
     this->m_Location.m_X += (this->m_Speed * this->m_Input.GetMovement().m_X);
 
     // Check collisions
-    if (!this->CellIsFree(board, this->m_Location))
+    if (!this->LocationIsFree(board))
     {
         this->m_Location = oldLocation;
         // Try center horizontal position if horizontal direction is 0.

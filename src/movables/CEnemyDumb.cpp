@@ -63,7 +63,7 @@ void CEnemyDumb::WalkAround(CBoard &board, int deltaTime)
         this->m_Location += (this->m_Movement * this->m_Speed);
 
         // If enemy stands still or new location is not free.
-        if (this->m_Movement == CCoord<>(0, 0) || !this->CellIsFree(board, this->m_Location))
+        if (this->m_Movement == CCoord<>(0, 0) || !this->LocationIsFree(board))
         {
             // Recover location and get avaible directions to go.
             this->m_Location = oldLocation;
@@ -81,10 +81,19 @@ void CEnemyDumb::WalkAround(CBoard &board, int deltaTime)
                 unsigned seed = std::chrono::system_clock::now().time_since_epoch().count() * rand();
                 std::default_random_engine randomEngine(seed);
 
-                // Choose random direction and set new movemnt and texture type.
-                unsigned int random = randomEngine() % directions.size();
-                this->m_Movement = directions[random];
+                // Choose randomIndex direction and set new movement and texture type.
+                unsigned int randomIndex = randomEngine() % directions.size();
 
+                CCoord<> randomDirection = directions[randomIndex];
+
+                // Prefer turning before going back.
+                if(directions.size() > 1 && this->m_Movement == -1 * randomDirection)
+                {
+                    directions.erase(directions.begin() + randomIndex);
+                    randomIndex = randomEngine() % directions.size();
+                }
+
+                this->m_Movement = directions[randomIndex];
                 this->m_Location += (this->m_Movement * this->m_Speed);
             }
         }

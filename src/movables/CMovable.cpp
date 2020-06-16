@@ -6,15 +6,15 @@
 #include "../CBoard.h"
 
 /*====================================================================================================================*/
-bool CMovable::CellIsFree(CBoard &board, CCoord<> location) const
+bool CMovable::LocationIsFree(CBoard &board) const
 {
     // All player corners must be passable - Look deltaTime * oneStep forward.
     double correction = (1 - this->m_Speed);
 
-    if (!board.IsPassable(CCoord<unsigned int>(location.m_X, location.m_Y), *this) ||
-        !board.IsPassable(CCoord<unsigned int>(location.m_X + correction, location.m_Y), *this) ||
-        !board.IsPassable(CCoord<unsigned int>(location.m_X, location.m_Y + correction), *this) ||
-        !board.IsPassable(CCoord<unsigned int>(location.m_X + correction, location.m_Y + correction),
+    if (!board.IsPassable(CCoord<unsigned int>(this->m_Location.m_X, this->m_Location.m_Y), *this) ||
+        !board.IsPassable(CCoord<unsigned int>(this->m_Location.m_X + correction, this->m_Location.m_Y), *this) ||
+        !board.IsPassable(CCoord<unsigned int>(this->m_Location.m_X, this->m_Location.m_Y + correction), *this) ||
+        !board.IsPassable(CCoord<unsigned int>(this->m_Location.m_X + correction, this->m_Location.m_Y + correction),
                           *this))
     { return false; }
 
