@@ -17,9 +17,10 @@ void CEnemyDumb::Update(CBoard &board, int deltaTime)
     if (this->m_IsAlive)
     {
         if (!this->LookForward(board, this->m_SurveillanceDistance))
-        { this->RunAway(board, deltaTime); }
+        { this->RunAway(board, deltaTime);}
         else
         { this->WalkAround(board, deltaTime); }
+
 
         this->UpdateTextureType(oldLocation);
     }

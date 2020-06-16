@@ -91,7 +91,7 @@ bool CEnemy::LookForward(CBoard &board, unsigned int distance) const
 {
     for(unsigned int i = 1; i <= distance; i++)
     {
-        CCoord<> loc = this->m_Location + ((this->m_Movement * (distance - 0.5)));
+        CCoord<> loc = this->m_Location + ((this->m_Movement * (distance - 0.75)));
         CCoord<unsigned int> forwardCell = loc.ToUnsignedInt();
 
         // Check for dangerous object in forwardCell location.
@@ -107,45 +107,25 @@ void CEnemy::RunAway(CBoard &board, int deltaTime)
     // Move deltaTime times.
     for (int i = 0; i < deltaTime; i++)
     {
-        // Save old location and move.
-        CCoord<> oldLocation = this->m_Location;
-        this->m_Location += (this->m_Movement * this->m_Speed);
+        auto directions = this->GetPossibleMoveDirections(board);
 
-        // If enemy stands still or new location is not free or a dangerous object is in sight.
-        if (this->m_Movement == CCoord<>(0, 0) || !this->LocationIsFree(board))
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count() * rand();
+        std::default_random_engine randomEngine(seed);
+
+        // Choose randomIndex direction and set new movement and texture type.
+        unsigned int randomIndex = randomEngine() % directions.size();
+
+        CCoord<> randomDirection = directions[randomIndex];
+
+        // Choose other direction if possible.
+        if (this->m_Movement == randomDirection && directions.size() > 1)
         {
-            // Recover location and get avaible directions to go.
-            this->m_Location = oldLocation;
-            auto directions = this->GetPossibleMoveDirections(board);
-
-            // Stand still if there is no direction to go.
-            if (directions.empty())
-            {
-                this->m_Movement = CCoord<>(0, 0);
-                this->m_Body.SetActualTextureType(ETextureType::TEXTURE_FRONT);
-            }
-                // Go to random direction.
-            else
-            {
-                unsigned seed = std::chrono::system_clock::now().time_since_epoch().count() * rand();
-                std::default_random_engine randomEngine(seed);
-
-                // Choose randomIndex direction and set new movement and texture type.
-                unsigned int randomIndex = randomEngine() % directions.size();
-
-                CCoord<> randomDirection = directions[randomIndex];
-
-                // Choose other direction if possible.
-                if (this->m_Movement == randomDirection && directions.size() > 1)
-                {
-                    directions.erase(directions.begin() + randomIndex);
-                    randomIndex = randomEngine() % directions.size();
-                }
-
-                this->m_Movement = directions[randomIndex];
-                this->m_Location += (this->m_Movement * this->m_Speed);
-            }
+            directions.erase(directions.begin() + randomIndex);
+            randomIndex = randomEngine() % directions.size();
         }
+
+        this->m_Movement = directions[randomIndex];
+        this->m_Location += (this->m_Movement * this->m_Speed);
     }
 }
 
