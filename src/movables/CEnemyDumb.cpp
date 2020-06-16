@@ -16,10 +16,13 @@ void CEnemyDumb::Update(CBoard &board, int deltaTime)
 
     if (this->m_IsAlive)
     {
-        this->WalkAround(board, deltaTime);
-    }
+        if (!this->LookForward(board, this->m_SurveillanceDistance))
+        { this->RunAway(board, deltaTime); }
+        else
+        { this->WalkAround(board, deltaTime); }
 
-    this->UpdateTextureType(oldLocation);
+        this->UpdateTextureType(oldLocation);
+    }
 }
 
 /*====================================================================================================================*/
@@ -62,7 +65,7 @@ void CEnemyDumb::WalkAround(CBoard &board, int deltaTime)
         CCoord<> oldLocation = this->m_Location;
         this->m_Location += (this->m_Movement * this->m_Speed);
 
-        // If enemy stands still or new location is not free.
+        // If enemy stands still or new location is not free or a dangerous object is in sight.
         if (this->m_Movement == CCoord<>(0, 0) || !this->LocationIsFree(board))
         {
             // Recover location and get avaible directions to go.
@@ -87,7 +90,7 @@ void CEnemyDumb::WalkAround(CBoard &board, int deltaTime)
                 CCoord<> randomDirection = directions[randomIndex];
 
                 // Prefer turning before going back.
-                if(directions.size() > 1 && this->m_Movement == -1 * randomDirection)
+                if (directions.size() > 1 && this->m_Movement == -1 * randomDirection)
                 {
                     directions.erase(directions.begin() + randomIndex);
                     randomIndex = randomEngine() % directions.size();

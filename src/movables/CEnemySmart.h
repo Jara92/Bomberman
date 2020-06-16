@@ -44,10 +44,5 @@ protected:
      * @param collectible Collectible object.
      */
     void ProtectCollectible(CCollectible * collectible);
-    /**
-     * Enemy will run away from given location.
-     * @param coord Location
-     */
-    void RunAway(CCoord<> coord);
 };
 

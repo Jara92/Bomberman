@@ -176,8 +176,8 @@ bool CBoard::PlaceBomb(CPlayer *player)
     { return false; }
 
     // We do not want to plant bombs on the other movables.
-    CBlock testBlock(this->m_BombObjectTexturePack, false,
-                     this->m_BombObjectTexturePack->GetTextureSize() + CCoord<>(0.1, 0.1));
+    CBlock testBlock(this->m_BombObjectTexturePack,
+                     this->m_BombObjectTexturePack->GetTextureSize() + CCoord<>(0.1, 0.1), false);
 
     for (auto movable = this->m_Movables.begin(); movable != this->m_Movables.end(); movable++)
     {

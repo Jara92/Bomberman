@@ -24,12 +24,13 @@ public:
     /**
     * Game object contructor
     * @param texturePack Texturepack to be rendered.
-    * @param isPassable Is this object passable for moving objects?
     * @param size Object size.
+    * @param isPassable Is this object passable for moving objects?
+    * @param isDangerous Is this object dangerous for other objects?
     */
-    CBlock(std::shared_ptr<CTexturePack> texturePack, bool isPassable, CCoord<> size)
+    CBlock(std::shared_ptr<CTexturePack> texturePack, CCoord<> size, bool isPassable, bool isDangerous = false)
             : m_Body(std::move(texturePack), 100), m_Size(size), m_IsAlive(true), m_IsDestroyed(false),
-              m_IsPassable(isPassable)
+              m_IsPassable(isPassable), m_IsDangerous(isDangerous)
     {}
 
     CBlock(const CBlock &other) = default;
@@ -125,12 +126,15 @@ public:
     bool IsDestroyed() const
     { return this->m_IsDestroyed; }
 
+    bool IsDangerous() const
+    { return this->m_IsDangerous; }
+
     void Kill()
     { this->m_IsAlive = false; }
 
 protected:
     CBody m_Body;
     CCoord<> m_Size;
-    bool m_IsAlive, m_IsDestroyed, m_IsPassable;
+    bool m_IsAlive, m_IsDestroyed, m_IsPassable, m_IsDangerous;
 };
 

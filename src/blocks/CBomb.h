@@ -24,7 +24,7 @@ public:
 
     CBomb(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1),
           CPlayer *owner = nullptr, int explosionDelay = 2000, bool remoteTrigger = false)
-            : CBlock(std::move(texturePack), false, size), m_Owner(owner), m_IsPassableForOwner(true),
+            : CBlock(std::move(texturePack), size, false, true), m_Owner(owner), m_IsPassableForOwner(true),
               m_RemoteTrigger(remoteTrigger), m_IsTriggered(false), m_ExplosionDelay(explosionDelay)
     {
         // Set auto explosion timer.

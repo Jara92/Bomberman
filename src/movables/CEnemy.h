@@ -19,11 +19,14 @@ public:
     * @param speed Enemy speed
     * @param wallPass Can this Enemy walk through destructible walls?
     * @param lives How many lives doest this monster have?
+     * @param surveillanceDistance How far this enemy can look forward?
     */
     explicit CEnemy(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size = CCoord<>(1, 1),
-                    int score = 100, double speed = 0.005, bool wallPass = false, int lives = 1)
-            : CMovable(std::move(texturePack), size, location, speed, wallPass, false, lives), m_Score(score)
-    {    }
+                    int score = 100, double speed = 0.005, bool wallPass = false, int lives = 1,
+                    unsigned int surveillanceDistance = 1)
+            : CMovable(std::move(texturePack), size, location, speed, wallPass, false, lives), m_Score(score),
+              m_SurveillanceDistance(surveillanceDistance)
+    {}
 
     CEnemy(const CEnemy &other) = default;
 
@@ -52,6 +55,7 @@ public:
 protected:
     int m_Score;
     CTimer m_DeadTimer;
+    unsigned int m_SurveillanceDistance;
 
     static constexpr unsigned int ENEMY_DESTROY_DELAY = 1000;
 
@@ -61,6 +65,17 @@ protected:
      * @return Avaible directions.
      */
     std::vector<CCoord<double>> GetPossibleMoveDirections(CBoard &board);
+
+    bool LookForward(CBoard &board, unsigned int distance) const;
+
+    /**
+    * Enemy will run away from given location.
+    * @param board Game board.
+     * @param deltaTime Delta time.
+    */
+    void RunAway(CBoard &board, int deltaTime);
+
+    void GoForward(CBoard & board, int deltaTime);
 
     CCoord<> FindWayOut(CBoard *board);
 };

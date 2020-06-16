@@ -20,7 +20,7 @@ public:
     */
     CCollectible(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1), size_t scoreBonus = 0,
                  int duration = 0)
-            : CBlock(std::move(texturePack), true, size), m_Duration(duration), m_IsVisible(false),
+            : CBlock(std::move(texturePack), size, true), m_Duration(duration), m_IsVisible(false),
               m_ScoreBonus(scoreBonus), m_TargetPlayer(nullptr)
     {}
 
