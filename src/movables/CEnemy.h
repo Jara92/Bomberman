@@ -46,7 +46,7 @@ public:
     virtual void CollisionWith(CMovable &movable) override
     {}
 
-    virtual void CollisionWithPlayer(CPlayer &player) override;
+    virtual void CollisionWithMovable(CPlayer &player) override;
 
     virtual void NextLevel(CBoard &board, bool clearLevelObjects) override;
 
@@ -59,7 +59,8 @@ protected:
 
     static constexpr unsigned int ENEMY_DESTROY_DELAY = 1000;
 
-    virtual void Move(const CBoard & board, int deltaTime ) = 0;
+    /** Enemy movement. */
+    virtual void Move(const CBoard &board, int deltaTime) = 0;
 
     /**
      * Get avaible moving directions.
@@ -68,19 +69,23 @@ protected:
      */
     std::vector<CCoord<double>> GetPossibleMoveDirections(const CBoard &board);
 
-    bool DirectionIsSafe(const CBoard &board, unsigned int distance) const;
-
     /**
-    * Enemy will run away from given location.
-    * @param board Game board.
-     * @param deltaTime Delta time.
-    */
-    void RunAway(const CBoard &board, int deltaTime);
+     * Is current m_Movement direction safe?
+     * @param board Game board.
+     * @param direction Moving direction.
+     * @param distance How far can the enemy see?
+     * @return True - Direction is safe.
+     */
+    bool DirectionIsSafe(const CBoard &board, CCoord<> direction, unsigned int distance) const;
 
-    bool GoForward(const CBoard & board);
+    /** Enemy tries to find save direction to go. */
+    void RunAway(const CBoard &board);
 
-    bool GoRandom(const CBoard & board);
+    /** Enemy goes forward by m_Movement */
+    bool GoForward(const CBoard &board);
 
-    CCoord<> FindWayOut(const CBoard *board);
+    /** The enemy chooses random direction. The enemy turns in a random direction.
+     * If he has no other choice, he turns around and goes back.*/
+    bool GoRandom(const CBoard &board);
 };
 

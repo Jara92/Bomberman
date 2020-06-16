@@ -182,5 +182,5 @@ void CPlayer::CollisionWith(CCoord<unsigned int> blockLocation, CBlock &block)
 void CPlayer::CollisionWith(CMovable &movable)
 {
     if (this->IsColliding(movable))
-    { movable.CollisionWithPlayer(*this); }
+    { movable.CollisionWithMovable(*this); }
 }

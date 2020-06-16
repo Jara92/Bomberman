@@ -74,7 +74,7 @@ public:
 
     virtual void CollisionWith(CMovable &moavable) = 0;
 
-    virtual void CollisionWithPlayer(CPlayer &player)
+    virtual void CollisionWithMovable(CPlayer &player)
     {}
 
     bool GetWallPass() const

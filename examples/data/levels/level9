@@ -1,5 +1,6 @@
-enemy smart 5 4 1 100 0
-enemy dump 2 8 1 100 0
+enemy 1 1000 1 20 0
+enemy 1 1500 1 25 0
+enemy 1 2000 1 30 0
 collectible 7 1500 0
 collectible 7 500 0
 collectible 8 600 0

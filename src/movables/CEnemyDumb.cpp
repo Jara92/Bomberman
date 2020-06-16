@@ -57,8 +57,8 @@ void CEnemyDumb::Move(const CBoard &board, int deltaTime)
     for (int i = 0; i < deltaTime; i++)
     {
         // Check for dangerous objects in front of this enemy.
-        if (!this->DirectionIsSafe(board, this->m_SurveillanceDistance))
-        { this->RunAway(board, deltaTime); }
+        if (!this->DirectionIsSafe(board, this->m_Movement, this->m_SurveillanceDistance))
+        { this->RunAway(board); }
 
         // Move
         if (this->GoForward(board))

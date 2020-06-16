@@ -20,7 +20,7 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool 
     board->PrepareBoard(loadLevelFile, collectibles);
 
     // Generate random obstacles.
-    size_t obstaclesCount = (board->GetBoardSize().m_X * board->GetBoardSize().m_Y) * 0.15;
+    size_t obstaclesCount = (board->GetBoardSize().m_X * board->GetBoardSize().m_Y) * 0.30; //FIXME * 0.15;
     this->GenerateObstacles(board, level, obstaclesCount);
 
     // Load enemies and boosts from the file.
@@ -525,7 +525,7 @@ bool CLevelLoader::ReadItem(std::shared_ptr<CBoard> &board, const std::vector<st
             unsigned int enemyTypeId = std::stoi(this->ReadProperty(input, 1));
             std::size_t score = std::stoi(this->ReadProperty(input, 2));
             std::size_t lives = std::stoi(this->ReadProperty(input, 3));
-            double speed = (std::stoi(this->ReadProperty(input, 4)) / 1000.0);
+            double speed = (std::stoi(this->ReadProperty(input, 4)) / 10000.0);
             std::size_t wallPass = (std::stoi(this->ReadProperty(input, 5)) == 1);
 
             // Invalid enemy type id detection.
