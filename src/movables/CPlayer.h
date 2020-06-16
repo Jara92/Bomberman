@@ -22,12 +22,18 @@ public:
      * @param speed Object moving speed.
      * @param lives Object starting lives.
     */
-    explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size, CInput controls,
+   /* explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size, CInput controls,
                      double speed = 0.0025, int lives = 3)
             : CMovable(std::move(texturePack), size, location, speed, false, false, lives), m_Score(0),
               m_ExplosionRadius(1), m_MaxBombs(1), m_ActiveBombs(0), m_RemoteExplosion(false), m_FireImmunity(false),
               m_LevelUp(false), m_Input(controls)
-    {}
+    {}*/
+   explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size, CInput controls,
+                    double speed = 0.0025, int lives = 3)
+           : CMovable(std::move(texturePack), size, location, speed, true, true, lives), m_Score(0),
+             m_ExplosionRadius(1), m_MaxBombs(10), m_ActiveBombs(0), m_RemoteExplosion(true), m_FireImmunity(true),
+             m_LevelUp(false), m_Input(controls)
+   {}
 
     CPlayer(const CPlayer &other) = default;
 
