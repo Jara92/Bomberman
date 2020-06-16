@@ -88,4 +88,3 @@ protected:
      * If he has no other choice, he turns around and goes back.*/
     bool GoRandom(const CBoard &board);
 };
-

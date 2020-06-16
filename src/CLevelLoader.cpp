@@ -20,7 +20,7 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool 
     board->PrepareBoard(loadLevelFile, collectibles);
 
     // Generate random obstacles.
-    size_t obstaclesCount = (board->GetBoardSize().m_X * board->GetBoardSize().m_Y) * 0.30; //FIXME * 0.15;
+    size_t obstaclesCount = (board->GetBoardSize().m_X * board->GetBoardSize().m_Y) * 0.15;
     this->GenerateObstacles(board, level, obstaclesCount);
 
     // Load enemies and boosts from the file.
@@ -185,6 +185,16 @@ void CLevelLoader::GenerateObstacles(std::shared_ptr<CBoard> &board, size_t leve
     std::map<ETextureType, const std::vector<std::string>> textures
             {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Blocks/ExplodableBlock.png"}}}};
     std::shared_ptr<CTexturePack> texturePack = std::make_shared<CTexturePack>(this->m_Interface, textures);
+
+    // Generate obstables to protect the player when the game starts.
+    board->m_Map[3][1] = new CWall(texturePack, true);
+    board->m_Map[1][3] = new CWall(texturePack, true);
+
+    if(board->m_Players.size() > 1)
+    {
+        board->m_Map[19][11] = new CWall(texturePack, true);
+        board->m_Map[21][9] = new CWall(texturePack, true);
+    }
 
     for (unsigned int i = 0; i < count; i++)
     {

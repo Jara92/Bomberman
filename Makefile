@@ -21,6 +21,7 @@ compile: bomberman ;
 
 bomberman: $(OBJ)
 	$(LD) -o bomberman -fsanitize=address $^ $(LIBS)
+	#$(LD) -o bomberman $^ $(LIBS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(@D)

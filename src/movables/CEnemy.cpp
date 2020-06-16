@@ -83,7 +83,7 @@ bool CEnemy::DirectionIsSafe(const CBoard &board, CCoord<> direction, unsigned i
 {
     for (unsigned int i = 1; i <= distance; i++)
     {
-        CCoord<> loc = this->m_Location + ((this->m_Movement * (i - 0.65)));
+        CCoord<> loc = this->GetLocationCell().ToDouble() + ((direction * (i)));
         CCoord<unsigned int> forwardCell = loc.ToUnsignedInt();
 
         // Check for dangerous object in forwardCell location.
@@ -99,26 +99,32 @@ void CEnemy::RunAway(const CBoard &board)
 {
     auto directions = this->GetPossibleMoveDirections(board);
 
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count() * rand();
-    std::default_random_engine randomEngine(seed);
-
-    // Choose randomIndex direction and set new movement and texture type.
-    unsigned int randomIndex = randomEngine() % directions.size();
-
-    // Do not move if the enemy is surrounded.
-    if (this->m_Movement == directions[randomIndex] && directions.size() == 1)
+    // Do nothing when there is no option.
+    if (directions.empty())
+    { this->m_Movement = CCoord<>(0, 0); }
+    else
     {
-        this->m_Movement = CCoord<>(0, 0);
-        return;
-    }
-        // Choose other direction if possible.
-    else if (this->m_Movement == directions[randomIndex] && directions.size() > 1)
-    {
-        directions.erase(directions.begin() + randomIndex);
-        randomIndex = randomEngine() % directions.size();
-    }
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count() * rand();
+        std::default_random_engine randomEngine(seed);
 
-    this->m_Movement = directions[randomIndex];
+        // Choose randomIndex direction and set new movement and texture type.
+        unsigned int randomIndex = randomEngine() % directions.size();
+
+        // Do not move if the enemy is surrounded.
+        if (this->m_Movement == directions[randomIndex] && directions.size() == 1)
+        {
+            this->m_Movement = CCoord<>(0, 0);
+            return;
+        }
+            // Choose other direction if possible.
+        else if (this->m_Movement == directions[randomIndex] && directions.size() > 1)
+        {
+            directions.erase(directions.begin() + randomIndex);
+            randomIndex = randomEngine() % directions.size();
+        }
+
+        this->m_Movement = directions[randomIndex];
+    }
 }
 
 /*====================================================================================================================*/
@@ -159,7 +165,7 @@ bool CEnemy::GoRandom(const CBoard &board)
         // Prefer turning before going back.
         CCoord<> randomDirection = directions[randomIndex];
         if (directions.size() > 1 && (this->m_Movement == -1 * randomDirection ||
-                                      this->DirectionIsSafe(board, randomDirection, this->m_SurveillanceDistance)))
+                                      !this->DirectionIsSafe(board, randomDirection, this->m_SurveillanceDistance)))
         {
             directions.erase(directions.begin() + randomIndex);
             randomIndex = randomEngine() % directions.size();
@@ -167,12 +173,13 @@ bool CEnemy::GoRandom(const CBoard &board)
         }
 
         // Do not move if there is no safe move direction.
-        if (this->DirectionIsSafe(board, this->m_Movement, this->m_SurveillanceDistance))
+        if (this->DirectionIsSafe(board, randomDirection, this->m_SurveillanceDistance))
         { this->m_Movement = randomDirection; }
         else
-        { this->m_Movement = CCoord<>(0, 0); }
+        { this->m_Movement = CCoord<>(0, 0);  }
     }
 
     // Now enemy can go forward. (Or stay put)
     return this->GoForward(board);
 }
+
