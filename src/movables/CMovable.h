@@ -12,6 +12,8 @@ class CBoard;
 
 class CBlock;
 
+class CPlayer;
+
 class CMovable
 {
 public:
@@ -71,6 +73,9 @@ public:
     virtual void CollisionWith(CCoord<unsigned int> blockLocation, CBlock &block) = 0;
 
     virtual void CollisionWith(CMovable &moavable) = 0;
+
+    virtual void CollisionWithPlayer(CPlayer &player)
+    {}
 
     bool GetWallPass() const
     { return this->m_WallPass; }

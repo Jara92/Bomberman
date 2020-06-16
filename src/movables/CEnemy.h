@@ -40,7 +40,10 @@ public:
 
     virtual void CollisionWith(CCoord<unsigned int> blockLocation, CBlock &block) override;
 
-    virtual void CollisionWith(CMovable &movable) override;
+    virtual void CollisionWith(CMovable &movable) override
+    {}
+
+    virtual void CollisionWithPlayer(CPlayer &player) override;
 
     virtual void NextLevel(CBoard &board, bool clearLevelObjects) override;
 

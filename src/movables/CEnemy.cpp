@@ -82,11 +82,7 @@ void CEnemy::CollisionWith(CCoord<unsigned int> blockLocation, CBlock &block)
     block.CollisionWith(blockLocation, *this);
 }
 
-/*====================================================================================================================*/
-void CEnemy::CollisionWith(CMovable &movable)
+void CEnemy::CollisionWithPlayer(CPlayer &player)
 {
-    if (this->IsColliding(movable))
-    {
-        std::cout << "collision enemy" << std::endl;
-    }
+    player.TryKill();
 }

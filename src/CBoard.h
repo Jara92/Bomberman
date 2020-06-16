@@ -10,6 +10,7 @@
 #include <vector>
 #include <chrono>
 #include <random>
+#include <algorithm>
 #include "Messages.h"
 #include "enums/EGameStatus.h"
 #include "blocks/CWall.h"

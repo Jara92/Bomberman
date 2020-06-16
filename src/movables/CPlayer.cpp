@@ -171,16 +171,16 @@ void CPlayer::UpdateTextureType(CCoord<> oldLocation)
 
     CMovable::UpdateTextureByMovement(diff);
 }
+
 /*====================================================================================================================*/
 void CPlayer::CollisionWith(CCoord<unsigned int> blockLocation, CBlock &block)
 {
     block.CollisionWith(blockLocation, *this);
 }
+
 /*====================================================================================================================*/
 void CPlayer::CollisionWith(CMovable &movable)
 {
     if (this->IsColliding(movable))
-    {
-        std::cout << "collision player" << std::endl;
-    }
+    { movable.CollisionWithPlayer(*this); }
 }

@@ -108,6 +108,10 @@ void CBoard::Update(int deltaTime)
             movable = this->m_Movables.erase(movable);
         }
     }
+
+    // Sort movables by Y to create a 3D view effect.
+    std::sort(this->m_Movables.begin(), this->m_Movables.end(), [](const CMovable *a, const CMovable *b)
+    { return (a->GetLocation().m_Y < b->GetLocation().m_Y); });
 }
 
 /*====================================================================================================================*/
@@ -141,7 +145,10 @@ void CBoard::UpdatePhysicEvents()
         while (nextMovable != this->m_Movables.end())
         {
             if ((*movable) && (*nextMovable))
-            { (*movable)->CollisionWith(*(*nextMovable)); }
+            {
+                (*movable)->CollisionWith(*(*nextMovable));
+                (*nextMovable)->CollisionWith(*(*movable));
+            }
             nextMovable++;
         }
     }
@@ -182,27 +189,28 @@ bool CBoard::PlaceBomb(CPlayer *player)
 /*====================================================================================================================*/
 void CBoard::CreateExplosion(CBomb &bomb, CCoord<unsigned int> bombLocation)
 {
-        CPlayer *owner = bomb.GetOwner();
+    CPlayer *owner = bomb.GetOwner();
 
-        // Remove the bomb.
-        this->SetMapItem(nullptr, bombLocation);
+    // Remove the bomb.
+    this->SetMapItem(nullptr, bombLocation);
 
-        if (owner)
-        {
-            unsigned int explosionRadius = owner->GetExplosionRadius();
+    if (owner)
+    {
+        unsigned int explosionRadius = owner->GetExplosionRadius();
 
-            // Explosion in all directions.
-            CCoord<int> directions[4] = {CCoord<int>(0, 1), CCoord<int>(0, -1), CCoord<int>(1, 0), CCoord<int>(-1, 0)};
-            for (int i = 0; i < 4; i++)
-            { this->CreateExplosionWave(bombLocation, directions[i], explosionRadius, owner); }
-        }
+        // Explosion in all directions.
+        CCoord<int> directions[4] = {CCoord<int>(0, 1), CCoord<int>(0, -1), CCoord<int>(1, 0), CCoord<int>(-1, 0)};
+        for (int i = 0; i < 4; i++)
+        { this->CreateExplosionWave(bombLocation, directions[i], explosionRadius, owner); }
+    }
 
-        // Remove from the list of requests.
-        this->m_BombsToExplode.erase(&bomb);
+    // Remove from the list of requests.
+    this->m_BombsToExplode.erase(&bomb);
 }
 
 /*====================================================================================================================*/
-void CBoard::CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> direction, unsigned int explosionRadius, CPlayer * owner)
+void CBoard::CreateExplosionWave(CCoord<unsigned int> bombLocation, CCoord<int> direction, unsigned int explosionRadius,
+                                 CPlayer *owner)
 {
     for (unsigned int i = 0; i <= explosionRadius; i++)
     {
