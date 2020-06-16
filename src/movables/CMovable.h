@@ -163,6 +163,6 @@ protected:
     void UpdateTextureByMovement(CCoord<> diff = {0, 0});
 
     /** Is current location free? */
-    bool LocationIsFree(CBoard &board) const;
+    bool LocationIsFree(const CBoard &board) const;
 };
 

@@ -156,7 +156,7 @@ void CBoard::UpdatePhysicEvents()
 }
 
 /*====================================================================================================================*/
-bool CBoard::IsPassable(CCoord<unsigned int> coord, const CMovable &movable)
+bool CBoard::IsPassable(CCoord<unsigned int> coord, const CMovable &movable) const
 {
     CBlock *block = this->GetMapItem(coord);
 
@@ -342,11 +342,11 @@ bool CBoard::PlayersAreaFree(CCoord<unsigned int> coord, double playerSaveZone)
 }
 
 /*====================================================================================================================*/
-CBlock *CBoard::GetMapItem(CCoord<unsigned int> location)
+CBlock *CBoard::GetMapItem(CCoord<unsigned int> location) const
 {
     if (location.m_X < 0 || location.m_X >= CBoard::m_BoardSize.m_X ||
         location.m_Y < 0 || location.m_Y >= CBoard::m_BoardSize.m_Y)
-    { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
+    { return nullptr;/*throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND);*/ }
 
     return this->m_Map[location.m_X][location.m_Y];
 }

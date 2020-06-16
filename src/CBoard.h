@@ -64,7 +64,7 @@ public:
      * @param movable Movable object.
      * @return True if is passable.
      */
-    bool IsPassable(CCoord<unsigned int> coord, const CMovable &movable);
+    bool IsPassable(CCoord<unsigned int> coord, const CMovable &movable) const;
 
     /**
      * Is this position totaly free?
@@ -139,7 +139,7 @@ public:
      * @throws std::out_of_range When the location is out of bound.
      * @return CBlock at given location
      */
-    CBlock *GetMapItem(CCoord<unsigned int> location);
+    CBlock *GetMapItem(CCoord<unsigned int> location) const;
 
     /**
      * Set block at given location.

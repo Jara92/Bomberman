@@ -34,11 +34,14 @@ public:
     virtual unsigned int TryKill(unsigned int distance) override;
 
 protected:
+    virtual void Move(const CBoard & board, int deltaTime ) override ;
+
     /**
      * Enemy will follow the player.
      * @param player Player object.
      */
     void FollowThePlayer(CPlayer * player);
+
     /**
      * Enemy will protect given collectible object against player.
      * @param collectible Collectible object.

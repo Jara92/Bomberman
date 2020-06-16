@@ -54,29 +54,33 @@ public:
 
 protected:
     int m_Score;
-    CTimer m_DeadTimer;
+    CTimer m_DestroyTimer;
     unsigned int m_SurveillanceDistance;
 
     static constexpr unsigned int ENEMY_DESTROY_DELAY = 1000;
+
+    virtual void Move(const CBoard & board, int deltaTime ) = 0;
 
     /**
      * Get avaible moving directions.
      * @param board Game board.
      * @return Avaible directions.
      */
-    std::vector<CCoord<double>> GetPossibleMoveDirections(CBoard &board);
+    std::vector<CCoord<double>> GetPossibleMoveDirections(const CBoard &board);
 
-    bool LookForward(CBoard &board, unsigned int distance) const;
+    bool DirectionIsSafe(const CBoard &board, unsigned int distance) const;
 
     /**
     * Enemy will run away from given location.
     * @param board Game board.
      * @param deltaTime Delta time.
     */
-    void RunAway(CBoard &board, int deltaTime);
+    void RunAway(const CBoard &board, int deltaTime);
 
-    void GoForward(CBoard & board, int deltaTime);
+    bool GoForward(const CBoard & board);
 
-    CCoord<> FindWayOut(CBoard *board);
+    bool GoRandom(const CBoard & board);
+
+    CCoord<> FindWayOut(const CBoard *board);
 };
 

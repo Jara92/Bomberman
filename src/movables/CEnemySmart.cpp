@@ -16,3 +16,8 @@ unsigned int CEnemySmart::TryKill(unsigned int distance)
     // Todo Smart enemy staff
     return 0;
 }
+
+void CEnemySmart::Move(const CBoard &board, int deltaTime)
+{
+
+}

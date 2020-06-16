@@ -6,7 +6,7 @@
 #include "../CBoard.h"
 
 /*====================================================================================================================*/
-bool CMovable::LocationIsFree(CBoard &board) const
+bool CMovable::LocationIsFree(const CBoard &board) const
 {
     // All player corners must be passable - Look deltaTime * oneStep forward.
     double correction = (1 - this->m_Speed);

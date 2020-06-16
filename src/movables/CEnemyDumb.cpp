@@ -1,8 +1,6 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
-
 
 #include "CEnemyDumb.h"
 #include "../CBoard.h"
@@ -10,17 +8,14 @@
 void CEnemyDumb::Update(CBoard &board, int deltaTime)
 {
     CEnemy::Update(board, deltaTime);
-    this->m_DeadTimer.Tick(deltaTime);
+    this->m_DestroyTimer.Tick(deltaTime);
 
-    CCoord<> oldLocation = this->m_Location;
-
+    // Move when the enemy is alive.
     if (this->m_IsAlive)
     {
-        if (!this->LookForward(board, this->m_SurveillanceDistance))
-        { this->RunAway(board, deltaTime);}
-        else
-        { this->WalkAround(board, deltaTime); }
+        CCoord<> oldLocation = this->m_Location;
 
+        this->Move(board, deltaTime);
 
         this->UpdateTextureType(oldLocation);
     }
@@ -44,7 +39,7 @@ unsigned int CEnemyDumb::TryKill(unsigned int distance)
             this->m_Score = 0;
 
             // Destroy the object with a delay.
-            this->m_DeadTimer.Run(CEnemy::ENEMY_DESTROY_DELAY, [=](void)
+            this->m_DestroyTimer.Run(CEnemy::ENEMY_DESTROY_DELAY, [=](void)
             {
                 this->m_IsDestroyed = true;
             });
@@ -57,49 +52,18 @@ unsigned int CEnemyDumb::TryKill(unsigned int distance)
 }
 
 /*====================================================================================================================*/
-void CEnemyDumb::WalkAround(CBoard &board, int deltaTime)
+void CEnemyDumb::Move(const CBoard &board, int deltaTime)
 {
-    // Move deltaTime times.
     for (int i = 0; i < deltaTime; i++)
     {
-        // Save old location and move.
-        CCoord<> oldLocation = this->m_Location;
-        this->m_Location += (this->m_Movement * this->m_Speed);
+        // Check for dangerous objects in front of this enemy.
+        if (!this->DirectionIsSafe(board, this->m_SurveillanceDistance))
+        { this->RunAway(board, deltaTime); }
 
-        // If enemy stands still or new location is not free or a dangerous object is in sight.
-        if (this->m_Movement == CCoord<>(0, 0) || !this->LocationIsFree(board))
-        {
-            // Recover location and get avaible directions to go.
-            this->m_Location = oldLocation;
-            auto directions = this->GetPossibleMoveDirections(board);
-
-            // Stand still if there is no direction to go.
-            if (directions.empty())
-            {
-                this->m_Movement = CCoord<>(0, 0);
-                this->m_Body.SetActualTextureType(ETextureType::TEXTURE_FRONT);
-            }
-                // Go to random direction.
-            else
-            {
-                unsigned seed = std::chrono::system_clock::now().time_since_epoch().count() * rand();
-                std::default_random_engine randomEngine(seed);
-
-                // Choose randomIndex direction and set new movement and texture type.
-                unsigned int randomIndex = randomEngine() % directions.size();
-
-                CCoord<> randomDirection = directions[randomIndex];
-
-                // Prefer turning before going back.
-                if (directions.size() > 1 && this->m_Movement == -1 * randomDirection)
-                {
-                    directions.erase(directions.begin() + randomIndex);
-                    randomIndex = randomEngine() % directions.size();
-                }
-
-                this->m_Movement = directions[randomIndex];
-                this->m_Location += (this->m_Movement * this->m_Speed);
-            }
-        }
+        // Move
+        if (this->GoForward(board))
+        { continue; }
+        else
+        { this->GoRandom(board); }
     }
 }

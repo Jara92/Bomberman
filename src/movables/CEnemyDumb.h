@@ -32,6 +32,6 @@ public:
     unsigned int TryKill(unsigned int distance) override;
 
 protected:
-    void WalkAround(CBoard & board, int deltaTime);
+    virtual void Move(const CBoard & board, int deltaTime ) override ;
 };
 

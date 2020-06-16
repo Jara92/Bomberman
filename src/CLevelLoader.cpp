@@ -172,7 +172,7 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
     {
         players.push_back(
                 new CPlayer(std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i], false, CCoord<>(1, 2)),
-                            startingLocation[i], CCoord<>(0.65, 0.75), controls[i]));
+                            startingLocation[i], CCoord<>(0.60, 0.60), controls[i]));
     }
 
     return players;
@@ -472,7 +472,7 @@ void CLevelLoader::CreateEnemy(std::shared_ptr<CBoard> &board, EEnemyType type, 
                                std::size_t score, double speed, bool wallPass)
 {
     unsigned int typeInt = static_cast<unsigned int>(type);
-    CCoord<> enemySize = CCoord<>(0.70, 0.70);
+    CCoord<> enemySize = CCoord<>(0.60, 0.60);
 
     CEnemy *newEnemy = nullptr;
 
