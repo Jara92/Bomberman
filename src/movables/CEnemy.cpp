@@ -84,5 +84,5 @@ void CEnemy::CollisionWith(CCoord<unsigned int> blockLocation, CBlock &block)
 
 void CEnemy::CollisionWithPlayer(CPlayer &player)
 {
-  /*  player.TryKill();*/
+    player.TryKill();
 }
