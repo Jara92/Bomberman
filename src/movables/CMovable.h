@@ -7,6 +7,7 @@
 #include <memory>
 #include "../CBody.h"
 #include "../CTimer.h"
+#include "../CRandom.h"
 
 class CBoard;
 

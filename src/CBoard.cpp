@@ -346,7 +346,7 @@ CBlock *CBoard::GetMapItem(CCoord<unsigned int> location) const
 {
     if (location.m_X < 0 || location.m_X >= CBoard::m_BoardSize.m_X ||
         location.m_Y < 0 || location.m_Y >= CBoard::m_BoardSize.m_Y)
-    { return nullptr;/*throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND);*/ }
+    { return nullptr; }
 
     return this->m_Map[location.m_X][location.m_Y];
 }

@@ -8,9 +8,8 @@
 #include <memory>
 #include <map>
 #include <vector>
-#include <chrono>
-#include <random>
 #include <algorithm>
+#include "CRandom.h"
 #include "Messages.h"
 #include "enums/EGameStatus.h"
 #include "blocks/CWall.h"
@@ -125,12 +124,8 @@ public:
     */
     CCoord<unsigned int> GetRandomBoardLocation() const
     {
-        // Random number generator.
-        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-        std::default_random_engine random(seed);
-
         // Return random location on the board.
-        return CCoord<unsigned int>((random() % (this->m_BoardSize.m_X)), (random() % (this->m_BoardSize.m_Y)));
+        return CCoord<unsigned  int>(CRandom::Random(0,this->m_BoardSize.m_X), CRandom::Random(0,this->m_BoardSize.m_Y));
     }
 
     /**

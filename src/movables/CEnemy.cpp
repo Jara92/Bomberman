@@ -38,7 +38,7 @@ void CEnemy::Update(CBoard &board, int deltaTime)
 
     this->m_RandomMovementTimer.Tick(deltaTime);
 
-  //  std::cout << "Remaining " << m_RandomMovementTimer.GetRemainingTime() << std::endl;
+    //  std::cout << "Remaining " << m_RandomMovementTimer.GetRemainingTime() << std::endl;
 
     if (this->m_Movement == CCoord<>(0, 0))
     { return; }
@@ -100,35 +100,37 @@ bool CEnemy::DirectionIsSafe(const CBoard &board, CCoord<> direction, unsigned i
 }
 
 /*====================================================================================================================*/
-void CEnemy::RunAway(const CBoard &board)
+bool CEnemy::RunAway(const CBoard &board)
 {
     auto directions = this->GetPossibleMoveDirections(board);
 
     // Do nothing when there is no option.
     if (directions.empty())
-    { this->m_Movement = CCoord<>(0, 0); }
+    {
+        this->m_Movement = CCoord<>(0, 0);
+        return false;
+    }
     else
     {
-        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count() * rand();
-        std::default_random_engine randomEngine(seed);
-
         // Choose randomIndex direction and set new movement and texture type.
-        unsigned int randomIndex = randomEngine() % directions.size();
+        unsigned int randomIndex = CRandom::Random(0, directions.size());
 
         // Do not move if the enemy is surrounded.
         if (this->m_Movement == directions[randomIndex] && directions.size() == 1)
         {
             this->m_Movement = CCoord<>(0, 0);
-            return;
+            return false;
         }
             // Choose other direction if possible.
         else if (this->m_Movement == directions[randomIndex] && directions.size() > 1)
         {
             directions.erase(directions.begin() + randomIndex);
-            randomIndex = randomEngine() % directions.size();
+            randomIndex = CRandom::Random(0, directions.size());
         }
 
         this->m_Movement = directions[randomIndex];
+
+        return this->GoForward(board);
     }
 }
 
@@ -161,11 +163,8 @@ bool CEnemy::GoRandom(const CBoard &board)
         // Go to random direction.
     else
     {
-        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count() * rand();
-        std::default_random_engine randomEngine(seed);
-
         // Choose randomIndex direction and set new movement and texture type.
-        unsigned int randomIndex = randomEngine() % directions.size();
+        unsigned int randomIndex = CRandom::Random(0, directions.size());
 
         // Prefer turning before going back.
         CCoord<> randomDirection = directions[randomIndex];
@@ -173,7 +172,7 @@ bool CEnemy::GoRandom(const CBoard &board)
                                       !this->DirectionIsSafe(board, randomDirection, this->m_SurveillanceDistance)))
         {
             directions.erase(directions.begin() + randomIndex);
-            randomIndex = randomEngine() % directions.size();
+            randomIndex = CRandom::Random(0, directions.size());
             randomDirection = directions[randomIndex];
         }
 
@@ -196,18 +195,15 @@ bool CEnemy::TurnRandom(const CBoard &board)
     { return this->GoForward(board); }
     else
     {
-        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count() * rand();
-        std::default_random_engine randomEngine(seed);
-
         // Choose randomIndex direction and set new movement and texture type.
-        unsigned int randomIndex = randomEngine() % directions.size();
+        unsigned int randomIndex = CRandom::Random(0, directions.size());
 
         // Remove forward and backward direction.
         while (!directions.empty() && (directions[randomIndex] == this->m_Movement ||
                                        directions[randomIndex] == -1 * this->m_Movement))
         {
             directions.erase(directions.begin() + randomIndex);
-            randomIndex = randomEngine() % directions.size();
+            randomIndex = CRandom::Random(0, directions.size());
         }
 
         // Go forward if there is no turn.

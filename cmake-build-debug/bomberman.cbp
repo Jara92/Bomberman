@@ -125,6 +125,9 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CLevelLoader.h">
 			<Option target="bomberman"/>
 		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CRandom.h">
+			<Option target="bomberman"/>
+		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/CSDLInterface.cpp">
 			<Option target="bomberman"/>
 		</Unit>

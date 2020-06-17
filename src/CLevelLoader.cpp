@@ -32,10 +32,10 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool 
         collectibles.clear();
 
         this->LoadLevelFile(board, level, collectibles);
-    } else
+    }
         // Random location for every collectable and enemy object.
+    else
     { this->NextRoundPrepare(board, collectibles); }
-
 
     return true;
 }
@@ -163,7 +163,7 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
                                                                                      {textures}};
 
     // Setup default locations
-    CCoord<> startingLocation[CLevelLoader::MAX_PLAYERS] = {{1, 1},
+    CCoord<> startingLocation[CLevelLoader::MAX_PLAYERS] = {{1,  1},
                                                             {21, 11}};
     std::vector<CPlayer *> players;
 
@@ -190,7 +190,7 @@ void CLevelLoader::GenerateObstacles(std::shared_ptr<CBoard> &board, size_t leve
     board->m_Map[3][1] = new CWall(texturePack, true);
     board->m_Map[1][3] = new CWall(texturePack, true);
 
-    if(board->m_Players.size() > 1)
+    if (board->m_Players.size() > 1)
     {
         board->m_Map[19][11] = new CWall(texturePack, true);
         board->m_Map[21][9] = new CWall(texturePack, true);
@@ -378,6 +378,9 @@ void CLevelLoader::LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int le
     }
 
     fileReader.close();
+
+    if(collectibles.size() >= 20)
+    {throw std::runtime_error(MESSAGE_MAXIMUM_COLLECTIBLES_REACHES);}
 }
 
 /*====================================================================================================================*/
@@ -405,7 +408,8 @@ void CLevelLoader::NextRoundPrepare(std::shared_ptr<CBoard> &board, std::vector<
 
 /*====================================================================================================================*/
 void
-CLevelLoader::CreateCollectible(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> &collectibles, ECollectibleType type, std::size_t score,
+CLevelLoader::CreateCollectible(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> &collectibles,
+                                ECollectibleType type, std::size_t score,
                                 std::size_t duration)
 {
     // Lamda which are used to apply / deactivate collectable item.

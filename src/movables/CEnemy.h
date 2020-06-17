@@ -5,7 +5,6 @@
 #pragma once
 
 #include <vector>
-#include <chrono>
 #include "CMovable.h"
 
 class CEnemy : public CMovable
@@ -15,12 +14,12 @@ public:
     * CEnemy contructor
     * @param texturePack Texturepack to be rendered.
     * @param location Starting location. (Must be passable)
-     * @param size Object size.
-     * @param score Score to be claimed.
+    * @param size Object size.
+    * @param score Score to be claimed.
     * @param speed Enemy speed
     * @param wallPass Can this Enemy walk through destructible walls?
     * @param lives How many lives doest this monster have?
-     * @param surveillanceDistance How far this enemy can look forward?
+    * @param surveillanceDistance How far this enemy can look forward?
     */
     explicit CEnemy(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size = CCoord<>(1, 1),
                     int score = 100, double speed = 0.005, bool wallPass = false, int lives = 1,
@@ -28,7 +27,9 @@ public:
             : CMovable(std::move(texturePack), size, location, speed, wallPass, false, lives), m_Score(score),
               m_MoveRandom(false), m_SurveillanceDistance(surveillanceDistance)
     {
-        this->m_RandomMovementTimer.Run(5000, [=](void)
+        // Generate random delay to choose random direction.
+        unsigned  int randomDelay = CRandom::Random(3500, 6500);
+        this->m_RandomMovementTimer.Run(randomDelay, [=](void)
         {
             this->m_MoveRandom = true;
         });
@@ -87,7 +88,7 @@ protected:
     bool DirectionIsSafe(const CBoard &board, CCoord<> direction, unsigned int distance) const;
 
     /** Enemy tries to find save direction to go. */
-    void RunAway(const CBoard &board);
+    bool RunAway(const CBoard &board);
 
     /** Enemy goes forward by m_Movement */
     bool GoForward(const CBoard &board);
@@ -96,5 +97,6 @@ protected:
      * If he has no other choice, he turns around and goes back.*/
     bool GoRandom(const CBoard &board);
 
+    /** The enemy turns in random direction in next crossroad. */
     bool TurnRandom(const CBoard &board);
 };
