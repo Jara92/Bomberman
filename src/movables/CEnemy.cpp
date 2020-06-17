@@ -36,6 +36,10 @@ void CEnemy::Update(CBoard &board, int deltaTime)
 {
     CMovable::Update(board, deltaTime);
 
+    this->m_RandomMovementTimer.Tick(deltaTime);
+
+  //  std::cout << "Remaining " << m_RandomMovementTimer.GetRemainingTime() << std::endl;
+
     if (this->m_Movement == CCoord<>(0, 0))
     { return; }
         // Calibrate not moving dimension.
@@ -75,7 +79,8 @@ void CEnemy::CollisionWith(CCoord<unsigned int> blockLocation, CBlock &block)
 /*====================================================================================================================*/
 void CEnemy::CollisionWithMovable(CPlayer &player)
 {
-    player.TryKill();
+    if (this->m_IsAlive)
+    { player.TryKill(); }
 }
 
 /*====================================================================================================================*/
@@ -176,10 +181,49 @@ bool CEnemy::GoRandom(const CBoard &board)
         if (this->DirectionIsSafe(board, randomDirection, this->m_SurveillanceDistance))
         { this->m_Movement = randomDirection; }
         else
-        { this->m_Movement = CCoord<>(0, 0);  }
+        { this->m_Movement = CCoord<>(0, 0); }
     }
 
     // Now enemy can go forward. (Or stay put)
     return this->GoForward(board);
+}
+
+bool CEnemy::TurnRandom(const CBoard &board)
+{
+    auto directions = this->GetPossibleMoveDirections(board);
+
+    if (directions.size() <= 2)
+    { return this->GoForward(board); }
+    else
+    {
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count() * rand();
+        std::default_random_engine randomEngine(seed);
+
+        // Choose randomIndex direction and set new movement and texture type.
+        unsigned int randomIndex = randomEngine() % directions.size();
+
+        // Remove forward and backward direction.
+        while (!directions.empty() && (directions[randomIndex] == this->m_Movement ||
+                                       directions[randomIndex] == -1 * this->m_Movement))
+        {
+            directions.erase(directions.begin() + randomIndex);
+            randomIndex = randomEngine() % directions.size();
+        }
+
+        // Go forward if there is no turn.
+        if (!directions.empty())
+        {
+            this->m_Movement = directions[randomIndex];
+
+            bool move = this->GoForward(board);
+
+            if (move)
+            {
+                this->m_MoveRandom = false;
+                this->m_RandomMovementTimer.Reset();
+            }
+        } else
+        { return this->GoForward(board); }
+    }
 }
 

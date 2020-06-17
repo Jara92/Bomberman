@@ -61,6 +61,12 @@ void CEnemyDumb::Move(const CBoard &board, int deltaTime)
         { this->RunAway(board); }
 
         // Move
+        if (this->m_MoveRandom)
+        {
+            if (this->TurnRandom(board))
+            { continue; }
+        }
+
         if (this->GoForward(board))
         { continue; }
         else

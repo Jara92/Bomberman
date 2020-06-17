@@ -5,6 +5,7 @@
 #pragma once
 
 #include <vector>
+#include <chrono>
 #include "CMovable.h"
 
 class CEnemy : public CMovable
@@ -25,8 +26,13 @@ public:
                     int score = 100, double speed = 0.005, bool wallPass = false, int lives = 1,
                     unsigned int surveillanceDistance = 1)
             : CMovable(std::move(texturePack), size, location, speed, wallPass, false, lives), m_Score(score),
-              m_SurveillanceDistance(surveillanceDistance)
-    {}
+              m_MoveRandom(false), m_SurveillanceDistance(surveillanceDistance)
+    {
+        this->m_RandomMovementTimer.Run(5000, [=](void)
+        {
+            this->m_MoveRandom = true;
+        });
+    }
 
     CEnemy(const CEnemy &other) = default;
 
@@ -55,6 +61,8 @@ public:
 protected:
     int m_Score;
     CTimer m_DestroyTimer;
+    CTimer m_RandomMovementTimer;
+    bool m_MoveRandom;
     unsigned int m_SurveillanceDistance;
 
     static constexpr unsigned int ENEMY_DESTROY_DELAY = 1000;
@@ -87,4 +95,6 @@ protected:
     /** The enemy chooses random direction. The enemy turns in a random direction.
      * If he has no other choice, he turns around and goes back.*/
     bool GoRandom(const CBoard &board);
+
+    bool TurnRandom(const CBoard &board);
 };
