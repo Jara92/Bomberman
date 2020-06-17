@@ -6,6 +6,7 @@
 
 #include <vector>
 #include "CMovable.h"
+#include "../enums/EEnemyMovementMode.h"
 
 class CEnemy : public CMovable
 {
@@ -25,9 +26,15 @@ public:
                     int score = 100, double speed = 0.005, bool wallPass = false, int lives = 1,
                     unsigned int surveillanceDistance = 1)
             : CMovable(std::move(texturePack), size, location, speed, wallPass, false, lives), m_Score(score),
-              m_MoveRandom(false), m_SurveillanceDistance(surveillanceDistance)
+              m_MovementMode(EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_FORWARD),
+              m_SurveillanceDistance(surveillanceDistance)
     {
-
+        // Generate random delay to choose random direction.
+        unsigned  int randomDelay = CRandom::Random(4500, 8000);
+        this->m_MovementModeTimer.Run(randomDelay, [=](void)
+        {
+            this->UpdateMovementMode();
+        });
     }
 
     CEnemy(const CEnemy &other) = default;
@@ -80,10 +87,13 @@ public:
 protected:
     int m_Score;
     CTimer m_DestroyTimer;
-    bool m_MoveRandom;
+    CTimer m_MovementModeTimer;
+    EEnemyMovementMode m_MovementMode;
     unsigned int m_SurveillanceDistance;
 
     static constexpr unsigned int ENEMY_DESTROY_DELAY = 1000;
+
+    virtual void UpdateMovementMode() = 0;
 
     /** Enemy movement. */
     virtual void Move(const CBoard &board, int deltaTime) = 0;

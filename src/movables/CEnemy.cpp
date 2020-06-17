@@ -37,6 +37,7 @@ void CEnemy::Update(CBoard &board, int deltaTime)
     CMovable::Update(board, deltaTime);
 
     this->m_DestroyTimer.Tick(deltaTime);
+    this->m_MovementModeTimer.Tick(deltaTime);
 
     if (this->m_Movement == CCoord<>(0, 0))
     { return; }

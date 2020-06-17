@@ -275,40 +275,19 @@ std::vector<std::shared_ptr<CTexturePack>> CLevelLoader::LoadEnemyTexturePacks()
                                                                             {"Creep/Pink/Right/Right_f02.png"},
                                                                             {"Creep/Pink/Right/Right_f03.png"},
                                                                             {"Creep/Pink/Right/Right_f04.png"},
-                                                                            {"Creep/Pink/Right/Right_f05.png"}}}},
-             {       {ETextureType::TEXTURE_FRONT, std::vector<std::string>{{"Creep/Pink/Front/Front_f00.png"},
-                                                                            {"Creep/Pink/Front/Front_f01.png"},
-                                                                            {"Creep/Pink/Front/Front_f02.png"},
-                                                                            {"Creep/Pink/Front/Front_f03.png"},
-                                                                            {"Creep/Pink/Front/Front_f04.png"},
-                                                                            {"Creep/Pink/Front/Front_f05.png"}}},
-                     {ETextureType::TEXTURE_BACK, std::vector<std::string>{{"Creep/Pink/Back/Back_f00.png"},
-                                                                           {"Creep/Pink/Back/Back_f01.png"},
-                                                                           {"Creep/Pink/Back/Back_f02.png"},
-                                                                           {"Creep/Pink/Back/Back_f03.png"},
-                                                                           {"Creep/Pink/Back/Back_f04.png"},
-                                                                           {"Creep/Pink/Back/Back_f05.png"}}},
-                     {ETextureType::TEXTURE_LEFT, std::vector<std::string>{{"Creep/Pink/Left/Left_f00.png"},
-                                                                           {"Creep/Pink/Left/Left_f01.png"},
-                                                                           {"Creep/Pink/Left/Left_f02.png"},
-                                                                           {"Creep/Pink/Left/Left_f03.png"},
-                                                                           {"Creep/Pink/Left/Left_f04.png"},
-                                                                           {"Creep/Pink/Left/Left_f05.png"}}},
-                     {ETextureType::TEXTURE_RIGHT, std::vector<std::string>{{"Creep/Pink/Right/Right_f00.png"},
-                                                                            {"Creep/Pink/Right/Right_f01.png"},
-                                                                            {"Creep/Pink/Right/Right_f02.png"},
-                                                                            {"Creep/Pink/Right/Right_f03.png"},
-                                                                            {"Creep/Pink/Right/Right_f04.png"},
                                                                             {"Creep/Pink/Right/Right_f05.png"}}}}};
-    std::vector<CCoord<>> sizes{
-            {1, 1},
-            {1, 1}
-    };
+    std::vector<CCoord<>> sizes{{1, 1}};
+
+    std::vector<SDL_Color> textureColors = {{50,  255, 30,  255},
+                                            {255, 255, 255, 255}};
 
     // Create texture packs shared pointers.
     std::vector<std::shared_ptr<CTexturePack>> texturePacks;
-    for (size_t i = 0; i < textures.size(); i++)
-    { texturePacks.push_back(std::make_shared<CTexturePack>(this->m_Interface, textures[i], true, sizes[i])); }
+    for (size_t i = 0; i < textureColors.size(); i++)
+    {
+        texturePacks.push_back(std::make_shared<CTexturePack>(this->m_Interface, textures[0], true, sizes[0]));
+        texturePacks.back()->SetTextureColorMod(textureColors[i]);
+    }
 
     return texturePacks;
 }
