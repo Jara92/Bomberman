@@ -43,7 +43,8 @@ public:
 
     CAnimation &operator=(const CAnimation &other) = delete;
 
-    bool SetTextureColorMod(SDL_Colour color)
+    /**  set an additional color value multiplied into render copy operations. */
+    void SetTextureColorMod(SDL_Colour color)
     {
         for (auto i = this->m_Textures.begin(); i != this->m_Textures.end(); i++)
         { SDL_SetTextureColorMod((*i), color.r, color.g, color.b); }
