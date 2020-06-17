@@ -11,9 +11,8 @@ class CCollectible : public CBlock
 {
 public:
     /**
-    * Collectible object contructor
-    * @param texturePack Texturepack to be rendered.
-    * @param location Object location.
+    * Collectible object constructor.
+    * @param texturePack Texture pack to be rendered.
     * @param size Object size.
     * @param scoreBonus Bonus to be claimed by collector.
     * @param duration Collectible duration in seconds. Set 0 for unlimited duration.

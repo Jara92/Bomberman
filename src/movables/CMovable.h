@@ -25,6 +25,7 @@ public:
      * @param size Object size.
      * @param speed  Starting speed
      * @param wallPass Can this object walk through destructible walls?
+     * @param bombPass Cant this object walk through bombs?
      * @param lives Starting lives count
      */
     explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1),
@@ -54,11 +55,10 @@ public:
     }
 
     /**
-     * Draw the gameobject
-     * @param interface Interface
-     * @param cellSize Cellsize
-     * @param location Target cell location
-     * @param offset Texture global offset
+     * Draw the gameobject.
+     * @param interface Interface.
+     * @param cellSize Cellsize.
+     * @param offset Texture global offset.
      */
     virtual void
     Draw(CSDLInterface &interface, int cellSize, CCoord<> offset = CCoord<>(0, 0)) const

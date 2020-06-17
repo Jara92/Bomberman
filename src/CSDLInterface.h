@@ -113,6 +113,7 @@ public:
      * @param text Text to be used.
      * @param size Output parameter. Returns the texture size.
      * @param color Text color.
+     * @param quality Rendering quality.
      * @return Text saved as texture in given color.
      */
     SDL_Texture *LoadTextTexture(const std::string &text, CCoord<unsigned int> &size, SDL_Colour color = {255, 255,

@@ -29,7 +29,8 @@ public:
      * Draw block.
      * @param interface Interface to be used.
      * @param cellSize Game board cell size.
-     * @param location Block location.
+     * @param location Object location.
+     * @param size Object size.
      * @param offset Drawing offset.
      */
     virtual void
@@ -38,8 +39,10 @@ public:
 
     /**
     * Are these objects colliding?
-     * @param thisLocation Location of this object in game board.
-    * @param other Other object
+     * @param aLocation First object location.
+     * @param aSize First object size.
+     * @param bLocation Second object location.
+     * @param bSize Second object size.
     */
     bool IsColliding(CCoord<> aLocation, CCoord<> aSize, CCoord<> bLocation, CCoord<> bSize) const;
 

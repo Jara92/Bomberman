@@ -74,7 +74,8 @@ public:
 
     /**
      * Is area around players free?
-     * @param coord Position
+     * @param coord Location.
+     * @param playerSaveZone Players save zone.
      * @return True - Location free
      */
     bool PlayersAreaFree(CCoord<unsigned int> coord, double playerSaveZone);
@@ -96,6 +97,7 @@ public:
     /**
      * Trigger explosion in bombs location.
      * @param bomb Exploding bomb.
+     * @param bombLocation Exploding bomb location.
      */
     void CreateExplosion(CBomb &bomb, CCoord<unsigned int> bombLocation);
 

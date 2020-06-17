@@ -8,7 +8,7 @@
 void CEnemyDumb::Update(CBoard &board, int deltaTime)
 {
     CEnemy::Update(board, deltaTime);
-    this->m_DestroyTimer.Tick(deltaTime);
+    this->m_RandomMovementTimer.Tick(deltaTime);
 
     // Move when the enemy is alive.
     if (this->m_IsAlive)
@@ -19,36 +19,6 @@ void CEnemyDumb::Update(CBoard &board, int deltaTime)
 
         this->UpdateTextureType(oldLocation);
     }
-}
-
-/*====================================================================================================================*/
-unsigned int CEnemyDumb::TryKill(unsigned int distance)
-{
-    if (this->m_IsAlive)
-    {
-        this->m_Lives--;
-
-        // Check lives of the monster
-        if (this->m_Lives <= 0)
-        {
-            this->m_IsAlive = false;
-            this->m_Movement = CCoord<>(0, 0);
-
-            int score = this->m_Score;
-            // Set score to 0 to make sure player doesn't get it more than once
-            this->m_Score = 0;
-
-            // Destroy the object with a delay.
-            this->m_DestroyTimer.Run(CEnemy::ENEMY_DESTROY_DELAY, [=](void)
-            {
-                this->m_IsDestroyed = true;
-            });
-
-            return score;
-        }
-    }
-
-    return 0;
 }
 
 /*====================================================================================================================*/
@@ -75,4 +45,41 @@ void CEnemyDumb::Move(const CBoard &board, int deltaTime)
         else
         { this->GoRandom(board); }
     }
+}
+
+/*====================================================================================================================*/
+bool CEnemyDumb::TurnRandom(const CBoard &board)
+{
+    auto directions = this->GetPossibleMoveDirections(board);
+
+    if (directions.size() > 2)
+    {
+        // Choose randomIndex direction and set new movement and texture type.
+        unsigned int randomIndex = CRandom::Random(0, directions.size());
+
+        // Remove forward and backward direction.
+        while (!directions.empty() && (directions[randomIndex] == this->m_Movement ||
+                                       directions[randomIndex] == -1 * this->m_Movement))
+        {
+            directions.erase(directions.begin() + randomIndex);
+            randomIndex = CRandom::Random(0, directions.size());
+        }
+
+        if (!directions.empty())
+        {
+            this->m_Movement = directions[randomIndex];
+
+            bool move = this->GoForward(board);
+
+            if (move)
+            {
+                this->m_MoveRandom = false;
+                this->m_RandomMovementTimer.Reset();
+
+                return move;
+            }
+        }
+    }
+
+    return this->GoForward(board);
 }

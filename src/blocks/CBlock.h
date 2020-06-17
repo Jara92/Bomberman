@@ -48,8 +48,9 @@ public:
 
     /**
      * Is this object passable for movement?
-     * @param movable Movable object.
-     * @return
+     * @param thisLocation This block location.
+     * @param movable Movable to pass.
+     * @return True - Block is passable for the movable.
      */
     virtual bool IsPassable(CCoord<unsigned int> thisLocation, const CMovable &movable) const
     { return (this->IsColliding(thisLocation, movable) ? this->m_IsPassable : true); }
@@ -62,9 +63,11 @@ public:
     bool IsColliding(CCoord<unsigned int> thisLocation, const CMovable &other) const
     { return this->m_Body.IsColliding(thisLocation.ToDouble(), this->m_Size, other.GetLocation(), other.GetSize()); }
 
+    /** Hadnle collision with player. */
     virtual void CollisionWith(CCoord<unsigned int> thisLocation, CPlayer &player)
     {}
 
+    /** Handle collision with enemy. */
     virtual void CollisionWith(CCoord<unsigned int> thisLocation, CEnemy &enemy)
     {}
 

@@ -27,12 +27,7 @@ public:
             : CMovable(std::move(texturePack), size, location, speed, wallPass, false, lives), m_Score(score),
               m_MoveRandom(false), m_SurveillanceDistance(surveillanceDistance)
     {
-        // Generate random delay to choose random direction.
-        unsigned  int randomDelay = CRandom::Random(3500, 6500);
-        this->m_RandomMovementTimer.Run(randomDelay, [=](void)
-        {
-            this->m_MoveRandom = true;
-        });
+
     }
 
     CEnemy(const CEnemy &other) = default;
@@ -48,21 +43,43 @@ public:
      */
     virtual void Update(CBoard &board, int deltaTime) override;
 
+    /**
+     * Handle collision with CBlock object.
+     * @param blockLocation Block location.
+     * @param block Block.
+     */
     virtual void CollisionWith(CCoord<unsigned int> blockLocation, CBlock &block) override;
 
+    /**
+     * Handle collision with other CMovable object.
+     * @param movable Movable object.
+     */
     virtual void CollisionWith(CMovable &movable) override
     {}
 
+    /**
+     * Handle colision with player.
+     * @param player Player.
+     */
     virtual void CollisionWithMovable(CPlayer &player) override;
 
+    /**
+     * Prepare the enemy for next level.
+     * @param board Game board.
+     * @param clearLevelObjects Kill and destroy enemies?
+     */
     virtual void NextLevel(CBoard &board, bool clearLevelObjects) override;
 
-    virtual unsigned int TryKill(unsigned int distance) = 0;
+    /**
+     * Try to kill the enemy.
+     * @param distance Distance from the enemy
+     * @return Score to be achieved.
+     */
+    virtual unsigned int TryKill(unsigned int distance);
 
 protected:
     int m_Score;
     CTimer m_DestroyTimer;
-    CTimer m_RandomMovementTimer;
     bool m_MoveRandom;
     unsigned int m_SurveillanceDistance;
 
@@ -96,7 +113,4 @@ protected:
     /** The enemy chooses random direction. The enemy turns in a random direction.
      * If he has no other choice, he turns around and goes back.*/
     bool GoRandom(const CBoard &board);
-
-    /** The enemy turns in random direction in next crossroad. */
-    bool TurnRandom(const CBoard &board);
 };

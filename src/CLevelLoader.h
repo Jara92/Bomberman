@@ -100,7 +100,7 @@ protected:
      * Load config data from file.
      * @param board Game board.
      * @param level Level to be loaded.
-     * @param loadLevelObjects Load collectible objects from the file or use existing collectibles?
+     * @param collectibles Vector for storing collectible objects.
      * @throws std::ios::failure When level file not found.
      */
     void LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int level, std::vector<CCollectible *> &collectibles);
@@ -108,6 +108,7 @@ protected:
     /**
      * Move every collectible to random location and attach it to assign it to the wall in the same position.
      * @param board Game board.
+     * @param collectibles Vector for storing collectible objects.
      */
     void NextRoundPrepare(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> &collectibles);
 
@@ -125,6 +126,7 @@ protected:
      * @param board Game board.
      * @param input Input array.
      * @param itemType Item type.
+     * @param collectibles Vector for storing collectible objects.
      * @return True - success.
      */
     bool ReadItem(std::shared_ptr<CBoard> &board, const std::vector<std::string> &input, const std::string &itemType,
