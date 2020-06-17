@@ -117,7 +117,7 @@ bool CEnemy::DirectionIsSafe(const CBoard &board, CCoord<> direction, unsigned i
 {
     for (unsigned int i = 1; i <= distance; i++)
     {
-        CCoord<> loc = this->GetLocationCell().ToDouble() + ((direction * (i)));
+        CCoord<> loc = this->GetLocation() + CCoord<>(0.5, 0.5) + ((direction * (i)));
         CCoord<unsigned int> forwardCell = loc.ToUnsignedInt();
 
         // Check for dangerous object in forwardCell location.

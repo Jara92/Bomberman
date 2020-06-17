@@ -20,7 +20,7 @@ public:
     * @param lives How many lives doest this monster have?
     */
     explicit CEnemyDumb(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size = CCoord<>(1, 1), int score = 0, double speed = 0.005, bool wallPass = false, int lives = 1)
-    : CEnemy(std::move(texturePack), location, size,score,speed, wallPass, lives)
+    : CEnemy(std::move(texturePack), location, size,score,speed, wallPass, lives, 1)
     {    }
 
     CEnemyDumb(const CEnemyDumb &other) = default;

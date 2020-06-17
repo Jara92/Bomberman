@@ -26,18 +26,15 @@ void CEnemyDumb::Move(const CBoard &board, int deltaTime)
 {
     for (int i = 0; i < deltaTime; i++)
     {
-        // Check for dangerous objects in front of this enemy.
-        if (!this->DirectionIsSafe(board, this->m_Movement, this->m_SurveillanceDistance))
-        {
-            if (this->RunAway(board))
-            { continue; }
-        }
-
         // Move
         if (this->m_MovementMode == EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_RANDOM)
         {
             if (this->TurnRandom(board))
-            { continue; }
+            {
+                this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_FORWARD;
+                this->m_MovementModeTimer.Reset();
+                continue;
+            }
         }
 
         if (this->GoForward(board))
@@ -58,8 +55,8 @@ bool CEnemyDumb::TurnRandom(const CBoard &board)
         unsigned int randomIndex = CRandom::Random(0, directions.size());
 
         // Remove forward and backward direction.
-        while (!directions.empty() && (directions[randomIndex] == this->m_Movement ||
-                                       directions[randomIndex] == -1 * this->m_Movement))
+        while (!directions.empty() && (/*directions[randomIndex] == this->m_Movement ||*/
+                directions[randomIndex] == -1 * this->m_Movement))
         {
             directions.erase(directions.begin() + randomIndex);
             randomIndex = CRandom::Random(0, directions.size());
