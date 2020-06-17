@@ -43,6 +43,12 @@ public:
 
     CAnimation &operator=(const CAnimation &other) = delete;
 
+    bool SetTextureColorMod(SDL_Colour color)
+    {
+        for (auto i = this->m_Textures.begin(); i != this->m_Textures.end(); i++)
+        { SDL_SetTextureColorMod((*i), color.r, color.g, color.b); }
+    }
+
     SDL_Texture *GetTexture(unsigned int *index) const;
 
 protected:

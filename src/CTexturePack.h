@@ -40,6 +40,14 @@ public:
 
     ~CTexturePack() = default;
 
+    bool SetTextureColorMod(SDL_Colour color)
+    {
+        for (auto i = this->m_Animations.begin(); i != this->m_Animations.end(); i++)
+        { (*i).second->SetTextureColorMod(color); }
+
+        return true;
+    }
+
     /**
      * Return texture by texturetype
      * @param textureType Texturetype to be returned

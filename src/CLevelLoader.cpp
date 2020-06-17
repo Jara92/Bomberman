@@ -110,13 +110,12 @@ std::vector<std::vector<CBlock *>> CLevelLoader::LoadMap()
 /*====================================================================================================================*/
 std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
 {
-    // count = 2; // todo remove
     CInput controls[MAX_PLAYERS] = {
-            {SDL_SCANCODE_W, SDL_SCANCODE_S, SDL_SCANCODE_A, SDL_SCANCODE_D, SDL_SCANCODE_J, SDL_SCANCODE_K},
-            {SDL_SCANCODE_I, SDL_SCANCODE_K, SDL_SCANCODE_J, SDL_SCANCODE_L, SDL_SCANCODE_N, SDL_SCANCODE_M}
+            {SDL_SCANCODE_W,  SDL_SCANCODE_S,    SDL_SCANCODE_A,    SDL_SCANCODE_D,     SDL_SCANCODE_J,    SDL_SCANCODE_K},
+            {SDL_SCANCODE_UP, SDL_SCANCODE_DOWN, SDL_SCANCODE_LEFT, SDL_SCANCODE_RIGHT, SDL_SCANCODE_KP_4, SDL_SCANCODE_KP_5}
     };
 
-    // Setup texturepack for the players. // TODO second player should have different texture color.
+    // Setup texturepack for the players.
     std::map<ETextureType, const std::vector<std::string>> textures
             {{ETextureType::TEXTURE_FRONT, std::vector<std::string>{
                     {"Bomberman/Front/front0.png"},
@@ -165,14 +164,18 @@ std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
     // Setup default locations
     CCoord<> startingLocation[CLevelLoader::MAX_PLAYERS] = {{1,  1},
                                                             {21, 11}};
+
+    SDL_Color playerColor[CLevelLoader::MAX_PLAYERS] = {{255, 255, 255, 255},
+                                                        {255, 215, 0,   255}};
     std::vector<CPlayer *> players;
 
     // return only required players
     for (int i = 0; i < count; i++)
     {
-        players.push_back(
-                new CPlayer(std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i], false, CCoord<>(1, 2)),
-                            startingLocation[i], CCoord<>(0.60, 0.60), controls[i]));
+        // Create texture pack using right color.
+        auto texturePack = std::make_shared<CTexturePack>(this->m_Interface, texturePacks[i], false, CCoord<>(1, 2));
+        texturePack->SetTextureColorMod(playerColor[i]);
+        players.push_back(new CPlayer(texturePack, startingLocation[i], CCoord<>(0.60, 0.60), controls[i]));
     }
 
     return players;
@@ -379,8 +382,8 @@ void CLevelLoader::LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int le
 
     fileReader.close();
 
-    if(collectibles.size() >= 20)
-    {throw std::runtime_error(MESSAGE_MAXIMUM_COLLECTIBLES_REACHES);}
+    if (collectibles.size() >= 20)
+    { throw std::runtime_error(MESSAGE_MAXIMUM_COLLECTIBLES_REACHES); }
 }
 
 /*====================================================================================================================*/
