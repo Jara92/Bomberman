@@ -5,7 +5,7 @@
 #pragma once
 
 #include <functional>
-#include "CWindowManager.h"
+#include "CScene.h"
 #include "../CSDLInterface.h"
 #include "../CGameClock.h"
 #include "../CBoard.h"
@@ -15,20 +15,20 @@
 #include "../CScoreSaver.h"
 
 /** Manager for single player game. */
-class CGameManager : public CWindowManager
+class CGameScene : public CScene
 {
 public:
     /**
      * Constructor.
      * @param interface Interface to be used.
      */
-    explicit CGameManager(CSDLInterface &interface);
+    explicit CGameScene(CSDLInterface &interface);
 
-    virtual ~CGameManager() = default;
+    virtual ~CGameScene() = default;
 
-    CGameManager(const CGameManager &other) = delete;
+    CGameScene(const CGameScene &other) = delete;
 
-    CGameManager &operator=(const CGameManager &other) = delete;
+    CGameScene &operator=(const CGameScene &other) = delete;
 
     /**
      * Run the game.

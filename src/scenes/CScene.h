@@ -18,19 +18,19 @@
 /**
  * Class which manages content rendering.
  */
-class CWindowManager
+class CScene
 {
 public:
     /**
      * Constructor.
      * @param interface Interface to be used.
      */
-    explicit CWindowManager(CSDLInterface &interface)
+    explicit CScene(CSDLInterface &interface)
     : m_Interface(interface), m_NextApplicationState(EApplicationStatus::APPLICATON_STATUS_NONE)
     {}
-    virtual ~CWindowManager() = default;
-    CWindowManager (const CWindowManager & other) = delete;
-    CWindowManager & operator = (const CWindowManager & other) = delete;
+    virtual ~CScene() = default;
+    CScene (const CScene & other) = delete;
+    CScene & operator = (const CScene & other) = delete;
 
     /** Run window. */
     virtual EApplicationStatus Run();

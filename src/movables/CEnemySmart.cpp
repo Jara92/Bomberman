@@ -31,6 +31,7 @@ void CEnemySmart::UpdateMovementMode()
     { newMovementMode = actualMovementMode + 1; }
 
     this->m_MovementMode = static_cast<EEnemyMovementMode >(newMovementMode);
+    std::cout << "new mode " << newMovementMode << std::endl;
 
     this->m_MovementModeTimer.Reset();
 }
@@ -44,21 +45,16 @@ void CEnemySmart::Move(const CBoard &board, int deltaTime)
         // Check for dangerous objects in front of this enemy.
         if (!this->DirectionIsSafe(board, this->m_Movement, this->m_SurveillanceDistance))
         {
-            if (this->RunAway(board))
-            { continue; }
+           /* if (this->RunAway(board))
+            { continue; }*/
+          // this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_RANDOM;
         }
-
-        if (this->m_MovementMode == EEnemyMovementMode::ENEMY_MOVEMENT_MODE_FOLLOW_THE_PLAYER)
-        {
-            if (this->FollowThePlayer(board))
-            { continue; }
-        }
-
 
         if (this->GoForward(board))
         { continue; }
         else
         { this->GoRandom(board); }
+       //this->TurnRandom(board);
     }
 }
 

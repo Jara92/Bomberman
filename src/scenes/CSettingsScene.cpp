@@ -4,9 +4,9 @@
 */
 
 
-#include "CSettingsManager.h"
+#include "CSettingsScene.h"
 
-CSettingsManager::CSettingsManager(CSDLInterface &interface) : CWindowManager(interface)
+CSettingsScene::CSettingsScene(CSDLInterface &interface) : CScene(interface)
 {
     this->m_Interface.SetMenuScreenSize();
     CCoord<unsigned int> windowSize = interface.GetWindowSize();
@@ -51,10 +51,10 @@ CSettingsManager::CSettingsManager(CSDLInterface &interface) : CWindowManager(in
 }
 
 /*====================================================================================================================*/
-EApplicationStatus CSettingsManager::Run()
+EApplicationStatus CSettingsScene::Run()
 {
     // While window is not closed.
-    while (CWindowManager::Run() != EApplicationStatus::APPLICATION_STATUS_EXIT)
+    while (CScene::Run() != EApplicationStatus::APPLICATION_STATUS_EXIT)
     {
         if (this->m_NextApplicationState != EApplicationStatus::APPLICATON_STATUS_NONE)
         { return this->m_NextApplicationState; }
@@ -64,18 +64,18 @@ EApplicationStatus CSettingsManager::Run()
 }
 
 /*====================================================================================================================*/
-void CSettingsManager::Draw() const
+void CSettingsScene::Draw() const
 {
     this->m_Interface.SetRenderColor(0, 0, 0, 255);
     this->m_Interface.Clear();
 
-    CWindowManager::Draw();
+    CScene::Draw();
 
     this->m_Interface.Present();
 }
 
 /*====================================================================================================================*/
-void CSettingsManager::ProcessEvent(SDL_Event &e)
+void CSettingsScene::ProcessEvent(SDL_Event &e)
 {
     switch (e.type)
     {
@@ -87,7 +87,7 @@ void CSettingsManager::ProcessEvent(SDL_Event &e)
             break;
         default:
             // Unknown events send to parent.
-            CWindowManager::ProcessEvent(e);
+            CScene::ProcessEvent(e);
     }
 }
 

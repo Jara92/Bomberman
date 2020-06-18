@@ -2,14 +2,14 @@
  * @author Jaroslav Fikar
 */
 
-#include "CMenuManager.h"
+#include "CMenuScene.h"
 
 /**
  * Menu window.
  * @param interface Interface to be used.
  */
-CMenuManager::CMenuManager(CSDLInterface &interface)
-        : CWindowManager(interface)
+CMenuScene::CMenuScene(CSDLInterface &interface)
+        : CScene(interface)
 {
     // Set menu window size.
     this->m_Interface.SetMenuScreenSize();
@@ -89,10 +89,10 @@ CMenuManager::CMenuManager(CSDLInterface &interface)
 }
 
 /*====================================================================================================================*/
-EApplicationStatus CMenuManager::Run()
+EApplicationStatus CMenuScene::Run()
 {
     // While window is not closed.
-    while (CWindowManager::Run() != EApplicationStatus::APPLICATION_STATUS_EXIT)
+    while (CScene::Run() != EApplicationStatus::APPLICATION_STATUS_EXIT)
     {
         if (this->m_NextApplicationState != EApplicationStatus::APPLICATON_STATUS_NONE)
         { return this->m_NextApplicationState; }
@@ -102,18 +102,18 @@ EApplicationStatus CMenuManager::Run()
 }
 
 /*====================================================================================================================*/
-void CMenuManager::Draw() const
+void CMenuScene::Draw() const
 {
     this->m_Interface.SetRenderColor(0, 0, 0, 255);
     this->m_Interface.Clear();
 
-    CWindowManager::Draw();
+    CScene::Draw();
 
     this->m_Interface.Present();
 }
 
 /*====================================================================================================================*/
-void CMenuManager::ProcessEvent(SDL_Event &e)
+void CMenuScene::ProcessEvent(SDL_Event &e)
 {
     switch (e.type)
     {
@@ -125,7 +125,7 @@ void CMenuManager::ProcessEvent(SDL_Event &e)
             break;
         default:
             // Unknown events send to parent.
-            CWindowManager::ProcessEvent(e);
+            CScene::ProcessEvent(e);
     }
 }
 

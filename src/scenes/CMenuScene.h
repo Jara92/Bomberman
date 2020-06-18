@@ -6,22 +6,22 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "CWindowManager.h"
+#include "CScene.h"
 #include "../CScoreSaver.h"
 
 /** Class which manages menu rendering and user events. */
-class CMenuManager : public CWindowManager
+class CMenuScene : public CScene
 {
 public:
     /**
     * Constructor.
     * @param interface Interface to be used.
     */
-    explicit CMenuManager(CSDLInterface &interface);
+    explicit CMenuScene(CSDLInterface &interface);
 
-    virtual ~CMenuManager() = default;
-    CMenuManager(const CMenuManager &other) = delete;
-    CMenuManager &operator=(const CMenuManager &other) = delete;
+    virtual ~CMenuScene() = default;
+    CMenuScene(const CMenuScene &other) = delete;
+    CMenuScene &operator=(const CMenuScene &other) = delete;
 
     virtual EApplicationStatus Run() override ;
 

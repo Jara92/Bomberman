@@ -42,41 +42,7 @@ void CEnemyDumb::Move(const CBoard &board, int deltaTime)
     }
 }
 
-/*====================================================================================================================*/
-bool CEnemyDumb::TurnRandom(const CBoard &board)
-{
-    auto directions = this->GetPossibleMoveDirections(board);
 
-    if (directions.size() > 2)
-    {
-        // Choose randomIndex direction and set new movement and texture type.
-        unsigned int randomIndex = CRandom::Random(0, directions.size());
-
-        // Remove forward and backward direction.
-        while (!directions.empty() && (directions[randomIndex] == this->m_Movement ||
-                                       directions[randomIndex] == -1 * this->m_Movement))
-        {
-            directions.erase(directions.begin() + randomIndex);
-            randomIndex = CRandom::Random(0, directions.size());
-        }
-
-        if (!directions.empty())
-        {
-            this->m_Movement = directions[randomIndex];
-
-            bool move = this->GoForward(board);
-
-            if (move)
-            {
-                this->UpdateMovementMode();
-                this->m_MovementModeTimer.Reset();
-                return move;
-            }
-        }
-    }
-
-    return this->GoForward(board);
-}
 
 /*====================================================================================================================*/
 void CEnemyDumb::UpdateMovementMode()

@@ -6,9 +6,9 @@
 #pragma once
 #include <queue>
 #include "CSDLInterface.h"
-#include "managers/CGameManager.h"
-#include "managers/CMenuManager.h"
-#include "managers/CSettingsManager.h"
+#include "scenes/CGameScene.h"
+#include "scenes/CMenuScene.h"
+#include "scenes/CSettingsScene.h"
 #include "Messages.h"
 
 class CApplication
@@ -24,6 +24,6 @@ public:
 protected:
     std::shared_ptr<CSettings> Init(int argc, char * argv[]);
 
-    std::shared_ptr<CWindowManager> GetWindowManagerByState(CSDLInterface & interface, EApplicationStatus applicationStatus) const;
+    std::shared_ptr<CScene> GetWindowManagerByState(CSDLInterface & interface, EApplicationStatus applicationStatus) const;
 };
 

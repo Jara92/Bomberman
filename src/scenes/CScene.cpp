@@ -2,9 +2,9 @@
  * @author Jaroslav Fikar
 */
 
-#include "CWindowManager.h"
+#include "CScene.h"
 
-EApplicationStatus CWindowManager::Run()
+EApplicationStatus CScene::Run()
 {
     // Tick event to update game clock
     this->m_Clock.Tick();
@@ -25,7 +25,7 @@ EApplicationStatus CWindowManager::Run()
 }
 
 /*====================================================================================================================*/
-void CWindowManager::UpdateEvents()
+void CScene::UpdateEvents()
 {
     // Proccess event.
     SDL_Event e;
@@ -34,7 +34,7 @@ void CWindowManager::UpdateEvents()
 }
 
 /*====================================================================================================================*/
-void CWindowManager::ProcessEvent(SDL_Event &e)
+void CScene::ProcessEvent(SDL_Event &e)
 {
     // Check events
     switch (e.type)
@@ -47,7 +47,7 @@ void CWindowManager::ProcessEvent(SDL_Event &e)
 }
 
 /*====================================================================================================================*/
-void CWindowManager::Draw() const
+void CScene::Draw() const
 {
     // Draw every UI item.
     for (auto item = this->m_InterfaceItems.begin(); item != this->m_InterfaceItems.end(); item++)
@@ -55,7 +55,7 @@ void CWindowManager::Draw() const
 }
 
 /*====================================================================================================================*/
-void CWindowManager::Update(int deltaTime)
+void CScene::Update(int deltaTime)
 {
     for (auto item = this->m_InterfaceItems.begin(); item != this->m_InterfaceItems.end(); item++)
     { item->get()->Update(this->m_Interface, deltaTime); }

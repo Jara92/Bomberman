@@ -120,4 +120,7 @@ protected:
     /** The enemy chooses random direction. The enemy turns in a random direction.
      * If he has no other choice, he turns around and goes back.*/
     bool GoRandom(const CBoard &board);
+
+    /** The enemy turns in random direction in next crossroad. */
+    bool TurnRandom(const CBoard &board);
 };

@@ -25,15 +25,15 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CSelectBoxItem.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/interfaceitems/CSelectBoxItem.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/interfaceitems/CText.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/interfaceitems/CText.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/main.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/main.cpp.o"
-  "/home/jaroslav/CLionProjects/bomberman/src/managers/CGameManager.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o"
-  "/home/jaroslav/CLionProjects/bomberman/src/managers/CMenuManager.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.o"
-  "/home/jaroslav/CLionProjects/bomberman/src/managers/CSettingsManager.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o"
-  "/home/jaroslav/CLionProjects/bomberman/src/managers/CWindowManager.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/movables/CEnemy.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/movables/CEnemy.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/movables/CEnemyDumb.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/movables/CEnemyDumb.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/movables/CEnemySmart.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/movables/CEnemySmart.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/movables/CMovable.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/movables/CMovable.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/movables/CPlayer.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/movables/CPlayer.cpp.o"
+  "/home/jaroslav/CLionProjects/bomberman/src/scenes/CGameScene.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/scenes/CGameScene.cpp.o"
+  "/home/jaroslav/CLionProjects/bomberman/src/scenes/CMenuScene.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/scenes/CMenuScene.cpp.o"
+  "/home/jaroslav/CLionProjects/bomberman/src/scenes/CScene.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/scenes/CScene.cpp.o"
+  "/home/jaroslav/CLionProjects/bomberman/src/scenes/CSettingsScene.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/scenes/CSettingsScene.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

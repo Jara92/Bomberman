@@ -2,16 +2,16 @@
  * @author Jaroslav Fikar
 */
 
-#include "CGameManager.h"
+#include "CGameScene.h"
 
-CGameManager::CGameManager(CSDLInterface &interface)
-        : CWindowManager(interface), m_Board(nullptr), m_BoardOffset(CCoord<>(0, 2)), m_LevelLoader(interface),
+CGameScene::CGameScene(CSDLInterface &interface)
+        : CScene(interface), m_Board(nullptr), m_BoardOffset(CCoord<>(0, 2)), m_LevelLoader(interface),
           m_GameStatus(EGameStatus::GAME_STATUS_RUNNING), m_NextGameStatus(EGameStatus::GAME_STATUS_RUNNING), m_Level(1)
 {
     this->m_Interface.SetGameScreenSize();
 
     // Kill all players when the time runs out.
-    this->m_GameEndDelay.Run(CGameManager::/*GAME_STATUS_UPDATE_DELAY*/STARTING_TIME, [=](void)
+    this->m_GameEndDelay.Run(CGameScene::/*GAME_STATUS_UPDATE_DELAY*/STARTING_TIME, [=](void)
     { this->KillAllPlayers(); });
 
     // Get board and load first level
@@ -73,11 +73,11 @@ CGameManager::CGameManager(CSDLInterface &interface)
 }
 
 /*====================================================================================================================*/
-EApplicationStatus CGameManager::Run()
+EApplicationStatus CGameScene::Run()
 {
     while (this->m_GameStatus != EGameStatus::GAME_STATUS_EXIT)
     {
-        if (CWindowManager::Run() == EApplicationStatus::APPLICATION_STATUS_EXIT)
+        if (CScene::Run() == EApplicationStatus::APPLICATION_STATUS_EXIT)
         { return EApplicationStatus::APPLICATION_STATUS_MENU; }
     }
 
@@ -85,7 +85,7 @@ EApplicationStatus CGameManager::Run()
 }
 
 /*====================================================================================================================*/
-void CGameManager::Draw() const
+void CGameScene::Draw() const
 {
     this->m_Interface.SetRenderColor(0, 0, 0, 255);
     this->m_Interface.Clear();
@@ -116,7 +116,7 @@ void CGameManager::Draw() const
 }
 
 /*====================================================================================================================*/
-void CGameManager::DrawGame() const
+void CGameScene::DrawGame() const
 {
     this->m_Board->Draw(this->m_Interface, this->m_Interface.GetSettings()->GetOffset().ToDouble());
 
@@ -132,7 +132,7 @@ void CGameManager::DrawGame() const
 }
 
 /*====================================================================================================================*/
-void CGameManager::Update(int deltaTime)
+void CGameScene::Update(int deltaTime)
 {
     if (this->m_GameStatus == EGameStatus::GAME_STATUS_RUNNING)
     {
@@ -182,9 +182,9 @@ void CGameManager::Update(int deltaTime)
 }
 
 /*====================================================================================================================*/
-void CGameManager::UpdateEvents()
+void CGameScene::UpdateEvents()
 {
-    CWindowManager::UpdateEvents();
+    CScene::UpdateEvents();
 
     // Read keyboard state
     const Uint8 *keystate = SDL_GetKeyboardState(NULL);
@@ -220,7 +220,7 @@ void CGameManager::UpdateEvents()
     if (this->m_GameStatusDelay.Done() && this->m_GameStatus != this->m_NextGameStatus)
     {
         std::function<void(void)> callBack;
-        int delay = CGameManager::GAME_STATUS_UPDATE_DELAY;
+        int delay = CGameScene::GAME_STATUS_UPDATE_DELAY;
 
         // Create callback functions for special states.
         switch (this->m_NextGameStatus)
@@ -248,7 +248,7 @@ void CGameManager::UpdateEvents()
 }
 
 /*====================================================================================================================*/
-void CGameManager::KillAllPlayers()
+void CGameScene::KillAllPlayers()
 {
     // Kill all players.
     for (auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
@@ -265,12 +265,12 @@ void CGameManager::KillAllPlayers()
 }
 
 /*====================================================================================================================*/
-void CGameManager::RoundOver()
+void CGameScene::RoundOver()
 {
     this->SetStatus(EGameStatus::GAME_STATUS_RUNNING);
 
     // Update game state and prepare level when timer is done.
-    this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_UPDATE_DELAY, [=](void)
+    this->m_GameStatusDelay.Run(CGameScene::GAME_STATUS_UPDATE_DELAY, [=](void)
     {
         this->m_LevelLoader.LoadLevel(this->m_Board, this->m_Level, false);
         this->UpdateStatus();
@@ -279,7 +279,7 @@ void CGameManager::RoundOver()
 }
 
 /*====================================================================================================================*/
-void CGameManager::GameOver()
+void CGameScene::GameOver()
 {
     if (this->m_Board->m_Players.size() == 0 || !this->m_Board->m_Players[0] ||
         !CScoreSaver(this->m_Interface.GetSettings()).TrySetTopScore(this->m_Board->m_Players[0]->GetScore()))
@@ -296,12 +296,12 @@ void CGameManager::GameOver()
 }
 
 /*====================================================================================================================*/
-void CGameManager::NextRound()
+void CGameScene::NextRound()
 {
     this->m_Level++;
 
     // End game if this was last level.
-    if (this->m_Level > CGameManager::GAME_LEVELS_COUNT)
+    if (this->m_Level > CGameScene::GAME_LEVELS_COUNT)
     {
         this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER;
         this->GameOver();
@@ -311,7 +311,7 @@ void CGameManager::NextRound()
     this->SetStatus(EGameStatus::GAME_STATUS_RUNNING);
 
     // Update game state and prepare next level when timer is done.
-    this->m_GameStatusDelay.Run(CGameManager::GAME_STATUS_UPDATE_DELAY, [=](void)
+    this->m_GameStatusDelay.Run(CGameScene::GAME_STATUS_UPDATE_DELAY, [=](void)
     {
         this->m_LevelLoader.LoadLevel(this->m_Board, this->m_Level, true);
         this->UpdateStatus();
@@ -320,7 +320,7 @@ void CGameManager::NextRound()
 }
 
 /*====================================================================================================================*/
-void CGameManager::GlobalInput(const Uint8 *input)
+void CGameScene::GlobalInput(const Uint8 *input)
 {
     // Game is over. Press enter to leave game.
     if (input[SDL_SCANCODE_RETURN]) // SDL_SCANCODE_RETURN = ENTER

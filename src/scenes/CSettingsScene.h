@@ -4,20 +4,20 @@
 */
 
 #pragma once
-#include "CWindowManager.h"
+#include "CScene.h"
 
-class CSettingsManager : public CWindowManager
+class CSettingsScene : public CScene
 {
 public:
     /**
     * Constructor.
     * @param interface Interface to be used.
     */
-    explicit CSettingsManager(CSDLInterface &interface);
+    explicit CSettingsScene(CSDLInterface &interface);
 
-    virtual ~CSettingsManager() = default;
-    CSettingsManager(const CSettingsManager &other) = delete;
-    CSettingsManager &operator=(const CSettingsManager &other) = delete;
+    virtual ~CSettingsScene() = default;
+    CSettingsScene(const CSettingsScene &other) = delete;
+    CSettingsScene &operator=(const CSettingsScene &other) = delete;
 
     virtual EApplicationStatus Run() override ;
 

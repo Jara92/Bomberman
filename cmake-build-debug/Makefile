@@ -690,114 +690,6 @@ src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/managers/CGameManager.o: src/managers/CGameManager.cpp.o
-
-.PHONY : src/managers/CGameManager.o
-
-# target to build an object file
-src/managers/CGameManager.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.o
-.PHONY : src/managers/CGameManager.cpp.o
-
-src/managers/CGameManager.i: src/managers/CGameManager.cpp.i
-
-.PHONY : src/managers/CGameManager.i
-
-# target to preprocess a source file
-src/managers/CGameManager.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.i
-.PHONY : src/managers/CGameManager.cpp.i
-
-src/managers/CGameManager.s: src/managers/CGameManager.cpp.s
-
-.PHONY : src/managers/CGameManager.s
-
-# target to generate assembly for a file
-src/managers/CGameManager.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/managers/CGameManager.cpp.s
-.PHONY : src/managers/CGameManager.cpp.s
-
-src/managers/CMenuManager.o: src/managers/CMenuManager.cpp.o
-
-.PHONY : src/managers/CMenuManager.o
-
-# target to build an object file
-src/managers/CMenuManager.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.o
-.PHONY : src/managers/CMenuManager.cpp.o
-
-src/managers/CMenuManager.i: src/managers/CMenuManager.cpp.i
-
-.PHONY : src/managers/CMenuManager.i
-
-# target to preprocess a source file
-src/managers/CMenuManager.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.i
-.PHONY : src/managers/CMenuManager.cpp.i
-
-src/managers/CMenuManager.s: src/managers/CMenuManager.cpp.s
-
-.PHONY : src/managers/CMenuManager.s
-
-# target to generate assembly for a file
-src/managers/CMenuManager.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/managers/CMenuManager.cpp.s
-.PHONY : src/managers/CMenuManager.cpp.s
-
-src/managers/CSettingsManager.o: src/managers/CSettingsManager.cpp.o
-
-.PHONY : src/managers/CSettingsManager.o
-
-# target to build an object file
-src/managers/CSettingsManager.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.o
-.PHONY : src/managers/CSettingsManager.cpp.o
-
-src/managers/CSettingsManager.i: src/managers/CSettingsManager.cpp.i
-
-.PHONY : src/managers/CSettingsManager.i
-
-# target to preprocess a source file
-src/managers/CSettingsManager.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.i
-.PHONY : src/managers/CSettingsManager.cpp.i
-
-src/managers/CSettingsManager.s: src/managers/CSettingsManager.cpp.s
-
-.PHONY : src/managers/CSettingsManager.s
-
-# target to generate assembly for a file
-src/managers/CSettingsManager.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/managers/CSettingsManager.cpp.s
-.PHONY : src/managers/CSettingsManager.cpp.s
-
-src/managers/CWindowManager.o: src/managers/CWindowManager.cpp.o
-
-.PHONY : src/managers/CWindowManager.o
-
-# target to build an object file
-src/managers/CWindowManager.cpp.o:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.o
-.PHONY : src/managers/CWindowManager.cpp.o
-
-src/managers/CWindowManager.i: src/managers/CWindowManager.cpp.i
-
-.PHONY : src/managers/CWindowManager.i
-
-# target to preprocess a source file
-src/managers/CWindowManager.cpp.i:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.i
-.PHONY : src/managers/CWindowManager.cpp.i
-
-src/managers/CWindowManager.s: src/managers/CWindowManager.cpp.s
-
-.PHONY : src/managers/CWindowManager.s
-
-# target to generate assembly for a file
-src/managers/CWindowManager.cpp.s:
-	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/managers/CWindowManager.cpp.s
-.PHONY : src/managers/CWindowManager.cpp.s
-
 src/movables/CEnemy.o: src/movables/CEnemy.cpp.o
 
 .PHONY : src/movables/CEnemy.o
@@ -933,6 +825,114 @@ src/movables/CPlayer.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/movables/CPlayer.cpp.s
 .PHONY : src/movables/CPlayer.cpp.s
 
+src/scenes/CGameScene.o: src/scenes/CGameScene.cpp.o
+
+.PHONY : src/scenes/CGameScene.o
+
+# target to build an object file
+src/scenes/CGameScene.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CGameScene.cpp.o
+.PHONY : src/scenes/CGameScene.cpp.o
+
+src/scenes/CGameScene.i: src/scenes/CGameScene.cpp.i
+
+.PHONY : src/scenes/CGameScene.i
+
+# target to preprocess a source file
+src/scenes/CGameScene.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CGameScene.cpp.i
+.PHONY : src/scenes/CGameScene.cpp.i
+
+src/scenes/CGameScene.s: src/scenes/CGameScene.cpp.s
+
+.PHONY : src/scenes/CGameScene.s
+
+# target to generate assembly for a file
+src/scenes/CGameScene.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CGameScene.cpp.s
+.PHONY : src/scenes/CGameScene.cpp.s
+
+src/scenes/CMenuScene.o: src/scenes/CMenuScene.cpp.o
+
+.PHONY : src/scenes/CMenuScene.o
+
+# target to build an object file
+src/scenes/CMenuScene.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CMenuScene.cpp.o
+.PHONY : src/scenes/CMenuScene.cpp.o
+
+src/scenes/CMenuScene.i: src/scenes/CMenuScene.cpp.i
+
+.PHONY : src/scenes/CMenuScene.i
+
+# target to preprocess a source file
+src/scenes/CMenuScene.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CMenuScene.cpp.i
+.PHONY : src/scenes/CMenuScene.cpp.i
+
+src/scenes/CMenuScene.s: src/scenes/CMenuScene.cpp.s
+
+.PHONY : src/scenes/CMenuScene.s
+
+# target to generate assembly for a file
+src/scenes/CMenuScene.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CMenuScene.cpp.s
+.PHONY : src/scenes/CMenuScene.cpp.s
+
+src/scenes/CScene.o: src/scenes/CScene.cpp.o
+
+.PHONY : src/scenes/CScene.o
+
+# target to build an object file
+src/scenes/CScene.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CScene.cpp.o
+.PHONY : src/scenes/CScene.cpp.o
+
+src/scenes/CScene.i: src/scenes/CScene.cpp.i
+
+.PHONY : src/scenes/CScene.i
+
+# target to preprocess a source file
+src/scenes/CScene.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CScene.cpp.i
+.PHONY : src/scenes/CScene.cpp.i
+
+src/scenes/CScene.s: src/scenes/CScene.cpp.s
+
+.PHONY : src/scenes/CScene.s
+
+# target to generate assembly for a file
+src/scenes/CScene.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CScene.cpp.s
+.PHONY : src/scenes/CScene.cpp.s
+
+src/scenes/CSettingsScene.o: src/scenes/CSettingsScene.cpp.o
+
+.PHONY : src/scenes/CSettingsScene.o
+
+# target to build an object file
+src/scenes/CSettingsScene.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CSettingsScene.cpp.o
+.PHONY : src/scenes/CSettingsScene.cpp.o
+
+src/scenes/CSettingsScene.i: src/scenes/CSettingsScene.cpp.i
+
+.PHONY : src/scenes/CSettingsScene.i
+
+# target to preprocess a source file
+src/scenes/CSettingsScene.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CSettingsScene.cpp.i
+.PHONY : src/scenes/CSettingsScene.cpp.i
+
+src/scenes/CSettingsScene.s: src/scenes/CSettingsScene.cpp.s
+
+.PHONY : src/scenes/CSettingsScene.s
+
+# target to generate assembly for a file
+src/scenes/CSettingsScene.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CSettingsScene.cpp.s
+.PHONY : src/scenes/CSettingsScene.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1005,18 +1005,6 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/managers/CGameManager.o"
-	@echo "... src/managers/CGameManager.i"
-	@echo "... src/managers/CGameManager.s"
-	@echo "... src/managers/CMenuManager.o"
-	@echo "... src/managers/CMenuManager.i"
-	@echo "... src/managers/CMenuManager.s"
-	@echo "... src/managers/CSettingsManager.o"
-	@echo "... src/managers/CSettingsManager.i"
-	@echo "... src/managers/CSettingsManager.s"
-	@echo "... src/managers/CWindowManager.o"
-	@echo "... src/managers/CWindowManager.i"
-	@echo "... src/managers/CWindowManager.s"
 	@echo "... src/movables/CEnemy.o"
 	@echo "... src/movables/CEnemy.i"
 	@echo "... src/movables/CEnemy.s"
@@ -1032,6 +1020,18 @@ help:
 	@echo "... src/movables/CPlayer.o"
 	@echo "... src/movables/CPlayer.i"
 	@echo "... src/movables/CPlayer.s"
+	@echo "... src/scenes/CGameScene.o"
+	@echo "... src/scenes/CGameScene.i"
+	@echo "... src/scenes/CGameScene.s"
+	@echo "... src/scenes/CMenuScene.o"
+	@echo "... src/scenes/CMenuScene.i"
+	@echo "... src/scenes/CMenuScene.s"
+	@echo "... src/scenes/CScene.o"
+	@echo "... src/scenes/CScene.i"
+	@echo "... src/scenes/CScene.s"
+	@echo "... src/scenes/CSettingsScene.o"
+	@echo "... src/scenes/CSettingsScene.i"
+	@echo "... src/scenes/CSettingsScene.s"
 .PHONY : help
 
 
