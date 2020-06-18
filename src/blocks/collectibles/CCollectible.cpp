@@ -1,8 +1,6 @@
 /**
  * @author Jaroslav Fikar
- *
 */
-
 
 #include "CCollectible.h"
 #include "../../CBoard.h"

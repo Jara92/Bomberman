@@ -20,7 +20,7 @@ public:
     CCollectible(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1), size_t scoreBonus = 0,
                  int duration = 0)
             : CBlock(std::move(texturePack), size, true), m_Duration(duration), m_IsVisible(false),
-              m_ScoreBonus(scoreBonus), m_TargetPlayer(nullptr)
+              m_IsTriggered(false), m_ScoreBonus(scoreBonus), m_TargetPlayer(nullptr)
     {}
 
     CCollectible(const CCollectible &other) = default;
@@ -29,7 +29,12 @@ public:
 
     virtual ~CCollectible() = default;
 
-    virtual void Update(CBoard &board, int deltaTime) override = 0;
+    virtual void Update(CBoard &board, int deltaTime) override
+    {
+        CBlock::Update(board, deltaTime);
+        if (this->m_IsAlive && this->m_IsTriggered && this->m_TargetPlayer)
+        { this->Apply(board, *(this->m_TargetPlayer)); }
+    }
 
     virtual void
     Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoord<> offset = CCoord<>(0, 0)) const override
@@ -46,12 +51,20 @@ public:
      * @param board Game board.
      * @param player Target player
      */
-    virtual void Apply(CPlayer &player) = 0;
+    virtual void Apply(const CBoard & board, CPlayer &player) = 0;
 
+    /**
+     * Handle collision with player.
+     * @param thisLocation This block location.
+     * @param player The player.
+     */
     virtual void CollisionWith(CCoord<unsigned int> thisLocation, CPlayer &player) override
     {
         if (this->IsColliding(thisLocation, player))
-        { this->Apply(player); }
+        {
+            this->m_IsTriggered = true;
+            this->m_TargetPlayer = &player;
+        }
     }
 
     /** Make collectible object visible */
@@ -69,7 +82,7 @@ public:
 
 protected:
     int m_Duration;
-    bool m_IsVisible;
+    bool m_IsVisible, m_IsTriggered;
     size_t m_ScoreBonus;
     CPlayer *m_TargetPlayer;
 };

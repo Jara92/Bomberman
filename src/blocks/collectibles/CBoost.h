@@ -49,7 +49,7 @@ public:
 
     virtual void Update(CBoard &board, int deltaTime) override;
 
-    virtual void Apply(CPlayer &player) override ;
+    virtual void Apply(const CBoard & board, CPlayer &player) override ;
 
 protected:
     std::function<void(CPlayer *)> m_Apply;

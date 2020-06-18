@@ -5,14 +5,14 @@
 #include "CDoor.h"
 #include "../../CBoard.h"
 
-void CDoor::Apply(CPlayer &player)
+void CDoor::Apply(const CBoard & board, CPlayer &player)
 {
-    // todo přidat kontrolu, zda hráč může projít do dalšího levelu
+    // All enemies must be dead.
+    if(board.m_Movables.size() == board.m_Players.size())
+    {
+        player.IncreseScore(this->m_ScoreBonus);
+        player.ActivateLevelUp();
 
-    player.IncreseScore(this->m_ScoreBonus);
-    player.ActivateLevelUp();
-
-    this->m_ScoreBonus = 0;
-
-    this->m_IsAlive = false;
+        this->m_ScoreBonus = 0;
+    }
 }

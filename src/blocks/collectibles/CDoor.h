@@ -27,13 +27,6 @@ public:
 
     virtual ~CDoor() = default;
 
-    virtual void Update(CBoard &board, int deltaTime) override
-    {}
-
-    virtual void Apply(CPlayer &player) override ;
-
-protected:
-    virtual void Deactivate()
-    {}
+    virtual void Apply(const CBoard & board, CPlayer &player) override ;
 };
 

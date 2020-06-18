@@ -5,7 +5,7 @@
 #include "CBoost.h"
 #include "../../CBoard.h"
 
-void CBoost::Apply(CPlayer &player)
+void CBoost::Apply(const CBoard & board, CPlayer &player)
 {
     if (this->m_IsAlive)
     {
