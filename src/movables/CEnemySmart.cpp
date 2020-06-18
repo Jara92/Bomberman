@@ -72,20 +72,7 @@ bool CEnemySmart::FollowThePlayer(const CBoard &board)
     auto targetLocation = this->m_PersecutedPlayer->GetLocationCell();
 
     this->m_Movement = this->FindWayToLocation(board, targetLocation);
-
-   /* auto directions = this->GetPossibleMoveDirections(board);
-
-    for (int i = 0; i < directions.size(); i++)
-    {
-        bool found = this->FindWayToLocationRec(0, board, this->GetLocationCell(), this->GetLocationCell(),
-                                                targetLocation);
-        if (found)
-        {
-            this->m_Movement = directions[i];
-            break;
-        }
-    }*/
-
+    std::cout << "Movement " << this->m_Movement << std::endl;
 
     return this->GoForward(board);
 }
@@ -93,11 +80,39 @@ bool CEnemySmart::FollowThePlayer(const CBoard &board)
 /*====================================================================================================================*/
 CCoord<> CEnemySmart::FindWayToLocation(const CBoard &board, CCoord<unsigned int> location)
 {
+    if (this->m_PathToPlayer.empty())
+    {
+        this->FindPathTo(board, this->GetLocationCell(), location);
 
-    //bool map[board.GetBoardSize().m_X][board.GetBoardSize().m_Y];
+        if (this->m_PathToPlayer.empty())
+        { return CCoord<>(0, 0); }
+    }
+
+    if (this->GetLocation().AlmostEqual(this->m_PathToPlayer[0].ToDouble(), this->m_Speed))
+    {
+        // Calibrate enemies location.
+        this->m_Location = this->m_PathToPlayer[0].ToDouble();
+        this->m_PathToPlayer.erase(this->m_PathToPlayer.begin());
+        this->m_DirectionsToPlayer.erase(this->m_DirectionsToPlayer.begin());
+    }
+
+    if (this->m_PathToPlayer.empty())
+    { return CCoord<>(0, 0); }
+
+    // return (this->m_PathToPlayer[0].ToDouble() - this->GetLocationCell().ToDouble()) ;
+    return m_DirectionsToPlayer[0].ToDouble();
+
+
+    return CCoord<>(0, 0);
+
+}
+
+std::vector<CCoord<int>>
+CEnemySmart::FindPathTo(const CBoard &board, CCoord<unsigned int> currentLocation, CCoord<unsigned int> targetLocation)
+{
     std::vector<std::vector<bool>> map;
     map.resize(board.GetBoardSize().m_X);
-    for(int i = 0; i < board.GetBoardSize().m_X;i++)
+    for (int i = 0; i < board.GetBoardSize().m_X; i++)
     {
         map[i].resize(board.GetBoardSize().m_Y);
     }
@@ -112,56 +127,76 @@ CCoord<> CEnemySmart::FindWayToLocation(const CBoard &board, CCoord<unsigned int
             { map[i][j] = true; }
             else
             { map[i][j] = false; }
-            // std::cout << map[i][j];
         }
-        // std::cout << std::endl;
     }
 
-    auto a = this->findPath(map, this->GetLocationCell(), location);
 
+    std::vector<CCoord<int>> temp;
+    std::vector<CCoord<int>> list;
+    std::vector<CCoord<int>> tempDirections;
+    std::vector<CCoord<int>> directions;
 
+    FindPathToRec(map, currentLocation.m_X, currentLocation.m_Y, temp, list, tempDirections, directions,
+                  targetLocation);
 
-    if(!a.empty())
-    {return (a[0]).ToDouble();}
-
-
-
-    return CCoord<>(0,0);
-
-}
-
-bool CEnemySmart::FindWayToLocationRec(std::vector<std::vector<bool>> map, CCoord<unsigned int> oldLocation,
-                                       CCoord<unsigned int> currentLocation,
-                                       CCoord<unsigned int> targetLocation)
-{
-   /* std::vector<CCoord<int>> directions = {{0, 1},
-                                           {0, -1},
-                                           {1, 0},
-                                           {-1, 0}};
-
-    for (int i = 0; i < directions.size(); i++)
+    if (!list.empty())
     {
-        CCoord<unsigned int> loc = (currentLocation.ToInt() + directions[i]).ToUnsignedInt();
-
-        if (loc == oldLocation)
-        { continue; }
-
-        if (loc == targetLocation)
-        { return true; }
-
-        else if (board.GetMapItem(loc) == nullptr || board.GetMapItem(loc)->IsPassable(loc, *this))
+        std::cout << "Location and path: " << std::endl;
+        for (int i = 0; i < list.size(); i++)
         {
-            std::cout << loc << std::endl;
-            bool found = (this->FindWayToLocationRec(0, board, loc, currentLocation, targetLocation));
-
-            if (found)
+            if (i > 0)
             {
-                std::cout << "found" << std::endl;
-                return true;
+                //    std::cout << "location: " << list [i] << std::endl;
+                //   std::cout << list[i] - list[i - 1] << std::endl;
+                //  directions.push_back(list[i] - list[i - 1]);
             }
         }
+
+        this->m_PathToPlayer = list;
+        this->m_DirectionsToPlayer = directions;
     }
 
-    return false;*/
+    return directions;
+}
+
+void CEnemySmart::FindPathToRec(std::vector<std::vector<bool>> &map, int i, int j, std::vector<CCoord<int>> &temp,
+                                std::vector<CCoord<int>> &list, std::vector<CCoord<int>> &tempDirections,
+                                std::vector<CCoord<int>> &directions, CCoord<unsigned int> targetLocation)
+{
+    if (i == targetLocation.m_X && j == targetLocation.m_Y)
+    {
+        list.clear();
+        list.insert(list.end(), temp.begin(), temp.end());
+
+        directions.clear();
+        directions.insert(directions.end(), tempDirections.begin(), tempDirections.end());
+        return;
+    }
+
+    std::vector<CCoord<int>> possibleDirections = {{-1, 0},
+                                                   {1,  0},
+                                                   {0,  -1},
+                                                   {0,  1}};
+
+    for (int k = 0; k < 4; k++)
+    {
+        int x = i + possibleDirections[k].m_X;
+        int y = j + possibleDirections[k].m_Y;
+
+        if (x >= 0 && y >= 0 && x <= map.size() - 1 && y <= map[0].size() - 1 && map[x][y] == true)
+        {
+            temp.push_back(CCoord<int>(x, y));
+            tempDirections.push_back(possibleDirections[k]);
+
+            bool prev = map[x][y];
+            map[x][y] = false;
+
+            FindPathToRec(map, x, y, temp, list, tempDirections, directions, targetLocation);
+
+            map[x][y] = prev;
+            temp.erase(temp.end() - 1);
+            tempDirections.erase(tempDirections.end() - 1);
+        }
+    }
 }
 
