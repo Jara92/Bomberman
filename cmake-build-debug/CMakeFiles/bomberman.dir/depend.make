@@ -51,6 +51,7 @@ CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/movables/CMovable.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/movables/CPlayer.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/scenes/CGameScene.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/scenes/CMenuScene.h
+CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/scenes/CMultiplayerGameScene.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/scenes/CScene.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/scenes/CSettingsScene.h
 
@@ -391,6 +392,7 @@ CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/movables/CMovable.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/movables/CPlayer.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/scenes/CGameScene.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/scenes/CMenuScene.h
+CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/scenes/CMultiplayerGameScene.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/scenes/CScene.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/scenes/CSettingsScene.h
 
@@ -582,6 +584,49 @@ CMakeFiles/bomberman.dir/src/scenes/CMenuScene.cpp.o: ../src/interfaceitems/CTex
 CMakeFiles/bomberman.dir/src/scenes/CMenuScene.cpp.o: ../src/scenes/CMenuScene.cpp
 CMakeFiles/bomberman.dir/src/scenes/CMenuScene.cpp.o: ../src/scenes/CMenuScene.h
 CMakeFiles/bomberman.dir/src/scenes/CMenuScene.cpp.o: ../src/scenes/CScene.h
+
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/CAnimation.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/CBoard.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/CBody.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/CCoord.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/CGameClock.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/CInput.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/CLevelLoader.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/CRandom.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/CSDLInterface.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/CScoreSaver.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/CSettings.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/CTexturePack.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/CTimer.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/Messages.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/blocks/CBlock.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/blocks/CBomb.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/blocks/CFire.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/blocks/CWall.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/blocks/collectibles/CBoost.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/blocks/collectibles/CCollectible.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/blocks/collectibles/CDoor.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/enums/EApplicationStatus.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/enums/ECollectibleType.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/enums/EEnemyMovementMode.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/enums/EEnemyType.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/enums/EGameStatus.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/enums/ETextureType.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/interfaceitems/CButton.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/interfaceitems/CImage.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/interfaceitems/CInterfaceItem.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/interfaceitems/CSelectBox.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/interfaceitems/CSelectBoxItem.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/interfaceitems/CText.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/movables/CEnemy.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/movables/CEnemyDumb.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/movables/CEnemySmart.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/movables/CMovable.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/movables/CPlayer.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/scenes/CGameScene.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/scenes/CMultiplayerGameScene.cpp
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/scenes/CMultiplayerGameScene.h
+CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/scenes/CScene.h
 
 CMakeFiles/bomberman.dir/src/scenes/CScene.cpp.o: ../src/CCoord.h
 CMakeFiles/bomberman.dir/src/scenes/CScene.cpp.o: ../src/CGameClock.h

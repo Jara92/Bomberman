@@ -879,6 +879,33 @@ src/scenes/CMenuScene.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CMenuScene.cpp.s
 .PHONY : src/scenes/CMenuScene.cpp.s
 
+src/scenes/CMultiplayerGameScene.o: src/scenes/CMultiplayerGameScene.cpp.o
+
+.PHONY : src/scenes/CMultiplayerGameScene.o
+
+# target to build an object file
+src/scenes/CMultiplayerGameScene.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o
+.PHONY : src/scenes/CMultiplayerGameScene.cpp.o
+
+src/scenes/CMultiplayerGameScene.i: src/scenes/CMultiplayerGameScene.cpp.i
+
+.PHONY : src/scenes/CMultiplayerGameScene.i
+
+# target to preprocess a source file
+src/scenes/CMultiplayerGameScene.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.i
+.PHONY : src/scenes/CMultiplayerGameScene.cpp.i
+
+src/scenes/CMultiplayerGameScene.s: src/scenes/CMultiplayerGameScene.cpp.s
+
+.PHONY : src/scenes/CMultiplayerGameScene.s
+
+# target to generate assembly for a file
+src/scenes/CMultiplayerGameScene.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.s
+.PHONY : src/scenes/CMultiplayerGameScene.cpp.s
+
 src/scenes/CScene.o: src/scenes/CScene.cpp.o
 
 .PHONY : src/scenes/CScene.o
@@ -1026,6 +1053,9 @@ help:
 	@echo "... src/scenes/CMenuScene.o"
 	@echo "... src/scenes/CMenuScene.i"
 	@echo "... src/scenes/CMenuScene.s"
+	@echo "... src/scenes/CMultiplayerGameScene.o"
+	@echo "... src/scenes/CMultiplayerGameScene.i"
+	@echo "... src/scenes/CMultiplayerGameScene.s"
 	@echo "... src/scenes/CScene.o"
 	@echo "... src/scenes/CScene.i"
 	@echo "... src/scenes/CScene.s"

@@ -4,12 +4,8 @@
 
 #include "CGameScene.h"
 
-CGameScene::CGameScene(CSDLInterface &interface)
-        : CScene(interface), m_Board(nullptr), m_BoardOffset(CCoord<>(0, 2)), m_LevelLoader(interface),
-          m_GameStatus(EGameStatus::GAME_STATUS_RUNNING), m_NextGameStatus(EGameStatus::GAME_STATUS_RUNNING), m_Level(1)
+void CGameScene::Init()
 {
-    this->m_Interface.SetGameScreenSize();
-
     // Kill all players when the time runs out.
     this->m_GameEndDelay.Run(CGameScene::/*GAME_STATUS_UPDATE_DELAY*/STARTING_TIME, [=](void)
     { this->KillAllPlayers(); });
@@ -30,13 +26,16 @@ CGameScene::CGameScene(CSDLInterface &interface)
     this->m_TimeText = std::make_unique<CText>(this->m_Interface, CCoord<>(0.5 * this->m_Board->GetCellSize(), padding),
                                                "", this->m_DefaultFontSize);
 
-    this->m_ScoreText = std::make_unique<CText>(this->m_Interface,
-                                                CCoord<>(5 * this->m_Board->GetCellSize() + padding, padding), "",
-                                                this->m_DefaultFontSize);
+    // Player 1 text labels
+    this->m_ScoreTexts.push_back(std::make_unique<CText>(this->m_Interface,
+                                                         CCoord<>(5 * this->m_Board->GetCellSize() + padding, padding),
+                                                         "",
+                                                         this->m_DefaultFontSize));
 
-    this->m_LivesText = std::make_unique<CText>(this->m_Interface,
-                                                CCoord<>(20.5 * this->m_Board->GetCellSize() + padding, padding), "",
-                                                this->m_DefaultFontSize);
+    this->m_LivesTexts.push_back(std::make_unique<CText>(this->m_Interface,
+                                                         CCoord<>(20.5 * this->m_Board->GetCellSize() + padding,
+                                                                  padding), "",
+                                                         this->m_DefaultFontSize));
 
     this->m_FPSText = std::make_unique<CText>(this->m_Interface,
                                               CCoord<>(padding, this->m_Board->GetCellSize() + padding), "",
@@ -126,9 +125,14 @@ void CGameScene::DrawGame() const
 
     // Draw menu UI
     this->m_TimeText->Draw(this->m_Interface);
-    this->m_ScoreText->Draw(this->m_Interface);
-    this->m_LivesText->Draw(this->m_Interface);
     this->m_FPSText->Draw(this->m_Interface);
+
+    // Draw scores and lives.
+    for (std::size_t i = 0; i < this->m_ScoreTexts.size(); i++)
+    {
+        this->m_ScoreTexts[i]->Draw(this->m_Interface);
+        this->m_LivesTexts[i]->Draw(this->m_Interface);
+    }
 }
 
 /*====================================================================================================================*/
@@ -142,24 +146,26 @@ void CGameScene::Update(int deltaTime)
         this->m_TimeText->SetText("Time: " + std::to_string(this->m_GameEndDelay.GetRemainingTime() / 1000),
                                   this->m_DefaultFontSize, this->m_TimeText->GetColor());
 
-        if (this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
+        // Update players textboxes.
+        for (std::size_t i = 0; i < this->m_Board->m_Players.size(); i++)
         {
             SDL_Color color = {255, 255, 255, 255};
-            if (this->m_Board->m_Players[0]->GetLives() <= 0)
+            if (this->m_Board->m_Players[i]->GetLives() <= 0)
             { color = {128, 0, 0, 255}; }
 
-            this->m_ScoreText->SetText("Score: " + std::to_string(this->m_Board->m_Players[0]->GetScore()),
-                                       this->m_DefaultFontSize, this->m_ScoreText->GetColor());
+            this->m_ScoreTexts[i]->SetText("Score: " + std::to_string(this->m_Board->m_Players[i]->GetScore()),
+                                           this->m_DefaultFontSize, this->m_ScoreTexts[i]->GetColor());
+            this->m_ScoreTexts[i]->Update(this->m_Interface, deltaTime);
 
-            this->m_LivesText->SetText("Lives: " + std::to_string(std::max(0, this->m_Board->m_Players[0]->GetLives())),
-                                       this->m_DefaultFontSize, color);
+            this->m_LivesTexts[i]->SetText(
+                    "Lives: " + std::to_string(std::max(0, this->m_Board->m_Players[i]->GetLives())),
+                    this->m_DefaultFontSize, color);
+            this->m_LivesTexts[i]->Update(this->m_Interface, deltaTime);
         }
-        this->m_FPSText->SetText("FPS: " + std::to_string(this->m_Clock.GetFPS()),
-                                 this->m_DefaultFontSize / 2, this->m_FPSText->GetColor());
+        this->m_FPSText->SetText("FPS: " + std::to_string(this->m_Clock.GetFPS()), this->m_DefaultFontSize / 2,
+                                 this->m_FPSText->GetColor());
 
         this->m_TimeText->Update(this->m_Interface, deltaTime);
-        this->m_ScoreText->Update(this->m_Interface, deltaTime);
-        this->m_LivesText->Update(this->m_Interface, deltaTime);
         this->m_FPSText->Update(this->m_Interface, deltaTime);
     }
         // Update round over text.
@@ -354,3 +360,4 @@ void CGameScene::GlobalInput(const Uint8 *input)
         { this->m_Interface.GetSettings()->SetRenderBoundingBox(true); }
     }
 }
+

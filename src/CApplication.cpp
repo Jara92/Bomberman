@@ -9,18 +9,21 @@
 int CApplication::Run(int argc, char *argv[])
 {
     std::shared_ptr<CSettings> settings = this->Init(argc, argv);
-    CSDLInterface interface ("Bomberman", settings,"Fonts/Piedra-Regular.ttf");
+    CSDLInterface interface("Bomberman", settings, "Fonts/Piedra-Regular.ttf");
     try
     {
-        // ToDO poladit, aby při chybě načtení SDL nebylo voláno okno show message box
         if (interface.InitInterface())
         {
             EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME;
             //EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_MENU;
 
-            // Run manager while application is running and get next application state.
+            // Run scene while application is running and get next application state.
             while (applicationStatus != EApplicationStatus::APPLICATION_STATUS_EXIT)
-            { applicationStatus = this->GetWindowManagerByState(interface, applicationStatus)->Run(); }
+            {
+                auto scene = this->GetSceneByApplicationState(interface, applicationStatus);
+                scene->Init();
+                applicationStatus = scene->Run();
+            }
         }
     }
     catch (std::ios::failure &ex)
@@ -65,9 +68,9 @@ std::shared_ptr<CSettings> CApplication::Init(int argc, char *argv[])
                                        CCoord<unsigned int>(512, 512),
                                        CCoord<unsigned int>(0, 1), 60, true, debug);
 }
-
+/*====================================================================================================================*/
 std::shared_ptr<CScene>
-CApplication::GetWindowManagerByState(CSDLInterface &interface, EApplicationStatus applicationStatus) const
+CApplication::GetSceneByApplicationState(CSDLInterface &interface, EApplicationStatus applicationStatus) const
 {
     switch (applicationStatus)
     {
@@ -78,7 +81,7 @@ CApplication::GetWindowManagerByState(CSDLInterface &interface, EApplicationStat
         case EApplicationStatus::APPLICATION_STATUS_SOLO_GAME:
             return std::make_shared<CGameScene>(interface);
         case EApplicationStatus::APPLICATION_STATUS_MULTI_GAME:
-            return std::make_shared<CGameScene>(interface);
+            return std::make_shared<CMultiplayerGameScene>(interface);
         default:
             throw std::invalid_argument(MESSAGE_INVALID_APPLICATION_STATE);
     }

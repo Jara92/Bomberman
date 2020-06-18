@@ -54,7 +54,7 @@ CMenuScene::CMenuScene(CSDLInterface &interface)
     this->m_InterfaceItems.push_back(
             std::make_unique<CButton>(interface, "Two players", CCoord<>(0, 0), textColor, textHoverColor, fontSize,
                                       [=]()
-                                      { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME; }));
+                                      { this->m_NextApplicationState = EApplicationStatus::APPLICATION_STATUS_MULTI_GAME; }));
 
     itemSize = this->m_InterfaceItems.back()->GetSize();
     this->m_InterfaceItems.back()->SetLocation(

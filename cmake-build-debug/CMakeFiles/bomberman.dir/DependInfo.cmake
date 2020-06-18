@@ -32,6 +32,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/jaroslav/CLionProjects/bomberman/src/movables/CPlayer.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/movables/CPlayer.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/scenes/CGameScene.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/scenes/CGameScene.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/scenes/CMenuScene.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/scenes/CMenuScene.cpp.o"
+  "/home/jaroslav/CLionProjects/bomberman/src/scenes/CMultiplayerGameScene.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/scenes/CScene.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/scenes/CScene.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/scenes/CSettingsScene.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/scenes/CSettingsScene.cpp.o"
   )

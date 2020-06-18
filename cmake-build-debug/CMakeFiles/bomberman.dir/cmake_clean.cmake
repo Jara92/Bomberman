@@ -27,6 +27,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/bomberman.dir/src/movables/CPlayer.cpp.o"
   "CMakeFiles/bomberman.dir/src/scenes/CGameScene.cpp.o"
   "CMakeFiles/bomberman.dir/src/scenes/CMenuScene.cpp.o"
+  "CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o"
   "CMakeFiles/bomberman.dir/src/scenes/CScene.cpp.o"
   "CMakeFiles/bomberman.dir/src/scenes/CSettingsScene.cpp.o"
   "bomberman"

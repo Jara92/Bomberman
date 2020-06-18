@@ -22,7 +22,11 @@ public:
      * Constructor.
      * @param interface Interface to be used.
      */
-    explicit CGameScene(CSDLInterface &interface);
+    explicit CGameScene(CSDLInterface &interface)
+            : CScene(interface), m_Board(nullptr), m_BoardOffset(CCoord<>(0, 2)), m_LevelLoader(interface),
+              m_GameStatus(EGameStatus::GAME_STATUS_RUNNING), m_NextGameStatus(EGameStatus::GAME_STATUS_RUNNING),
+              m_Level(1)
+    { this->m_Interface.SetGameScreenSize(); }
 
     virtual ~CGameScene() = default;
 
@@ -36,8 +40,7 @@ public:
     */
     virtual EApplicationStatus Run() override;
 
-    virtual void Init() override
-    {}
+    virtual void Init() override;
 
 protected:
     std::shared_ptr<CBoard> m_Board;
@@ -55,7 +58,9 @@ protected:
     CTimer m_GameStatusDelay;
 
     /** UI items which has special meaning. */
-    std::unique_ptr<CText> m_TimeText, m_ScoreText, m_LivesText, m_FPSText;
+    std::unique_ptr<CText> m_TimeText, m_FPSText;
+    std::vector<std::unique_ptr<CText>> m_ScoreTexts;
+    std::vector<std::unique_ptr<CText>> m_LivesTexts;
     std::unique_ptr<CText> m_RoundOverText, m_NextRoundText, m_GameOverText, m_GameOverSubtext;
     unsigned int m_DefaultFontSize;
 
@@ -122,5 +127,7 @@ protected:
 
     /** Check and handle important game events. Update game state. */
     virtual void UpdateEvents() override;
+
+
 };
 

@@ -284,6 +284,12 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/scenes/CMenuScene.h">
 			<Option target="bomberman"/>
 		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/scenes/CMultiplayerGameScene.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/scenes/CMultiplayerGameScene.h">
+			<Option target="bomberman"/>
+		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/scenes/CScene.cpp">
 			<Option target="bomberman"/>
 		</Unit>
