@@ -192,7 +192,7 @@ void CGameManager::UpdateEvents()
     // Catch global input keys.
     this->GlobalInput(keystate);
 
-    this->m_Board->UpdatePhysicEvents();
+    this->m_Board->UpdatePhysicsEvents();
 
     // If game is running.
     if (this->m_GameStatus == EGameStatus::GAME_STATUS_RUNNING && this->m_GameStatus == this->m_NextGameStatus)

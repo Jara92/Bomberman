@@ -48,7 +48,7 @@ public:
     void Update(int deltaTime);
 
 
-    void UpdatePhysicEvents();
+    void UpdatePhysicsEvents();
 
     /**
      * Draw all objects in the board.

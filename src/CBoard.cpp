@@ -52,7 +52,6 @@ void CBoard::Draw(CSDLInterface &interface, CCoord<> offset)
         }
     }
 
-    // TODO změnit pořadí renderu tak, aby nejdříve byly renderovány objekty, které jsou vespod.
     for (auto i = this->m_Movables.begin(); i != this->m_Movables.end(); i++)
     {
         if (*i)
@@ -80,7 +79,7 @@ void CBoard::Update(int deltaTime)
             }
 
             // Delete dead objects.
-            if (this->m_Map[i][j] && /*!this->m_Map[i][j]->IsAlive()*/this->m_Map[i][j]->IsDestroyed())
+            if (this->m_Map[i][j] && this->m_Map[i][j]->IsDestroyed())
             {
                 if (this->m_Map[i][j]->HasCollectible() && this->m_Map[i][j] != this->m_Map[i][j]->GetCollectible() &&
                     this->m_Map[i][j]->GetCollectible())
@@ -115,7 +114,7 @@ void CBoard::Update(int deltaTime)
 }
 
 /*====================================================================================================================*/
-void CBoard::UpdatePhysicEvents()
+void CBoard::UpdatePhysicsEvents()
 {
     CCoord<int> directions[5] = {CCoord<int>(0, 0), CCoord<int>(0, 1), CCoord<int>(0, -1), CCoord<int>(1, 0),
                                  CCoord<int>(-1, 0)};

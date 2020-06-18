@@ -10,7 +10,7 @@ std::vector<CCoord<double>> CEnemy::GetPossibleMoveDirections(const CBoard &boar
     CCoord<> oldLocation = this->m_Location;
 
     std::vector<CCoord<double>> outputDirections;
-    // Create directional vectors and texture types.
+    // Create directional vectors.
     double move = (1);
     std::vector<CCoord<>> directions = {{CCoord<double>(0, move)},
                                         {CCoord<double>(0, -move)},
@@ -141,7 +141,7 @@ bool CEnemy::GoRandom(const CBoard &board)
         // Go to random direction.
     else
     {
-        // Choose randomIndex direction and set new movement and texture type.
+        // Choose randomIndex direction and set new movement.
         unsigned int randomIndex = CRandom::Random(0, directions.size());
 
         // Prefer turning before going back.

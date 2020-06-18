@@ -4,9 +4,9 @@ enemys 1 200 1 20 0
 enemys 1 200 1 20 0
 enemys 1 200 1 25 0
 enemy 0 200 1 20 0
-enemy 0 200 1 20 0
-enemy 0 200 1 20 0
-enemy 0 200 1 20 0
-enemy 0 200 1 25 0
+enemys 0 200 1 20 0
+enemys 0 200 1 20 0
+enemys 0 200 1 20 0
+enemys 0 200 1 25 0
 collectible 0 100 0
 collectible 8 150 0

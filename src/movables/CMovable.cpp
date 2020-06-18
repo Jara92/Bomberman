@@ -31,15 +31,18 @@ void CMovable::NextLevel(CBoard &board, bool clearLevelObjects)
 
 void CMovable::UpdateTextureByMovement(CCoord<> diff)
 {
-    // Set right texture by movement vector.
-    if (diff.m_X < -this->m_Speed)
-    { this->m_Body.SetActualTextureType(ETextureType::TEXTURE_RIGHT); }
-    else if (diff.m_X > this->m_Speed)
-    { this->m_Body.SetActualTextureType(ETextureType::TEXTURE_LEFT); }
-    else if (diff.m_Y < -this->m_Speed)
-    { this->m_Body.SetActualTextureType(ETextureType::TEXTURE_FRONT); }
-    else if (diff.m_Y > this->m_Speed)
-    { this->m_Body.SetActualTextureType(ETextureType::TEXTURE_BACK); }
+    if(this->m_Movement != CCoord<>(0,0))
+    {
+        // Set right texture by movement vector.
+        if (diff.m_X < -this->m_Speed)
+        { this->m_Body.SetActualTextureType(ETextureType::TEXTURE_RIGHT); }
+        else if (diff.m_X > this->m_Speed)
+        { this->m_Body.SetActualTextureType(ETextureType::TEXTURE_LEFT); }
+        else if (diff.m_Y < -this->m_Speed)
+        { this->m_Body.SetActualTextureType(ETextureType::TEXTURE_FRONT); }
+        else if (diff.m_Y > this->m_Speed)
+        { this->m_Body.SetActualTextureType(ETextureType::TEXTURE_BACK); }
+    }
 }
 
 

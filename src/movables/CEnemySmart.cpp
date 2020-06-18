@@ -24,7 +24,6 @@ void CEnemySmart::Update(CBoard &board, int deltaTime)
 void CEnemySmart::UpdateMovementMode()
 {
 
- //   std::cout << "smart" << std::endl;
     int actualMovementMode = static_cast<int>(this->m_MovementMode);
     int newMovementMode = 0;
 
@@ -32,8 +31,6 @@ void CEnemySmart::UpdateMovementMode()
     { newMovementMode = actualMovementMode + 1; }
 
     this->m_MovementMode = static_cast<EEnemyMovementMode >(newMovementMode);
-   // std::cout << "new state: " << newMovementMode << std::endl;
- //   this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_FOLLOW_THE_PLAYER;
 
     this->m_MovementModeTimer.Reset();
 }
@@ -73,6 +70,7 @@ bool CEnemySmart::RunAway(const CBoard &board)
     // Do nothing when there is no option.
     if (directions.empty())
     {
+        std::cout << "directions empty" << std::endl;
         this->m_Movement = CCoord<>(0, 0);
         return false;
     } else
@@ -83,6 +81,8 @@ bool CEnemySmart::RunAway(const CBoard &board)
         // Do not move if the enemy is surrounded.
         if (this->m_Movement == directions[randomIndex] && directions.size() == 1)
         {
+
+            std::cout << "directions equal" << std::endl;
             this->m_Movement = CCoord<>(0, 0);
             return false;
         }
@@ -118,12 +118,6 @@ bool CEnemySmart::FollowThePlayer(const CBoard &board)
     this->m_Movement = this->FindBestWayToLocation(board, targetLocation);
 
     return this->GoForward(board);
-}
-
-/*====================================================================================================================*/
-void CEnemySmart::ProtectCollectible(const CBoard &board)
-{
-
 }
 
 /*====================================================================================================================*/

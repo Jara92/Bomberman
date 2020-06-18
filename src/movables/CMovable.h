@@ -51,7 +51,7 @@ public:
     {
         // Update when moving.
         if (this->m_Movement != CCoord<>(0, 0))
-        { this->m_Body.Update(board, deltaTime); }
+        {this->m_Body.Update(board, deltaTime); }
     }
 
     /**
