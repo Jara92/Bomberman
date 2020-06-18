@@ -28,6 +28,8 @@ void CBoost::Apply(const CBoard & board, CPlayer &player)
 /*====================================================================================================================*/
 void CBoost::Update(CBoard &board, int deltaTime)
 {
+    CCollectible::Update(board, deltaTime);
+
     if (this->m_TargetPlayer)
     {
         this->m_Duration -= deltaTime;

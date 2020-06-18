@@ -31,8 +31,8 @@ public:
     explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1),
                       CCoord<> location = CCoord<>(0, 0), double speed = 0.005, bool wallPass = false,
                       bool bombPass = false, int lives = 1)
-            : m_Body(std::move(texturePack), 100), m_IsAlive(true), m_IsDestroyed(false), m_Size(size),
-              m_Location(location), m_StartingLocation(location),
+            : m_Body(std::move(texturePack), static_cast<unsigned int>(50000 * speed)), m_IsAlive(true),
+              m_IsDestroyed(false), m_Size(size), m_Location(location), m_StartingLocation(location),
               m_Speed(speed), m_WallPass(wallPass), m_BombPass(bombPass), m_Movement(CCoord<>(0, 0)), m_Lives(lives)
     {}
 
