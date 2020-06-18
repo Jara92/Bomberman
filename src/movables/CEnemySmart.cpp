@@ -24,128 +24,144 @@ void CEnemySmart::Update(CBoard &board, int deltaTime)
 void CEnemySmart::UpdateMovementMode()
 {
 
-    int actualMovementMode = static_cast<int>(this->m_MovementMode);
-    int newMovementMode = 0;
+    /*  int actualMovementMode = static_cast<int>(this->m_MovementMode);
+      int newMovementMode = 0;
 
-    if (actualMovementMode < static_cast<int>(EEnemyMovementMode::ENEMY_MOVEMENT_MODE_NR_ITEMS) - 1)
-    { newMovementMode = actualMovementMode + 1; }
+      if (actualMovementMode < static_cast<int>(EEnemyMovementMode::ENEMY_MOVEMENT_MODE_NR_ITEMS) - 1)
+      { newMovementMode = actualMovementMode + 1; }
 
-    this->m_MovementMode = static_cast<EEnemyMovementMode >(newMovementMode);
-    std::cout << "new mode " << newMovementMode << std::endl;
+      this->m_MovementMode = static_cast<EEnemyMovementMode >(newMovementMode);
+      std::cout << "new mode " << newMovementMode << std::endl;
+      this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_FOLLOW_THE_PLAYER;
 
-    this->m_MovementModeTimer.Reset();
+      this->m_MovementModeTimer.Reset();*/
 }
 
 /*====================================================================================================================*/
 
 void CEnemySmart::Move(const CBoard &board, int deltaTime)
 {
+    this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_FOLLOW_THE_PLAYER; // FIXME REMOVE
+
     for (int i = 0; i < deltaTime; i++)
     {
-        // Check for dangerous objects in front of this enemy.
-        if (!this->DirectionIsSafe(board, this->m_Movement, this->m_SurveillanceDistance))
-        {
-           /* if (this->RunAway(board))
-            { continue; }*/
-          // this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_RANDOM;
-        }
+        this->FollowThePlayer(board);
+        continue;
+        /*if (this->m_MovementMode == EEnemyMovementMode::ENEMY_MOVEMENT_MODE_FOLLOW_THE_PLAYER)
+        { ;
+            continue;}*/
 
-        if (this->GoForward(board))
+        if (this->m_MovementMode == EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_RANDOM && this->TurnRandom(board))
+        { continue; }
+        else if (this->GoForward(board))
         { continue; }
         else
         { this->GoRandom(board); }
-       //this->TurnRandom(board);
-    }
-}
-
-/*====================================================================================================================*/
-bool CEnemySmart::RunAway(const CBoard &board)
-{
-    auto directions = this->GetPossibleMoveDirections(board);
-
-    // Do nothing when there is no option.
-    if (directions.empty())
-    {
-        std::cout << "directions empty" << std::endl;
-        this->m_Movement = CCoord<>(0, 0);
-        return false;
-    } else
-    {
-        // Choose randomIndex direction and set new movement and texture type.
-        unsigned int randomIndex = CRandom::Random(0, directions.size());
-
-        // Do not move if the enemy is surrounded.
-        if (this->m_Movement == directions[randomIndex] && directions.size() == 1)
-        {
-
-            std::cout << "directions equal" << std::endl;
-            this->m_Movement = CCoord<>(0, 0);
-            return false;
-        }
-            // Choose other direction if possible.
-        else if (this->m_Movement == directions[randomIndex] && directions.size() > 1)
-        {
-            directions.erase(directions.begin() + randomIndex);
-            randomIndex = CRandom::Random(0, directions.size());
-        }
-
-        this->m_Movement = directions[randomIndex];
-
-        return this->GoForward(board);
     }
 }
 
 /*====================================================================================================================*/
 bool CEnemySmart::FollowThePlayer(const CBoard &board)
 {
-    auto directions = this->GetPossibleMoveDirections(board);
-
-    if (directions.size() <= 2)
-    { return false; }
-
     if (!this->m_PersecutedPlayer)
     {
         unsigned int randomPlayer = CRandom::Random(0, board.m_Players.size());
         this->m_PersecutedPlayer = board.m_Players[randomPlayer];
     }
 
-    CCoord<> targetLocation = this->m_PersecutedPlayer->GetLocation();
+    auto targetLocation = this->m_PersecutedPlayer->GetLocationCell();
 
-    this->m_Movement = this->FindBestWayToLocation(board, targetLocation);
+    this->m_Movement = this->FindWayToLocation(board, targetLocation);
+
+   /* auto directions = this->GetPossibleMoveDirections(board);
+
+    for (int i = 0; i < directions.size(); i++)
+    {
+        bool found = this->FindWayToLocationRec(0, board, this->GetLocationCell(), this->GetLocationCell(),
+                                                targetLocation);
+        if (found)
+        {
+            this->m_Movement = directions[i];
+            break;
+        }
+    }*/
+
 
     return this->GoForward(board);
 }
 
 /*====================================================================================================================*/
-CCoord<> CEnemySmart::FindBestWayToLocation(const CBoard &board, CCoord<> location)
+CCoord<> CEnemySmart::FindWayToLocation(const CBoard &board, CCoord<unsigned int> location)
 {
-    auto directions = this->GetPossibleMoveDirections(board);
 
-    // There is not avaible direction.
-    if (directions.empty())
+    //bool map[board.GetBoardSize().m_X][board.GetBoardSize().m_Y];
+    std::vector<std::vector<bool>> map;
+    map.resize(board.GetBoardSize().m_X);
+    for(int i = 0; i < board.GetBoardSize().m_X;i++)
     {
-        this->m_Movement = CCoord<>(0, 0);
-        return CCoord<>(0, 0);
+        map[i].resize(board.GetBoardSize().m_Y);
     }
 
-    unsigned int bestDirectionIndex = 0;
-    double bestDistance = 1000;
-
-    for (std::size_t i = 0; i < directions.size(); i++)
+    for (unsigned int i = 0; i < board.GetBoardSize().m_X; i++)
     {
-        // Calculate distance between this possible location and target location.
-        double distance = (this->GetLocation() + directions[i]).CalcDistnance(location);
-
-        if (distance < bestDistance)
+        for (unsigned int j = 0; j < board.GetBoardSize().m_Y; j++)
         {
-            bestDistance = distance;
-            bestDirectionIndex = i;
+            auto loc = CCoord<unsigned int>(i, j);
+
+            if (!board.GetMapItem(loc) || board.GetMapItem(loc)->IsPassable(loc, *this))
+            { map[i][j] = true; }
+            else
+            { map[i][j] = false; }
+            // std::cout << map[i][j];
+        }
+        // std::cout << std::endl;
+    }
+
+    auto a = this->findPath(map, this->GetLocationCell(), location);
+
+
+
+    if(!a.empty())
+    {return (a[0]).ToDouble();}
+
+
+
+    return CCoord<>(0,0);
+
+}
+
+bool CEnemySmart::FindWayToLocationRec(std::vector<std::vector<bool>> map, CCoord<unsigned int> oldLocation,
+                                       CCoord<unsigned int> currentLocation,
+                                       CCoord<unsigned int> targetLocation)
+{
+   /* std::vector<CCoord<int>> directions = {{0, 1},
+                                           {0, -1},
+                                           {1, 0},
+                                           {-1, 0}};
+
+    for (int i = 0; i < directions.size(); i++)
+    {
+        CCoord<unsigned int> loc = (currentLocation.ToInt() + directions[i]).ToUnsignedInt();
+
+        if (loc == oldLocation)
+        { continue; }
+
+        if (loc == targetLocation)
+        { return true; }
+
+        else if (board.GetMapItem(loc) == nullptr || board.GetMapItem(loc)->IsPassable(loc, *this))
+        {
+            std::cout << loc << std::endl;
+            bool found = (this->FindWayToLocationRec(0, board, loc, currentLocation, targetLocation));
+
+            if (found)
+            {
+                std::cout << "found" << std::endl;
+                return true;
+            }
         }
     }
 
-    // Return the best.
-    if (directions[bestDirectionIndex] == -1 * this->m_Movement)
-    { return CCoord<>(0, 0); }
-    return directions[bestDirectionIndex];
+    return false;*/
 }
 

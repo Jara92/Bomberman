@@ -176,8 +176,7 @@ bool CEnemy::TurnRandom(const CBoard &board)
         unsigned int randomIndex = CRandom::Random(0, directions.size());
 
         // Remove forward and backward direction.
-        while (!directions.empty() && (/*directions[randomIndex] == this->m_Movement ||*/
-                                       directions[randomIndex] == -1 * this->m_Movement))
+        while (!directions.empty() && (directions[randomIndex] == -1 * this->m_Movement))
         {
             directions.erase(directions.begin() + randomIndex);
             randomIndex = CRandom::Random(0, directions.size());
@@ -191,18 +190,13 @@ bool CEnemy::TurnRandom(const CBoard &board)
 
             if (move)
             {
-                this->UpdateMovementMode();
-                this->m_MovementModeTimer.Reset();
+                this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_FORWARD;
+               // this->m_MovementModeTimer.Reset();
                 return move;
             }
         }
     }
-    else if(directions.size() == 1)
-    {
-        this->m_Movement = directions[0];
-    }
-
-    return this->GoForward(board);
+    return false;
 }
 
 /*====================================================================================================================*/
