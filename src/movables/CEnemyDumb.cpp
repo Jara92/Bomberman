@@ -31,8 +31,6 @@ void CEnemyDumb::Move(const CBoard &board, int deltaTime)
         {
             if (this->TurnRandom(board))
             {
-                this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_FORWARD;
-                this->m_MovementModeTimer.Reset();
                 continue;
             }
         }
@@ -55,7 +53,7 @@ bool CEnemyDumb::TurnRandom(const CBoard &board)
         unsigned int randomIndex = CRandom::Random(0, directions.size());
 
         // Remove forward and backward direction.
-        while (!directions.empty() && (/*directions[randomIndex] == this->m_Movement ||*/
+        while (!directions.empty() && (directions[randomIndex] == this->m_Movement ||
                 directions[randomIndex] == -1 * this->m_Movement))
         {
             directions.erase(directions.begin() + randomIndex);
@@ -70,8 +68,8 @@ bool CEnemyDumb::TurnRandom(const CBoard &board)
 
             if (move)
             {
-                this->m_RandomMovementTimer.Reset();
                 this->UpdateMovementMode();
+                this->m_MovementModeTimer.Reset();
                 return move;
             }
         }
@@ -87,4 +85,6 @@ void CEnemyDumb::UpdateMovementMode()
     { this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_FORWARD; }
     else if (this->m_MovementMode == EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_FORWARD)
     { this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_RANDOM; }
+
+    std::cout << static_cast<int>(this->m_MovementMode) << std::endl;
 }
