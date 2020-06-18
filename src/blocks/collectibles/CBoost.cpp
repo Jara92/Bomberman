@@ -5,20 +5,20 @@
 #include "CBoost.h"
 #include "../../CBoard.h"
 
-void CBoost::Apply(CPlayer *player)
+void CBoost::Apply(CPlayer &player)
 {
     if (this->m_IsAlive)
     {
         if (this->m_Apply)
-        { this->m_Apply(player); }
+        { this->m_Apply(&player); }
 
-        player->IncreseScore(this->m_ScoreBonus);
+        player.IncreseScore(this->m_ScoreBonus);
 
         this->m_ScoreBonus = 0;
 
         // save target player
         if (this->m_Duration != 0)
-        { this->m_TargetPlayer = player; }
+        { this->m_TargetPlayer = &player; }
             // kill object
         else
         { this->m_IsAlive = false; this->m_IsDestroyed = true; }

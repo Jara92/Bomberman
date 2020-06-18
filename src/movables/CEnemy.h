@@ -106,16 +106,13 @@ protected:
     std::vector<CCoord<double>> GetPossibleMoveDirections(const CBoard &board);
 
     /**
-     * Is current m_Movement direction safe?
-     * @param board Game board.
-     * @param direction Moving direction.
-     * @param distance How far can the enemy see?
-     * @return True - Direction is safe.
-     */
+    * Is given direction safe?
+    * @param board Game board.
+    * @param direction Moving direction.
+    * @param distance How far can the enemy see?
+    * @return True - Direction is safe.
+    */
     bool DirectionIsSafe(const CBoard &board, CCoord<> direction, unsigned int distance) const;
-
-    /** Enemy tries to find save direction to go. */
-    bool RunAway(const CBoard &board);
 
     /** Enemy goes forward by m_Movement */
     bool GoForward(const CBoard &board);

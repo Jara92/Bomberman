@@ -30,7 +30,7 @@ public:
     virtual void Update(CBoard &board, int deltaTime) override
     {}
 
-    virtual void Apply(CPlayer *player);
+    virtual void Apply(CPlayer &player) override ;
 
 protected:
     virtual void Deactivate()

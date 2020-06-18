@@ -43,6 +43,9 @@ protected:
 
     virtual void Move(const CBoard &board, int deltaTime) override;
 
+    /** Enemy tries to find save direction to go. */
+    bool RunAway(const CBoard &board);
+
     /**
      * Enemy finds best way to target location.
      * @param board Game board.

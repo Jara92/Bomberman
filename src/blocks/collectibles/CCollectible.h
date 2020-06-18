@@ -43,14 +43,15 @@ public:
 
     /**
      * Apply collectible on the player.
+     * @param board Game board.
      * @param player Target player
      */
-    virtual void Apply(CPlayer *player) = 0;
+    virtual void Apply(CPlayer &player) = 0;
 
     virtual void CollisionWith(CCoord<unsigned int> thisLocation, CPlayer &player) override
     {
         if (this->IsColliding(thisLocation, player))
-        { this->Apply(&player); }
+        { this->Apply(player); }
     }
 
     /** Make collectible object visible */

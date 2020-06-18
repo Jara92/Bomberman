@@ -66,6 +66,40 @@ void CEnemySmart::Move(const CBoard &board, int deltaTime)
 }
 
 /*====================================================================================================================*/
+bool CEnemySmart::RunAway(const CBoard &board)
+{
+    auto directions = this->GetPossibleMoveDirections(board);
+
+    // Do nothing when there is no option.
+    if (directions.empty())
+    {
+        this->m_Movement = CCoord<>(0, 0);
+        return false;
+    } else
+    {
+        // Choose randomIndex direction and set new movement and texture type.
+        unsigned int randomIndex = CRandom::Random(0, directions.size());
+
+        // Do not move if the enemy is surrounded.
+        if (this->m_Movement == directions[randomIndex] && directions.size() == 1)
+        {
+            this->m_Movement = CCoord<>(0, 0);
+            return false;
+        }
+            // Choose other direction if possible.
+        else if (this->m_Movement == directions[randomIndex] && directions.size() > 1)
+        {
+            directions.erase(directions.begin() + randomIndex);
+            randomIndex = CRandom::Random(0, directions.size());
+        }
+
+        this->m_Movement = directions[randomIndex];
+
+        return this->GoForward(board);
+    }
+}
+
+/*====================================================================================================================*/
 bool CEnemySmart::FollowThePlayer(const CBoard &board)
 {
     auto directions = this->GetPossibleMoveDirections(board);

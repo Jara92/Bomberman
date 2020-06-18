@@ -54,7 +54,7 @@ bool CEnemyDumb::TurnRandom(const CBoard &board)
 
         // Remove forward and backward direction.
         while (!directions.empty() && (directions[randomIndex] == this->m_Movement ||
-                directions[randomIndex] == -1 * this->m_Movement))
+                                       directions[randomIndex] == -1 * this->m_Movement))
         {
             directions.erase(directions.begin() + randomIndex);
             randomIndex = CRandom::Random(0, directions.size());
@@ -85,6 +85,4 @@ void CEnemyDumb::UpdateMovementMode()
     { this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_FORWARD; }
     else if (this->m_MovementMode == EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_FORWARD)
     { this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_RANDOM; }
-
-    std::cout << static_cast<int>(this->m_MovementMode) << std::endl;
 }

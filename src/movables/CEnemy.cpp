@@ -113,56 +113,6 @@ void CEnemy::CollisionWithMovable(CPlayer &player)
 }
 
 /*====================================================================================================================*/
-bool CEnemy::DirectionIsSafe(const CBoard &board, CCoord<> direction, unsigned int distance) const
-{
-    for (unsigned int i = 1; i <= distance; i++)
-    {
-        CCoord<> loc = this->GetLocation() + CCoord<>(0.5, 0.5) + ((direction * (i)));
-        CCoord<unsigned int> forwardCell = loc.ToUnsignedInt();
-
-        // Check for dangerous object in forwardCell location.
-        if (board.GetMapItem(forwardCell) && board.GetMapItem(forwardCell)->IsDangerous())
-        { return false; }
-    }
-
-    return true;
-}
-
-/*====================================================================================================================*/
-bool CEnemy::RunAway(const CBoard &board)
-{
-    auto directions = this->GetPossibleMoveDirections(board);
-
-    // Do nothing when there is no option.
-    if (directions.empty())
-    {
-        this->m_Movement = CCoord<>(0, 0);
-        return false;
-    } else
-    {
-        // Choose randomIndex direction and set new movement and texture type.
-        unsigned int randomIndex = CRandom::Random(0, directions.size());
-
-        // Do not move if the enemy is surrounded.
-        if (this->m_Movement == directions[randomIndex] && directions.size() == 1)
-        {
-            this->m_Movement = CCoord<>(0, 0);
-            return false;
-        }
-            // Choose other direction if possible.
-        else if (this->m_Movement == directions[randomIndex] && directions.size() > 1)
-        {
-            directions.erase(directions.begin() + randomIndex);
-            randomIndex = CRandom::Random(0, directions.size());
-        }
-
-        this->m_Movement = directions[randomIndex];
-
-        return this->GoForward(board);
-    }
-}
-
-/*====================================================================================================================*/
 bool CEnemy::GoForward(const CBoard &board)
 {
     CCoord<> oldLocation = this->m_Location;
@@ -215,4 +165,19 @@ bool CEnemy::GoRandom(const CBoard &board)
     return this->GoForward(board);
 }
 
+/*====================================================================================================================*/
+bool CEnemy::DirectionIsSafe(const CBoard &board, CCoord<> direction, unsigned int distance) const
+{
+    for (unsigned int i = 1; i <= distance; i++)
+    {
+        CCoord<> loc = this->GetLocation() + CCoord<>(0.5, 0.5) + ((direction * (i)));
+        CCoord<unsigned int> forwardCell = loc.ToUnsignedInt();
+
+        // Check for dangerous object in forwardCell location.
+        if (board.GetMapItem(forwardCell) && board.GetMapItem(forwardCell)->IsDangerous())
+        { return false; }
+    }
+
+    return true;
+}
 
