@@ -134,10 +134,10 @@ unsigned int CPlayer::TryKill(unsigned int distance)
 {
     if (this->m_IsAlive)
     {
-      /*  this->m_Lives--;
+        this->m_Lives--;
         this->m_IsAlive = false;
 
-        return 1;*/
+        return 1;
     }
 
     return 0;

@@ -80,7 +80,7 @@ CApplication::GetSceneByApplicationState(CSDLInterface &interface, EApplicationS
         case EApplicationStatus::APPLICATION_STATUS_SETTINGS:
             return std::make_shared<CSettingsScene>(interface);
         case EApplicationStatus::APPLICATION_STATUS_SOLO_GAME:
-            return std::make_shared<CGameScene>(interface);
+            return std::make_shared<CSoloGameScene>(interface);
         case EApplicationStatus::APPLICATION_STATUS_MULTI_GAME:
             return std::make_shared<CMultiplayerGameScene>(interface);
         default:

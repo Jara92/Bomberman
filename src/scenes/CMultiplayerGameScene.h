@@ -26,8 +26,14 @@ public:
     virtual void Init() override;
 
 protected:
+    std::unique_ptr<CText> m_WinnerText;
+
     virtual void Update(int deltaTime) override;
 
     virtual void UpdateEvents() override;
+
+    virtual void GameOver() override ;
+
+    virtual void DrawGameOver() const override ;
 };
 

@@ -84,7 +84,7 @@ protected:
     void RoundOver();
 
     /** Save top score and shut off the game. */
-    void GameOver();
+    virtual void GameOver();
 
     /**
      * Fill game state with value of next game state and fill next game state with value of newStatus.
@@ -100,7 +100,7 @@ protected:
     void UpdateStatus()
     { this->m_GameStatus = this->m_NextGameStatus; }
 
-    void KillAllPlayers();
+    virtual void KillAllPlayers();
 
     /** Draw game by the game state. */
     virtual void Draw() const override;
@@ -113,7 +113,7 @@ protected:
     void DrawNextRound() const
     { this->m_NextRoundText->Draw(this->m_Interface); }
 
-    void DrawGameOver() const
+   virtual void DrawGameOver() const
     {
         this->m_GameOverText->Draw(this->m_Interface);
         this->m_GameOverSubtext->Draw(this->m_Interface);

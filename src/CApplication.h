@@ -8,6 +8,7 @@
 #include "CSDLInterface.h"
 #include "scenes/CGameScene.h"
 #include "scenes/CMultiplayerGameScene.h"
+#include "scenes/CSoloGameScene.h"
 #include "scenes/CMenuScene.h"
 #include "scenes/CSettingsScene.h"
 #include "Messages.h"

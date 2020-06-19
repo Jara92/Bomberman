@@ -23,7 +23,7 @@ public:
      * @param lives Object starting lives.
     */
     explicit CPlayer(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size, CInput controls,
-                     double speed = 0.0025, int lives = 3)
+                     double speed = 0.0025, int lives = 1)
             : CMovable(std::move(texturePack), size, location, speed, false, false, lives), m_Score(0),
               m_ExplosionRadius(1), m_MaxBombs(1), m_ActiveBombs(0), m_RemoteExplosion(false), m_FireImmunity(false),
               m_LevelUp(false), m_Input(controls)
