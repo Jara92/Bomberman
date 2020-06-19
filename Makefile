@@ -1,49 +1,44 @@
-COMPILER       = g++
-COMPILERFLAGS  = -Wall -pedantic -O3 -std=c++14
-LD        = g++
-LIBS      = -L/usr/lib/x86_64-linux-gnu -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_net
+CXX       = g++
+CXXFLAGS  = -Wall -pedantic -O3 -std=c++14
+LIBFLAGS  = -L/usr/lib/x86_64-linux-gnu -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+_DEPS     = CBody.h CTexturePack.h CLevelLoader.h CCoord.h CSettings.h enums/EGameStatus.h enums/EApplicationStatus.h enums/ECollectibleType.h enums/ETextureType.h enums/EEnemyType.h Messages.h CScoreSaver.h CAnimation.h CApplication.h blocks/CWall.h blocks/CBomb.h blocks/CFire.h blocks/collectibles/CCollectible.h blocks/collectibles/CBoost.h blocks/collectibles/CDoor.h blocks/CBlock.h CInput.h CBoard.h movables/CEnemy.h movables/CEnemySmart.h movables/CPlayer.h movables/CEnemyDumb.h movables/CMovable.h interfaceitems/CText.h interfaceitems/CImage.h interfaceitems/CButton.h interfaceitems/CSelectBoxItem.h interfaceitems/CSelectBox.h interfaceitems/CInterfaceItem.h CGameClock.h CRandom.h CTimer.h CSDLInterface.h scenes/CGameScene.h scenes/CSoloGameScene.h scenes/CSettingsScene.h scenes/CMultiplayerGameScene.h scenes/CScene.h scenes/CMenuScene.h
+_OBJ      = main.o CBody.o CTexturePack.o CLevelLoader.o CScoreSaver.o CAnimation.o CApplication.o blocks/CWall.o blocks/CBomb.o blocks/CFire.o blocks/collectibles/CCollectible.o blocks/collectibles/CBoost.o blocks/collectibles/CDoor.o blocks/CBlock.o CInput.o CBoard.o movables/CEnemy.o movables/CEnemySmart.o movables/CPlayer.o movables/CEnemyDumb.o movables/CMovable.o interfaceitems/CText.o interfaceitems/CButton.o interfaceitems/CSelectBoxItem.o interfaceitems/CInterfaceItem.o CSDLInterface.o scenes/CGameScene.o scenes/CSoloGameScene.o scenes/CSettingsScene.o scenes/CMultiplayerGameScene.o scenes/CScene.o scenes/CMenuScene.o
 OBJDIR    = obj
 SRCDIR    = src
-DEPDIR    = dep
 
-search = $(foreach d,$(wildcard $(1:=/*)),$(call search,$d,$2) $(filter $(subst *,%,$2),$d))
+DEPS      = $(patsubst %,$(SRCDIR)/%,$(_DEPS))
+OBJ       = $(patsubst %,$(OBJDIR)/%,$(_OBJ))
 
-SRC = $(call search,$(SRCDIR),*.cpp)
-OBJ = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SRC))
-HEADERS = $(call search,$(SRCDIR),*.h)
-DEP = $(patsubst $(SRCDIR)/%.cpp,$(DEPDIR)/%.d,$(SRC))
-
+.PHONY: all
 all: compile doc
 
-compile: fikarja3 ;
+.PHONY: compile
+compile: fikarja3
 
-# Kompiluje výsledný produkt. Slinkuje všechny .o objekty a nalinkuje k nim knihovny.
+$(OBJDIR):
+	mkdir $(OBJDIR)
+	mkdir $(OBJDIR)/blocks
+	mkdir $(OBJDIR)/blocks/collectibles
+	mkdir $(OBJDIR)/scenes
+	mkdir $(OBJDIR)/enums
+	mkdir $(OBJDIR)/interfaceitems
+	mkdir $(OBJDIR)/movables
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(DEPS) $(OBJDIR)
+	$(CXX) -c -o $@ $< $(CXXFLAGS)
+
 fikarja3: $(OBJ)
-	$(LD) -o fikarja3 -fsanitize=address $^ $(LIBS)
-	#$(LD) -o fikarja3 $^ $(LIBS)
+	$(CXX) -o $@ $^ $(CXXFLAGS) $(LIBFLAGS)
 
-# Kompilace jednoho .o souboru
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
-	@mkdir -p $(@D)
-	$(COMPILER) -c -o $@ $< $(COMPILERFLAGS)
-
-# Pro každý .cpp nalzený soubor vezme závislosti (includované .h soubory) a
-$(DEPDIR)/%.d: $(SRCDIR)/%.cpp $(HEADERS)
-	@mkdir -p $(@D)
-	$(COMPILER) -MM $< -MT $(OBJDIR)/$*.o > $@
-
-doc: $(HEADERS) $(SRC) Doxyfile README.md
-	doxygen Doxyfile
+doc: Doxyfile README.md
+	doxygen
 
 .PHONY: clean
 clean:
 	rm -f fikarja3
 	rm -rf doc
-	rm -rf $(DEPDIR)
 	rm -rf $(OBJDIR)
 
 .PHONY: run
 run: compile
 	./fikarja3
-
--include $(DEP)
