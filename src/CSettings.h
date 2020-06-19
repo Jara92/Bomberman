@@ -29,7 +29,7 @@ public:
               bool sound = true, bool debugMode = false, std::string assetsPath = "./examples/assets/",
               std::string dataPath = "./examples/data/")
             : m_DebugMode(debugMode), m_RenderBoundingBox(false), m_AssetsPath(std::move(assetsPath)), m_DataPath(std::move(dataPath)),
-              m_Offset(offset)
+              m_Offset(offset), m_ScreenFPS(screenFPS)
     {
         this->ChangeSettings(gameScreenSize, menuScreenSize, sound);
     }
@@ -89,10 +89,14 @@ public:
     CCoord<unsigned int> GetOffset() const
     { return this->m_Offset; }
 
+    unsigned int GetScreenFPS() const
+    {return this->m_ScreenFPS;}
+
 protected:
     CCoord<unsigned int> m_GameScreenSize, m_MenuScreenSize;
     bool m_Sound, m_DebugMode, m_RenderBoundingBox;
     std::string m_AssetsPath, m_DataPath;
     CCoord<unsigned int> m_Offset;
+    unsigned int m_ScreenFPS;
 };
 

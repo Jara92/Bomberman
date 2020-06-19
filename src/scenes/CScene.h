@@ -4,6 +4,7 @@
 */
 
 #pragma once
+
 #include <memory>
 #include <queue>
 #include "../CSDLInterface.h"
@@ -26,11 +27,14 @@ public:
      * @param interface Interface to be used.
      */
     explicit CScene(CSDLInterface &interface)
-    : m_Interface(interface), m_NextApplicationState(EApplicationStatus::APPLICATON_STATUS_NONE)
-    {}
+            : m_Interface(interface), m_NextApplicationState(EApplicationStatus::APPLICATON_STATUS_NONE)
+    { this->m_Clock = CGameClock(interface.GetSettings()->GetScreenFPS()); }
+
     virtual ~CScene() = default;
-    CScene (const CScene & other) = delete;
-    CScene & operator = (const CScene & other) = delete;
+
+    CScene(const CScene &other) = delete;
+
+    CScene &operator=(const CScene &other) = delete;
 
     /** Run window. */
     virtual EApplicationStatus Run();
@@ -38,7 +42,7 @@ public:
     virtual void Init() = 0;
 
 protected:
-    CSDLInterface & m_Interface;
+    CSDLInterface &m_Interface;
     /** Interface items in the view. */
     std::vector<std::unique_ptr<CInterfaceItem>> m_InterfaceItems;
     EApplicationStatus m_NextApplicationState;
@@ -59,7 +63,7 @@ protected:
      * @param e Event.
      * @return Next application state.
      */
-    virtual void ProcessEvent(SDL_Event & e);
+    virtual void ProcessEvent(SDL_Event &e);
 
     /** Draw window. */
     virtual void Draw() const;

@@ -301,9 +301,8 @@ void CBoard::PrepareBoard(bool clearLevelObjects, std::vector<CCollectible *> &c
         {
             (*movable)->NextLevel(*this, clearLevelObjects);
 
-            // TODO !movable nemůže nastat
-            // Remove nullptr or destroyed objects.
-            if (!(*movable) || (*movable)->IsDestroyed())
+            // Destroyed objects.
+            if ((*movable)->IsDestroyed())
             {
                 delete (*movable);
                 *movable = nullptr;
@@ -343,8 +342,8 @@ bool CBoard::PlayersAreaFree(CCoord<unsigned int> coord, double playerSaveZone)
 /*====================================================================================================================*/
 CBlock *CBoard::GetMapItem(CCoord<unsigned int> location) const
 {
-    if (location.m_X < 0 || location.m_X >= CBoard::m_BoardSize.m_X ||
-        location.m_Y < 0 || location.m_Y >= CBoard::m_BoardSize.m_Y)
+    if (location.m_X >= CBoard::m_BoardSize.m_X ||
+        location.m_Y >= CBoard::m_BoardSize.m_Y)
     { return nullptr; }
 
     return this->m_Map[location.m_X][location.m_Y];
@@ -353,8 +352,8 @@ CBlock *CBoard::GetMapItem(CCoord<unsigned int> location) const
 /*====================================================================================================================*/
 void CBoard::SetMapItem(CBlock *block, CCoord<unsigned int> location)
 {
-    if (location.m_X < 0 || location.m_X >= CBoard::m_BoardSize.m_X ||
-        location.m_Y < 0 || location.m_Y >= CBoard::m_BoardSize.m_Y)
+    if (location.m_X >= CBoard::m_BoardSize.m_X ||
+        location.m_Y >= CBoard::m_BoardSize.m_Y)
     { throw std::out_of_range(MESSAGE_INDEX_OUT_OF_BOUND); }
 
     // Delete old block.
