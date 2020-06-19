@@ -35,9 +35,6 @@ clean:
 	rm -rf doc
 	rm -rf $(DEPDIR)
 	rm -rf $(OBJDIR)
-
-
-
 run: compile
 	./fikarja3
 
