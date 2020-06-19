@@ -42,31 +42,5 @@ protected:
     virtual void UpdateMovementMode() override;
 
     virtual void Move(const CBoard &board, int deltaTime) override;
-
-    /**
-     * Enemy finds best way to target location.
-     * @param board Game board.
-     * @param location Target location.
-     * @return New movement vector.
-     */
-    CCoord<> FindWayToLocation(const CBoard &board, CCoord<unsigned int> location) ;
-
-    /**
-     * Enemy follows the player.
-     * @param board Game board.
-     */
-    bool FollowThePlayer(const CBoard &board);
-
-    std::vector<CCoord<unsigned int>> m_PathToPlayer;
-    std::vector<CCoord<double>> m_DirectionsToPlayer;
-
-    bool
-    FindPathToPlayer(const CBoard &board, CCoord<unsigned int> currentLocation, CCoord<unsigned int> targetLocation) ;
-
-    void
-    FindPathToPlayerRec(std::vector<std::vector<bool>> &map,CCoord<unsigned int> location,
-                        std::vector<CCoord<unsigned int>> &tempLocations, std::vector<CCoord<unsigned int>> &locations,
-                        std::vector<CCoord<double>> &tempDirections, std::vector<CCoord<double>> &directions,
-                        CCoord<unsigned int> targetLocation);
 };
 

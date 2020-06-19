@@ -27,7 +27,7 @@ void CEnemyDumb::Move(const CBoard &board, int deltaTime)
     for (int i = 0; i < deltaTime; i++)
     {
         // Move
-        if (this->m_MovementMode == EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_RANDOM)
+        if (this->m_MovementMode == EEnemyMovementMode::ENEMY_MOVEMENT_MODE_RANDOM)
         {
             if (this->TurnRandom(board))
             { continue; }
@@ -44,8 +44,8 @@ void CEnemyDumb::Move(const CBoard &board, int deltaTime)
 /*====================================================================================================================*/
 void CEnemyDumb::UpdateMovementMode()
 {
-    if (this->m_MovementMode == EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_RANDOM)
+    if (this->m_MovementMode == EEnemyMovementMode::ENEMY_MOVEMENT_MODE_RANDOM)
     { this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_FORWARD; }
     else if (this->m_MovementMode == EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_FORWARD)
-    { this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_RANDOM; }
+    { this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_RANDOM; }
 }
