@@ -49,7 +49,7 @@ protected:
      * @param location Target location.
      * @return New movement vector.
      */
-    CCoord<> FindWayToLocation(const CBoard &board, CCoord<unsigned int> location);
+    CCoord<> FindWayToLocation(const CBoard &board, CCoord<unsigned int> location) ;
 
     /**
      * Enemy follows the player.
@@ -61,10 +61,10 @@ protected:
     std::vector<CCoord<double>> m_DirectionsToPlayer;
 
     bool
-    FindPathToPlayer(const CBoard &board, CCoord<unsigned int> currentLocation, CCoord<unsigned int> targetLocation);
+    FindPathToPlayer(const CBoard &board, CCoord<unsigned int> currentLocation, CCoord<unsigned int> targetLocation) ;
 
     void
-    FindPathToPlayerRec(std::vector<std::vector<bool>> &map, CCoord<> previousDirection, CCoord<unsigned int> location,
+    FindPathToPlayerRec(std::vector<std::vector<bool>> &map,CCoord<unsigned int> location,
                         std::vector<CCoord<unsigned int>> &tempLocations, std::vector<CCoord<unsigned int>> &locations,
                         std::vector<CCoord<double>> &tempDirections, std::vector<CCoord<double>> &directions,
                         CCoord<unsigned int> targetLocation);

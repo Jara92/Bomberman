@@ -30,7 +30,7 @@ public:
               m_SurveillanceDistance(surveillanceDistance)
     {
         // Generate random delay to choose random direction.
-        unsigned  int randomDelay = CRandom::Random(8000, 12000);
+        unsigned  int randomDelay = CRandom::Random(5000, 8000);
         this->m_MovementModeTimer.Run(randomDelay, [=](void)
         {
             this->UpdateMovementMode();
