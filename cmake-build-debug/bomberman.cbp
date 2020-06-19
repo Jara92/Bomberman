@@ -302,6 +302,12 @@
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/scenes/CSettingsScene.h">
 			<Option target="bomberman"/>
 		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/scenes/CSoloGameScene.cpp">
+			<Option target="bomberman"/>
+		</Unit>
+		<Unit filename="/home/jaroslav/CLionProjects/bomberman/src/scenes/CSoloGameScene.h">
+			<Option target="bomberman"/>
+		</Unit>
 		<Unit filename="/home/jaroslav/CLionProjects/bomberman/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

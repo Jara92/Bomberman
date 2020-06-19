@@ -44,7 +44,7 @@ public:
     {
         // The fire was "recovered".
         this->m_ExpirationTimer.Reset();
-        return true; // TODO Tady by mělo být asi true, protože skrze ohen by mělo jit vytvořit další ohně
+        return true;
     }
 
 protected:

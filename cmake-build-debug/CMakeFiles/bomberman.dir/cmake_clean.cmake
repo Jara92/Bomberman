@@ -30,6 +30,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o"
   "CMakeFiles/bomberman.dir/src/scenes/CScene.cpp.o"
   "CMakeFiles/bomberman.dir/src/scenes/CSettingsScene.cpp.o"
+  "CMakeFiles/bomberman.dir/src/scenes/CSoloGameScene.cpp.o"
   "bomberman"
   "bomberman.pdb"
 )

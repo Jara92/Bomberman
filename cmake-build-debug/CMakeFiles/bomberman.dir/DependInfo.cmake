@@ -35,6 +35,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/jaroslav/CLionProjects/bomberman/src/scenes/CMultiplayerGameScene.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/scenes/CScene.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/scenes/CScene.cpp.o"
   "/home/jaroslav/CLionProjects/bomberman/src/scenes/CSettingsScene.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/scenes/CSettingsScene.cpp.o"
+  "/home/jaroslav/CLionProjects/bomberman/src/scenes/CSoloGameScene.cpp" "/home/jaroslav/CLionProjects/bomberman/cmake-build-debug/CMakeFiles/bomberman.dir/src/scenes/CSoloGameScene.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

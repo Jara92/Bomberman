@@ -89,14 +89,6 @@ void CMultiplayerGameScene::Init()
 void CMultiplayerGameScene::Update(int deltaTime)
 {
     CGameScene::Update(deltaTime);
-    // Add rendering Sologame scene. // fixme
-   /* if (this->m_GameStatus == EGameStatus::GAME_STATUS_RUNNING)
-    {
-        this->m_Board->Update(deltaTime);
-        this->m_GameEndDelay.Tick(deltaTime);
-    }
-
-    this->m_GameStatusDelay.Tick(deltaTime);*/
 }
 
 void CMultiplayerGameScene::UpdateEvents()

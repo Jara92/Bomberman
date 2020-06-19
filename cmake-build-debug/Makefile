@@ -960,6 +960,33 @@ src/scenes/CSettingsScene.cpp.s:
 	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CSettingsScene.cpp.s
 .PHONY : src/scenes/CSettingsScene.cpp.s
 
+src/scenes/CSoloGameScene.o: src/scenes/CSoloGameScene.cpp.o
+
+.PHONY : src/scenes/CSoloGameScene.o
+
+# target to build an object file
+src/scenes/CSoloGameScene.cpp.o:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CSoloGameScene.cpp.o
+.PHONY : src/scenes/CSoloGameScene.cpp.o
+
+src/scenes/CSoloGameScene.i: src/scenes/CSoloGameScene.cpp.i
+
+.PHONY : src/scenes/CSoloGameScene.i
+
+# target to preprocess a source file
+src/scenes/CSoloGameScene.cpp.i:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CSoloGameScene.cpp.i
+.PHONY : src/scenes/CSoloGameScene.cpp.i
+
+src/scenes/CSoloGameScene.s: src/scenes/CSoloGameScene.cpp.s
+
+.PHONY : src/scenes/CSoloGameScene.s
+
+# target to generate assembly for a file
+src/scenes/CSoloGameScene.cpp.s:
+	$(MAKE) -f CMakeFiles/bomberman.dir/build.make CMakeFiles/bomberman.dir/src/scenes/CSoloGameScene.cpp.s
+.PHONY : src/scenes/CSoloGameScene.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -1062,6 +1089,9 @@ help:
 	@echo "... src/scenes/CSettingsScene.o"
 	@echo "... src/scenes/CSettingsScene.i"
 	@echo "... src/scenes/CSettingsScene.s"
+	@echo "... src/scenes/CSoloGameScene.o"
+	@echo "... src/scenes/CSoloGameScene.i"
+	@echo "... src/scenes/CSoloGameScene.s"
 .PHONY : help
 
 

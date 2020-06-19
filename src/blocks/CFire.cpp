@@ -28,9 +28,9 @@ void CFire::CollisionWith(CCoord<unsigned int> thisLocation, CPlayer &player)
 {
     if (this->IsColliding(thisLocation, player))
     {
-        // Kill the player if he doesnt have fire imunity.
+        // Kill the player if he doesnt have fire imunity or the player is not the owner.
         unsigned int score = 0;
-        if (!player.GetFireImunity())
+        if (!player.GetFireImunity() || &player != this->m_Owner)
         { score = player.TryKill(); }
 
         if(this->m_Owner != &player)

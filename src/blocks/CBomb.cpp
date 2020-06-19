@@ -58,8 +58,8 @@ bool CBomb::IsPassable(CCoord<unsigned int> thisLocation, const CMovable &movabl
         if (this->m_Owner == &movable && this->m_IsPassableForOwner)
         { return true; }
 
-            // Bombs are passable for movables which has "BombPass" property true.
-        else if (movable.GetBombPass())
+            // Bombs are passable for their owners which has "BombPass" bonus activated.
+        else if (movable.GetBombPass() && &movable == this->m_Owner)
         { return true; }
         return false;
     }

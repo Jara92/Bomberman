@@ -273,7 +273,10 @@ void CGameScene::KillAllPlayers()
 
         // Player is totally dead - game over.
         if ((*(player)) && (*(player))->GetLives() <= 0)
-        { this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER; }
+        {
+            this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER;
+           // break;
+        }
             // Player is not totally dead - round over.
         else if ((*(player)) && (*(player))->GetLives() > 0)
         { this->m_NextGameStatus = EGameStatus::GAME_STATUS_ROUND_OVER; }
