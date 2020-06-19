@@ -23,7 +23,6 @@ void CEnemySmart::Update(CBoard &board, int deltaTime)
 /*====================================================================================================================*/
 void CEnemySmart::UpdateMovementMode()
 {
-
     int actualMovementMode = static_cast<int>(this->m_MovementMode);
     int newMovementMode = 0;
 
@@ -31,8 +30,11 @@ void CEnemySmart::UpdateMovementMode()
     { newMovementMode = actualMovementMode + 1; }
 
     this->m_MovementMode = static_cast<EEnemyMovementMode >(newMovementMode);
-    std::cout << "new mode " << newMovementMode << std::endl;
-     this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_FOLLOW_THE_PLAYER;
+
+    const auto p1 = std::chrono::system_clock::now();
+    std::cout << "[" << std::chrono::duration_cast<std::chrono::seconds>(
+            p1.time_since_epoch()).count() << "] new mode " << newMovementMode << std::endl;
+    this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_FOLLOW_THE_PLAYER;
 
     this->m_MovementModeTimer.Reset();
 }
@@ -48,14 +50,14 @@ void CEnemySmart::Move(const CBoard &board, int deltaTime)
             if (this->FollowThePlayer(board))
             { continue; }
         }
-        //  continue;
+        //   continue;
 
         /* if (this->m_MovementMode == EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_RANDOM && this->TurnRandom(board))
          { continue; }
-         else*//* if (this->GoForward(board))
+         else*/ if (this->GoForward(board))
         { continue; }
         else
-        { this->GoRandom(board); }*/
+        { this->GoRandom(board); }
     }
 }
 
@@ -74,19 +76,11 @@ bool CEnemySmart::FollowThePlayer(const CBoard &board)
 
     this->GoForward(board);
 
-    if(this->m_Movement == CCoord<>(0,0))
+    if (this->m_Movement == CCoord<>(0, 0))
     {
-           this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_RANDOM;
+
         return false;
     }
-
-    // TODO dodělat pohyb nepřítele
-
-  /*  if (!this->GoForward(board))
-    {
-
-
-    }*/
 
     return true;
 }
@@ -94,27 +88,32 @@ bool CEnemySmart::FollowThePlayer(const CBoard &board)
 /*====================================================================================================================*/
 CCoord<> CEnemySmart::FindWayToLocation(const CBoard &board, CCoord<unsigned int> location)
 {
-    if (this->m_PathToPlayer.empty())
+    if (true/*this->m_PathToPlayer.empty() && this->m_Location.AlmostEqual(this->m_Location.ToUnsignedInt().ToDouble(), this->m_Speed)*/)
     {
-        this->FindPathToPlayer(board, this->GetLocationCell(), location);
+        this->FindPathToPlayer(board, this->GetLocation().ToUnsignedInt(), location);
 
         if (this->m_PathToPlayer.empty())
-        { return CCoord<>(0, 0); }
+        { this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_RANDOM; return CCoord<>(0, 0); }
     }
+    else
+    { return CCoord<>(0, 0); }
 
-    if (this->GetLocation().AlmostEqual(this->m_PathToPlayer[0].ToDouble(), this->m_Speed))
+   /* if (this->GetLocation().AlmostEqual(this->m_PathToPlayer[0].ToDouble(), this->m_Speed))
     {
         // Calibrate enemies location.
         this->m_Location = this->m_PathToPlayer[0].ToDouble();
         this->m_PathToPlayer.erase(this->m_PathToPlayer.begin());
         this->m_DirectionsToPlayer.erase(this->m_DirectionsToPlayer.begin());
-    }
+    }*/
+
+   this->m_Movement = this->m_DirectionsToPlayer[0];
 
     if (this->m_PathToPlayer.empty())
-    { return CCoord<>(0, 0); }
+    { this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_RANDOM;return CCoord<>(0, 0); }
 
     return m_DirectionsToPlayer[0];
 }
+
 /*====================================================================================================================*/
 bool
 CEnemySmart::FindPathToPlayer(const CBoard &board, CCoord<unsigned int> currentLocation,
@@ -145,7 +144,8 @@ CEnemySmart::FindPathToPlayer(const CBoard &board, CCoord<unsigned int> currentL
     std::vector<CCoord<double>> tempDirections;
     std::vector<CCoord<double>> directions;
 
-    FindPathToRec(map, currentLocation, tempLocations, locations, tempDirections, directions, targetLocation);
+    FindPathToPlayerRec(map, this->m_Movement, currentLocation, tempLocations, locations, tempDirections, directions,
+                        targetLocation);
 
     if (!locations.empty())
     {
@@ -159,12 +159,15 @@ CEnemySmart::FindPathToPlayer(const CBoard &board, CCoord<unsigned int> currentL
 
     return false;
 }
+
 /*====================================================================================================================*/
-void CEnemySmart::FindPathToRec(std::vector<std::vector<bool>> &map, CCoord<unsigned int> location,
-                                std::vector<CCoord<unsigned int>> &tempLocations,
-                                std::vector<CCoord<unsigned int>> &locations,
-                                std::vector<CCoord<double>> &tempDirections, std::vector<CCoord<double>> &directions,
-                                CCoord<unsigned int> targetLocation)
+void CEnemySmart::FindPathToPlayerRec(std::vector<std::vector<bool>> &map, CCoord<> previousDirection,
+                                      CCoord<unsigned int> location,
+                                      std::vector<CCoord<unsigned int>> &tempLocations,
+                                      std::vector<CCoord<unsigned int>> &locations,
+                                      std::vector<CCoord<double>> &tempDirections,
+                                      std::vector<CCoord<double>> &directions,
+                                      CCoord<unsigned int> targetLocation)
 {
     // If I found my location i save every move step.
     if (location == targetLocation)
@@ -177,27 +180,31 @@ void CEnemySmart::FindPathToRec(std::vector<std::vector<bool>> &map, CCoord<unsi
         return;
     }
 
-    std::vector<CCoord<int>> possibleDirections = {{-1, 0},
-                                                   {1,  0},
-                                                   {0,  -1},
-                                                   {0,  1}};
+    std::vector<CCoord<double>> possDirections = {{-1, 0},
+                                                  {1,  0},
+                                                  {0,  -1},
+                                                  {0,  1}};
 
-    for (int i = 0; i < possibleDirections.size(); i++)
+    possDirections.erase(std::find(possDirections.begin(), possDirections.end(), previousDirection));
+    possDirections.insert(possDirections.begin(), previousDirection);
+
+    for (int i = 0; i < possDirections.size(); i++)
     {
-        CCoord<unsigned int> newLocation = CCoord<unsigned int>(location.m_X + possibleDirections[i].m_X,
-                                                                location.m_Y + possibleDirections[i].m_Y);
+        CCoord<unsigned int> newLocation = CCoord<unsigned int>(location.m_X + possDirections[i].m_X,
+                                                                location.m_Y + possDirections[i].m_Y);
 
-        if (newLocation.m_X <= map.size() - 1 && newLocation.m_Y <= map[0].size() - 1 &&
+        if (newLocation.m_X < map.size() && newLocation.m_Y < map[0].size() &&
             map[newLocation.m_X][newLocation.m_Y] == true)
         {
             tempLocations.push_back(newLocation);
-            tempDirections.push_back(possibleDirections[i].ToDouble());
+            tempDirections.push_back(possDirections[i]);
 
             bool prev = map[newLocation.m_X][newLocation.m_Y];
             map[newLocation.m_X][newLocation.m_Y] = false;
 
-            FindPathToRec(map, newLocation, tempLocations, locations, tempDirections, directions,
-                          targetLocation);
+            FindPathToPlayerRec(map, possDirections[i], newLocation, tempLocations, locations, tempDirections,
+                                directions,
+                                targetLocation);
 
             map[newLocation.m_X][newLocation.m_Y] = prev;
             tempLocations.erase(tempLocations.end() - 1);

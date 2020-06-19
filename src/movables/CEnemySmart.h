@@ -60,11 +60,13 @@ protected:
     std::vector<CCoord<unsigned int>> m_PathToPlayer;
     std::vector<CCoord<double>> m_DirectionsToPlayer;
 
-    bool FindPathToPlayer(const CBoard &board, CCoord<unsigned int> currentLocation, CCoord<unsigned int> targetLocation);
+    bool
+    FindPathToPlayer(const CBoard &board, CCoord<unsigned int> currentLocation, CCoord<unsigned int> targetLocation);
 
-    void FindPathToRec(std::vector<std::vector<bool>> &map, CCoord<unsigned int> location,
-                       std::vector<CCoord<unsigned int>> &tempLocations, std::vector<CCoord<unsigned int>> &locations,
-                       std::vector<CCoord<double>> &tempDirections, std::vector<CCoord<double>> &directions,
-                       CCoord<unsigned int> targetLocation);
+    void
+    FindPathToPlayerRec(std::vector<std::vector<bool>> &map, CCoord<> previousDirection, CCoord<unsigned int> location,
+                        std::vector<CCoord<unsigned int>> &tempLocations, std::vector<CCoord<unsigned int>> &locations,
+                        std::vector<CCoord<double>> &tempDirections, std::vector<CCoord<double>> &directions,
+                        CCoord<unsigned int> targetLocation);
 };
 

@@ -113,7 +113,6 @@ public:
                 ((this->m_Y - other.m_Y) * (this->m_Y - other.m_Y)));
     }
 
-
     /**
      * Convert Coord to CCoord<double>
      * @return Converted coord.

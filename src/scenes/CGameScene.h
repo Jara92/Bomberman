@@ -100,7 +100,7 @@ protected:
     void UpdateStatus()
     { this->m_GameStatus = this->m_NextGameStatus; }
 
-    virtual void KillAllPlayers();
+    void KillAllPlayers();
 
     /** Draw game by the game state. */
     virtual void Draw() const override;
