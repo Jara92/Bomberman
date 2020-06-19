@@ -148,6 +148,58 @@ void CGameScene::UpdateEvents()
     this->GlobalInput(keystate);
 
     this->m_Board->UpdatePhysicsEvents();
+
+    // If game is running.
+    if (this->m_GameStatus == EGameStatus::GAME_STATUS_RUNNING && this->m_GameStatus == this->m_NextGameStatus)
+    {
+        // Check for dead players.
+        for (auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
+        {
+            // IF player is dead.
+            if ((*(player)) && !(*(player))->IsAlive())
+            {
+                // If player is not totally dead - Round over.
+                if ((*(player))->GetLives() > 0)
+                { this->m_NextGameStatus = EGameStatus::GAME_STATUS_ROUND_OVER; }
+                    // Player is totally dead - Game over.
+                else
+                { this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER; }
+
+                this->m_GameEndDelay.Stop();
+            } else if ((*(player))->GetLevelUp())
+            { this->m_NextGameStatus = EGameStatus::GAME_STATUS_NEXT_ROUND; }
+        }
+    }
+
+    // Set new callback when timer is done
+    if (this->m_GameStatusDelay.Done() && this->m_GameStatus != this->m_NextGameStatus)
+    {
+        std::function<void(void)> callBack;
+        int delay = CGameScene::GAME_STATUS_UPDATE_DELAY;
+
+        // Create callback functions for special states.
+        switch (this->m_NextGameStatus)
+        {
+            case EGameStatus::GAME_STATUS_NEXT_ROUND:
+                callBack = [=]()
+                { this->NextRound(); };
+                delay = 150;
+                break;
+            case EGameStatus::GAME_STATUS_ROUND_OVER:
+                callBack = [=]()
+                { this->RoundOver(); };
+                break;
+            case EGameStatus::GAME_STATUS_GAME_OVER:
+                callBack = [=]()
+                { this->GameOver(); };
+                break;
+            default:
+                return;
+        }
+
+        // Set new callback.
+        this->m_GameStatusDelay.Run(delay, callBack);
+    }
 }
 
 /*====================================================================================================================*/
@@ -162,7 +214,7 @@ void CGameScene::KillAllPlayers()
         if ((*(player)) && (*(player))->GetLives() <= 0)
         {
             this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER;
-            break;
+            return;
         }
             // Player is not totally dead - round over.
         else if ((*(player)) && (*(player))->GetLives() > 0)
@@ -234,9 +286,20 @@ void CGameScene::GlobalInput(const Uint8 *input)
     // Debug options
     if (this->m_Interface.GetSettings()->GetDebugMode())
     {
+        // Kill every enemy.
         if (input[SDL_SCANCODE_F1])
         {
+            for (auto i = this->m_Board->m_Movables.begin(); i != this->m_Board->m_Movables.end(); i++)
+            {
+                auto *enemy = dynamic_cast<CEnemy *>(*i);
 
+                if (enemy)
+                {
+                    unsigned int score = enemy->TryKill(0);
+                    if (this->m_Board->m_Players.size() > 0 && this->m_Board->m_Players[0])
+                    { this->m_Board->m_Players[0]->IncreseScore(score); }
+                }
+            }
         }
             // Destroy every destructible wall.
         else if (input[SDL_SCANCODE_F2])

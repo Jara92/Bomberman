@@ -21,7 +21,7 @@ public:
 
     CMultiplayerGameScene (const CMultiplayerGameScene &other) = delete;
 
-    CGameScene &operator=(const CGameScene &other) = delete;
+    CGameScene &operator=(const CMultiplayerGameScene &other) = delete;
 
     virtual void Init() override;
 
@@ -29,8 +29,6 @@ protected:
     std::unique_ptr<CText> m_WinnerText;
 
     virtual void Update(int deltaTime) override;
-
-    virtual void UpdateEvents() override;
 
     virtual void GameOver() override ;
 

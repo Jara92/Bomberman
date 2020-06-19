@@ -38,8 +38,6 @@ public:
 protected:
     virtual void Update(int deltaTime) override;
 
-    virtual void UpdateEvents() override;
-
     virtual void GameOver() override ;
 };
 

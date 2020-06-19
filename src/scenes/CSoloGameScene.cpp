@@ -77,63 +77,6 @@ void CSoloGameScene::Update(int deltaTime)
     CGameScene::Update(deltaTime);
 }
 
-void CSoloGameScene::UpdateEvents()
-{
-    CGameScene::UpdateEvents();
-
-    // If game is running.
-    if (this->m_GameStatus == EGameStatus::GAME_STATUS_RUNNING && this->m_GameStatus == this->m_NextGameStatus)
-    {
-        // Check for dead players.
-        for (auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
-        {
-            // IF player is dead.
-            if ((*(player)) && !(*(player))->IsAlive())
-            {
-                // If player is not totally dead - Round over.
-                if ((*(player))->GetLives() > 0)
-                { this->m_NextGameStatus = EGameStatus::GAME_STATUS_ROUND_OVER; }
-                    // Player is totally dead - Game over.
-                else
-                { this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER; }
-
-                this->m_GameEndDelay.Stop();
-            } else if ((*(player))->GetLevelUp())
-            { this->m_NextGameStatus = EGameStatus::GAME_STATUS_NEXT_ROUND; }
-        }
-    }
-
-    // Set new callback when timer is done
-    if (this->m_GameStatusDelay.Done() && this->m_GameStatus != this->m_NextGameStatus)
-    {
-        std::function<void(void)> callBack;
-        int delay = CGameScene::GAME_STATUS_UPDATE_DELAY;
-
-        // Create callback functions for special states.
-        switch (this->m_NextGameStatus)
-        {
-            case EGameStatus::GAME_STATUS_NEXT_ROUND:
-                callBack = [=]()
-                { this->NextRound(); };
-                delay = 150;
-                break;
-            case EGameStatus::GAME_STATUS_ROUND_OVER:
-                callBack = [=]()
-                { this->RoundOver(); };
-                break;
-            case EGameStatus::GAME_STATUS_GAME_OVER:
-                callBack = [=]()
-                { this->GameOver(); };
-                break;
-            default:
-                return;
-        }
-
-        // Set new callback.
-        this->m_GameStatusDelay.Run(delay, callBack);
-    }
-}
-
 void CSoloGameScene::GameOver()
 {
     // Save first players (the only players) score.

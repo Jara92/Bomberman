@@ -8,11 +8,7 @@
 
 void CMultiplayerGameScene::Init()
 {
-
-    std::cout << "mul" << std::endl;
-    // Kill all players when the time runs out.
-    this->m_GameEndDelay.Run(CGameScene::/*GAME_STATUS_UPDATE_DELAY*/STARTING_TIME, [=](void)
-    { this->KillAllPlayers(); });
+    CGameScene::Init();
 
     // Get board and load first level
     this->m_Board = this->m_LevelLoader.GetBoard(2, this->m_Interface.GetSettings());
@@ -76,7 +72,7 @@ void CMultiplayerGameScene::Init()
     this->m_GameOverText->SetLocation(
             CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0), (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0)));
 
-    this->m_WinnerText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "[PLAYER] is the winner!",
+    this->m_WinnerText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "PLAYER is the winner!",
                                                  this->m_DefaultFontSize * 1.3);
     itemSize = this->m_WinnerText->GetSize();
     this->m_WinnerText->SetLocation(
@@ -94,71 +90,14 @@ void CMultiplayerGameScene::Init()
     // Run the game clock when the constructor is over.
     this->m_Clock = CGameClock();
 }
-
+/*====================================================================================================================*/
 void CMultiplayerGameScene::Update(int deltaTime)
 {
     CGameScene::Update(deltaTime);
 
     this->m_WinnerText->Update(this->m_Interface, deltaTime);
 }
-
-void CMultiplayerGameScene::UpdateEvents()
-{
-    CGameScene::UpdateEvents();
-
-    // If game is running.
-    if (this->m_GameStatus == EGameStatus::GAME_STATUS_RUNNING && this->m_GameStatus == this->m_NextGameStatus)
-    {
-        // Check for dead players.
-        for (auto player = this->m_Board->m_Players.begin(); player != this->m_Board->m_Players.end(); player++)
-        {
-            // IF player is dead.
-            if ((*(player)) && !(*(player))->IsAlive())
-            {
-                // If player is not totally dead - Round over.
-                if ((*(player))->GetLives() > 0)
-                { this->m_NextGameStatus = EGameStatus::GAME_STATUS_ROUND_OVER; }
-                    // Player is totally dead - Game over.
-                else
-                { this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER; }
-
-                this->m_GameEndDelay.Stop();
-            } else if ((*(player))->GetLevelUp())
-            { this->m_NextGameStatus = EGameStatus::GAME_STATUS_NEXT_ROUND; }
-        }
-    }
-
-    // Set new callback when timer is done
-    if (this->m_GameStatusDelay.Done() && this->m_GameStatus != this->m_NextGameStatus)
-    {
-        std::function<void(void)> callBack;
-        int delay = CGameScene::GAME_STATUS_UPDATE_DELAY;
-
-        // Create callback functions for special states.
-        switch (this->m_NextGameStatus)
-        {
-            case EGameStatus::GAME_STATUS_NEXT_ROUND:
-                callBack = [=]()
-                { this->NextRound(); };
-                delay = 150;
-                break;
-            case EGameStatus::GAME_STATUS_ROUND_OVER:
-                callBack = [=]()
-                { this->RoundOver(); };
-                break;
-            case EGameStatus::GAME_STATUS_GAME_OVER:
-                callBack = [=]()
-                { this->GameOver(); };
-                break;
-            default:
-                return;
-        }
-
-        // Set new callback.
-        this->m_GameStatusDelay.Run(delay, callBack);
-    }
-}
-
+/*====================================================================================================================*/
 void CMultiplayerGameScene::GameOver()
 {
     // Get best player
@@ -193,7 +132,7 @@ void CMultiplayerGameScene::GameOver()
 
     CGameScene::GameOver();
 }
-
+/*====================================================================================================================*/
 void CMultiplayerGameScene::DrawGameOver() const
 {
     CGameScene::DrawGameOver();
