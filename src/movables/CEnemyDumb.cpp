@@ -8,7 +8,6 @@
 void CEnemyDumb::Update(CBoard &board, int deltaTime)
 {
     CEnemy::Update(board, deltaTime);
-    this->m_RandomMovementTimer.Tick(deltaTime);
 
     // Move when the enemy is alive.
     if (this->m_IsAlive)
@@ -26,26 +25,10 @@ void CEnemyDumb::Move(const CBoard &board, int deltaTime)
 {
     for (int i = 0; i < deltaTime; i++)
     {
-        // Move
-        if (this->m_MovementMode == EEnemyMovementMode::ENEMY_MOVEMENT_MODE_RANDOM)
-        {
-            if (this->TurnRandom(board))
-            { continue; }
-        }
-
+        // Go forward until the way is blocked.
         if (this->GoForward(board))
         { continue; }
         else
         { this->GoRandom(board); }
     }
-}
-
-
-/*====================================================================================================================*/
-void CEnemyDumb::UpdateMovementMode()
-{
-    if (this->m_MovementMode == EEnemyMovementMode::ENEMY_MOVEMENT_MODE_RANDOM)
-    { this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_FORWARD; }
-    else if (this->m_MovementMode == EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_FORWARD)
-    { this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_RANDOM; }
 }

@@ -39,8 +39,9 @@ protected:
 
     static constexpr double ENEMY_SPEED_UP = 1.25;
 
-    virtual void UpdateMovementMode() override;
-
     virtual void Move(const CBoard &board, int deltaTime) override;
+
+    /** The enemy turns in random direction in next crossroad. */
+    bool TurnRandom(const CBoard &board);
 };
 

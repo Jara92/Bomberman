@@ -34,7 +34,6 @@ CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/blocks/collectibles/CCol
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/blocks/collectibles/CDoor.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/enums/EApplicationStatus.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/enums/ECollectibleType.h
-CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/enums/EEnemyType.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/enums/EGameStatus.h
 CMakeFiles/bomberman.dir/src/CApplication.cpp.o: ../src/enums/ETextureType.h
@@ -73,7 +72,6 @@ CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/blocks/CWall.h
 CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/blocks/collectibles/CCollectible.h
-CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/enums/EGameStatus.h
 CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/enums/ETextureType.h
 CMakeFiles/bomberman.dir/src/CBoard.cpp.o: ../src/movables/CEnemy.h
@@ -117,7 +115,6 @@ CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/blocks/collectibles/CBoo
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/blocks/collectibles/CCollectible.h
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/blocks/collectibles/CDoor.h
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/enums/ECollectibleType.h
-CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/enums/EEnemyType.h
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/enums/EGameStatus.h
 CMakeFiles/bomberman.dir/src/CLevelLoader.cpp.o: ../src/enums/ETextureType.h
@@ -160,7 +157,6 @@ CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: ../src/CTimer.h
 CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: ../src/Messages.h
 CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: ../src/blocks/CBlock.cpp
 CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: ../src/blocks/CBlock.h
-CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: ../src/enums/ETextureType.h
 CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: ../src/movables/CEnemy.h
 CMakeFiles/bomberman.dir/src/blocks/CBlock.cpp.o: ../src/movables/CMovable.h
@@ -183,7 +179,6 @@ CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: ../src/blocks/CWall.h
 CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: ../src/blocks/collectibles/CCollectible.h
-CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: ../src/enums/EGameStatus.h
 CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: ../src/enums/ETextureType.h
 CMakeFiles/bomberman.dir/src/blocks/CBomb.cpp.o: ../src/movables/CEnemy.h
@@ -209,7 +204,6 @@ CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: ../src/blocks/CFire.cpp
 CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: ../src/blocks/CWall.h
 CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: ../src/blocks/collectibles/CCollectible.h
-CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: ../src/enums/EGameStatus.h
 CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: ../src/enums/ETextureType.h
 CMakeFiles/bomberman.dir/src/blocks/CFire.cpp.o: ../src/movables/CEnemy.h
@@ -232,7 +226,6 @@ CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/blocks/CBlock.h
 CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/blocks/CWall.cpp
 CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/blocks/CWall.h
 CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/blocks/collectibles/CCollectible.h
-CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/enums/ETextureType.h
 CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/movables/CEnemy.h
 CMakeFiles/bomberman.dir/src/blocks/CWall.cpp.o: ../src/movables/CMovable.h
@@ -256,7 +249,6 @@ CMakeFiles/bomberman.dir/src/blocks/collectibles/CBoost.cpp.o: ../src/blocks/CWa
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CBoost.cpp.o: ../src/blocks/collectibles/CBoost.cpp
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CBoost.cpp.o: ../src/blocks/collectibles/CBoost.h
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CBoost.cpp.o: ../src/blocks/collectibles/CCollectible.h
-CMakeFiles/bomberman.dir/src/blocks/collectibles/CBoost.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CBoost.cpp.o: ../src/enums/EGameStatus.h
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CBoost.cpp.o: ../src/enums/ETextureType.h
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CBoost.cpp.o: ../src/movables/CEnemy.h
@@ -282,7 +274,6 @@ CMakeFiles/bomberman.dir/src/blocks/collectibles/CCollectible.cpp.o: ../src/bloc
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CCollectible.cpp.o: ../src/blocks/CWall.h
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CCollectible.cpp.o: ../src/blocks/collectibles/CCollectible.cpp
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CCollectible.cpp.o: ../src/blocks/collectibles/CCollectible.h
-CMakeFiles/bomberman.dir/src/blocks/collectibles/CCollectible.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CCollectible.cpp.o: ../src/enums/EGameStatus.h
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CCollectible.cpp.o: ../src/enums/ETextureType.h
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CCollectible.cpp.o: ../src/movables/CEnemy.h
@@ -309,7 +300,6 @@ CMakeFiles/bomberman.dir/src/blocks/collectibles/CDoor.cpp.o: ../src/blocks/CWal
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CDoor.cpp.o: ../src/blocks/collectibles/CCollectible.h
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CDoor.cpp.o: ../src/blocks/collectibles/CDoor.cpp
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CDoor.cpp.o: ../src/blocks/collectibles/CDoor.h
-CMakeFiles/bomberman.dir/src/blocks/collectibles/CDoor.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CDoor.cpp.o: ../src/enums/EGameStatus.h
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CDoor.cpp.o: ../src/enums/ETextureType.h
 CMakeFiles/bomberman.dir/src/blocks/collectibles/CDoor.cpp.o: ../src/movables/CEnemy.h
@@ -375,7 +365,6 @@ CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/blocks/collectibles/CCollectible
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/blocks/collectibles/CDoor.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/enums/EApplicationStatus.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/enums/ECollectibleType.h
-CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/enums/EEnemyType.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/enums/EGameStatus.h
 CMakeFiles/bomberman.dir/src/main.cpp.o: ../src/enums/ETextureType.h
@@ -414,7 +403,6 @@ CMakeFiles/bomberman.dir/src/movables/CEnemy.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/movables/CEnemy.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/movables/CEnemy.cpp.o: ../src/blocks/CWall.h
 CMakeFiles/bomberman.dir/src/movables/CEnemy.cpp.o: ../src/blocks/collectibles/CCollectible.h
-CMakeFiles/bomberman.dir/src/movables/CEnemy.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/movables/CEnemy.cpp.o: ../src/enums/EGameStatus.h
 CMakeFiles/bomberman.dir/src/movables/CEnemy.cpp.o: ../src/enums/ETextureType.h
 CMakeFiles/bomberman.dir/src/movables/CEnemy.cpp.o: ../src/movables/CEnemy.cpp
@@ -440,7 +428,6 @@ CMakeFiles/bomberman.dir/src/movables/CEnemyDumb.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/movables/CEnemyDumb.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/movables/CEnemyDumb.cpp.o: ../src/blocks/CWall.h
 CMakeFiles/bomberman.dir/src/movables/CEnemyDumb.cpp.o: ../src/blocks/collectibles/CCollectible.h
-CMakeFiles/bomberman.dir/src/movables/CEnemyDumb.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/movables/CEnemyDumb.cpp.o: ../src/enums/EGameStatus.h
 CMakeFiles/bomberman.dir/src/movables/CEnemyDumb.cpp.o: ../src/enums/ETextureType.h
 CMakeFiles/bomberman.dir/src/movables/CEnemyDumb.cpp.o: ../src/movables/CEnemy.h
@@ -466,7 +453,6 @@ CMakeFiles/bomberman.dir/src/movables/CEnemySmart.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/movables/CEnemySmart.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/movables/CEnemySmart.cpp.o: ../src/blocks/CWall.h
 CMakeFiles/bomberman.dir/src/movables/CEnemySmart.cpp.o: ../src/blocks/collectibles/CCollectible.h
-CMakeFiles/bomberman.dir/src/movables/CEnemySmart.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/movables/CEnemySmart.cpp.o: ../src/enums/EGameStatus.h
 CMakeFiles/bomberman.dir/src/movables/CEnemySmart.cpp.o: ../src/enums/ETextureType.h
 CMakeFiles/bomberman.dir/src/movables/CEnemySmart.cpp.o: ../src/movables/CEnemy.h
@@ -492,7 +478,6 @@ CMakeFiles/bomberman.dir/src/movables/CMovable.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/movables/CMovable.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/movables/CMovable.cpp.o: ../src/blocks/CWall.h
 CMakeFiles/bomberman.dir/src/movables/CMovable.cpp.o: ../src/blocks/collectibles/CCollectible.h
-CMakeFiles/bomberman.dir/src/movables/CMovable.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/movables/CMovable.cpp.o: ../src/enums/EGameStatus.h
 CMakeFiles/bomberman.dir/src/movables/CMovable.cpp.o: ../src/enums/ETextureType.h
 CMakeFiles/bomberman.dir/src/movables/CMovable.cpp.o: ../src/movables/CEnemy.h
@@ -518,7 +503,6 @@ CMakeFiles/bomberman.dir/src/movables/CPlayer.cpp.o: ../src/blocks/CBomb.h
 CMakeFiles/bomberman.dir/src/movables/CPlayer.cpp.o: ../src/blocks/CFire.h
 CMakeFiles/bomberman.dir/src/movables/CPlayer.cpp.o: ../src/blocks/CWall.h
 CMakeFiles/bomberman.dir/src/movables/CPlayer.cpp.o: ../src/blocks/collectibles/CCollectible.h
-CMakeFiles/bomberman.dir/src/movables/CPlayer.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/movables/CPlayer.cpp.o: ../src/enums/EGameStatus.h
 CMakeFiles/bomberman.dir/src/movables/CPlayer.cpp.o: ../src/enums/ETextureType.h
 CMakeFiles/bomberman.dir/src/movables/CPlayer.cpp.o: ../src/movables/CEnemy.h
@@ -551,7 +535,6 @@ CMakeFiles/bomberman.dir/src/scenes/CGameScene.cpp.o: ../src/blocks/collectibles
 CMakeFiles/bomberman.dir/src/scenes/CGameScene.cpp.o: ../src/blocks/collectibles/CDoor.h
 CMakeFiles/bomberman.dir/src/scenes/CGameScene.cpp.o: ../src/enums/EApplicationStatus.h
 CMakeFiles/bomberman.dir/src/scenes/CGameScene.cpp.o: ../src/enums/ECollectibleType.h
-CMakeFiles/bomberman.dir/src/scenes/CGameScene.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/scenes/CGameScene.cpp.o: ../src/enums/EEnemyType.h
 CMakeFiles/bomberman.dir/src/scenes/CGameScene.cpp.o: ../src/enums/EGameStatus.h
 CMakeFiles/bomberman.dir/src/scenes/CGameScene.cpp.o: ../src/enums/ETextureType.h
@@ -610,7 +593,6 @@ CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/blocks/c
 CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/blocks/collectibles/CDoor.h
 CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/enums/EApplicationStatus.h
 CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/enums/ECollectibleType.h
-CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/enums/EEnemyType.h
 CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/enums/EGameStatus.h
 CMakeFiles/bomberman.dir/src/scenes/CMultiplayerGameScene.cpp.o: ../src/enums/ETextureType.h
@@ -684,7 +666,6 @@ CMakeFiles/bomberman.dir/src/scenes/CSoloGameScene.cpp.o: ../src/blocks/collecti
 CMakeFiles/bomberman.dir/src/scenes/CSoloGameScene.cpp.o: ../src/blocks/collectibles/CDoor.h
 CMakeFiles/bomberman.dir/src/scenes/CSoloGameScene.cpp.o: ../src/enums/EApplicationStatus.h
 CMakeFiles/bomberman.dir/src/scenes/CSoloGameScene.cpp.o: ../src/enums/ECollectibleType.h
-CMakeFiles/bomberman.dir/src/scenes/CSoloGameScene.cpp.o: ../src/enums/EEnemyMovementMode.h
 CMakeFiles/bomberman.dir/src/scenes/CSoloGameScene.cpp.o: ../src/enums/EEnemyType.h
 CMakeFiles/bomberman.dir/src/scenes/CSoloGameScene.cpp.o: ../src/enums/EGameStatus.h
 CMakeFiles/bomberman.dir/src/scenes/CSoloGameScene.cpp.o: ../src/enums/ETextureType.h

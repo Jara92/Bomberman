@@ -15,14 +15,14 @@ CEnemySmart::CEnemySmart(std::shared_ptr<CTexturePack> texturePack, CCoord<> loc
         {
             this->m_SpeedUp = false;
             this->m_Speed /= CEnemySmart::ENEMY_SPEED_UP;
-        }
-        else
+        } else
         {
             this->m_SpeedUp = true;
             this->m_Speed *= CEnemySmart::ENEMY_SPEED_UP;
         }
     });
 }
+
 /*====================================================================================================================*/
 void CEnemySmart::Update(CBoard &board, int deltaTime)
 {
@@ -33,8 +33,8 @@ void CEnemySmart::Update(CBoard &board, int deltaTime)
     if (this->m_IsAlive)
     {
         // Run speedup timer again with random value.
-        if(this->m_SpeedUpTimer.Done())
-        {this->m_SpeedUpTimer.Run(CRandom::Random(2000, 5000));}
+        if (this->m_SpeedUpTimer.Done())
+        { this->m_SpeedUpTimer.Run(CRandom::Random(2000, 5000)); }
 
         CCoord<> oldLocation = this->m_Location;
 
@@ -45,26 +45,14 @@ void CEnemySmart::Update(CBoard &board, int deltaTime)
 }
 
 /*====================================================================================================================*/
-void CEnemySmart::UpdateMovementMode()
-{
-    int actualMovementMode = static_cast<int>(this->m_MovementMode);
-    int newMovementMode = 0;
-
-    if (actualMovementMode < static_cast<int>(EEnemyMovementMode::ENEMY_MOVEMENT_MODE_NR_ITEMS) - 1)
-    { newMovementMode = actualMovementMode + 1; }
-
-    this->m_MovementMode = static_cast<EEnemyMovementMode >(newMovementMode);
-
-    this->m_MovementModeTimer.Reset();
-}
-
-/*====================================================================================================================*/
-
 void CEnemySmart::Move(const CBoard &board, int deltaTime)
 {
     for (int i = 0; i < deltaTime; i++)
     {
-        if (/*this->m_MovementMode == EEnemyMovementMode::ENEMY_MOVEMENT_MODE_RANDOM && */this->TurnRandom(board))
+        if (!this->DirectionIsSafe(board, this->m_Movement, this->m_SurveillanceDistance))
+        { this->m_Movement = -1 * this->m_Movement; }
+
+        if (this->TurnRandom(board))
         { continue; }
         else if (this->GoForward(board))
         { continue; }
@@ -73,5 +61,33 @@ void CEnemySmart::Move(const CBoard &board, int deltaTime)
     }
 }
 
+/*====================================================================================================================*/
+bool CEnemySmart::TurnRandom(const CBoard &board)
+{
+    auto directions = this->GetPossibleMoveDirections(board);
 
+    if (directions.size() > 2)
+    {
+        // Choose randomIndex direction and set new movement and texture type.
+        unsigned int randomIndex = CRandom::Random(0, directions.size());
+
+        // Remove forward and backward direction.
+        while (!directions.empty() && (directions[randomIndex] == -1 * this->m_Movement))
+        {
+            directions.erase(directions.begin() + randomIndex);
+            randomIndex = CRandom::Random(0, directions.size());
+        }
+
+        if (!directions.empty())
+        {
+            this->m_Movement = directions[randomIndex];
+
+            bool move = this->GoForward(board);
+
+            if (move)
+            { return move; }
+        }
+    }
+    return false;
+}
 

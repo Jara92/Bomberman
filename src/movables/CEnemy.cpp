@@ -170,40 +170,6 @@ bool CEnemy::GoRandom(const CBoard &board)
 }
 
 /*====================================================================================================================*/
-bool CEnemy::TurnRandom(const CBoard &board)
-{
-    auto directions = this->GetPossibleMoveDirections(board);
-
-    if (directions.size() > 2)
-    {
-        // Choose randomIndex direction and set new movement and texture type.
-        unsigned int randomIndex = CRandom::Random(0, directions.size());
-
-        // Remove forward and backward direction.
-        while (!directions.empty() && (directions[randomIndex] == -1 * this->m_Movement))
-        {
-            directions.erase(directions.begin() + randomIndex);
-            randomIndex = CRandom::Random(0, directions.size());
-        }
-
-        if (!directions.empty())
-        {
-            this->m_Movement = directions[randomIndex];
-
-            bool move = this->GoForward(board);
-
-            if (move)
-            {
-                this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_FORWARD;
-                // this->m_MovementModeTimer.Reset();
-                return move;
-            }
-        }
-    }
-    return false;
-}
-
-/*====================================================================================================================*/
 bool CEnemy::DirectionIsSafe(const CBoard &board, CCoord<> direction, unsigned int distance) const
 {
     for (unsigned int i = 1; i <= distance; i++)
