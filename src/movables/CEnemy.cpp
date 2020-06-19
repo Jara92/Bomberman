@@ -108,8 +108,12 @@ void CEnemy::CollisionWith(CCoord<unsigned int> blockLocation, CBlock &block)
 /*====================================================================================================================*/
 void CEnemy::CollisionWithMovable(CPlayer &player)
 {
+    // Kill the player but don't take his score.
     if (this->m_IsAlive)
-    { player.TryKill(); }
+    {
+        unsigned int score = player.TryKill();
+        player.IncreseScore(score);
+    }
 }
 
 /*====================================================================================================================*/
@@ -191,7 +195,7 @@ bool CEnemy::TurnRandom(const CBoard &board)
             if (move)
             {
                 this->m_MovementMode = EEnemyMovementMode::ENEMY_MOVEMENT_MODE_WALK_FORWARD;
-               // this->m_MovementModeTimer.Reset();
+                // this->m_MovementModeTimer.Reset();
                 return move;
             }
         }

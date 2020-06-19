@@ -137,7 +137,10 @@ unsigned int CPlayer::TryKill(unsigned int distance)
         this->m_Lives--;
         this->m_IsAlive = false;
 
-        return 1;
+        unsigned int score =  static_cast<unsigned int>(0.25 * this->m_Score);
+        this->m_Score -= score;
+
+        return score;
     }
 
     return 0;

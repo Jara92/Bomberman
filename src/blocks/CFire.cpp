@@ -15,6 +15,7 @@ CFire::CFire(std::shared_ptr<CTexturePack> texturePack, CPlayer *owner, CCoord<>
         this->m_IsDestroyed = true;
     });
 }
+
 /*====================================================================================================================*/
 void CFire::Update(CBoard &board, int deltaTime)
 {
@@ -33,8 +34,12 @@ void CFire::CollisionWith(CCoord<unsigned int> thisLocation, CPlayer &player)
         if (!player.GetFireImunity() || &player != this->m_Owner)
         { score = player.TryKill(); }
 
-        if(this->m_Owner != &player)
-        {this->m_Owner->IncreseScore(score);}
+        // Add a score to the owner if the victim is not the owner.
+        if (this->m_Owner != &player)
+        { this->m_Owner->IncreseScore(score); }
+            // Roll the score back to the player.
+        else
+        { player.IncreseScore(score); }
     }
 }
 
