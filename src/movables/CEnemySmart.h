@@ -23,10 +23,7 @@ public:
     * @param lives How many lives doest this monster have?
     */
     explicit CEnemySmart(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size = CCoord<>(1, 1),
-                         int score = 0, double speed = 0.005, bool wallPass = false, int lives = 1)
-            : CEnemy(std::move(texturePack), location, size, score, speed, wallPass, lives, 1),
-              m_PersecutedPlayer(nullptr)
-    {}
+                         int score = 0, double speed = 0.005, bool wallPass = false, int lives = 1);
 
     CEnemySmart(const CEnemySmart &other) = default;
 
@@ -37,7 +34,10 @@ public:
     virtual void Update(CBoard &board, int deltaTime) override;
 
 protected:
-    const CPlayer *m_PersecutedPlayer;
+    CTimer m_SpeedUpTimer;
+    bool m_SpeedUp;
+
+    static constexpr double ENEMY_SPEED_UP = 1.25;
 
     virtual void UpdateMovementMode() override;
 

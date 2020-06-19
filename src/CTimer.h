@@ -61,12 +61,15 @@ public:
     void Run()
     { this->Run(this->m_TargetTime, this->m_Callback); }
 
+    void Run(unsigned int value)
+    { this->Run(value, this->m_Callback); }
+
     /**
      * Turn on timer countdown.
      * @param value Value to be counted.
      * @param callBack Callback function which will be called when the timer is done.
      */
-    void Run(unsigned int value, std::function<void(void)> callBack = {})
+    void Run(unsigned int value, std::function<void(void)> callBack)
     {
         this->m_IsOn = true;
         this->m_ActualTime = 0;

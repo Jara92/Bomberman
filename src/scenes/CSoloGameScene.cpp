@@ -24,7 +24,7 @@ void CSoloGameScene::Init()
 
     // Menu texts.
     this->m_TimeText = std::make_unique<CText>(this->m_Interface, CCoord<>(10 * this->m_Board->GetCellSize(), padding),
-                                               "", this->m_DefaultFontSize, SDL_Color{255, 165, 0, 255});
+                                               "", this->m_DefaultFontSize, SDL_Color{0, 0, 0, 255});
 
     // Player 1 text labels
     this->m_ScoreTexts.push_back(std::make_unique<CText>(this->m_Interface,

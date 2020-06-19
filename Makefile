@@ -17,25 +17,21 @@ DEP = $(patsubst $(SRCDIR)/%.cpp,$(DEPDIR)/%.d,$(SRC))
 
 all: compile doc
 
-compile: bomberman ;
+compile: fikarja3 ;
 
-bomberman: $(OBJ)
-	$(LD) -o bomberman -fsanitize=address $^ $(LIBS)
-	#$(LD) -o bomberman $^ $(LIBS)
+fikarja3: $(OBJ)
+	$(LD) -o fikarja3 -fsanitize=address $^ $(LIBS)
+	#$(LD) -o fikarja3 $^ $(LIBS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(@D)
 	$(CXX) -c -o $@ $< $(CXXFLAGS)
 
-
-
 doc: $(HEADERS) $(SRC) Doxyfile README.md
 	doxygen
 
-
-
 clean:
-	rm -f bomberman
+	rm -f fikarja3
 	rm -rf doc
 	rm -rf $(DEPDIR)
 	rm -rf $(OBJDIR)
@@ -43,9 +39,7 @@ clean:
 
 
 run: compile
-	./bomberman
-
-
+	./fikarja3
 
 $(DEPDIR)/%.d: $(SRCDIR)/%.cpp $(HEADERS)
 	@mkdir -p $(@D)
