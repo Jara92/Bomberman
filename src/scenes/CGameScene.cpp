@@ -23,12 +23,13 @@ void CGameScene::Init()
     { this->m_Board->GetGroundObject()->Draw(this->m_Interface, this->m_Board->GetCellSize(), CCoord<double>(i, 0)); }
 
     // Menu texts.
-    this->m_TimeText = std::make_unique<CText>(this->m_Interface, CCoord<>(0.5 * this->m_Board->GetCellSize(), padding),
-                                               "", this->m_DefaultFontSize);
+    this->m_TimeText = std::make_unique<CText>(this->m_Interface, CCoord<>(10 * this->m_Board->GetCellSize(), padding),
+                                               "", this->m_DefaultFontSize, SDL_Color{255, 165, 0, 255});
 
     // Player 1 text labels
     this->m_ScoreTexts.push_back(std::make_unique<CText>(this->m_Interface,
-                                                         CCoord<>(5 * this->m_Board->GetCellSize() + padding, padding),
+                                                         CCoord<>(0.5 * this->m_Board->GetCellSize() + padding,
+                                                                  padding),
                                                          "",
                                                          this->m_DefaultFontSize));
 
@@ -149,11 +150,20 @@ void CGameScene::Update(int deltaTime)
         // Update players textboxes.
         for (std::size_t i = 0; i < this->m_Board->m_Players.size(); i++)
         {
-            SDL_Color color = {255, 255, 255, 255};
+            SDL_Color color = this->m_ScoreTexts[i]->GetColor();
             if (this->m_Board->m_Players[i]->GetLives() <= 0)
             { color = {128, 0, 0, 255}; }
 
-            this->m_ScoreTexts[i]->SetText("Score: " + std::to_string(this->m_Board->m_Players[i]->GetScore()),
+            // Adding zeros.
+            std::string score = std::to_string(this->m_Board->m_Players[i]->GetScore());
+            std::size_t oldSize = score.size();
+            if (oldSize < 10)
+            {
+                for (std::size_t i = 0; i < 10 - oldSize; i++)
+                { score.insert(score.begin(), '0'); }
+            }
+
+            this->m_ScoreTexts[i]->SetText("Score: " + score,
                                            this->m_DefaultFontSize, this->m_ScoreTexts[i]->GetColor());
             this->m_ScoreTexts[i]->Update(this->m_Interface, deltaTime);
 
