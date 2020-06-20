@@ -140,7 +140,7 @@ public:
     void ShowMessageBox(Uint32 flags, const std::string &title, const std::string &message)
     {
         // Clear the window first.
-        this->SetRenderColor(0,0,170,255);
+        this->SetRenderColor(0, 0, 170, 255);
         this->Clear();
         this->Present();
         SDL_ShowSimpleMessageBox(flags, title.c_str(), message.c_str(), this->m_Window);

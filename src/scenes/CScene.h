@@ -27,7 +27,8 @@ public:
      * @param interface Interface to be used.
      */
     explicit CScene(CSDLInterface &interface)
-            : m_Interface(interface), m_NextApplicationState(EApplicationStatus::APPLICATON_STATUS_NONE)
+            : m_Interface(interface), m_NextApplicationState(EApplicationStatus::APPLICATON_STATUS_NONE),
+              m_ScenePadding(5)
     { this->m_Clock = CGameClock(interface.GetSettings().GetScreenFPS()); }
 
     virtual ~CScene() = default;
@@ -48,6 +49,7 @@ protected:
     EApplicationStatus m_NextApplicationState;
     /** Application refresh clock. */
     CGameClock m_Clock;
+    unsigned int m_ScenePadding;
 
     /**
      * Update window state.

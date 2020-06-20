@@ -6,18 +6,54 @@
 
 void CGameScene::Init()
 {
+    // Get board and load first level
+    this->m_Board = this->m_LevelLoader.GetBoard(this->m_Interface.GetSettings());
+
     // Kill all players when the time runs out.
     this->m_GameEndTimer.Run(CGameScene::STARTING_TIME, [=](void)
     { this->KillAllPlayers(); });
 
-    int padding = 5;
+    CCoord<unsigned int> windowSize = this->m_Interface.GetWindowSize();
+    this->m_DefaultFontSize = this->m_Board->GetCellSize() - 2 * this->m_ScenePadding;
 
+    // FPS text.
+    this->m_FPSText = std::make_unique<CText>(this->m_Interface,
+                                              CCoord<>(this->m_ScenePadding, 50 + this->m_ScenePadding), "",
+                                              this->m_DefaultFontSize / 2);
+
+    // Pause text
     this->m_PauseText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "PAUSED",
                                                 3 * this->m_DefaultFontSize);
     CCoord<> itemSize = this->m_PauseText->GetSize();
     this->m_PauseText->SetLocation(
             CCoord<>((this->m_Interface.GetWindowSize().m_X / 2.0) - (itemSize.m_X / 2.0),
                      (this->m_Interface.GetWindowSize().m_Y / 2.0) - (itemSize.m_Y / 2.0)));
+
+    // Scene messages.
+    this->m_RoundOverText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "Round over!",
+                                                    3 * this->m_DefaultFontSize);
+    itemSize = this->m_RoundOverText->GetSize();
+    this->m_RoundOverText->SetLocation(
+            CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0), (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0)));
+
+    this->m_NextRoundText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "Round X!",
+                                                    3 * this->m_DefaultFontSize);
+    itemSize = this->m_NextRoundText->GetSize();
+    this->m_NextRoundText->SetLocation(
+            CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0), (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0)));
+
+    this->m_GameOverText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "Game over",
+                                                   3 * this->m_DefaultFontSize);
+    itemSize = this->m_GameOverText->GetSize();
+    this->m_GameOverText->SetLocation(
+            CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0), (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0)));
+
+    this->m_GameOverSubtext = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0),
+                                                      "Press [ENTER] to return to the menu", this->m_DefaultFontSize);
+    itemSize = this->m_GameOverSubtext->GetSize();
+    this->m_GameOverSubtext->SetLocation(
+            CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0),
+                     (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0) + this->m_DefaultFontSize * 2.5));
 }
 
 /*====================================================================================================================*/
@@ -95,8 +131,6 @@ void CGameScene::DrawPause() const
 /*====================================================================================================================*/
 void CGameScene::Update(int deltaTime)
 {
-    this->m_PauseText->Update(this->m_Interface, deltaTime);
-
     if (this->m_GameStatus == EGameStatus::GAME_STATUS_RUNNING)
     {
         this->m_Board->Update(deltaTime);
