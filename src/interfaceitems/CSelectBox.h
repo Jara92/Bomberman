@@ -41,7 +41,6 @@ public:
 protected:
     std::map<T, std::unique_ptr<CSelectBoxItem>> m_Items;
     std::function<void(T)> m_CallBack;
-    T m_SelectedValue;
     SDL_Colour m_ItemColor;
     SDL_Colour m_SelectedItemColor;
 

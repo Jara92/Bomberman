@@ -18,8 +18,8 @@ void CGameScene::Init()
 
     // FPS text.
     this->m_FPSText = std::make_unique<CText>(this->m_Interface,
-                                              CCoord<>(this->m_ScenePadding, 50 + this->m_ScenePadding), "",
-                                              this->m_DefaultFontSize / 2);
+                                              CCoord<>(this->m_ScenePadding,
+                                                       this->m_Board->GetCellSize() + this->m_ScenePadding), "", this->m_DefaultFontSize / 2);
 
     // Pause text
     this->m_PauseText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "PAUSED",

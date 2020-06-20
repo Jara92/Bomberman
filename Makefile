@@ -49,4 +49,5 @@ $(DEPDIR)/%.d: $(SRCDIR)/%.cpp $(HEADERS)
 	mkdir -p $(@D)
 	$(CXX) -MM $< -MT $(OBJDIR)/$*.o > $@ # Load dependencies for xxx.cpp file and redirect it into xxx.d
 
+# Include dependencies.
 -include $(DEP)
