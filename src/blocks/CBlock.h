@@ -30,7 +30,7 @@ public:
     CBlock(std::shared_ptr<CTexturePack> texturePack, CCoord<> size, bool isPassable, bool isExplodable,
            bool isDangerous)
             : m_Body(std::move(texturePack), 100), m_Size(size), m_IsAlive(true), m_IsDestroyed(false),
-              m_IsPassable(isPassable), m_IsExplodable(isExplodable), m_IsDangerous(isDangerous)
+              m_IsPassable(isPassable), m_IsExplodable(isExplodable), m_IsDangerous(isDangerous), m_Collectible(nullptr)
     {}
 
     CBlock(const CBlock &other) = default;
@@ -95,8 +95,8 @@ public:
      * Attach collectible object to this wall.
      * @param collectible Collectible object.
      */
-    virtual void AttachCollectible(CCollectible *collectible)
-    {}
+    virtual bool AttachCollectible(CCollectible *collectible)
+    { return false; }
 
     /**
     * Are these objects colliding?
@@ -110,11 +110,11 @@ public:
      * Has this object attached collectible object?
      * @return True - Has collectible object.
      */
-    virtual bool HasCollectible() const
-    { return false; }
+    bool HasCollectible() const
+    { return this->m_Collectible; }
 
-    virtual CCollectible *GetCollectible()
-    { return nullptr; }
+    CCollectible *GetCollectible()
+    { return this->m_Collectible; }
 
     bool IsAlive() const
     { return this->m_IsAlive; }
@@ -135,5 +135,6 @@ protected:
     CBody m_Body;
     CCoord<> m_Size;
     bool m_IsAlive, m_IsDestroyed, m_IsPassable, m_IsExplodable, m_IsDangerous;
+    CCollectible *m_Collectible;
 };
 

@@ -49,11 +49,11 @@ public:
 
     virtual void Update(CBoard &board, int deltaTime) override;
 
-    virtual void Apply(const CBoard & board, CPlayer &player) override ;
-
 protected:
     std::function<void(CPlayer *)> m_Apply;
     std::function<void(CPlayer *)> m_Deactivate;
+
+    virtual void Apply(const CBoard & board, CPlayer &player) override ;
 
     /*** Deativate collectible. */
     virtual void Deactivate();

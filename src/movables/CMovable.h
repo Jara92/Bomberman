@@ -60,8 +60,7 @@ public:
      * @param cellSize Cellsize.
      * @param offset Texture global offset.
      */
-    virtual void
-    Draw(CSDLInterface &interface, int cellSize, CCoord<> offset = CCoord<>(0, 0)) const
+    void Draw(CSDLInterface &interface, int cellSize, CCoord<> offset = CCoord<>(0, 0)) const
     { this->m_Body.Draw(interface, cellSize, this->m_Location, this->m_Size, offset); }
 
     /**
@@ -73,10 +72,17 @@ public:
 
     virtual void CollisionWith(CCoord<unsigned int> blockLocation, CBlock &block) = 0;
 
-    virtual void CollisionWith(CMovable &moavable) = 0;
+    virtual void CollisionWith(CMovable &movable) = 0;
 
     virtual void CollisionWithMovable(CPlayer &player)
     {}
+
+    /**
+     * Prepare object for next level.
+     * @param board Game board.
+     * @param clearLevelObjects Objects associated with the level will be deleted.
+     */
+    virtual void NextLevel(CBoard &board, bool clearLevelObjects);
 
     bool GetWallPass() const
     { return this->m_WallPass; }
@@ -95,13 +101,6 @@ public:
 
     void DeactivateWallPass()
     { this->m_BombPass = false; }
-
-    /**
-     * Prepare object for next level.
-     * @param board Game board.
-     * @param clearLevelObjects Objects associated with the level will be deleted.
-     */
-    virtual void NextLevel(CBoard &board, bool clearLevelObjects);
 
     /**
     * Are these objects colliding?

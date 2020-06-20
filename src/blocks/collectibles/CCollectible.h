@@ -21,7 +21,7 @@ public:
                  int duration = 0)
             : CBlock(std::move(texturePack), size, true, false, false), m_Duration(duration), m_IsVisible(false),
               m_IsTriggered(false), m_ScoreBonus(scoreBonus), m_TargetPlayer(nullptr)
-    {}
+    { this->m_Collectible = this; }
 
     CCollectible(const CCollectible &other) = default;
 
@@ -47,13 +47,6 @@ public:
     virtual void NextLevel(CBoard &board, bool clearLevelObjects) override;
 
     /**
-     * Apply collectible on the player.
-     * @param board Game board.
-     * @param player Target player
-     */
-    virtual void Apply(const CBoard & board, CPlayer &player) = 0;
-
-    /**
      * Handle collision with player.
      * @param thisLocation This block location.
      * @param player The player.
@@ -71,17 +64,18 @@ public:
     void MakeVisible()
     { this->m_IsVisible = true; }
 
-    virtual bool HasCollectible() const
-    { return true; }
-
-    virtual CCollectible *GetCollectible()
-    { return this; }
-
 protected:
     int m_Duration;
     bool m_IsVisible, m_IsTriggered;
     size_t m_ScoreBonus;
     CPlayer *m_TargetPlayer;
+
+    /**
+ * Apply collectible on the player.
+ * @param board Game board.
+ * @param player Target player
+ */
+    virtual void Apply(const CBoard &board, CPlayer &player) = 0;
 };
 
 

@@ -17,8 +17,7 @@ public:
     * @param isExplodable Is this wall destructible?
     */
     CWall(std::shared_ptr<CTexturePack> texturePack, bool isExplodable)
-            : CBlock(std::move(texturePack), texturePack->GetTextureSize(), false, isExplodable, false),
-              m_Collectible(nullptr)
+            : CBlock(std::move(texturePack), texturePack->GetTextureSize(), false, isExplodable, false)
     {}
 
     CWall(const CWall &other) = default;
@@ -37,20 +36,14 @@ public:
 
     virtual bool TryExplode(unsigned int distance) override;
 
-    virtual void AttachCollectible(CCollectible *collectible) override
+    virtual bool AttachCollectible(CCollectible *collectible) override
     {
         if (!this->m_Collectible && this->m_IsExplodable)
-        { this->m_Collectible = collectible; }
+        {
+            this->m_Collectible = collectible;
+            return true;
+        } else
+        { return false; }
     }
-
-    virtual bool HasCollectible() const override
-    { return (this->m_Collectible); }
-
-    virtual CCollectible *GetCollectible() override
-    { return this->m_Collectible; }
-
-
-protected:
-    CCollectible *m_Collectible;
 };
 
