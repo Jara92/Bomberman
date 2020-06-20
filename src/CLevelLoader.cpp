@@ -41,14 +41,14 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool 
 }
 
 /*====================================================================================================================*/
-std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, CSettings &settings)
+std::shared_ptr<CBoard> CLevelLoader::GetBoard(CSettings &settings)
 {
     // calc cellsize
     unsigned int cellSize = static_cast<unsigned int>((settings.GetGameScreenSize().m_Y) /
                                                       (CLevelLoader::MAP_HEIGHT + settings.GetOffset().m_Y));
 
     // Create new board using loaded objects.
-    return std::make_shared<CBoard>(settings, this->LoadMap(), this->LoadPlayers(playersCount),
+    return std::make_shared<CBoard>(settings, this->LoadMap(),
                                     CCoord<unsigned int>(CLevelLoader::MAP_WIDTH, CLevelLoader::MAP_HEIGHT),
                                     this->LoadGround(), this->LoadBombTexturePack(), this->LoadFireTexturePack(),
                                     cellSize);
@@ -108,10 +108,10 @@ std::vector<std::vector<CBlock *>> CLevelLoader::LoadMap()
 }
 
 /*====================================================================================================================*/
-std::vector<CPlayer *> CLevelLoader::LoadPlayers(int count)
+std::vector<CPlayer *> CLevelLoader::GetPlayers(int count)
 {
     CInput controls[MAX_PLAYERS] = {
-            {SDL_SCANCODE_W,  SDL_SCANCODE_S,    SDL_SCANCODE_A,    SDL_SCANCODE_D,     SDL_SCANCODE_LALT,    SDL_SCANCODE_SPACE},
+            {SDL_SCANCODE_W,  SDL_SCANCODE_S,    SDL_SCANCODE_A,    SDL_SCANCODE_D,     SDL_SCANCODE_LALT, SDL_SCANCODE_SPACE},
             {SDL_SCANCODE_UP, SDL_SCANCODE_DOWN, SDL_SCANCODE_LEFT, SDL_SCANCODE_RIGHT, SDL_SCANCODE_KP_4, SDL_SCANCODE_KP_5}
     };
 
@@ -364,8 +364,8 @@ void CLevelLoader::LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int le
     if (collectibles.size() >= 20)
     { throw std::runtime_error(MESSAGE_MAXIMUM_COLLECTIBLES_REACHED); }
 
-    if(board->m_Movables.size() - board->m_Players.size() >= 20 )
-    {throw std::runtime_error(MESSAGE_MAXIMUM_ENEMIES_REACHED);}
+    if (board->m_Movables.size() - board->m_Players.size() >= 20)
+    { throw std::runtime_error(MESSAGE_MAXIMUM_ENEMIES_REACHED); }
 }
 
 /*====================================================================================================================*/

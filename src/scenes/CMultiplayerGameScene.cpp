@@ -11,8 +11,9 @@ void CMultiplayerGameScene::Init()
     CGameScene::Init();
 
     // Get board and load first level
-    this->m_Board = this->m_LevelLoader.GetBoard(2, this->m_Interface.GetSettings());
+    this->m_Board = this->m_LevelLoader.GetBoard(this->m_Interface.GetSettings());
     this->m_LevelLoader.LoadLevel(this->m_Board, 1);
+    this->m_Board->SetPlayers(this->m_LevelLoader.GetPlayers(2));
 
     unsigned int padding = 5;
     this->m_DefaultFontSize = this->m_Board->GetCellSize() - 2 * padding;
@@ -25,11 +26,6 @@ void CMultiplayerGameScene::Init()
     // Menu texts.
     this->m_TimeText = std::make_unique<CText>(this->m_Interface, CCoord<>(10 * this->m_Board->GetCellSize(), padding),
                                                "", this->m_DefaultFontSize, SDL_Color{0, 0, 0, 255});
-
-    // FPS
-    this->m_FPSText = std::make_unique<CText>(this->m_Interface,
-                                              CCoord<>(padding, this->m_Board->GetCellSize() + padding), "",
-                                              this->m_DefaultFontSize / 2);
 
     // Player 1 text labels
     this->m_ScoreTexts.push_back(std::make_unique<CText>(this->m_Interface,
@@ -85,7 +81,6 @@ void CMultiplayerGameScene::Init()
     this->m_GameOverSubtext->SetLocation(
             CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0),
                      (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0) + this->m_DefaultFontSize * 5));
-
 
     // Run the game clock when the constructor is over.
     this->m_Clock = CGameClock();

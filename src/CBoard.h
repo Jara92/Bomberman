@@ -23,16 +23,14 @@
 class CBoard
 {
 public:
-    CBoard(CSettings & settings, std::vector<std::vector<CBlock *>> map, std::vector<CPlayer *> players,
+    CBoard(CSettings &settings, std::vector<std::vector<CBlock *>> map,
            CCoord<unsigned int> boardSize, std::shared_ptr<CBlock> ground,
            std::shared_ptr<CTexturePack> bombTexturePack, std::shared_ptr<CTexturePack> fireTexturePack,
            unsigned int cellSize)
-            : m_Players(std::move(players)), m_Map(std::move(map)), m_Settings(settings),
+            : m_Map(std::move(map)), m_Settings(settings),
               m_BoardSize(boardSize), m_CellSize(cellSize), m_GroundObject(std::move(ground)),
               m_BombObjectTexturePack(std::move(bombTexturePack)), m_FireObjectTexturePack(std::move(fireTexturePack))
-    {
-        this->m_Movables.insert(this->m_Movables.end(), this->m_Players.begin(), this->m_Players.end());
-    }
+    {}
 
     ~CBoard();
 
@@ -152,6 +150,15 @@ public:
     unsigned int GetCellSize() const
     { return this->m_CellSize; }
 
+    void SetPlayers(std::vector<CPlayer *> players)
+    {
+        if (this->m_Players.empty())
+        {
+            this->m_Players = std::move(players);
+            this->m_Movables.insert(this->m_Movables.end(), this->m_Players.begin(), this->m_Players.end());
+        }
+    }
+
     /** We need to save pointers to players because need to know players score and lives count. */
     std::vector<CPlayer *> m_Players;
     /** Game map saved as 2D array */
@@ -159,7 +166,7 @@ public:
     std::vector<CMovable *> m_Movables;
 
     /** Game settings */
-    CSettings & m_Settings;
+    CSettings &m_Settings;
 
     std::shared_ptr<CBlock> GetGroundObject() const
     { return this->m_GroundObject; }

@@ -21,8 +21,10 @@ public:
     CText(CSDLInterface &interface, CCoord<> location, const std::string &text, int fontSize,
           SDL_Color color = {255, 255, 255, 255}
     ) : CInterfaceItem(location), m_Texture(NULL), m_Text(""), m_FontSize(0), m_Color()
-    { this->SetText(text, fontSize, color);
-        this->ReloadContent(interface);}
+    {
+        this->SetText(text, fontSize, color);
+        CText::ReloadContent(interface);
+    }
 
     virtual ~CText()
     { SDL_DestroyTexture(this->m_Texture); }

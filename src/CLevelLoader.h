@@ -23,7 +23,7 @@
 class CLevelLoader
 {
 public:
-    CLevelLoader(CSDLInterface &interface, std::string mapFileName = "map", std::string levelFileName = "levels/level");
+    explicit CLevelLoader(CSDLInterface &interface, std::string mapFileName = "map", std::string levelFileName = "levels/level");
 
     ~CLevelLoader() = default;
 
@@ -33,11 +33,17 @@ public:
 
     /**
      * Create game board and load players.
-     * @param playersCount How many players will be loaded?
      * @param settings Settings object to be used.
      * @return New game board.
      */
-    std::shared_ptr<CBoard> GetBoard(int playersCount, CSettings &settings);
+    std::shared_ptr<CBoard> GetBoard(CSettings &settings);
+
+    /**
+    * Get players from game.
+    * @param count Players count.
+    * @return Players for game.
+    */
+    std::vector<CPlayer *> GetPlayers(int count);
 
     /**
      * Load new level.
@@ -73,13 +79,6 @@ protected:
      * @throws std::ios:failure When
      */
     std::vector<std::vector<CBlock *>> LoadMap();
-
-    /**
-     * Get players from game.
-     * @param count Players count.
-     * @return Players for game.
-     */
-    std::vector<CPlayer *> LoadPlayers(int count);
 
     /**
      * Get object which will be rendered as ground.
@@ -141,8 +140,10 @@ protected:
      * @param duration Collectible duration.
      * @throws std::invalid_argument Unknown collectible type.
      */
-    void CreateCollectible(std::shared_ptr<CBoard> &board,std::vector<CCollectible *> &collectibles, ECollectibleType type, std::size_t score,
-                           std::size_t duration);
+    void
+    CreateCollectible(std::shared_ptr<CBoard> &board, std::vector<CCollectible *> &collectibles, ECollectibleType type,
+                      std::size_t score,
+                      std::size_t duration);
 
     /**
      * Create new CEnemy at random location.

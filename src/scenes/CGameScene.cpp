@@ -7,8 +7,17 @@
 void CGameScene::Init()
 {
     // Kill all players when the time runs out.
-    this->m_GameEndDelay.Run(CGameScene::STARTING_TIME, [=](void)
+    this->m_GameEndTimer.Run(CGameScene::STARTING_TIME, [=](void)
     { this->KillAllPlayers(); });
+
+    int padding = 5;
+
+    this->m_PauseText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "PAUSED",
+                                                3 * this->m_DefaultFontSize);
+    CCoord<> itemSize = this->m_PauseText->GetSize();
+    this->m_PauseText->SetLocation(
+            CCoord<>((this->m_Interface.GetWindowSize().m_X / 2.0) - (itemSize.m_X / 2.0),
+                     (this->m_Interface.GetWindowSize().m_Y / 2.0) - (itemSize.m_Y / 2.0)));
 }
 
 /*====================================================================================================================*/
@@ -42,7 +51,7 @@ void CGameScene::Draw() const
             this->DrawNextRound();
             break;
         case EGameStatus::GAMESTATUS_PAUSED:
-            // this->Pause();
+            this->DrawPause();
             break;
         case EGameStatus::GAME_STATUS_GAME_OVER:
             this->DrawGameOver();
@@ -76,14 +85,24 @@ void CGameScene::DrawGame() const
 }
 
 /*====================================================================================================================*/
+void CGameScene::DrawPause() const
+{
+    this->DrawGame();
+
+    this->m_PauseText->Draw(this->m_Interface);
+}
+
+/*====================================================================================================================*/
 void CGameScene::Update(int deltaTime)
 {
+    this->m_PauseText->Update(this->m_Interface, deltaTime);
+
     if (this->m_GameStatus == EGameStatus::GAME_STATUS_RUNNING)
     {
         this->m_Board->Update(deltaTime);
-        this->m_GameEndDelay.Tick(deltaTime);
+        this->m_GameEndTimer.Tick(deltaTime);
 
-        this->m_TimeText->SetText("Time: " + std::to_string(this->m_GameEndDelay.GetRemainingTime() / 1000),
+        this->m_TimeText->SetText("Time: " + std::to_string(this->m_GameEndTimer.GetRemainingTime() / 1000),
                                   this->m_DefaultFontSize, this->m_TimeText->GetColor());
 
         // Update players textboxes.
@@ -133,6 +152,10 @@ void CGameScene::Update(int deltaTime)
         this->m_GameOverText->Update(this->m_Interface, deltaTime);
         this->m_GameOverSubtext->Update(this->m_Interface, deltaTime);
     }
+        // Update paused text.
+    else if (this->m_GameStatus == EGameStatus::GAMESTATUS_PAUSED)
+    { this->m_PauseText->Update(this->m_Interface, deltaTime); }
+
     this->m_GameStatusDelay.Tick(deltaTime);
 }
 
@@ -165,7 +188,7 @@ void CGameScene::UpdateEvents()
                 else
                 { this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER; }
 
-                this->m_GameEndDelay.Stop();
+                this->m_GameEndTimer.Stop();
             } else if ((*(player))->GetLevelUp())
             { this->m_NextGameStatus = EGameStatus::GAME_STATUS_NEXT_ROUND; }
         }
@@ -232,14 +255,14 @@ void CGameScene::RoundOver()
     {
         this->m_LevelLoader.LoadLevel(this->m_Board, this->m_Level, false);
         this->UpdateStatus();
-        this->m_GameEndDelay.Reset();
+        this->m_GameEndTimer.Reset();
     });
 }
 
 /*====================================================================================================================*/
 void CGameScene::GameOver()
 {
-    this->m_GameEndDelay.Stop();
+    this->m_GameEndTimer.Stop();
     this->m_GameStatusDelay.Stop();
 
     this->SetStatus(EGameStatus::GAME_STATUS_EXIT);
@@ -265,7 +288,7 @@ void CGameScene::NextRound()
     {
         this->m_LevelLoader.LoadLevel(this->m_Board, this->m_Level, true);
         this->UpdateStatus();
-        this->m_GameEndDelay.Reset();
+        this->m_GameEndTimer.Reset();
     });
 }
 
@@ -280,8 +303,28 @@ void CGameScene::GlobalInput(const Uint8 *input)
     }
 
     // Pause game.
-    if (input[SDL_SCANCODE_ESCAPE])
+    if (input[SDL_SCANCODE_ESCAPE] && this->m_GameStatus == this->m_NextGameStatus &&
+        (this->m_GameStatus == EGameStatus::GAMESTATUS_PAUSED ||
+         this->m_GameStatus == EGameStatus::GAME_STATUS_RUNNING))
     {
+        if (!this->m_PauseButtonPressed)
+        {
+            // Pause game when the game is running.
+            if (this->m_Clock.IsRunning())
+            {
+                this->m_Clock.Stop();
+                this->m_GameStatus = this->m_NextGameStatus = EGameStatus::GAMESTATUS_PAUSED;
+            } else
+            {
+                this->m_Clock.Reset();
+                this->m_GameStatus = this->m_NextGameStatus = EGameStatus::GAME_STATUS_RUNNING;
+            }
+
+            this->m_PauseButtonPressed = true;
+        }
+    } else
+    {
+        this->m_PauseButtonPressed = false;
     }
 
     // Debug options

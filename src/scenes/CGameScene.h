@@ -25,7 +25,7 @@ public:
     explicit CGameScene(CSDLInterface &interface)
             : CScene(interface), m_Board(nullptr), m_BoardOffset(CCoord<>(0, 2)), m_LevelLoader(interface),
               m_GameStatus(EGameStatus::GAME_STATUS_RUNNING), m_NextGameStatus(EGameStatus::GAME_STATUS_RUNNING),
-              m_Level(1)
+              m_Level(1), m_PauseButtonPressed(false)
     { this->m_Interface.SetGameScreenSize(); }
 
     virtual ~CGameScene() = default;
@@ -53,7 +53,7 @@ protected:
     EGameStatus m_NextGameStatus;
     unsigned int m_Level;
     /** Timer which detects expiration of time. */
-    CTimer m_GameEndDelay;
+    CTimer m_GameEndTimer;
     /** Timer which updates game state updates a time delay. */
     CTimer m_GameStatusDelay;
 
@@ -61,7 +61,7 @@ protected:
     std::unique_ptr<CText> m_TimeText, m_FPSText;
     std::vector<std::unique_ptr<CText>> m_ScoreTexts;
     std::vector<std::unique_ptr<CText>> m_LivesTexts;
-    std::unique_ptr<CText> m_RoundOverText, m_NextRoundText, m_GameOverText, m_GameOverSubtext;
+    std::unique_ptr<CText> m_RoundOverText, m_NextRoundText, m_GameOverText, m_GameOverSubtext, m_PauseText;
     unsigned int m_DefaultFontSize;
 
     /** The time a player has to complete the game.*/
@@ -70,7 +70,7 @@ protected:
     static constexpr int GAME_STATUS_UPDATE_DELAY = 2000;
     /** Number of game levels. (Last level id is equal to GAME_LEVELS_COUNT )*/
     static constexpr int GAME_LEVELS_COUNT = 10;
-
+    bool m_PauseButtonPressed;
     /**
      * Global input events.
      * @param input Keystate
@@ -106,6 +106,8 @@ protected:
     virtual void Draw() const override;
 
     void DrawGame() const;
+
+    void DrawPause() const;
 
     void DrawRoundOver() const
     { this->m_RoundOverText->Draw(this->m_Interface); }

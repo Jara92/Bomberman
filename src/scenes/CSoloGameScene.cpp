@@ -11,8 +11,9 @@ void CSoloGameScene::Init()
     CGameScene::Init();
 
     // Get board and load first level
-    this->m_Board = this->m_LevelLoader.GetBoard(1, this->m_Interface.GetSettings());
+    this->m_Board = this->m_LevelLoader.GetBoard( this->m_Interface.GetSettings());
     this->m_LevelLoader.LoadLevel(this->m_Board, 1);
+    this->m_Board->SetPlayers(this->m_LevelLoader.GetPlayers(1));
 
     unsigned int padding = 5;
     this->m_DefaultFontSize = this->m_Board->GetCellSize() - 2 * padding;
@@ -39,7 +40,7 @@ void CSoloGameScene::Init()
                                                          this->m_DefaultFontSize));
 
     this->m_FPSText = std::make_unique<CText>(this->m_Interface,
-                                              CCoord<>(padding, this->m_Board->GetCellSize() + padding), "",
+                                              CCoord<>(padding, 50 + padding), "",
                                               this->m_DefaultFontSize / 2);
 
     // Scene messages.

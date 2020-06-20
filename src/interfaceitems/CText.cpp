@@ -25,13 +25,15 @@ CText::SetText(const std::string &text, int fontSize, SDL_Color color = {255, 25
 
 void CText::ReloadContent(CSDLInterface &interface)
 {
+
     // Delete old texture
     if (this->m_Texture != NULL)
     { SDL_DestroyTexture(this->m_Texture); }
 
     // Get new texture
     CCoord<unsigned int> defaultSize;
-    this->m_Texture = interface.LoadTextTexture(this->m_Text, defaultSize, this->m_Color, static_cast<int>(this->m_FontSize / 1.5));
+    this->m_Texture = interface.LoadTextTexture(this->m_Text, defaultSize, this->m_Color,
+                                                static_cast<int>(this->m_FontSize / 1.5));
 
     // Calculate text width.
     double q = static_cast<double>(this->m_FontSize) / defaultSize.m_Y;

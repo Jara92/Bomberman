@@ -24,8 +24,8 @@ public:
     * @param interface Interface to be used.
     */
     explicit CSoloGameScene(CSDLInterface &interface)
-    : CGameScene(interface)
-    {  }
+            : CGameScene(interface)
+    {}
 
     virtual ~CSoloGameScene() = default;
 
@@ -38,6 +38,6 @@ public:
 protected:
     virtual void Update(int deltaTime) override;
 
-    virtual void GameOver() override ;
+    virtual void GameOver() override;
 };
 
