@@ -14,7 +14,6 @@ int CApplication::Run(int argc, char *argv[])
         if (interface.InitInterface())
         {
             //EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME;
-            // TODO
             // EApplicationStatus applicationStatus = EApplicationStatus ::APPLICATION_STATUS_MULTI_GAME;
              EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_MENU;
 
@@ -62,8 +61,7 @@ CSettings CApplication::Init(int argc, char *argv[])
     catch (...)
     { std::cerr << MESSAGE_INVALID_INPUT_PARAMETERS << std::endl; }
 
-    // TODO REMOVE
-    debug = true;
+    //debug = true;
 
     return CSettings(CCoord<unsigned int>(1495, 910), CCoord<unsigned int>(512, 512), CCoord<unsigned int>(0, 1), 60,
                      true, debug);

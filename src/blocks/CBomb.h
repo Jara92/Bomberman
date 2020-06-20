@@ -67,7 +67,6 @@ public:
     static constexpr int AUTO_EXPLOSION_DELAY = 2000;
     static constexpr int TRIGGER_EXPLOSION_DELAY = 100;
 protected:
-
     CPlayer *m_Owner;
     /** Every bomb is passable for owner until the player left bombs cell. */
     bool m_IsPassableForOwner, m_RemoteTrigger, m_IsTriggered;

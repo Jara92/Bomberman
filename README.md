@@ -53,6 +53,8 @@ V případě singleplayer hry bude ovládání následující: Pohyb (WASD), Pol
 Pro multiplayer hru bude ovládání prvního hráče stejné jako pro singleplayer. 
 Druhý hráč bude mít ovládání následující: Pohyb (Šipky), Položení bomby (NUM4) a Odpálení bomby (NUM5).
 
+Hru je možné pozastavit pomocí (ESC).
+
 Ovládání debug módu:
 
 F1 - Zabij všechny příšery a bonusové body připiš prvnímu hráči v poli.
@@ -64,7 +66,8 @@ F3 - Přidej všem hráčům 1000 bodů.
 F4 - Zobrazuj mřížku colliderboxů.
 
 ### Kde využívám polymorfismus?
-Polymorfismu využívám u třídy `CBlock`
+Polymorfismu využívám u třídy `CBlock`, která má odvozené třídy `CFire`, `CWall`, `CBomb` a `CCollectible`. 
+Odvozezené třídy přetěžují virtuální metody `TryExplode()`, `IsPassable()`, `Draw()`
 Polymorfismus používám u abstraktní třídy `CEnemy`, která má abstraktní metody `Update()` a `TryKill()`. 
 Implementace `CEnemyDump` a `CEnemySmart` budou tyto metody přetěžovat. Z názvu vyplývá, že hlavní rozdíly budou chování a výdrži jednotlivých implementací. 
 Metoda `Update()` aktualizuje vnitřní stav objektu a je v ní nějakým způsobem realizován pohyb pomocí primitivní umělé inteligence.
