@@ -17,7 +17,7 @@ public:
      * Clock contrucktor.
      * @param requiredFPS How many times will be screen refreshed in 1 second?
      */
-    CGameClock(int requiredFPS = 60)
+    CGameClock(unsigned int requiredFPS = 60)
             : m_TicksPerFrame(1000 / requiredFPS)
     { this->Reset(); }
 

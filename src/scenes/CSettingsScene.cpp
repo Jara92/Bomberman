@@ -36,7 +36,7 @@ CSettingsScene::CSettingsScene(CSDLInterface &interface) : CScene(interface)
             std::make_unique<CSelectBox<CCoord<unsigned int>>>(interface, selectBoxLocation,
                                                                (this->m_Interface.GetWindowSize().ToDouble() -
                                                                 selectBoxLocation), 48, resolutions,
-                                                               this->m_Interface.GetSettings()->GetGameScreenSize(),
+                                                               this->m_Interface.GetSettings().GetGameScreenSize(),
                                                                defaultFontColor, hoverFontColor, selectedFontColor,
                                                                [=](CCoord<unsigned int> newRes)
                                                                { this->UpdateResolution(newRes); }));

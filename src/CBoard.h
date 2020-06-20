@@ -24,11 +24,11 @@
 class CBoard
 {
 public:
-    CBoard(std::shared_ptr<CSettings> settings, std::vector<std::vector<CBlock *>> map, std::vector<CPlayer *> players,
+    CBoard(CSettings & settings, std::vector<std::vector<CBlock *>> map, std::vector<CPlayer *> players,
            CCoord<unsigned int> boardSize, std::shared_ptr<CBlock> ground,
-           std::shared_ptr<CTexturePack> bombTexturePack,
-           std::shared_ptr<CTexturePack> fireTexturePack, unsigned int cellSize)
-            : m_Players(std::move(players)), m_Map(std::move(map)), m_Settings(std::move(settings)),
+           std::shared_ptr<CTexturePack> bombTexturePack, std::shared_ptr<CTexturePack> fireTexturePack,
+           unsigned int cellSize)
+            : m_Players(std::move(players)), m_Map(std::move(map)), m_Settings(settings),
               m_BoardSize(boardSize), m_CellSize(cellSize), m_GroundObject(std::move(ground)),
               m_BombObjectTexturePack(std::move(bombTexturePack)), m_FireObjectTexturePack(std::move(fireTexturePack))
     {
@@ -39,7 +39,7 @@ public:
 
     CBoard(const CBoard &other) = delete;
 
-    CBoard &operator=(const CBoard &other) = delete; // todo check this
+    CBoard &operator=(const CBoard &other) = delete;
 
     /**
      * Update all objects in the board.
@@ -127,7 +127,8 @@ public:
     CCoord<unsigned int> GetRandomBoardLocation() const
     {
         // Return random location on the board.
-        return CCoord<unsigned  int>(CRandom::Random(0,this->m_BoardSize.m_X), CRandom::Random(0,this->m_BoardSize.m_Y));
+        return CCoord<unsigned int>(CRandom::Random(0, this->m_BoardSize.m_X),
+                                    CRandom::Random(0, this->m_BoardSize.m_Y));
     }
 
     /**
@@ -159,7 +160,7 @@ public:
     std::vector<CMovable *> m_Movables;
 
     /** Game settings */
-    std::shared_ptr<CSettings> m_Settings;
+    CSettings & m_Settings;
 
     std::shared_ptr<CBlock> GetGroundObject() const
     { return this->m_GroundObject; }

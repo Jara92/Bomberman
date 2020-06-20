@@ -24,7 +24,7 @@ public:
     int Run(int argc, char * argv[]);
 
 protected:
-    std::shared_ptr<CSettings> Init(int argc, char * argv[]);
+    CSettings Init(int argc, char * argv[]);
 
     std::shared_ptr<CScene> GetSceneByApplicationState(CSDLInterface & interface, EApplicationStatus applicationStatus) const;
 };

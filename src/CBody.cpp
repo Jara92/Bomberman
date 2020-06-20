@@ -21,7 +21,7 @@ void CBody::Draw(CSDLInterface &interface, int cellSize, CCoord<> location, CCoo
                             cellSize * this->m_TexturePack->GetTextureSize());
 
     // Debug function - Render bounding box.
-    if(interface.GetSettings()->GetRenderBoundingBox())
+    if(interface.GetSettings().GetRenderBoundingBox())
     {
         CCoord<> center = ((CCoord<>(1, 1) - size) / 2);
 

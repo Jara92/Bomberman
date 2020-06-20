@@ -6,15 +6,16 @@
 
 int CApplication::Run(int argc, char *argv[])
 {
-    std::shared_ptr<CSettings> settings = this->Init(argc, argv);
+    CSettings settings = this->Init(argc, argv);
     CSDLInterface interface("Bomberman", settings, "Fonts/Piedra-Regular.ttf");
+
     try
     {
         if (interface.InitInterface())
         {
             EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME;
-          // EApplicationStatus applicationStatus = EApplicationStatus ::APPLICATION_STATUS_MULTI_GAME;
-           // EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_MENU;
+            // EApplicationStatus applicationStatus = EApplicationStatus ::APPLICATION_STATUS_MULTI_GAME;
+            // EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_MENU;
 
             // Run scene while application is running and get next application state.
             while (applicationStatus != EApplicationStatus::APPLICATION_STATUS_EXIT)
@@ -48,7 +49,7 @@ int CApplication::Run(int argc, char *argv[])
 }
 
 /*====================================================================================================================*/
-std::shared_ptr<CSettings> CApplication::Init(int argc, char *argv[])
+CSettings CApplication::Init(int argc, char *argv[])
 {
     // Debug mode
     bool debug = false;
@@ -63,10 +64,10 @@ std::shared_ptr<CSettings> CApplication::Init(int argc, char *argv[])
     // TODO REMOVE
     debug = true;
 
-    return std::make_shared<CSettings>(CCoord<unsigned int>(1495, 910),
-                                       CCoord<unsigned int>(512, 512),
-                                       CCoord<unsigned int>(0, 1), 60, true, debug);
+    return CSettings(CCoord<unsigned int>(1495, 910), CCoord<unsigned int>(512, 512), CCoord<unsigned int>(0, 1), 60,
+                     true, debug);
 }
+
 /*====================================================================================================================*/
 std::shared_ptr<CScene>
 CApplication::GetSceneByApplicationState(CSDLInterface &interface, EApplicationStatus applicationStatus) const

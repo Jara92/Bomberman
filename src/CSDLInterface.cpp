@@ -60,10 +60,10 @@ bool CSDLInterface::InitInterface()
 /*====================================================================================================================*/
 SDL_Texture *CSDLInterface::LoadTexture(const std::string &file) const
 {
-    SDL_Texture *texture = IMG_LoadTexture(this->m_Renderer, (this->m_Settings->GetAssetsPath() + file).c_str());
+    SDL_Texture *texture = IMG_LoadTexture(this->m_Renderer, (this->m_Settings.GetAssetsPath() + file).c_str());
 
     if (texture == nullptr || texture == NULL)
-    { throw std::ios_base::failure(MESSAGE_TEXTURE_ERROR + (this->m_Settings->GetAssetsPath() + file)); }
+    { throw std::ios_base::failure(MESSAGE_TEXTURE_ERROR + (this->m_Settings.GetAssetsPath() + file)); }
 
     return texture;
 }
@@ -72,11 +72,11 @@ SDL_Texture *CSDLInterface::LoadTexture(const std::string &file) const
 void CSDLInterface::SetMenuScreenSize()
 {
     // Change window size if new size is different.
-    if (this->m_WindowSize.m_X != this->m_Settings->GetMenuScreenSize().m_X ||
-        this->m_WindowSize.m_Y != this->m_Settings->GetMenuScreenSize().m_Y)
+    if (this->m_WindowSize.m_X != this->m_Settings.GetMenuScreenSize().m_X ||
+        this->m_WindowSize.m_Y != this->m_Settings.GetMenuScreenSize().m_Y)
     {
-        this->m_WindowSize.m_X = this->m_Settings->GetMenuScreenSize().m_X;
-        this->m_WindowSize.m_Y = this->m_Settings->GetMenuScreenSize().m_Y;
+        this->m_WindowSize.m_X = this->m_Settings.GetMenuScreenSize().m_X;
+        this->m_WindowSize.m_Y = this->m_Settings.GetMenuScreenSize().m_Y;
 
         this->UpdateWindowSize();
     }
@@ -86,11 +86,11 @@ void CSDLInterface::SetMenuScreenSize()
 void CSDLInterface::SetGameScreenSize()
 {
     // Change window size if new size is different.
-    if (this->m_WindowSize.m_X != this->m_Settings->GetGameScreenSize().m_X ||
-        this->m_WindowSize.m_Y != this->m_Settings->GetGameScreenSize().m_Y)
+    if (this->m_WindowSize.m_X != this->m_Settings.GetGameScreenSize().m_X ||
+        this->m_WindowSize.m_Y != this->m_Settings.GetGameScreenSize().m_Y)
     {
-        this->m_WindowSize.m_X = this->m_Settings->GetGameScreenSize().m_X;
-        this->m_WindowSize.m_Y = this->m_Settings->GetGameScreenSize().m_Y;
+        this->m_WindowSize.m_X = this->m_Settings.GetGameScreenSize().m_X;
+        this->m_WindowSize.m_Y = this->m_Settings.GetGameScreenSize().m_Y;
 
         this->UpdateWindowSize();
     }
@@ -100,7 +100,7 @@ void CSDLInterface::SetGameScreenSize()
 SDL_Texture *CSDLInterface::LoadTextTexture(const std::string &text, CCoord<unsigned int> &size, SDL_Color color,int quality) const
 {
     // Load font.
-    TTF_Font *font = TTF_OpenFont((this->m_Settings->GetAssetsPath() + this->m_Font).c_str(), quality);
+    TTF_Font *font = TTF_OpenFont((this->m_Settings.GetAssetsPath() + this->m_Font).c_str(), quality);
     if (font == NULL)
     { return NULL; }
 

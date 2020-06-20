@@ -14,13 +14,13 @@
 class CScoreSaver
 {
 public:
-    CScoreSaver(std::shared_ptr<CSettings> settings, const std::string &scoreFile = "score")
-            : m_Settings(std::move(settings)), m_ScoreFile(scoreFile)
+    CScoreSaver(CSettings & settings, const std::string &scoreFile = "score")
+            : m_Settings(settings), m_ScoreFile(scoreFile)
     {}
 
-    CScoreSaver(const CScoreSaver &other) = default;
+    CScoreSaver(const CScoreSaver &other) = delete;
 
-    CScoreSaver &operator=(const CScoreSaver &other) = default;
+    CScoreSaver &operator=(const CScoreSaver &other) = delete;
 
     ~CScoreSaver() = default;
 
@@ -33,7 +33,7 @@ public:
     bool TrySetTopScore(std::size_t newScore);
 
 protected:
-    std::shared_ptr<CSettings> m_Settings;
+    CSettings & m_Settings;
     std::string m_ScoreFile;
 };
 

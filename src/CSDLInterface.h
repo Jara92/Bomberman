@@ -28,8 +28,8 @@ public:
      * @param settings Setting to be used.
      * @param defaultFont Default font path.
      */
-    CSDLInterface(const std::string &title, std::shared_ptr<CSettings> settings, const std::string &defaultFont)
-            : m_WindowSize(settings->GetMenuScreenSize()), m_WindowTitle(title), m_Settings(std::move(settings)),
+    CSDLInterface(const std::string &title, CSettings & settings, const std::string &defaultFont)
+            : m_WindowSize(settings.GetMenuScreenSize()), m_WindowTitle(title), m_Settings(settings),
               m_Font(defaultFont), m_Window(nullptr), m_Renderer(nullptr)
     {}
 
@@ -62,7 +62,7 @@ public:
     CCoord<unsigned int> GetWindowSize() const
     { return this->m_WindowSize; }
 
-    std::shared_ptr<CSettings> GetSettings()
+    CSettings & GetSettings()
     { return this->m_Settings; }
 
     /**
@@ -151,7 +151,7 @@ protected:
     CCoord<unsigned int> m_WindowSize;
     std::string m_WindowTitle;
 
-    std::shared_ptr<CSettings> m_Settings;
+    CSettings & m_Settings;
     std::string m_Font;
     SDL_Window *m_Window;
     SDL_Renderer *m_Renderer;

@@ -37,7 +37,7 @@ public:
      * @param settings Settings object to be used.
      * @return New game board.
      */
-    std::shared_ptr<CBoard> GetBoard(int playersCount, const std::shared_ptr<CSettings> &settings);
+    std::shared_ptr<CBoard> GetBoard(int playersCount, CSettings &settings);
 
     /**
      * Load new level.

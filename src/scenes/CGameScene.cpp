@@ -57,7 +57,7 @@ void CGameScene::Draw() const
 /*====================================================================================================================*/
 void CGameScene::DrawGame() const
 {
-    this->m_Board->Draw(this->m_Interface, this->m_Interface.GetSettings()->GetOffset().ToDouble());
+    this->m_Board->Draw(this->m_Interface, this->m_Interface.GetSettings().GetOffset().ToDouble());
 
     // Top menu background
     for (unsigned int i = 0; i < this->m_Board->GetBoardSize().m_X; i++)
@@ -284,7 +284,7 @@ void CGameScene::GlobalInput(const Uint8 *input)
     {}
 
     // Debug options
-    if (this->m_Interface.GetSettings()->GetDebugMode())
+    if (this->m_Interface.GetSettings().GetDebugMode())
     {
         // Kill every enemy.
         if (input[SDL_SCANCODE_F1])
@@ -312,7 +312,7 @@ void CGameScene::GlobalInput(const Uint8 *input)
         }
             // Turn on rendering bounding boxes.
         else if (input[SDL_SCANCODE_F4])
-        { this->m_Interface.GetSettings()->SetRenderBoundingBox(true); }
+        { this->m_Interface.GetSettings().SetRenderBoundingBox(true); }
     }
 }
 

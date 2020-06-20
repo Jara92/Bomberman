@@ -28,7 +28,7 @@ public:
      */
     explicit CScene(CSDLInterface &interface)
             : m_Interface(interface), m_NextApplicationState(EApplicationStatus::APPLICATON_STATUS_NONE)
-    { this->m_Clock = CGameClock(interface.GetSettings()->GetScreenFPS()); }
+    { this->m_Clock = CGameClock(interface.GetSettings().GetScreenFPS()); }
 
     virtual ~CScene() = default;
 

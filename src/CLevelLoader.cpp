@@ -41,11 +41,11 @@ bool CLevelLoader::LoadLevel(std::shared_ptr<CBoard> &board, size_t level, bool 
 }
 
 /*====================================================================================================================*/
-std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, const std::shared_ptr<CSettings> &settings)
+std::shared_ptr<CBoard> CLevelLoader::GetBoard(int playersCount, CSettings &settings)
 {
     // calc cellsize
-    unsigned int cellSize = static_cast<unsigned int>((settings->GetGameScreenSize().m_Y) /
-                                                      (CLevelLoader::MAP_HEIGHT + settings->GetOffset().m_Y));
+    unsigned int cellSize = static_cast<unsigned int>((settings.GetGameScreenSize().m_Y) /
+                                                      (CLevelLoader::MAP_HEIGHT + settings.GetOffset().m_Y));
 
     // Create new board using loaded objects.
     return std::make_shared<CBoard>(settings, this->LoadMap(), this->LoadPlayers(playersCount),
@@ -70,7 +70,7 @@ std::vector<std::vector<CBlock *>> CLevelLoader::LoadMap()
     { map[i].resize(CLevelLoader::MAP_HEIGHT, nullptr); }
 
     unsigned int row = 0, col = 0;
-    std::ifstream fileReader(this->m_Interface.GetSettings()->GetDataPath() + this->m_MapFileName,
+    std::ifstream fileReader(this->m_Interface.GetSettings().GetDataPath() + this->m_MapFileName,
                              std::ios::binary | std::ios::in);
 
     // Is file reader ok?
@@ -333,7 +333,7 @@ void CLevelLoader::LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int le
                                  std::vector<CCollectible *> &collectibles)
 {
     std::ifstream fileReader(
-            (this->m_Interface.GetSettings()->GetDataPath() + this->m_LevelFileName) + std::to_string(level),
+            (this->m_Interface.GetSettings().GetDataPath() + this->m_LevelFileName) + std::to_string(level),
             std::ios::in);
 
     // Is file reader ok?
