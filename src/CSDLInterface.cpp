@@ -34,11 +34,11 @@ bool CSDLInterface::InitInterface()
 
     // Create an application window with the following settings:
     this->m_Window = SDL_CreateWindow(
-            this->m_WindowTitle.c_str(),                   // window title
+            this->m_WindowTitle.c_str(),       // window title
             SDL_WINDOWPOS_CENTERED,              // initial x position
             SDL_WINDOWPOS_CENTERED,              // initial y position
-            this->m_WindowSize.m_X,                   // width, in pixels
-            this->m_WindowSize.m_Y,                  // height, in pixels
+            this->m_WindowSize.m_X,                // width, in pixels
+            this->m_WindowSize.m_Y,                // height, in pixels
             SDL_WINDOW_OPENGL                 // flags
     );
 
@@ -63,7 +63,10 @@ SDL_Texture *CSDLInterface::LoadTexture(const std::string &file) const
     SDL_Texture *texture = IMG_LoadTexture(this->m_Renderer, (this->m_Settings.GetAssetsPath() + file).c_str());
 
     if (texture == nullptr || texture == NULL)
-    { throw std::ios_base::failure(MESSAGE_TEXTURE_ERROR + (this->m_Settings.GetAssetsPath() + file)); }
+    {
+        throw std::ios_base::failure(
+                MESSAGE_TEXTURE_ERROR + (this->m_Settings.GetAssetsPath() + file) + "\n" + SDL_GetError());
+    }
 
     return texture;
 }
@@ -97,7 +100,8 @@ void CSDLInterface::SetGameScreenSize()
 }
 
 /*====================================================================================================================*/
-SDL_Texture *CSDLInterface::LoadTextTexture(const std::string &text, CCoord<unsigned int> &size, SDL_Color color,int quality) const
+SDL_Texture *
+CSDLInterface::LoadTextTexture(const std::string &text, CCoord<unsigned int> &size, SDL_Color color, int quality) const
 {
     // Load font.
     TTF_Font *font = TTF_OpenFont((this->m_Settings.GetAssetsPath() + this->m_Font).c_str(), quality);

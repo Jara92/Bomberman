@@ -18,7 +18,7 @@ public:
      * @param requiredFPS How many times will be screen refreshed in 1 second?
      */
     CGameClock(unsigned int requiredFPS = 60)
-            : m_TicksPerFrame(1000 / requiredFPS)
+            : m_TicksPerFrame(1000 / requiredFPS), m_IsRunning(true)
     { this->Reset(); }
 
     /**
@@ -30,6 +30,7 @@ public:
         this->m_FPS = 0;
         this->m_LastTicks = SDL_GetTicks();
         this->m_FPSUpdateCounter = 0;
+        this->m_IsRunning = true;
     }
 
     /**
@@ -62,7 +63,7 @@ public:
     }
 
     int DeltaTime() const
-    { return this->m_DeltaTime; }
+    { return (this->m_IsRunning ? this->m_DeltaTime : 0); }
 
     int GetFPS() const
     { return this->m_FPS; }
@@ -81,10 +82,17 @@ public:
         return 0;
     }
 
+    void Stop()
+    { this->m_IsRunning = false; }
+
+    bool IsRunning() const
+    {return this->m_IsRunning;}
+
 protected:
     /** How many ticks sould take one frame to achieve the required FPS.*/
     unsigned int m_TicksPerFrame;
     Uint32 m_LastTicks, m_FPSUpdateCounter;
+    bool m_IsRunning;
 
     int m_DeltaTime;
     double m_FPS;

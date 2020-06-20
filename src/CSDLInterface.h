@@ -28,7 +28,7 @@ public:
      * @param settings Setting to be used.
      * @param defaultFont Default font path.
      */
-    CSDLInterface(const std::string &title, CSettings & settings, const std::string &defaultFont)
+    CSDLInterface(const std::string &title, CSettings &settings, const std::string &defaultFont)
             : m_WindowSize(settings.GetMenuScreenSize()), m_WindowTitle(title), m_Settings(settings),
               m_Font(defaultFont), m_Window(nullptr), m_Renderer(nullptr)
     {}
@@ -62,7 +62,7 @@ public:
     CCoord<unsigned int> GetWindowSize() const
     { return this->m_WindowSize; }
 
-    CSettings & GetSettings()
+    CSettings &GetSettings()
     { return this->m_Settings; }
 
     /**
@@ -138,7 +138,13 @@ public:
     *  @param message  UTF-8 message text
     */
     void ShowMessageBox(Uint32 flags, const std::string &title, const std::string &message)
-    { SDL_ShowSimpleMessageBox(flags, title.c_str(), message.c_str(), this->m_Window); }
+    {
+        // Clear the window first.
+        this->SetRenderColor(0,0,170,255);
+        this->Clear();
+        this->Present();
+        SDL_ShowSimpleMessageBox(flags, title.c_str(), message.c_str(), this->m_Window);
+    }
 
     /**
      * Wait a specified number of milliseconds before returning.
@@ -151,7 +157,7 @@ protected:
     CCoord<unsigned int> m_WindowSize;
     std::string m_WindowTitle;
 
-    CSettings & m_Settings;
+    CSettings &m_Settings;
     std::string m_Font;
     SDL_Window *m_Window;
     SDL_Renderer *m_Renderer;

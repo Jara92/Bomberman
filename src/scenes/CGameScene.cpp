@@ -7,7 +7,7 @@
 void CGameScene::Init()
 {
     // Kill all players when the time runs out.
-    this->m_GameEndDelay.Run(CGameScene::/*GAME_STATUS_UPDATE_DELAY*/STARTING_TIME, [=](void)
+    this->m_GameEndDelay.Run(CGameScene::STARTING_TIME, [=](void)
     { this->KillAllPlayers(); });
 }
 
@@ -42,7 +42,7 @@ void CGameScene::Draw() const
             this->DrawNextRound();
             break;
         case EGameStatus::GAMESTATUS_PAUSED:
-            // TODO
+            // this->Pause();
             break;
         case EGameStatus::GAME_STATUS_GAME_OVER:
             this->DrawGameOver();
@@ -281,7 +281,8 @@ void CGameScene::GlobalInput(const Uint8 *input)
 
     // Pause game.
     if (input[SDL_SCANCODE_ESCAPE])
-    {}
+    {
+    }
 
     // Debug options
     if (this->m_Interface.GetSettings().GetDebugMode())
