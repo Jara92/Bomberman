@@ -27,9 +27,10 @@ public:
     * @param isPassable Is this object passable for moving objects?
     * @param isDangerous Is this object dangerous for other objects?
     */
-    CBlock(std::shared_ptr<CTexturePack> texturePack, CCoord<> size, bool isPassable, bool isDangerous = false)
+    CBlock(std::shared_ptr<CTexturePack> texturePack, CCoord<> size, bool isPassable, bool isExplodable,
+           bool isDangerous)
             : m_Body(std::move(texturePack), 100), m_Size(size), m_IsAlive(true), m_IsDestroyed(false),
-              m_IsPassable(isPassable), m_IsDangerous(isDangerous)
+              m_IsPassable(isPassable), m_IsExplodable(isExplodable), m_IsDangerous(isDangerous)
     {}
 
     CBlock(const CBlock &other) = default;
@@ -54,14 +55,6 @@ public:
      */
     virtual bool IsPassable(CCoord<unsigned int> thisLocation, const CMovable &movable) const
     { return (this->IsColliding(thisLocation, movable) ? this->m_IsPassable : true); }
-
-    /**
-    * Are these objects colliding?
-     * @param thisLocation Location of this object in game board.
-    * @param other Other object
-    */
-    bool IsColliding(CCoord<unsigned int> thisLocation, const CMovable &other) const
-    { return this->m_Body.IsColliding(thisLocation.ToDouble(), this->m_Size, other.GetLocation(), other.GetSize()); }
 
     /** Hadnle collision with player. */
     virtual void CollisionWith(CCoord<unsigned int> thisLocation, CPlayer &player)
@@ -99,18 +92,19 @@ public:
     {}
 
     /**
-     * Is this wall destructible?
-    * @return True - is destructible.
-    */
-    virtual bool IsExplodeable() const
-    { return false; }
-
-    /**
      * Attach collectible object to this wall.
      * @param collectible Collectible object.
      */
     virtual void AttachCollectible(CCollectible *collectible)
     {}
+
+    /**
+    * Are these objects colliding?
+     * @param thisLocation Location of this object in game board.
+    * @param other Other object
+    */
+    bool IsColliding(CCoord<unsigned int> thisLocation, const CMovable &other) const
+    { return this->m_Body.IsColliding(thisLocation.ToDouble(), this->m_Size, other.GetLocation(), other.GetSize()); }
 
     /**
      * Has this object attached collectible object?
@@ -128,6 +122,9 @@ public:
     bool IsDestroyed() const
     { return this->m_IsDestroyed; }
 
+    bool IsExplodeable() const
+    { return this->m_IsExplodable; }
+
     bool IsDangerous() const
     { return this->m_IsDangerous; }
 
@@ -137,6 +134,6 @@ public:
 protected:
     CBody m_Body;
     CCoord<> m_Size;
-    bool m_IsAlive, m_IsDestroyed, m_IsPassable, m_IsDangerous;
+    bool m_IsAlive, m_IsDestroyed, m_IsPassable, m_IsExplodable, m_IsDangerous;
 };
 

@@ -37,8 +37,8 @@ public:
 
     virtual void CollisionWith(CCoord<unsigned int> thisLocation, CEnemy &enemy) override;
 
-    virtual bool IsExplodeable() const override
-    { return true; }
+   /* virtual bool IsExplodeable() const override
+    { return true; }*/
 
     virtual bool TryExplode(unsigned int distance) override
     {

@@ -6,7 +6,7 @@
 #include "../CBoard.h"
 
 CFire::CFire(std::shared_ptr<CTexturePack> texturePack, CPlayer *owner, CCoord<> size, unsigned int duration)
-        : CBlock(std::move(texturePack), size, true, true), m_Owner(owner)
+        : CBlock(std::move(texturePack), size, true, true, true), m_Owner(owner)
 {
     // Run the timer which will destroy this object after the duration expires.
     this->m_ExpirationTimer.Run(duration, [=](void)

@@ -19,7 +19,7 @@ public:
     */
     CCollectible(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1), size_t scoreBonus = 0,
                  int duration = 0)
-            : CBlock(std::move(texturePack), size, true), m_Duration(duration), m_IsVisible(false),
+            : CBlock(std::move(texturePack), size, true, false, false), m_Duration(duration), m_IsVisible(false),
               m_IsTriggered(false), m_ScoreBonus(scoreBonus), m_TargetPlayer(nullptr)
     {}
 
@@ -76,9 +76,6 @@ public:
 
     virtual CCollectible *GetCollectible()
     { return this; }
-
-    virtual bool IsExplodeable() const override
-    { return false; }
 
 protected:
     int m_Duration;
