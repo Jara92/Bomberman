@@ -15,4 +15,6 @@ void CDoor::Apply(const CBoard & board, CPlayer &player)
 
         this->m_ScoreBonus = 0;
     }
+
+    this->m_IsTriggered = false;
 }

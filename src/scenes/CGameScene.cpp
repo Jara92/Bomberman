@@ -41,19 +41,6 @@ void CGameScene::Init()
     itemSize = this->m_NextRoundText->GetSize();
     this->m_NextRoundText->SetLocation(
             CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0), (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0)));
-
-    this->m_GameOverText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "Game over",
-                                                   3 * this->m_DefaultFontSize);
-    itemSize = this->m_GameOverText->GetSize();
-    this->m_GameOverText->SetLocation(
-            CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0), (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0)));
-
-    this->m_GameOverSubtext = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0),
-                                                      "Press [ENTER] to return to the menu", this->m_DefaultFontSize);
-    itemSize = this->m_GameOverSubtext->GetSize();
-    this->m_GameOverSubtext->SetLocation(
-            CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0),
-                     (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0) + this->m_DefaultFontSize * 2.5));
 }
 
 /*====================================================================================================================*/
