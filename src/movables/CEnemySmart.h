@@ -36,6 +36,7 @@ public:
 protected:
     CTimer m_SpeedUpTimer;
     bool m_SpeedUp;
+    unsigned int m_RandomMovementCounter, m_RandomMovement;
 
     static constexpr double ENEMY_SPEED_UP = 1.25;
 

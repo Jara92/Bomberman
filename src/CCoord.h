@@ -88,16 +88,6 @@ public:
         return false;
     }
 
-    bool AlmostEqual(const CCoord &other, double tolerance = 0.005) const
-    {
-        if (std::abs(this->m_X - other.m_X) <= tolerance &&
-            std::abs(this->m_Y - other.m_Y) <=tolerance)
-        { return true; }
-
-        return false;
-    }
-
-
     bool operator!=(const CCoord &other) const
     { return !(*this == other); }
 
@@ -139,6 +129,4 @@ public:
 
     T m_X, m_Y;
 };
-
-
 

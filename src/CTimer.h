@@ -78,15 +78,11 @@ public:
         this->m_CallBackCalled = false;
     }
 
-    /**
-     * Turn off timer.
-     */
+    /** Turn off timer. */
     void Stop()
     { this->m_IsOn = false; }
 
-    /**
-     * Turn on timer.
-     */
+    /** Turn on timer. */
     void Continue()
     { this->m_IsOn = true; }
 
@@ -106,8 +102,7 @@ public:
 
 protected:
     unsigned int m_ActualTime, m_TargetTime;
-    bool m_IsOn;
-    bool m_CallBackCalled;
+    bool m_IsOn, m_CallBackCalled;
 
     std::function<void(void)> m_Callback;
 };

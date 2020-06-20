@@ -22,4 +22,5 @@ const char * const MESSAGE_INVALID_INPUT_PARAMETERS = "Invalid input parameters.
 const char * const MESSAGE_INVALID_APPLICATION_STATE = "Invalid application state.";
 const char * const MESSAGE_UNABLE_TO_OPEN_FILE = "Unable to open file.";
 const char * const MESSAGE_CANNOT_WRITE_TO_FILE = "Cannot write to file.";
-const char * const MESSAGE_MAXIMUM_COLLECTIBLES_REACHES = "The maximum number of collectible items has been exceeded.";
+const char * const MESSAGE_MAXIMUM_COLLECTIBLES_REACHED = "The maximum number of collectible items has been exceeded.";
+const char * const MESSAGE_MAXIMUM_ENEMIES_REACHED = "The maximum number of enemies has been exceeded.";

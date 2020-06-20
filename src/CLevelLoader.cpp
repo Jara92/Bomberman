@@ -362,7 +362,10 @@ void CLevelLoader::LoadLevelFile(std::shared_ptr<CBoard> &board, unsigned int le
     fileReader.close();
 
     if (collectibles.size() >= 20)
-    { throw std::runtime_error(MESSAGE_MAXIMUM_COLLECTIBLES_REACHES); }
+    { throw std::runtime_error(MESSAGE_MAXIMUM_COLLECTIBLES_REACHED); }
+
+    if(board->m_Movables.size() - board->m_Players.size() >= 20 )
+    {throw std::runtime_error(MESSAGE_MAXIMUM_ENEMIES_REACHED);}
 }
 
 /*====================================================================================================================*/

@@ -1,6 +1,6 @@
 enemy 1 150 1 20 0
-enemy 1 300 1 25 0
-enemy 1 150 1 15 0
+enemy 0 300 1 20 0
+enemy 1 150 1 25 0
 enemy 1 250 1 15 0
 collectible 2 200 0
 collectible 7 500 0

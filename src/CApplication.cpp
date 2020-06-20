@@ -13,9 +13,10 @@ int CApplication::Run(int argc, char *argv[])
     {
         if (interface.InitInterface())
         {
-            EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME;
+            //EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_SOLO_GAME;
+            // TODO
             // EApplicationStatus applicationStatus = EApplicationStatus ::APPLICATION_STATUS_MULTI_GAME;
-            // EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_MENU;
+             EApplicationStatus applicationStatus = EApplicationStatus::APPLICATION_STATUS_MENU;
 
             // Run scene while application is running and get next application state.
             while (applicationStatus != EApplicationStatus::APPLICATION_STATUS_EXIT)

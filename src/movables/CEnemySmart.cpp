@@ -7,8 +7,11 @@
 
 CEnemySmart::CEnemySmart(std::shared_ptr<CTexturePack> texturePack, CCoord<> location, CCoord<> size, int score,
                          double speed, bool wallPass, int lives)
-        : CEnemy(std::move(texturePack), location, size, score, speed, wallPass, lives, 1), m_SpeedUp(false)
+        : CEnemy(std::move(texturePack), location, size, score, speed, wallPass, lives, 1), m_SpeedUp(false),
+          m_RandomMovementCounter(0)
 {
+    this->m_RandomMovement = CRandom::Random(1, 4);
+
     this->m_SpeedUpTimer.Run(CRandom::Random(2000, 5000), [=](void)
     {
         if (this->m_SpeedUp)
@@ -50,7 +53,10 @@ void CEnemySmart::Move(const CBoard &board, int deltaTime)
     for (int i = 0; i < deltaTime; i++)
     {
         if (!this->DirectionIsSafe(board, this->m_Movement, this->m_SurveillanceDistance))
-        { this->m_Movement = -1 * this->m_Movement; }
+        {
+            this->m_Movement = -1 * this->m_Movement;
+            this->m_RandomMovementCounter = this->m_RandomMovement;
+        }
 
         if (this->TurnRandom(board))
         { continue; }
@@ -68,6 +74,16 @@ bool CEnemySmart::TurnRandom(const CBoard &board)
 
     if (directions.size() > 2)
     {
+        if (this->m_RandomMovementCounter < this->m_RandomMovement)
+        {
+            this->m_RandomMovementCounter++;
+            return false;
+        } else
+        {
+            this->m_RandomMovementCounter = 0;
+            this->m_RandomMovement = CRandom::Random(1, 4);
+        }
+
         // Choose randomIndex direction and set new movement and texture type.
         unsigned int randomIndex = CRandom::Random(0, directions.size());
 
