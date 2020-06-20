@@ -67,19 +67,19 @@ F4 - Zobrazuj mřížku colliderboxů.
 
 ### Kde využívám polymorfismus?
 Polymorfismu využívám u třídy `CBlock`, která má odvozené třídy `CFire`, `CWall`, `CBomb` a `CCollectible`. 
-Odvozezené třídy přetěžují virtuální metody `TryExplode()`, `IsPassable()`, `CollisionWith()`, `Update()`, `Draw()`, `NextLevel()` a `AttachCollectible`.
+Odvozené třídy přetěžují virtuální metody `TryExplode()`, `IsPassable()`, `CollisionWith()`, `Update()`, `Draw()`, `NextLevel()` a `AttachCollectible`.
 Popíšu nejzajíměvší z nich. `TryExplode()` se pokusí zničit daný block. Některé odvozené třídy jsou zničitelné, některé ne a některé jsou zničitelné pouze za daných podmínek.
 `IsPassable()` mi řekne, zda je daný objekt třídy `CMovable` schopný projít skrze tento block. Výstup závisí na typu blocku a na vlastnostech `CMovable` objektu.
-`CollisionWith()` zařizuje kolizi s nějakým objektem třídy `CMovable`. 
-`NextLevel()` připraví daný block do dalšího levelu. některé blocky jsou před načtením nového levelu zničeny a některé zachovány a "zresetovány".
-Polymorfní volání je například ve třídě `CBoard`, kde se při výbuchu bomby pokouším zničit objekty typu `CBlock` v dosahu 
+`CollisionWith()` zařizuje kolizi s nějakým objektem třídy `CMovable`. Může ho například "zabít" nebo "obdarovat".
+`NextLevel()` připraví daný block do dalšího levelu. Některé blocky jsou před načtením nového levelu zničeny, některé zachovány a "zresetovány".
+Polymorfní volání je například ve třídě `CBoard`, kde se při výbuchu bomby pokouším zničit všechny objekty typu `CBlock` v dosahu 
 nebo při přípravě desky na další level volám na všech blocích metodu `NextLevel()`. Při každém vykreslení hry také volám metody `Update()` a `Draw()`.
 Další volání je ve třídě `CPlayer` a `CEnemy`, kde při kolizi s `CBlock` na blocku volám `CollisionWith()`, která se podle své třídy a třídy druhého objektu nějak zachová.
 
 Další využití polymorfismu mám u abstraktní třídy `CMovable`, která má odvozené třídy `CPlayer` a abstraktní třídu `CEnemy`.
 `CMovable` má virtuální metody `Update()`, `TryKill()`, `CollisionWith()` a `NextLevel()`.
 `Update()` provádí aktualizaci vnitřního stavu objektu, animaci a pohyb objektu. `CollisionWith()` řeší kolize s jinými `CMovable` nebo `CBlock`.
-`NextLevel()` samozřejmě objekt připravý k dalšímu levelu. 
+`NextLevel()` objekt připravý k dalšímu levelu. 
 Polymorfní volání je ve třídě `CBoard`, kde při každém vykresleném snímku volám metodu `Update()`. Při zjištění kolize 
 s jiným `CMovable` je na obou objektech volána `CollisionWith()`, která se o kolizi postará.
 
@@ -87,7 +87,7 @@ Třídy `CEnemyDumb` a `CEnemySmart` jsou třídy odvozené od `CEnemy`. Přetě
 
 Vedlejší polymofismus mám u abstraktní třídy `CInterfaceItem`, která je využita jako základní prvek uživatelského rozhraní.
 Má virtuální metody `Update()`, `Draw()` a `MouseEventHandler()`. 
-Polymorfní volání je napříkald ve třídě `CMenuScene`, kde mám všechny `CInterfaceItem` objekty v jednom poli a volám na nich `Update()`,
+Polymorfní volání je například ve třídě `CMenuScene`, kde mám všechny `CInterfaceItem` objekty v jednom poli a volám na nich `Update()`,
 `Draw()` a `MouseEventHandler()` pro případně využití událostí myši. 
 
 
