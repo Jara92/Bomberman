@@ -215,7 +215,10 @@ void CGameScene::UpdateEvents()
                 { this->m_NextGameStatus = EGameStatus::GAME_STATUS_ROUND_OVER; }
                     // Player is totally dead - Game over.
                 else
-                { this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER; }
+                {
+                    this->m_NextGameStatus = EGameStatus::GAME_STATUS_GAME_OVER;
+                    break;
+                }
 
                 this->m_GameEndTimer.Stop();
             } else if ((*(player))->GetLevelUp())

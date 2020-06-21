@@ -61,7 +61,7 @@ CSettings CApplication::Init(int argc, char *argv[])
     catch (...)
     { std::cerr << MESSAGE_INVALID_INPUT_PARAMETERS << std::endl; }
 
-    //debug = true;
+    debug = true;
 
     return CSettings(CCoord<unsigned int>(1495, 910), CCoord<unsigned int>(512, 512), CCoord<unsigned int>(0, 1), 60,
                      true, debug);
