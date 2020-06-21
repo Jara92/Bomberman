@@ -320,7 +320,7 @@ bool CBoard::PositionFree(CCoord<unsigned int> coord)
 {
     CBlock *block = this->GetMapItem(coord);
 
-    // Check walls
+    // Check if the posisition is free.
     if (block != nullptr)
     { return false; }
 

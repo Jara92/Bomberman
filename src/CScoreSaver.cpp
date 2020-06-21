@@ -1,8 +1,6 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
-
 
 #include "CScoreSaver.h"
 

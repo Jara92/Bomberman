@@ -17,6 +17,12 @@ public:
               m_AnimationUpdateInterval(animationUpdateInterval), m_AnimationTimer(0)
     {}
 
+    ~CBody() = default;
+
+    CBody(const CBody &other) = default;
+
+    CBody &operator=(const CBody &other) = default;
+
     /**
     * Updates body state using deltatime.
     * @param board Game board
@@ -54,7 +60,7 @@ public:
     }
 
     void SetActualTextureType(ETextureType newTextureType)
-    {this->m_ActualTexture = newTextureType;}
+    { this->m_ActualTexture = newTextureType; }
 
 protected:
     /** Texturepack which is used for rendering. */

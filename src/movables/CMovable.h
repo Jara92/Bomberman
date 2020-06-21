@@ -20,13 +20,13 @@ class CMovable
 public:
     /**
      * Object which can move in board.
-     * @param texturePack Textures to be rendered
-     * @param location Starting location
+     * @param texturePack Textures to be rendered.
+     * @param location Starting location.
      * @param size Object size.
-     * @param speed  Starting speed
+     * @param speed  Starting speed.
      * @param wallPass Can this object walk through destructible walls?
      * @param bombPass Cant this object walk through bombs?
-     * @param lives Starting lives count
+     * @param lives Starting lives count.
      */
     explicit CMovable(std::shared_ptr<CTexturePack> texturePack, CCoord<> size = CCoord<>(1, 1),
                       CCoord<> location = CCoord<>(0, 0), double speed = 0.005, bool wallPass = false,
@@ -51,7 +51,7 @@ public:
     {
         // Update when moving.
         if (this->m_Movement != CCoord<>(0, 0))
-        {this->m_Body.Update(board, deltaTime); }
+        { this->m_Body.Update(board, deltaTime); }
     }
 
     /**

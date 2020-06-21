@@ -44,7 +44,6 @@ public:
      */
     void Update(int deltaTime);
 
-
     void UpdatePhysicsEvents();
 
     /**
@@ -150,6 +149,7 @@ public:
     unsigned int GetCellSize() const
     { return this->m_CellSize; }
 
+    /** Set players if there are none. */
     void SetPlayers(std::vector<CPlayer *> players)
     {
         if (this->m_Players.empty())
@@ -159,7 +159,6 @@ public:
         }
     }
 
-    /** We need to save pointers to players because need to know players score and lives count. */
     std::vector<CPlayer *> m_Players;
     /** Game map saved as 2D array */
     std::vector<std::vector<CBlock *>> m_Map;

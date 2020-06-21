@@ -1,10 +1,8 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
 
 #pragma once
-#include <queue>
 #include "CSDLInterface.h"
 #include "scenes/CGameScene.h"
 #include "scenes/CMultiplayerGameScene.h"
@@ -16,16 +14,18 @@
 class CApplication
 {
 public:
-    CApplication() = default;
-    ~CApplication() = default;
-    CApplication (const CApplication & other) = default;
-    CApplication & operator = (const CApplication & other) = default;
-
     int Run(int argc, char * argv[]);
 
 protected:
     CSettings Init(int argc, char * argv[]);
 
+    /**
+     * Get scene by application state.
+     * @param interface Interface to be used.
+     * @param applicationStatus Application state.
+     * @throws std::invalid_argument When the application state is invalid.
+     * @return Scene to be run.
+     */
     std::shared_ptr<CScene> GetSceneByApplicationState(CSDLInterface & interface, EApplicationStatus applicationStatus) const;
 };
 

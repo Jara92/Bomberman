@@ -388,4 +388,3 @@ void CGameScene::GlobalInput(const Uint8 *input)
         { this->m_Interface.GetSettings().SetRenderBoundingBox(true); }
     }
 }
-
