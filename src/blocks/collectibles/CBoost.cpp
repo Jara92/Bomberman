@@ -46,4 +46,5 @@ void CBoost::Deactivate()
     { this->m_Deactivate(this->m_TargetPlayer); }
 
     this->m_IsAlive = false;
+    this->m_IsDestroyed = true;
 }

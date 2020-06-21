@@ -1,8 +1,6 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
-
 
 #include "CText.h"
 
@@ -22,7 +20,7 @@ CText::SetText(const std::string &text, int fontSize, SDL_Color color = {255, 25
     // Object must be refreshed in next Update().
     this->m_IsActual = false;
 }
-
+/*====================================================================================================================*/
 void CText::ReloadContent(CSDLInterface &interface)
 {
 

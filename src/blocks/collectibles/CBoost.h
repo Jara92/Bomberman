@@ -55,6 +55,5 @@ protected:
 
     virtual void Apply(const CBoard & board, CPlayer &player) override ;
 
-    /*** Deativate collectible. */
     virtual void Deactivate();
 };

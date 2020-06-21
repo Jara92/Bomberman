@@ -75,12 +75,9 @@ SDL_Texture *CSDLInterface::LoadTexture(const std::string &file) const
 void CSDLInterface::SetMenuScreenSize()
 {
     // Change window size if new size is different.
-    if (this->m_WindowSize.m_X != this->m_Settings.GetMenuScreenSize().m_X ||
-        this->m_WindowSize.m_Y != this->m_Settings.GetMenuScreenSize().m_Y)
+    if (this->m_WindowSize != this->m_Settings.GetMenuScreenSize())
     {
-        this->m_WindowSize.m_X = this->m_Settings.GetMenuScreenSize().m_X;
-        this->m_WindowSize.m_Y = this->m_Settings.GetMenuScreenSize().m_Y;
-
+        this->m_WindowSize = this->m_Settings.GetMenuScreenSize();
         this->UpdateWindowSize();
     }
 }
@@ -89,12 +86,9 @@ void CSDLInterface::SetMenuScreenSize()
 void CSDLInterface::SetGameScreenSize()
 {
     // Change window size if new size is different.
-    if (this->m_WindowSize.m_X != this->m_Settings.GetGameScreenSize().m_X ||
-        this->m_WindowSize.m_Y != this->m_Settings.GetGameScreenSize().m_Y)
+    if (this->m_WindowSize != this->m_Settings.GetGameScreenSize())
     {
-        this->m_WindowSize.m_X = this->m_Settings.GetGameScreenSize().m_X;
-        this->m_WindowSize.m_Y = this->m_Settings.GetGameScreenSize().m_Y;
-
+        this->m_WindowSize = this->m_Settings.GetGameScreenSize();
         this->UpdateWindowSize();
     }
 }

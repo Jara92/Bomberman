@@ -1,6 +1,5 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
 
 #pragma once

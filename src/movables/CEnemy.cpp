@@ -11,7 +11,7 @@ std::vector<CCoord<double>> CEnemy::GetPossibleMoveDirections(const CBoard &boar
 
     std::vector<CCoord<double>> outputDirections;
     // Create directional vectors.
-    double move = (1);
+    double move = 1;
     std::vector<CCoord<>> directions = {{CCoord<double>(0, move)},
                                         {CCoord<double>(0, -move)},
                                         {CCoord<double>(move, 0)},

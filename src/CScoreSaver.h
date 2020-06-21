@@ -1,6 +1,5 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
 
 #pragma once
@@ -14,8 +13,8 @@
 class CScoreSaver
 {
 public:
-    CScoreSaver(CSettings & settings, const std::string &scoreFile = "score")
-            : m_Settings(settings), m_ScoreFile(scoreFile)
+    CScoreSaver(CSettings & settings, std::string scoreFile = "score")
+            : m_Settings(settings), m_ScoreFile(std::move(scoreFile))
     {}
 
     CScoreSaver(const CScoreSaver &other) = delete;
