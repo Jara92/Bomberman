@@ -16,6 +16,7 @@ public:
      * Initializes a new instance of the CSettings.
      * @param gameScreenSize Game screen size in pixels.
      * @param menuScreenSize Menu Screen size in pixels.
+     * @param offset Game board rendering offset.
      * @param screenFPS Rendered frames per second.
      * @param sound Enable sound?
      * @param debugMode Is debug mode on?

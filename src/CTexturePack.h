@@ -50,6 +50,7 @@ public:
     /**
      * Return texture by texturetype
      * @param textureType Texturetype to be returned
+     * @param index Texture animation index.
      * @return Texture or nullptr if not found.
      */
     SDL_Texture *GetTexture(ETextureType textureType, unsigned int *index) const;

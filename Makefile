@@ -8,7 +8,7 @@ DEPDIR    = dep
 
 PROJECTNAME = fikarja3
 
-# Load sources and headers files names from every folder - No shell find. :(
+# Load sources and headers file names from every folder - No shell find. :(
 SOURCES = $(wildcard src/*.cpp src/blocks/*.cpp src/blocks/collectibles/*.cpp src/enums/*.cpp src/interfaceitems/*.cpp src/movables/*.cpp src/scenes/*.cpp)
 HEADERS = $(wildcard src/*.h src/blocks/*.h src/blocks/collectibles/*.h src/enums/*.h src/interfaceitems/*.h src/movables/*.h src/scenes/*.h)
 
@@ -23,7 +23,7 @@ all: compile doc
 compile: $(PROJECTNAME)
 
 $(PROJECTNAME): $(OBJ)
-	$(LD) -o $(PROJECTNAME) -fsanitize=address $^ $(LIBRARIES)
+	$(LD) -o $(PROJECTNAME) $^ $(LIBRARIES)
 
 # Compile object file and create its directory.
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp

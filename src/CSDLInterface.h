@@ -133,7 +133,7 @@ public:
 
     /**
     *  Create a modal message box
-    *  @param flags    ::SDL_MessageBoxFlags
+    *  @param flags    SDL_MessageBoxFlags
     *  @param title    UTF-8 title text
     *  @param message  UTF-8 message text
     */

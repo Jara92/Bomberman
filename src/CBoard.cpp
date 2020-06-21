@@ -104,7 +104,7 @@ void CBoard::Update(int deltaTime)
         {
             delete (*movable);
             *movable = nullptr;
-            movable = this->m_Movables.erase(movable);
+            movable = this->m_Movables.erase(movable); // go to next iterator
         }
     }
 
@@ -187,7 +187,7 @@ bool CBoard::PlaceBomb(CPlayer *player)
     // Set explosion delay.
     int delay = (player->GetRemoteExplosion() ? CBomb::TRIGGER_EXPLOSION_DELAY : CBomb::AUTO_EXPLOSION_DELAY);
 
-    CBomb *bomb = new CBomb(this->m_BombObjectTexturePack,
+    auto *bomb = new CBomb(this->m_BombObjectTexturePack,
                             this->m_BombObjectTexturePack->GetTextureSize(), player,
                             delay, player->GetRemoteExplosion());
 

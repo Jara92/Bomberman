@@ -16,7 +16,7 @@ public:
      * @param location Item location.
      * @param text Text to be rendered.
      * @param fontSize Font size.
-     * @param texturePath Path to texture.
+     * @param color Text color to be rendered.
      */
     CText(CSDLInterface &interface, CCoord<> location, const std::string &text, int fontSize,
           SDL_Color color = {255, 255, 255, 255}
