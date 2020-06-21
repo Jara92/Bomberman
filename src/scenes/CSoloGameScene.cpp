@@ -1,6 +1,5 @@
 /**
  * @author Jaroslav Fikar
- * 
 */
 
 
@@ -29,13 +28,11 @@ void CSoloGameScene::Init()
             20.5 * this->m_Board->GetCellSize() + this->m_ScenePadding, this->m_ScenePadding), "",
                                                          this->m_DefaultFontSize));
 
-    this->m_GameOverText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "Game over",3 * this->m_DefaultFontSize);
+    // Scene messages locations.
     CCoord<> itemSize = this->m_GameOverText->GetSize();
     this->m_GameOverText->SetLocation(
             CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0), (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0)));
 
-    this->m_GameOverSubtext = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0),
-                                                      "Press [ENTER] to return to the menu", this->m_DefaultFontSize);
     itemSize = this->m_GameOverSubtext->GetSize();
     this->m_GameOverSubtext->SetLocation(
             CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0),
@@ -45,11 +42,7 @@ void CSoloGameScene::Init()
     this->m_Clock = CGameClock();
 }
 
-void CSoloGameScene::Update(int deltaTime)
-{
-    CGameScene::Update(deltaTime);
-}
-
+/*====================================================================================================================*/
 void CSoloGameScene::GameOver()
 {
     // Save first players (the only players) score.

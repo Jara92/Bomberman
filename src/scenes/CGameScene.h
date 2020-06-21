@@ -65,7 +65,7 @@ protected:
     unsigned int m_DefaultFontSize;
 
     /** The time a player has to complete the game.*/
-    static constexpr int STARTING_TIME = 200500;
+    static constexpr int STARTING_TIME = 240500;
     /** Waiting time between loading scenes. */
     static constexpr int GAME_STATUS_UPDATE_DELAY = 2000;
     /** Number of game levels. (Last level id is equal to GAME_LEVELS_COUNT )*/

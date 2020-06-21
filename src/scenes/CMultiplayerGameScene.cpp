@@ -37,26 +37,22 @@ void CMultiplayerGameScene::Init()
             20.5 * this->m_Board->GetCellSize() + this->m_ScenePadding, this->m_ScenePadding), "",
                                                          this->m_DefaultFontSize, SDL_Color{255, 215, 0, 255}));
 
-    // Scene texts.
-    this->m_GameOverText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "Game over",
-                                                   3 * this->m_DefaultFontSize);
+    // Scene messages locations.
     CCoord<> itemSize = this->m_GameOverText->GetSize();
     this->m_GameOverText->SetLocation(
             CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0), (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0)));
 
-    this->m_WinnerText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "PLAYER is the winner!",
+    this->m_WinnerText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), MESSAGE_WINNER,
                                                  this->m_DefaultFontSize * 1.3);
     itemSize = this->m_WinnerText->GetSize();
-    this->m_WinnerText->SetLocation(
-            CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0),
-                     (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0) + this->m_DefaultFontSize * 2.5));
+    this->m_WinnerText->SetLocation(CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0),
+                                             (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0) +
+                                             this->m_DefaultFontSize * 2.5));
 
-    this->m_GameOverSubtext = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0),
-                                                      "Press [ENTER] to return to the menu", this->m_DefaultFontSize);
     itemSize = this->m_GameOverSubtext->GetSize();
-    this->m_GameOverSubtext->SetLocation(
-            CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0),
-                     (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0) + this->m_DefaultFontSize * 5));
+    this->m_GameOverSubtext->SetLocation(CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0),
+                                                  (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0) +
+                                                  this->m_DefaultFontSize * 5));
 
     // Run the game clock when the constructor is over.
     this->m_Clock = CGameClock();

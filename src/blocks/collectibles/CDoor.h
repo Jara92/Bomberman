@@ -27,6 +27,6 @@ public:
 
     virtual ~CDoor() = default;
 
-    virtual void Apply(const CBoard & board, CPlayer &player) override ;
+    virtual void Apply(const CBoard &board, CPlayer &player) override;
 };
 

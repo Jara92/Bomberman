@@ -36,8 +36,6 @@ public:
     virtual void Init() override;
 
 protected:
-    virtual void Update(int deltaTime) override;
-
     virtual void GameOver() override;
 };
 

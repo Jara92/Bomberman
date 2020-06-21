@@ -83,11 +83,9 @@ Další využití polymorfismu mám u abstraktní třídy `CMovable`, která má
 Polymorfní volání je ve třídě `CBoard`, kde při každém vykresleném snímku volám metodu `Update()`. Při zjištění kolize 
 s jiným `CMovable` je na obou objektech volána `CollisionWith()`, která se o kolizi postará.
 
-Třídy `CEnemyDumb` a `CEnemySmart` jsou třídy odvozené od `CEnemy`. Přetěžují její metody a díky tomu se jejich chování liší.
+Třídy `CEnemyDumb` a `CEnemySmart` jsou třídy odvozené od `CEnemy`. Přetěžují její metody a díky tomu se jejich chování liší (zejména způsob pohybu).
 
 Vedlejší polymofismus mám u abstraktní třídy `CInterfaceItem`, která je využita jako základní prvek uživatelského rozhraní.
 Má virtuální metody `Update()`, `Draw()` a `MouseEventHandler()`. 
 Polymorfní volání je například ve třídě `CMenuScene`, kde mám všechny `CInterfaceItem` objekty v jednom poli a volám na nich `Update()`,
 `Draw()` a `MouseEventHandler()` pro případně využití událostí myši. 
-
-

@@ -17,12 +17,13 @@ void CGameScene::Init()
     this->m_DefaultFontSize = this->m_Board->GetCellSize() - 2 * this->m_ScenePadding;
 
     // FPS text.
-    this->m_FPSText = std::make_unique<CText>(this->m_Interface,
-                                              CCoord<>(this->m_ScenePadding,
-                                                       this->m_Board->GetCellSize() + this->m_ScenePadding), "", this->m_DefaultFontSize / 2);
+    this->m_FPSText = std::make_unique<CText>(this->m_Interface, CCoord<>(this->m_ScenePadding,
+                                                                          this->m_Board->GetCellSize() +
+                                                                          this->m_ScenePadding), "",
+                                              this->m_DefaultFontSize / 2);
 
     // Pause text
-    this->m_PauseText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "PAUSED",
+    this->m_PauseText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), MESSAGE_PAUSE,
                                                 3 * this->m_DefaultFontSize);
     CCoord<> itemSize = this->m_PauseText->GetSize();
     this->m_PauseText->SetLocation(
@@ -30,7 +31,7 @@ void CGameScene::Init()
                      (this->m_Interface.GetWindowSize().m_Y / 2.0) - (itemSize.m_Y / 2.0)));
 
     // Scene messages.
-    this->m_RoundOverText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), "Round over!",
+    this->m_RoundOverText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), MESSAGE_ROUND_OVER,
                                                     3 * this->m_DefaultFontSize);
     itemSize = this->m_RoundOverText->GetSize();
     this->m_RoundOverText->SetLocation(
@@ -41,6 +42,12 @@ void CGameScene::Init()
     itemSize = this->m_NextRoundText->GetSize();
     this->m_NextRoundText->SetLocation(
             CCoord<>((windowSize.m_X / 2.0) - (itemSize.m_X / 2.0), (windowSize.m_Y / 2.0) - (itemSize.m_Y / 2.0)));
+
+    this->m_GameOverText = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0), MESSAGE_GAME_OVER,
+                                                   3 * this->m_DefaultFontSize);
+
+    this->m_GameOverSubtext = std::make_unique<CText>(this->m_Interface, CCoord<>(0, 0),
+                                                      MESSAGE_PRESS_ENTER, this->m_DefaultFontSize);
 }
 
 /*====================================================================================================================*/
@@ -123,8 +130,10 @@ void CGameScene::Update(int deltaTime)
         this->m_Board->Update(deltaTime);
         this->m_GameEndTimer.Tick(deltaTime);
 
-        this->m_TimeText->SetText("Time: " + std::to_string(this->m_GameEndTimer.GetRemainingTime() / 1000),
-                                  this->m_DefaultFontSize, this->m_TimeText->GetColor());
+        this->m_TimeText->SetText(
+                MESSAGE_REMAINING_TIME_LABEL + std::to_string(this->m_GameEndTimer.GetRemainingTime() / 1000),
+                this->m_DefaultFontSize, this->m_TimeText->GetColor());
+        this->m_TimeText->Update(this->m_Interface, deltaTime);
 
         // Update players textboxes.
         for (std::size_t i = 0; i < this->m_Board->m_Players.size(); i++)
@@ -142,19 +151,18 @@ void CGameScene::Update(int deltaTime)
                 { score.insert(score.begin(), '0'); }
             }
 
-            this->m_ScoreTexts[i]->SetText("Score: " + score,
-                                           this->m_DefaultFontSize, this->m_ScoreTexts[i]->GetColor());
+            this->m_ScoreTexts[i]->SetText(MESSAGE_SCORE_LABEL + score, this->m_DefaultFontSize,
+                                           this->m_ScoreTexts[i]->GetColor());
             this->m_ScoreTexts[i]->Update(this->m_Interface, deltaTime);
 
             this->m_LivesTexts[i]->SetText(
-                    "Lives: " + std::to_string(std::max(0, this->m_Board->m_Players[i]->GetLives())),
+                    MESSAGE_LIVES_LABEL + std::to_string(std::max(0, this->m_Board->m_Players[i]->GetLives())),
                     this->m_DefaultFontSize, color);
             this->m_LivesTexts[i]->Update(this->m_Interface, deltaTime);
         }
-        this->m_FPSText->SetText("FPS: " + std::to_string(this->m_Clock.GetFPS()), this->m_DefaultFontSize / 2,
-                                 this->m_FPSText->GetColor());
+        this->m_FPSText->SetText(MESSAGE_FPS_LABEL + std::to_string(this->m_Clock.GetFPS()),
+                                 this->m_DefaultFontSize / 2, this->m_FPSText->GetColor());
 
-        this->m_TimeText->Update(this->m_Interface, deltaTime);
         this->m_FPSText->Update(this->m_Interface, deltaTime);
     }
         // Update round over text.
@@ -163,7 +171,7 @@ void CGameScene::Update(int deltaTime)
         // Update next round text.
     else if (this->m_GameStatus == EGameStatus::GAME_STATUS_NEXT_ROUND)
     {
-        this->m_NextRoundText->SetText("Round " + std::to_string(this->m_Level) + "!",
+        this->m_NextRoundText->SetText(MESSAGE_NEXT_ROUND + std::to_string(this->m_Level) + "!",
                                        3 * this->m_DefaultFontSize, this->m_NextRoundText->GetColor());
         this->m_NextRoundText->Update(this->m_Interface, deltaTime);
     }
@@ -343,10 +351,10 @@ void CGameScene::GlobalInput(const Uint8 *input)
 
             this->m_PauseButtonPressed = true;
         }
-    } else
-    {
-        this->m_PauseButtonPressed = false;
     }
+        // Enable pause / unpause the game.
+    else
+    { this->m_PauseButtonPressed = false; }
 
     // Debug options
     if (this->m_Interface.GetSettings().GetDebugMode())
