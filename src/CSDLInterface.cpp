@@ -16,7 +16,7 @@ CSDLInterface::~CSDLInterface()
     // Quit SDL
     IMG_Quit();
     TTF_Quit();
-    SDL_QuitSubSystem(SDL_INIT_EVERYTHING);
+    SDL_QuitSubSystem(SDL_INIT_AUDIO | SDL_INIT_VIDEO);
     SDL_Quit();
 }
 
@@ -105,12 +105,19 @@ CSDLInterface::LoadTextTexture(const std::string &text, CCoord<unsigned int> &si
     // Create text surface.
     SDL_Surface *surfaceMessage = TTF_RenderText_Blended(font, (text).c_str(), color);
     if (surfaceMessage == NULL)
-    { return NULL; }
+    {
+        TTF_CloseFont(font);
+        return NULL;
+    }
 
     // Create texture.
     SDL_Texture *message = SDL_CreateTextureFromSurface(this->m_Renderer, surfaceMessage);
     if (message == NULL)
-    { return NULL; }
+    {
+        TTF_CloseFont(font);
+        SDL_FreeSurface(surfaceMessage);
+        return NULL;
+    }
 
     // Set size
     size = CCoord<unsigned int>(surfaceMessage->w, surfaceMessage->h);
