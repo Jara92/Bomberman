@@ -24,6 +24,7 @@ compile: $(PROJECTNAME)
 
 $(PROJECTNAME): $(OBJ)
 	$(LD) -o $(PROJECTNAME) $^ $(LIBRARIES)
+	#$(LD) -o $(PROJECTNAME) -fsanitize=address $^ $(LIBRARIES)
 
 # Compile object file and create its directory.
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
