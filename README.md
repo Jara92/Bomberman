@@ -5,6 +5,9 @@ Autor: Jaroslav Fikar
 
 Klasická hra Bomberman
 
+![Hlavní nabídka](img/menu.png)
+![Ukázka hry](img/game.png)
+
 ###Implementujte následující varianty:
 
     1. pro alespoň 2 hráče na jednom počítači
